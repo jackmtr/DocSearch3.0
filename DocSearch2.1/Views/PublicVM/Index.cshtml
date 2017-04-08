@@ -1,0 +1,114 @@
+﻿@model IEnumerable<DocSearch2._1.ViewModels.PublicVM>
+
+@{
+    ViewBag.Title = "Westland Archive System";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="body">
+
+    <div id="public_navigation">
+
+        <p>Category/Policy</p>
+        <!-- Rounded switch -->
+        <label class="switch">
+            <input type="checkbox" id="category_policy_toggle">
+            <div class="slider round"></div>
+        </label>
+
+        <ul id="category_list">
+            <li>Category</li>
+            @foreach (var item in Model.GroupBy(m => m.CategoryName).Select(g => g.First()))
+            {
+                <li><a href="#">@item.CategoryName</a></li>
+            }
+        </ul>
+
+        <ul id="policy_list" class="hidden">
+            <li>Policy Number</li>
+            @foreach (var item in Model.GroupBy(m => m.RefNumber).Select(g => g.First()))
+            {
+                <li><a href="#">@item.RefNumber</a></li>
+            }
+        </ul>
+
+    </div>
+
+    <div id="public_info">
+        <h2>@TempData["Person_Name"]</h2>
+
+        <form method="get">
+            <input type="hidden" name="publicId" value="@Model.First().Folder_ID" />
+            <input type="search" name="searchTerm" />
+            <input type="submit" value="Search" />
+        </form> <!--Should do using html helpers over basic html-->
+
+        @*@using (Html.BeginForm("Index", "PublicVM", FormMethod.Get)) {
+            @Html.Hidden("Folder_Id")
+            @Html.TextBox("searchTerm")
+            <input type="submit" value="Search" />
+        }*@
+
+        <table id="public_table" class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Document_ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RefNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CategoryName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DocumentTypeName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IssueDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EffectiveDate)
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Document_ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RefNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DocumentTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IssueDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EffectiveDate)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+@section CustomScripts{
+    <script>
+        (function () {
+            $('#category_policy_toggle').click(function () {
+                $("#category_list, #policy_list").toggleClass("hidden");
+            })
+        })();
+    </script>  
+}
