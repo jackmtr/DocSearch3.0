@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace DocSearch2._1.Controllers
 {
@@ -27,13 +28,14 @@ namespace DocSearch2._1.Controllers
         // GET: PublicVM
         [HttpGet] // dunno if need this, was causing issues with the search return request
         //I think the search submit is coming back as a post
-        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string searchTerm = null)
+        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string searchTerm = null, int page = 1)
         {
             TempData.Keep("Person_Name");
 
             IEnumerable<PublicVM> publicModel = repository
                 .SelectAll(Folder_ID)
-                .Where(r => searchTerm == null || r.Description.Contains(searchTerm));
+                .Where(r => searchTerm == null || r.Description.Contains(searchTerm))
+                .ToPagedList(page, 10);
             //need to greatly refine this search feature
 
             if (Request.IsAjaxRequest()) {

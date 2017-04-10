@@ -1,28 +1,29 @@
-﻿@model IEnumerable<DocSearch2._1.ViewModels.PublicVM>
+﻿@model IPagedList<PublicVM>
+@*@model IEnumerable<DocSearch2._1.ViewModels.PublicVM>*@
 
 <div id="publicTable">
     <table id="public_table" class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Document_ID)
+                @Html.DisplayNameFor(model => model.ToList().First().Document_ID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RefNumber)
+                @Html.DisplayNameFor(model => model.ToList().First().RefNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CategoryName)
+                @Html.DisplayNameFor(model => model.ToList().First().CategoryName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DocumentTypeName)
+                @Html.DisplayNameFor(model => model.ToList().First().DocumentTypeName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IssueDate)
+                @Html.DisplayNameFor(model => model.ToList().First().IssueDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.ToList().First().Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EffectiveDate)
+                @Html.DisplayNameFor(model => model.ToList().First().EffectiveDate)
             </th>
         </tr>
         @foreach (var item in Model)
@@ -52,5 +53,10 @@
             </tr>
         }
     </table>
+
+    <div class="pagedList" data-otf-target="#public_table">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID }),
+            PagedListRenderOptions.MinimalWithItemCountText)
+    </div>
 </div>
 
