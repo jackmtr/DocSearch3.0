@@ -25,7 +25,8 @@ namespace DocSearch2._1.Controllers
         */
 
         // GET: PublicVM
-        [HttpGet] // dunno if need this: 
+        //[HttpGet] // dunno if need this, causing issues with the search return request
+        //I think the search submit is coming back as a post
         public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string searchTerm = null)
         {
             TempData.Keep("Person_Name");
@@ -34,6 +35,10 @@ namespace DocSearch2._1.Controllers
                 .SelectAll(Folder_ID)
                 .Where(r => searchTerm == null || r.Description.Contains(searchTerm));
             //need to greatly refine this search feature
+
+            if (Request.IsAjaxRequest()) {
+                return PartialView("_PublicTable", publicModel);
+            }
 
             if (publicModel != null)
             {

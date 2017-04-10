@@ -36,11 +36,25 @@
     <div id="public_info">
         <h2>@TempData["Person_Name"]</h2>
 
-        <form method="get">
+        @using (Ajax.BeginForm("Index", "PublicVM", null,
+                new AjaxOptions
+                {
+                    HttpMethod = "get",
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "public_table"
+                }))
+        {
+            <input type="hidden" name="publicId" value="@Model.First().Folder_ID" />
+            <input type="search" name="searchTerm" />
+            <input type="submit" value="Search Description" />
+        }
+
+        <!--Below is the synchronous way of making the search, probably wont use-->
+        @*<form method="get">
             <input type="hidden" name="publicId" value="@Model.First().Folder_ID" />
             <input type="search" name="searchTerm" />
             <input type="submit" value="Search" />
-        </form> <!--Should do using html helpers over basic html-->
+        </form>*@ <!--Should do using html helpers over basic html-->
 
         @*@using (Html.BeginForm("Index", "PublicVM", FormMethod.Get)) {
             @Html.Hidden("Folder_Id")
@@ -48,58 +62,8 @@
             <input type="submit" value="Search" />
         }*@
 
-        <table id="public_table" class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Document_ID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RefNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CategoryName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DocumentTypeName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IssueDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EffectiveDate)
-                </th>
-            </tr>
+        @Html.Partial("_PublicTable", Model)
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Document_ID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RefNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CategoryName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DocumentTypeName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IssueDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EffectiveDate)
-                    </td>
-                </tr>
-            }
-        </table>
     </div>
 </div>
 
