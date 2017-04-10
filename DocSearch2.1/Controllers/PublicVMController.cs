@@ -25,7 +25,7 @@ namespace DocSearch2._1.Controllers
         */
 
         // GET: PublicVM
-        //[HttpGet] // dunno if need this, causing issues with the search return request
+        [HttpGet] // dunno if need this, was causing issues with the search return request
         //I think the search submit is coming back as a post
         public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string searchTerm = null)
         {

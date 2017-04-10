@@ -36,7 +36,15 @@
     <div id="public_info">
         <h2>@TempData["Person_Name"]</h2>
 
-        @using (Ajax.BeginForm("Index", "PublicVM", null,
+        <form method="get" action="@Url.Action("Index")"
+              data-otf-ajax="true" data-otf-target="#public_table">
+            <input type="hidden" name="publicId" value="@Model.First().Folder_ID" />
+            <input type="search" name="searchTerm" />
+            <input type="submit" value="Search Description" />
+        </form>
+
+        <!--Easy way of doing ajax call, but not as easily customizable-->
+        @*@using (Ajax.BeginForm("Index", "PublicVM", null,
                 new AjaxOptions
                 {
                     HttpMethod = "get",
@@ -47,7 +55,7 @@
             <input type="hidden" name="publicId" value="@Model.First().Folder_ID" />
             <input type="search" name="searchTerm" />
             <input type="submit" value="Search Description" />
-        }
+        }*@
 
         <!--Below is the synchronous way of making the search, probably wont use-->
         @*<form method="get">

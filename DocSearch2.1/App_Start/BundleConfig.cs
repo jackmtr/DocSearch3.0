@@ -12,7 +12,8 @@ namespace DocSearch2._1
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery-ui-{version}.js",//not installed yet
                         "~/Scripts/jquery.unobtrusive*",
-                        "~/Scripts/jquery.validate*"));//not installed yet
+                        "~/Scripts/jquery.validate*",
+                        "~/Scripts/otf.js"));//not installed yet
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
