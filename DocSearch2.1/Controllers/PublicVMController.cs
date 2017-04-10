@@ -26,16 +26,30 @@ namespace DocSearch2._1.Controllers
 
         // GET: PublicVM
         [HttpGet] // dunno if need this: 
-        public ActionResult Index(string publicId, string searchTerm = null)
+        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string searchTerm = null)
         {
             TempData.Keep("Person_Name");
 
             IEnumerable<PublicVM> publicModel = repository
-                .SelectAll(publicId)
+                .SelectAll(Folder_ID)
                 .Where(r => searchTerm == null || r.Description.Contains(searchTerm));
             //need to greatly refine this search feature
 
-            return View(publicModel);
+            if (publicModel != null)
+            {
+                return View(publicModel);
+            }
+            else {
+
+                return HttpNotFound();
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            repository.Dispose();
+
+            base.Dispose(disposing);
         }
     }
 }

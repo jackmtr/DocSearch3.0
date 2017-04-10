@@ -58,5 +58,10 @@ namespace DocSearch2._1.Repositories
             }
             return PublicVMList;
         }
+
+        public void Dispose() {
+
+            _db.Dispose();
+        }
     }
 }

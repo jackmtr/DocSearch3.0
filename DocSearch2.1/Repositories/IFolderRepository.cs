@@ -10,5 +10,7 @@ namespace DocSearch2._1.Repositories
     public interface IFolderRepository
     {
         tbl_Folder SelectByID(string id);
+
+        void Dispose();
     }
 }

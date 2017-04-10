@@ -20,5 +20,10 @@ namespace DocSearch2._1.Repositories
             //do this better
             return _db.tbl_Folder.Find(Int32.Parse(id));
         }
+
+        public void Dispose() {
+            _db.Dispose();
+
+        }
     }
 }
