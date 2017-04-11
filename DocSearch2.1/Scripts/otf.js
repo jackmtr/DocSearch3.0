@@ -13,7 +13,7 @@
             var $newHtml = $(data);
 
             $target.replaceWith($newHtml);
-            //$newHtml.effect("highlight"); //add when i add jquery ui
+            $newHtml.children("table").effect("highlight");
         });
 
         return false;

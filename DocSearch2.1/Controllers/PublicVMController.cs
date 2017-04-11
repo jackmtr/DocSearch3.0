@@ -34,7 +34,7 @@ namespace DocSearch2._1.Controllers
             TempData.Keep("Client_Name");
             TempData.Keep("Client_Id");
 
-            //"04/10/2017"
+            //"04/10/2017" example date
             DateTime issueDateMin = DateTime.ParseExact(IssueDateMinRange, "d", CultureInfo.InvariantCulture);
             DateTime issueDateMax = DateTime.ParseExact(IssueDateMaxRange, "d", CultureInfo.InvariantCulture);
 
