@@ -12,9 +12,9 @@
     @Scripts.Render("~/bundles/modernizr") <!--modernizr must be in head of script-->
 </head>
 <body>
-    <div> 
+    <section class="content-wrapper main-content clear-fix">
         @RenderBody()
-    </div>
+    </section>
     @Scripts.Render("~/bundles/otf")
     <!--Eventually run bootstrap-->
     @RenderSection("CustomScripts", false)

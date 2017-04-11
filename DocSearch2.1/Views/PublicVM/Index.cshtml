@@ -38,7 +38,7 @@
         <h2>@TempData["Person_Name"]</h2>
 
         <form method="get" action="@Url.Action("Index")"
-              data-otf-ajax="true" data-otf-target="#public_table">
+              data-otf-ajax="true" data-otf-target="#publicTable">
             <input type="hidden" name="publicId" value="@Model.First().Folder_ID" />
             <input type="search" name="searchTerm" />
             <input type="submit" value="Search Description" />
