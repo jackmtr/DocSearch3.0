@@ -1,19 +1,17 @@
-﻿
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "Westland Archive System ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*568801 is Ramins test public #*@
-
+@*568801 is Ramins test public #, 34 is his folder_id*@
 
 @using (Html.BeginForm("Index", "Folder", FormMethod.Get))
 {
 
-    <h1>Enter the Public# then Submit</h1>
+    <h1>Enter the Client Id then Submit</h1>
 
-    @Html.Label("publicId", "Public# ")
-    @Html.TextBox("publicId", 34);
+    @Html.Label("ClientId", "Client Id ")
+    @Html.TextBox("ClientId", 568801);
 
     <input type="submit" value="Submit" />
 }

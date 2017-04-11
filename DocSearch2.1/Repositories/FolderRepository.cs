@@ -21,6 +21,13 @@ namespace DocSearch2._1.Repositories
             return _db.tbl_Folder.Find(Int32.Parse(id));
         }
 
+        public tbl_Folder SelectByNumber(string number) {
+
+            int clientId = Int32.Parse(number);
+
+            return _db.tbl_Folder.SingleOrDefault(folder => folder.Number == clientId);
+        }
+
         public void Dispose() {
             _db.Dispose();
 

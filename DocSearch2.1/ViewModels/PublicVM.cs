@@ -17,9 +17,11 @@ namespace DocSearch2._1.ViewModels
         [Display(Name = "Type of Document")]
         public string DocumentTypeName { get; set; } //tbl_DocumentType.Name
 
-        [Display(Name = "Issue Date")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
-        public Nullable<System.DateTime> IssueDate { get; set; } //tbl_Document.Issue_DT
+        //[Display(Name = "Issue Date")]
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:MMM dd yyyy}")]
+        public Nullable<DateTime> IssueDate { get; set; } //tbl_Document.Issue_DT
 
         public string Description { get; set; } //tbl_Document.Description
 
@@ -29,8 +31,9 @@ namespace DocSearch2._1.ViewModels
         public string CategoryName { get; set; } //tbl_Category.Name
 
         [Display(Name = "Effective Date")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
-        public Nullable<System.DateTime> EffectiveDate { get; set; } //tbl_DocReference.Date1_DT
+        [DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:d}")]
+        public Nullable<DateTime> EffectiveDate { get; set; } //tbl_DocReference.Date1_DT
 
         public string RefNumber { get; set; } //tbl_DocReference.RefNumber
 

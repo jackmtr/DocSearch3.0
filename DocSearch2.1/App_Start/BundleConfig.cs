@@ -10,7 +10,7 @@ namespace DocSearch2._1
         {
             bundles.Add(new ScriptBundle("~/bundles/otf").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery-ui-{version}.js",//not installed yet
+                        "~/Scripts/jquery-ui.js",
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*",
                         "~/Scripts/otf.js"));//not installed yet
@@ -38,7 +38,8 @@ namespace DocSearch2._1
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/Site.css",
-                      "~/Content/PagedList.css"
+                      "~/Content/PagedList.css",
+                      "~/Content/jquery-ui*"
                       ));
 
             /*

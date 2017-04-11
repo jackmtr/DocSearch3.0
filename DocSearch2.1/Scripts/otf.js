@@ -36,6 +36,21 @@
         return false;
     };
 
+    if (!Modernizr.inputtypes.date) {
+
+        $(".datefield").each(function () {
+            var displayedDate = $(this).val();
+            var date = new Date(displayedDate);
+            $(this).datepicker().datepicker("setDate", date);
+        });
+
+        //$(".datefield").on("click", function () {
+        //    var displayedDate = $(this).val();
+        //    var date = new Date(displayedDate);
+        //    $(this).datepicker().datepicker("setDate", date);
+        //});
+    }
+
     $("form[data-otf-ajax='true']").submit(ajaxFormSubmit);
 
     $(".main-content").on("click", ".pagedList a", getPage);

@@ -11,6 +11,8 @@ namespace DocSearch2._1.Repositories
     {
         tbl_Folder SelectByID(string id);
 
+        tbl_Folder SelectByNumber(string number);
+
         void Dispose();
     }
 }

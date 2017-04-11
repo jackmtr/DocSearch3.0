@@ -3,11 +3,6 @@
 
 <div id="publicTable">
 
-    <div class="pagedList" data-otf-target="#publicTable">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID }),
-            PagedListRenderOptions.MinimalWithItemCountText)
-    </div>
-
     <table id="public_table" class="table">
         <tr>
             <th>
@@ -59,5 +54,10 @@
             </tr>
         }
     </table>
+
+    <div class="pagedList" data-otf-target="#publicTable">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID }),
+            PagedListRenderOptions.MinimalWithItemCountText)
+    </div>
 </div>
 

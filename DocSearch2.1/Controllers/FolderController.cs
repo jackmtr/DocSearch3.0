@@ -25,13 +25,14 @@ namespace DocSearch2._1.Controllers
         
         
         // GET: Folder
-        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID)
+        public ActionResult Index([Bind(Prefix = "ClientId")] string Number)
         {
-            tbl_Folder folder = repository.SelectByID(Folder_ID);
+            tbl_Folder folder = repository.SelectByNumber(Number);
 
-            TempData["Person_Name"] = folder.Name;
+            TempData["Client_Name"] = folder.Name;
+            TempData["Client_Id"] = folder.Number;
 
-            return RedirectToAction("Index", "PublicVM", new { publicId = Folder_ID });
+            return RedirectToAction("Index", "PublicVM", new { publicId = folder.Folder_ID });
         }
 
         protected override void Dispose(bool disposing)

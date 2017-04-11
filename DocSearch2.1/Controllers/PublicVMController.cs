@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using System.Globalization;
 
 namespace DocSearch2._1.Controllers
 {
@@ -28,13 +29,19 @@ namespace DocSearch2._1.Controllers
         // GET: PublicVM
         [HttpGet] // dunno if need this, was causing issues with the search return request
         //I think the search submit is coming back as a post
-        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string searchTerm = null, int page = 1)
+        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string searchTerm = null, string IssueDateMinRange = "01/15/1990", string IssueDateMaxRange = "04/11/2017", int page = 1)
         {
-            TempData.Keep("Person_Name");
+            TempData.Keep("Client_Name");
+            TempData.Keep("Client_Id");
+
+            //"04/10/2017"
+            DateTime issueDateMin = DateTime.ParseExact(IssueDateMinRange, "d", CultureInfo.InvariantCulture);
+            DateTime issueDateMax = DateTime.ParseExact(IssueDateMaxRange, "d", CultureInfo.InvariantCulture);
 
             IEnumerable<PublicVM> publicModel = repository
                 .SelectAll(Folder_ID)
                 .Where(r => searchTerm == null || r.Description.Contains(searchTerm))
+                .Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax))
                 .ToPagedList(page, 10);
             //need to greatly refine this search feature
 

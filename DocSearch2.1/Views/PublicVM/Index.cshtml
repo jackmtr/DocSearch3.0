@@ -35,14 +35,23 @@
     </div>
 
     <div id="public_info">
-        <h2>@TempData["Person_Name"]</h2>
+        <h2>Name: @TempData["Client_Name"]</h2>
+        <h2>ID: @TempData["Client_Id"]</h2>
 
-        <form method="get" action="@Url.Action("Index")"
-              data-otf-ajax="true" data-otf-target="#publicTable">
-            <input type="hidden" name="publicId" value="@Model.First().Folder_ID" />
+        <!--Search Box-->
+        <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#publicTable">
+            <label for="search">Search Description: </label>
+            <input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />
             <input type="search" name="searchTerm" />
-            <input type="submit" value="Search Description" />
+            Low Range Date
+            @Html.TextBox("IssueDateMinRange", String.Format("{0:d}", Model.OrderBy(d => d.IssueDate).First().IssueDate.Value.ToShortDateString()), new { @class = "datefield", type = "date" })
+            High Range Date
+            @Html.TextBox("IssueDateMaxRange", String.Format("{0:d}", Model.OrderByDescending(d => d.IssueDate).First().IssueDate.Value.ToShortDateString()), new { @class = "datefield", type = "date" })
+            <input type="submit" value="Search and Filter" />
         </form>
+
+        <!--Date Filters-->
+
 
         <!--Easy way of doing ajax call, but not as easily customizable-->
         @*@using (Ajax.BeginForm("Index", "PublicVM", null,
