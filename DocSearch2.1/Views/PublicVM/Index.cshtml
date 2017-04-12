@@ -21,19 +21,31 @@
             @foreach (var item in Model.GroupBy(m => m.CategoryName).Select(g => g.First()))
             {
                 <li>
-                    @*<a href="#">@item.CategoryName</a>*@
-                    @Html.ActionLink(item.CategoryName, "Index", new {
-                        publicId = item.Folder_ID,
-                        category = item.CategoryName
-                    })
+                    @* Should eventually turn these ajax actionlinks into html actionlinks and make a more customizable ajax call though otf.js *@
+                    @Ajax.ActionLink(item.CategoryName, "Index", new
+                       {
+                           publicId = item.Folder_ID,
+                           category = item.CategoryName
+                       }, new AjaxOptions
+                           {
+                               HttpMethod = "GET",
+                               InsertionMode = InsertionMode.Replace,
+                               UpdateTargetId = "publicTable"
+                           })
                     <ul>
-                        @foreach (var category in Model.Where(m => m.CategoryName == item.CategoryName).GroupBy(m => m.DocumentTypeName).Select(g => g.First())) {
+                        @foreach (var category in Model.Where(m => m.CategoryName == item.CategoryName).GroupBy(m => m.DocumentTypeName).Select(g => g.First()))
+                        {
                             <li>
-                                @*<a href="#">@category.DocumentTypeName</a>*@
-                                @Html.ActionLink(category.DocumentTypeName, "Index", new{
-                                    publicId = category.Folder_ID,
-                                    documentTypeName = category.DocumentTypeName
-                                })
+                                @Ajax.ActionLink(category.DocumentTypeName, "Index", new
+                                   {
+                                       publicId = category.Folder_ID,
+                                       documentTypeName = category.DocumentTypeName
+                                   }, new AjaxOptions
+                                       {
+                                           HttpMethod = "GET",
+                                           InsertionMode = InsertionMode.Replace,
+                                           UpdateTargetId = "publicTable"
+                                       })
                             </li>
                         }
                     </ul>

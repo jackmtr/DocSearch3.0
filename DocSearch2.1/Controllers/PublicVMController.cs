@@ -31,19 +31,40 @@ namespace DocSearch2._1.Controllers
         //I think the search submit is coming back as a post
         public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string category = null, string documentTypeName = null, string searchTerm = null, string IssueDateMinRange = "01/15/1990", string IssueDateMaxRange = "04/11/2017", int page = 1)
         {
+            IEnumerable<PublicVM> publicModel = null;
+
             TempData.Keep("Client_Name");
             TempData.Keep("Client_Id");
 
-            //"04/10/2017" example date
-            DateTime issueDateMin = DateTime.ParseExact(IssueDateMinRange, "d", CultureInfo.InvariantCulture);
-            DateTime issueDateMax = DateTime.ParseExact(IssueDateMaxRange, "d", CultureInfo.InvariantCulture);
+            if ((category != null) || (documentTypeName != null)) {
+                if (category != null)
+                {
+                    publicModel = repository
+                        .SelectAll(Folder_ID)
+                        .Where(r => r.CategoryName == category)
+                        .ToPagedList(page, 10);
+                }
+                else
+                {
+                    publicModel = repository
+                        .SelectAll(Folder_ID)
+                        .Where(r => r.DocumentTypeName == documentTypeName)
+                        .ToPagedList(page, 10);
+                }
+            }
+            else {
+                //"04/10/2017" example date
+                DateTime issueDateMin = DateTime.ParseExact(IssueDateMinRange, "d", CultureInfo.InvariantCulture);
+                DateTime issueDateMax = DateTime.ParseExact(IssueDateMaxRange, "d", CultureInfo.InvariantCulture);
 
-            IEnumerable<PublicVM> publicModel = repository
-                .SelectAll(Folder_ID)
-                .Where(r => searchTerm == null || r.Description.Contains(searchTerm))
-                .Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax))
-                .ToPagedList(page, 10);
-            //need to greatly refine this search feature
+                publicModel = repository
+                    .SelectAll(Folder_ID)
+                    .Where(r => searchTerm == null || r.Description.Contains(searchTerm))
+                    .Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax))
+                    .ToPagedList(page, 10);
+                //need to greatly refine this search feature
+            }
+
 
             if (Request.IsAjaxRequest()) {
                 return PartialView("_PublicTable", publicModel);

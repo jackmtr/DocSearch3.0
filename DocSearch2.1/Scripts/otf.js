@@ -1,4 +1,5 @@
 ﻿$(function () {
+
     var ajaxFormSubmit = function () {
         var $form = $(this);
         var options = {
@@ -61,4 +62,5 @@
     $("form[data-otf-ajax='true']").submit(ajaxFormSubmit);
 
     $(".main-content").on("click", ".pagedList a", getPage);
+
 });
