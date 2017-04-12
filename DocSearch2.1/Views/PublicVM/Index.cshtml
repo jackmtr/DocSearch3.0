@@ -55,9 +55,21 @@
 
         <ul id="policy_list" class="hidden">
             <li>Policy Number</li>
-            @foreach (var item in Model.GroupBy(m => m.RefNumber).Select(g => g.First()))
+            @foreach (var policy in Model.GroupBy(m => m.RefNumber).Select(g => g.First()))
             {
-                <li><a href="#">@item.RefNumber</a></li>
+                <li>
+                    @*<a href="#">@policy.RefNumber</a>*@
+                    @Ajax.ActionLink(policy.RefNumber, "Index", new
+                       {
+                           publicId = policy.Folder_ID,
+                           policyNumber = policy.RefNumber
+                       }, new AjaxOptions
+                           {
+                               HttpMethod = "GET",
+                               InsertionMode = InsertionMode.Replace,
+                               UpdateTargetId = "publicTable"
+                           })
+                </li>
             }
         </ul>
 
