@@ -106,3 +106,16 @@ li a:hover {
 #public_info {
 
 }
+
+.category tr th:nth-child(3n), .category tr td:nth-child(3n) {
+    display: none;
+}
+
+.doctype tr th:nth-child(1), .doctype tr th:nth-child(3), .doctype tr td:nth-child(1), .doctype tr td:nth-child(3){
+    display: none;
+}
+
+/*.policy tr th:first-child, .policy tr td:first-child{
+    background: red;
+    display: none;
+}*/

@@ -3,9 +3,9 @@
 
 <div id="publicTable">
 
-    <table id="public_table" class="table">
+    <table id="public_table">
         <tr>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.ToList().First().Document_ID)
             </th>
             <th>
@@ -13,7 +13,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ToList().First().CategoryName)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.ToList().First().DocumentTypeName)
             </th>
@@ -21,16 +21,18 @@
                 @Html.DisplayNameFor(model => model.ToList().First().IssueDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ToList().First().Description)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.ToList().First().EffectiveDate)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ToList().First().Description)
+            </th>
+            <th>File</th>
+            <th>...</th>
         </tr>
         @foreach (var item in Model)
             {
             <tr>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.Document_ID)
                 </td>
                 <td>
@@ -38,7 +40,7 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CategoryName)
-                </td>
+                </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.DocumentTypeName)
                 </td>
@@ -46,11 +48,13 @@
                     @Html.DisplayFor(modelItem => item.IssueDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.EffectiveDate)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td><a href="#">File</a></td>
+                <td>OPEN ME</td>
             </tr>
         }
     </table>

@@ -27,6 +27,15 @@
                     //OnComplete = "clear_fields();" will need to clear form fields
                 }) 
 
+        @* Need a better way to place this JS *@
+        <script type="text/javascript">
+            function postNavbar() {
+                $this = $(this);
+                console.log($this.data("subclass"));
+                $('#publicTable').removeClass().addClass($this.data("subclass"));
+            };
+        </script>
+
         <ul id="category_list">
             <li>Category</li>
             @foreach (var item in Model.GroupBy(m => m.CategoryName).Select(g => g.First()))
@@ -34,29 +43,36 @@
                 <li>
                     @* Should eventually turn these ajax actionlinks into html actionlinks and make a more customizable ajax call though otf.js *@
                     @Ajax.ActionLink(item.CategoryName, "Index", new
-                       {
-                           publicId = item.Folder_ID,
-                           category = item.CategoryName
-                       }, new AjaxOptions
-                           {
-                               HttpMethod = "GET",
-                               InsertionMode = InsertionMode.Replace,
-                               UpdateTargetId = "publicTable"
-                           })
+               {
+                   publicId = item.Folder_ID,
+                   category = item.CategoryName
+               }, new AjaxOptions
+               {
+                   HttpMethod = "GET",
+                   InsertionMode = InsertionMode.Replace,
+                   UpdateTargetId = "publicTable",
+                   OnComplete = "postNavbar"
+               }, new {
+                   data_subclass = "category"
+               })
                     <ul>
                         @foreach (var category in Model.Where(m => m.CategoryName == item.CategoryName).GroupBy(m => m.DocumentTypeName).Select(g => g.First()))
                         {
                             <li>
                                 @Ajax.ActionLink(category.DocumentTypeName, "Index", new
-                                   {
-                                       publicId = category.Folder_ID,
-                                       documentTypeName = category.DocumentTypeName
-                                   }, new AjaxOptions
-                                       {
-                                           HttpMethod = "GET",
-                                           InsertionMode = InsertionMode.Replace,
-                                           UpdateTargetId = "publicTable"
-                                       })
+                           {
+                               publicId = category.Folder_ID,
+                               documentTypeName = category.DocumentTypeName
+                           }, new AjaxOptions
+                           {
+                               HttpMethod = "GET",
+                               InsertionMode = InsertionMode.Replace,
+                               UpdateTargetId = "publicTable",
+                               OnComplete = "postNavbar"
+                           }, new
+                           {
+                               data_subclass = "doctype"
+                           })
                             </li>
                         }
                     </ul>
@@ -71,15 +87,19 @@
                 <li>
                     @*<a href="#">@policy.RefNumber</a>*@
                     @Ajax.ActionLink(policy.RefNumber, "Index", new
-                       {
-                           publicId = policy.Folder_ID,
-                           policyNumber = policy.RefNumber
-                       }, new AjaxOptions
-                           {
-                               HttpMethod = "GET",
-                               InsertionMode = InsertionMode.Replace,
-                               UpdateTargetId = "publicTable"
-                           })
+               {
+                   publicId = policy.Folder_ID,
+                   policyNumber = policy.RefNumber
+               }, new AjaxOptions
+               {
+                   HttpMethod = "GET",
+                   InsertionMode = InsertionMode.Replace,
+                   UpdateTargetId = "publicTable",
+                   OnComplete = "postNavbar"
+               }, new
+               {
+                   data_subclass = "policy"
+               })
                 </li>
             }
         </ul>
