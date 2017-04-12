@@ -21,11 +21,19 @@
             @foreach (var item in Model.GroupBy(m => m.CategoryName).Select(g => g.First()))
             {
                 <li>
-                    <a href="#">@item.CategoryName</a>
+                    @*<a href="#">@item.CategoryName</a>*@
+                    @Html.ActionLink(item.CategoryName, "Index", new {
+                        publicId = item.Folder_ID,
+                        category = item.CategoryName
+                    })
                     <ul>
                         @foreach (var category in Model.Where(m => m.CategoryName == item.CategoryName).GroupBy(m => m.DocumentTypeName).Select(g => g.First())) {
                             <li>
-                                <a href="#">@category.DocumentTypeName</a>
+                                @*<a href="#">@category.DocumentTypeName</a>*@
+                                @Html.ActionLink(category.DocumentTypeName, "Index", new{
+                                    publicId = category.Folder_ID,
+                                    documentTypeName = category.DocumentTypeName
+                                })
                             </li>
                         }
                     </ul>
