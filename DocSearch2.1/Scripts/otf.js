@@ -43,13 +43,20 @@
             var date = new Date(displayedDate);
             $(this).datepicker().datepicker("setDate", date);
         });
-
-        //$(".datefield").on("click", function () {
-        //    var displayedDate = $(this).val();
-        //    var date = new Date(displayedDate);
-        //    $(this).datepicker().datepicker("setDate", date);
-        //});
     }
+
+    //$("#category_list").menu(
+    //"focus", null, $("#category_list").menu().find(".ui-menu-item:last"));
+    //$(menu).mouseleave(function () {
+    //    menu.menu('collapseAll');
+    //});
+
+    $("#category_list").accordion({
+        collapsible: true,
+        navigation: true,
+        clearStyle: true,
+        event: "mouseover"
+    });
 
     $("form[data-otf-ajax='true']").submit(ajaxFormSubmit);
 

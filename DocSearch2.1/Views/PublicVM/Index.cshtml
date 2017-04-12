@@ -20,7 +20,16 @@
             <li>Category</li>
             @foreach (var item in Model.GroupBy(m => m.CategoryName).Select(g => g.First()))
             {
-                <li><a href="#">@item.CategoryName</a></li>
+                <li>
+                    <a href="#">@item.CategoryName</a>
+                    <ul>
+                        @foreach (var category in Model.Where(m => m.CategoryName == item.CategoryName).GroupBy(m => m.DocumentTypeName).Select(g => g.First())) {
+                            <li>
+                                <a href="#">@category.DocumentTypeName</a>
+                            </li>
+                        }
+                    </ul>
+                </li>
             }
         </ul>
 
