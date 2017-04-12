@@ -16,6 +16,17 @@
             <div class="slider round"></div>
         </label>
 
+        @Ajax.ActionLink("Clear Search", "Index", new
+            {
+                publicId = Model.First().Folder_ID }, new AjaxOptions
+                {
+                    HttpMethod = "GET",
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "publicTable"
+                    //,
+                    //OnComplete = "clear_fields();" will need to clear form fields
+                }) 
+
         <ul id="category_list">
             <li>Category</li>
             @foreach (var item in Model.GroupBy(m => m.CategoryName).Select(g => g.First()))
