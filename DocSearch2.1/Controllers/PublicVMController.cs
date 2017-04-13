@@ -13,9 +13,11 @@ namespace DocSearch2._1.Controllers
     public class PublicVMController : Controller
     {
         private IPublicRepository repository = null;
+        private IDocumentRepository repository1 = null;
 
         public PublicVMController() {
             this.repository = new PublicRepository();
+            this.repository1 = new DocumentRepository();
         }
 
         //keep for future testing
@@ -84,6 +86,25 @@ namespace DocSearch2._1.Controllers
 
                 return HttpNotFound();
             }
+        }
+
+        // Get: File
+        public ActionResult FileDisplay([Bind(Prefix = "documentId")] string id) {
+
+            var file = repository1.SelectById(id);
+
+            string MimeType = null;
+
+            switch (1) {
+                case 1:
+                    MimeType = "application/pdf";
+                    break;
+                default:
+                    MimeType = "application/pdf";
+                    break;
+            }
+
+            return File(file.ArchivedFile, MimeType); 
         }
 
         protected override void Dispose(bool disposing)
