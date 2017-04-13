@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using System.Globalization;
+using DocSearch2._1.Models;
 
 namespace DocSearch2._1.Controllers
 {
@@ -95,12 +96,48 @@ namespace DocSearch2._1.Controllers
 
             string MimeType = null;
 
-            switch (1) {
-                case 1:
+            switch (file.FileExtension.ToLower().Trim()) {
+
+                case "pdf":
                     MimeType = "application/pdf";
                     break;
+
+                case "gif":
+                    MimeType = "image/gif";
+                    break;
+
+                case "jpg":
+                    MimeType = "image/jpeg";
+                    break;
+
+                case "msg":
+                    MimeType = "application/vnd.outlook";
+                    break;
+
+                case "ppt":
+                    MimeType = "application/vnd.ms-powerpoint";
+                    break;
+
+                case "xls":
+                case "csv":
+                    MimeType = "application/vnd.ms-excel";
+                    break;
+
+                case "xlsx":
+                    MimeType = "application/vnd.ms-excel.12";
+                    break;
+
+                case "doc":
+                case "dot":
+                    MimeType = "application/msword";
+                    break;
+
+                case "docx":
+                    MimeType = "application/vnd.ms-word.document.12";
+                    break;
+
                 default:
-                    MimeType = "application/pdf";
+                    MimeType = "text/html";
                     break;
             }
 

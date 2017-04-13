@@ -84,23 +84,26 @@
             <li>Policy Number</li>
             @foreach (var policy in Model.GroupBy(m => m.RefNumber).Select(g => g.First()))
             {
-                <li>
-                    @*<a href="#">@policy.RefNumber</a>*@
-                    @Ajax.ActionLink(policy.RefNumber, "Index", new
-               {
-                   publicId = policy.Folder_ID,
-                   policyNumber = policy.RefNumber
-               }, new AjaxOptions
-               {
-                   HttpMethod = "GET",
-                   InsertionMode = InsertionMode.Replace,
-                   UpdateTargetId = "publicTable",
-                   OnComplete = "postNavbar"
-               }, new
-               {
-                   data_subclass = "policy"
-               })
-                </li>
+                if (policy.RefNumber.Length >= 1)
+                {
+                    <li>
+                        @*<a href="#">@policy.RefNumber</a>*@
+                        @Ajax.ActionLink(policy.RefNumber, "Index", new
+                   {
+                       publicId = policy.Folder_ID,
+                       policyNumber = policy.RefNumber
+                   }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "publicTable",
+                       OnComplete = "postNavbar"
+                   }, new
+                   {
+                       data_subclass = "policy"
+                   })
+                    </li>
+                }
             }
         </ul>
 
