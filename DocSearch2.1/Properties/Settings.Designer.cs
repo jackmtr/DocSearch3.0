@@ -42,5 +42,15 @@ namespace DocSearch2._1.Properties {
                 return ((string)(this["Setting1"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=LAPTOP-H3O8M4UU;Initial Catalog=WAS;Integrated Security=True")]
+        public string Setting2 {
+            get {
+                return ((string)(this["Setting2"]));
+            }
+        }
     }
 }
