@@ -4,19 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport"
           content="width=device-width,
-               initial-scale=1.0,
-               maximum-scale=1.0,
-               user-scalable=no" />
+               initial-scale=1.0
+               " />                <!--,maximum-scale=1.0, user-scalable=no-->
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr") <!--modernizr must be in head of script-->
 </head>
 <body>
-    <section class="content-wrapper main-content clear-fix">
+    <div id="body" class="container-fluid"><!-- content-wrapper main-content clear-fix-->
         @RenderBody()
-    </section>
+    </div>
     @Scripts.Render("~/bundles/otf")
-    <!--Eventually run bootstrap-->
     @RenderSection("CustomScripts", false)
 </body>
 </html>

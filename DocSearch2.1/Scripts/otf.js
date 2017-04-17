@@ -54,21 +54,23 @@
         });
     }
 
+    //$("#category_list").menu();
+
     //$("#category_list").menu(
     //"focus", null, $("#category_list").menu().find(".ui-menu-item:last"));
     //$(menu).mouseleave(function () {
     //    menu.menu('collapseAll');
     //});
 
-    $("#category_list").accordion({
-        collapsible: true,
-        navigation: true,
-        clearStyle: true,
-        event: "mouseover"
-    });
+    //$("#category_list").accordion({
+    //    collapsible: true,
+    //    navigation: true,
+    //    clearStyle: true,
+    //    event: "mouseover"
+    //});
 
     $("form[data-otf-ajax='true']").submit(ajaxFormSubmit);
 
-    $(".main-content").on("click", ".pagedList a", getPage);
+    $("#body").on("click", ".pagedList a", getPage);
 
 });

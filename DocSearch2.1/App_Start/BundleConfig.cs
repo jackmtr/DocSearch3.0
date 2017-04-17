@@ -13,11 +13,12 @@ namespace DocSearch2._1
                         "~/Scripts/jquery-ui.js",
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*",
+                        "~/Scripts/bootstrap.js",
                         "~/Scripts/otf.js"));//not installed yet
 
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery-{version}.slim.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+            //            "~/Scripts/jquery-{version}.js",
+            //            "~/Scripts/jquery-{version}.slim.js"));
             //keep one jquery only in the end.
             //bundler might even only take one by nature
 
@@ -37,9 +38,10 @@ namespace DocSearch2._1
             */
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/Site.css",
+                      "~/Content/bootstrap-theme.css",
                       "~/Content/PagedList.css",
-                      "~/Content/jquery-ui*"
+                      "~/Content/jquery-ui*",
+                      "~/Content/Site.css"
                       ));
 
             /*

@@ -1,67 +1,69 @@
 ﻿@model IPagedList<PublicVM>
 @*@model IEnumerable<DocSearch2._1.ViewModels.PublicVM>*@
 
-<div id="publicTable">
-
-    <table id="public_table">
-        <tr>
-            @*<th>
-                @Html.DisplayNameFor(model => model.ToList().First().Document_ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ToList().First().RefNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ToList().First().CategoryName)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.ToList().First().DocumentTypeName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ToList().First().IssueDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ToList().First().EffectiveDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ToList().First().Description)
-            </th>
-            <th>File</th>
-            <th>...</th>
-        </tr>
-        @foreach (var item in Model)
-            {
+<div id="public_table" class="row">
+    <div id ="abc" class="col-md-12">
+        <table>
             <tr>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.Document_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RefNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CategoryName)
-                </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.DocumentTypeName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IssueDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EffectiveDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>@Html.ActionLink("File", "FileDisplay", new { documentId = item.Document_ID }, new { target = "_blank"}) </td>
-                <td>OPEN ME</td>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.ToList().First().Document_ID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ToList().First().RefNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ToList().First().CategoryName)
+                    </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.ToList().First().DocumentTypeName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ToList().First().IssueDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ToList().First().EffectiveDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ToList().First().Description)
+                </th>
+                <th>File</th>
+                <th>...</th>
             </tr>
-        }
-    </table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Document_ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RefNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CategoryName)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DocumentTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IssueDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EffectiveDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>@Html.ActionLink("File", "FileDisplay", new { documentId = item.Document_ID }, new { target = "_blank" }) </td>
+                    <td>OPEN ME</td>
+                </tr>
+            }
+        </table>
 
-    <div class="pagedList" data-otf-target="#publicTable">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID }),
+        <div class="pagedList col-md-6 col-md-offset-3" data-otf-target="#public_table">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID }),
             PagedListRenderOptions.MinimalWithItemCountText)
+        </div>
     </div>
+
 </div>
 

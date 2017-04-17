@@ -1,130 +1,171 @@
 ﻿@model IPagedList<PublicVM>
-@*@model IEnumerable<DocSearch2._1.ViewModels.PublicVM>*@
 
 @{
     ViewBag.Title = "Westland Archive System";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div id="body">
+<div id ="main-row" class="row">
 
-    <div id="public_navigation">
+    <div id="public_navigation" class="col-sm-2" style="background-color:pink;">
+        
+        <div class="row">
+            
+            <div class="col-md-6">
+                <h4>Category/Policy</h4>
 
-        <p>Category/Policy</p>
-        <!-- Rounded switch -->
-        <label class="switch">
-            <input type="checkbox" id="category_policy_toggle">
-            <div class="slider round"></div>
-        </label>
+                <!-- Rounded switch -->
+                <label class="switch">
+                    <input type="checkbox" id="category_policy_toggle">
+                    <div class="slider round"></div>
+                </label>
+            </div>
 
-        @Ajax.ActionLink("Clear Search", "Index", new
-            {
-                publicId = Model.First().Folder_ID }, new AjaxOptions
-                {
-                    HttpMethod = "GET",
-                    InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "publicTable"
-                    //,
-                    //OnComplete = "clear_fields();" will need to clear form fields
-                }) 
+            <div class="col-md-6 buttondiv">
+                @Ajax.ActionLink("Clear Search", "Index", new
+       {
+           publicId = Model.First().Folder_ID
+       }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "public_table"
+           //,
+           //OnComplete = "clear_fields();" will need to clear form fields
+       }, new { @class = "button" })
+            </div>
 
-        @* Need a better way to place this JS *@
-        <script type="text/javascript">
-            function postNavbar() {
-                $this = $(this);
-                console.log($this.data("subclass"));
-                $('#publicTable').removeClass().addClass($this.data("subclass"));
-            };
-        </script>
+        </div>
 
-        <ul id="category_list">
-            <li>Category</li>
-            @foreach (var item in Model.GroupBy(m => m.CategoryName).Select(g => g.First()))
-            {
-                <li>
-                    @* Should eventually turn these ajax actionlinks into html actionlinks and make a more customizable ajax call though otf.js *@
-                    @Ajax.ActionLink(item.CategoryName, "Index", new
-               {
-                   publicId = item.Folder_ID,
-                   category = item.CategoryName
-               }, new AjaxOptions
-               {
-                   HttpMethod = "GET",
-                   InsertionMode = InsertionMode.Replace,
-                   UpdateTargetId = "publicTable",
-                   OnComplete = "postNavbar"
-               }, new {
-                   data_subclass = "category"
-               })
-                    <ul>
-                        @foreach (var category in Model.Where(m => m.CategoryName == item.CategoryName).GroupBy(m => m.DocumentTypeName).Select(g => g.First()))
-                        {
+        
+        <div class="row">
+            <div class="col-md-12">
+
+
+                @* Need a better way to place this JS *@
+                <script type="text/javascript">
+                    function postNavbar() {
+                        $this = $(this);
+                        console.log($this.data("subclass"));
+                        $('#public_table').removeClass().addClass($this.data("subclass"));
+                    };
+                </script>
+
+                <div id="category_section">
+                    <h4>Categories</h4>
+                    <ul id="category_list">
+                        @foreach (var item in Model.GroupBy(m => m.CategoryName).Select(g => g.First())){
                             <li>
-                                @Ajax.ActionLink(category.DocumentTypeName, "Index", new
+                                @* Should eventually turn these ajax actionlinks into html actionlinks and make a more customizable ajax call though otf.js *@
+                                @Ajax.ActionLink(item.CategoryName, "Index", new
                            {
-                               publicId = category.Folder_ID,
-                               documentTypeName = category.DocumentTypeName
+                               publicId = item.Folder_ID,
+                               category = item.CategoryName
                            }, new AjaxOptions
                            {
                                HttpMethod = "GET",
                                InsertionMode = InsertionMode.Replace,
-                               UpdateTargetId = "publicTable",
+                               UpdateTargetId = "public_table",
                                OnComplete = "postNavbar"
                            }, new
                            {
-                               data_subclass = "doctype"
+                               data_subclass = "category"
                            })
+                                <ul id="docType_list">
+                                    @foreach (var category in Model.Where(m => m.CategoryName == item.CategoryName).GroupBy(m => m.DocumentTypeName).Select(g => g.First()))
+                                    {
+                                        <li>
+                                            @Ajax.ActionLink(category.DocumentTypeName, "Index", new
+                                       {
+                                           publicId = category.Folder_ID,
+                                           documentTypeName = category.DocumentTypeName
+                                       }, new AjaxOptions
+                                       {
+                                           HttpMethod = "GET",
+                                           InsertionMode = InsertionMode.Replace,
+                                           UpdateTargetId = "public_table",
+                                           OnComplete = "postNavbar"
+                                       }, new
+                                       {
+                                           data_subclass = "doctype"
+                                       })
+                                        </li>
+                                    }
+                                </ul>
                             </li>
                         }
                     </ul>
-                </li>
-            }
-        </ul>
+                </div>
+                
+                <div id="policy_section" class="hidden">
+                    <h4>Policies</h4>
+                    <ul id="policy_list" >
+                        @foreach (var policy in Model.GroupBy(m => m.RefNumber).Select(g => g.First()))
+                        {
+                            if (policy.RefNumber.Length >= 1)
+                            {
+                                <li>
+                                    @*<a href="#">@policy.RefNumber</a>*@
+                                    @Ajax.ActionLink(policy.RefNumber, "Index", new
+                               {
+                                   publicId = policy.Folder_ID,
+                                   policyNumber = policy.RefNumber
+                               }, new AjaxOptions
+                               {
+                                   HttpMethod = "GET",
+                                   InsertionMode = InsertionMode.Replace,
+                                   UpdateTargetId = "public_table",
+                                   OnComplete = "postNavbar"
+                               }, new
+                               {
+                                   data_subclass = "policy"
+                               })
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+                
+            </div>
 
-        <ul id="policy_list" class="hidden">
-            <li>Policy Number</li>
-            @foreach (var policy in Model.GroupBy(m => m.RefNumber).Select(g => g.First()))
-            {
-                if (policy.RefNumber.Length >= 1)
-                {
-                    <li>
-                        @*<a href="#">@policy.RefNumber</a>*@
-                        @Ajax.ActionLink(policy.RefNumber, "Index", new
-                   {
-                       publicId = policy.Folder_ID,
-                       policyNumber = policy.RefNumber
-                   }, new AjaxOptions
-                   {
-                       HttpMethod = "GET",
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "publicTable",
-                       OnComplete = "postNavbar"
-                   }, new
-                   {
-                       data_subclass = "policy"
-                   })
-                    </li>
-                }
-            }
-        </ul>
+        </div>
+
 
     </div>
 
-    <div id="public_info">
-        <h2>Name: @TempData["Client_Name"]</h2>
-        <h2>ID: @TempData["Client_Id"]</h2>
+    <div id="public_info" class="col-sm-10" style="background-color:papayawhip;">
+        
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Name: @TempData["Client_Name"]</h3>
+            </div>
+            <div class="col-md-6">
+                <h3>ID: @TempData["Client_Id"]</h3>
+            </div>
+        </div>
 
         <!--Search Box-->
-        <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#publicTable">
-            <label for="search">Search Description: </label>
-            <input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />
-            <input type="search" name="searchTerm" />
-            Low Range Date
-            @Html.TextBox("IssueDateMinRange", String.Format("{0:d}", Model.OrderBy(d => d.IssueDate).First().IssueDate.Value.ToShortDateString()), new { @class = "datefield", type = "date" })
-            High Range Date
-            @Html.TextBox("IssueDateMaxRange", String.Format("{0:d}", Model.OrderByDescending(d => d.IssueDate).First().IssueDate.Value.ToShortDateString()), new { @class = "datefield", type = "date" })
-            <input type="submit" value="Search and Filter" />
-        </form>
-
+        <div class="row">
+            <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#public_table">
+                <div class="col-md-4">
+                    @*<label for="search">Search Description: </label>*@
+                    Search Description: 
+                    <input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />
+                    <input type="search" name="searchTerm" />
+                </div>
+                <div class="col-md-3">
+                    Low Range Date: 
+                    @Html.TextBox("IssueDateMinRange", String.Format("{0:d}", Model.OrderBy(d => d.IssueDate).First().IssueDate.Value.ToShortDateString()), new { @class = "datefield", type = "date" })
+                </div>
+                <div class="col-md-3">
+                    High Range Date: 
+                    @Html.TextBox("IssueDateMaxRange", String.Format("{0:d}", Model.OrderByDescending(d => d.IssueDate).First().IssueDate.Value.ToShortDateString()), new { @class = "datefield", type = "date" })
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" value="Search and Filter" />
+                </div>
+            </form>
+        </div>
+       
         <!--Easy way of doing ajax call, but not as easily customizable-->
         @*@using (Ajax.BeginForm("Index", "PublicVM", null,
                 new AjaxOptions
@@ -161,7 +202,7 @@
     <script>
         (function () {
             $('#category_policy_toggle').click(function () {
-                $("#category_list, #policy_list").toggleClass("hidden");
+                $("#category_section, #policy_section").toggleClass("hidden");
             })
         })();
     </script>  
