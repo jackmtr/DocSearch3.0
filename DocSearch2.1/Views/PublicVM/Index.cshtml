@@ -6,12 +6,12 @@
 }
 <div id ="main-row" class="row">
 
-    <div id="public_navigation" class="col-sm-2" style="background-color:pink;">
+    <div id="public_navigation" class="col-md-2 hidden-sm hidden-xs">
         
         <div class="row">
             
-            <div class="col-md-6">
-                <h4>Category/Policy</h4>
+            <div class="cat_pol_switcher col-md-12">
+                <h2>Category/Policy</h2>
 
                 <!-- Rounded switch -->
                 <label class="switch">
@@ -19,27 +19,10 @@
                     <div class="slider round"></div>
                 </label>
             </div>
-
-            <div class="col-md-6 buttondiv">
-                @Ajax.ActionLink("Clear Search", "Index", new
-       {
-           publicId = Model.First().Folder_ID
-       }, new AjaxOptions
-       {
-           HttpMethod = "GET",
-           InsertionMode = InsertionMode.Replace,
-           UpdateTargetId = "public_table"
-           //,
-           //OnComplete = "clear_fields();" will need to clear form fields
-       }, new { @class = "button" })
-            </div>
-
         </div>
-
         
-        <div class="row">
-            <div class="col-md-12">
-
+        <div class="abc row">
+            <div class="nav_lists col-md-12">
 
                 @* Need a better way to place this JS *@
                 <script type="text/javascript">
@@ -51,7 +34,7 @@
                 </script>
 
                 <div id="category_section">
-                    <h4>Categories</h4>
+                    <h2>Categories</h2>
                     <ul id="category_list">
                         @foreach (var item in Model.GroupBy(m => m.CategoryName).Select(g => g.First())){
                             <li>
@@ -97,7 +80,7 @@
                 </div>
                 
                 <div id="policy_section" class="hidden">
-                    <h4>Policies</h4>
+                    <h2>Policies</h2>
                     <ul id="policy_list" >
                         @foreach (var policy in Model.GroupBy(m => m.RefNumber).Select(g => g.First()))
                         {
@@ -129,12 +112,11 @@
 
         </div>
 
-
     </div>
 
-    <div id="public_info" class="col-sm-10" style="background-color:papayawhip;">
+    <div id="public_info" class="col-md-10">
         
-        <div class="row">
+        <div class="public_name_id row">
             <div class="col-md-6">
                 <h3>Name: @TempData["Client_Name"]</h3>
             </div>
@@ -143,25 +125,38 @@
             </div>
         </div>
 
-        <!--Search Box-->
+        <!--Search Box, Date Filters, clear, and submit button-->
         <div class="row">
             <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#public_table">
-                <div class="col-md-4">
+                <div class="filter col-md-4">
                     @*<label for="search">Search Description: </label>*@
                     Search Description: 
                     <input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />
                     <input type="search" name="searchTerm" />
                 </div>
-                <div class="col-md-3">
+                <div class="filter col-md-3">
                     Low Range Date: 
                     @Html.TextBox("IssueDateMinRange", String.Format("{0:d}", Model.OrderBy(d => d.IssueDate).First().IssueDate.Value.ToShortDateString()), new { @class = "datefield", type = "date" })
                 </div>
-                <div class="col-md-3">
+                <div class="filter col-md-3">
                     High Range Date: 
                     @Html.TextBox("IssueDateMaxRange", String.Format("{0:d}", Model.OrderByDescending(d => d.IssueDate).First().IssueDate.Value.ToShortDateString()), new { @class = "datefield", type = "date" })
                 </div>
-                <div class="col-md-2">
+
+                <div class="filter col-md-2 buttondiv">
+                    @Ajax.ActionLink("Clear Search", "Index", new
+               {
+                   publicId = Model.First().Folder_ID
+               }, new AjaxOptions
+               {
+                   HttpMethod = "GET",
+                   InsertionMode = InsertionMode.Replace,
+                   UpdateTargetId = "public_table"
+                   //,
+                   //OnComplete = "clear_fields();" will need to clear form fields
+               }, new { @class = "button" })
                     <input type="submit" value="Search and Filter" />
+
                 </div>
             </form>
         </div>

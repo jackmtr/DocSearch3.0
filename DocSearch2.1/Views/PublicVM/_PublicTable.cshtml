@@ -1,19 +1,9 @@
 ﻿@model IPagedList<PublicVM>
-@*@model IEnumerable<DocSearch2._1.ViewModels.PublicVM>*@
 
 <div id="public_table" class="row">
-    <div id ="abc" class="col-md-12">
-        <table>
+    <div class="col-md-12">
+        <table class="table-bordered">
             <tr>
-                @*<th>
-                        @Html.DisplayNameFor(model => model.ToList().First().Document_ID)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ToList().First().RefNumber)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ToList().First().CategoryName)
-                    </th>*@
                 <th>
                     @Html.DisplayNameFor(model => model.ToList().First().DocumentTypeName)
                 </th>
@@ -32,15 +22,6 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.Document_ID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RefNumber)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CategoryName)
-                        </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.DocumentTypeName)
                     </td>

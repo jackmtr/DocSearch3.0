@@ -1,152 +1,186 @@
-﻿#body {
-
+﻿/*Sets the top Westland Banner, at fixed height*/
+header {  
+    background: url(../Images/logo.png) no-repeat bottom;
+    background-color: #26728a;
+    height: 10vh;
 }
 
-#main-row {
-
+/*Makes the nav height to match remaining screen height, breaks for mobile*/
+#public_navigation {
+    background-color: rgba(191, 215, 48, 0.7);
+    height:90vh;
+    width: 20%;
 }
 
+/*Makes the main content height to match remaining screen height, breaks for mobile*/
+#public_info {
+    height:90vh;
+    width: 80%;
+}
+
+/*Affects the nav bar list, as well as the pagedList*/
 ul {
     list-style-type: none;
-    font-size: 15px;
-    margin: 0;
-    padding-left: 10px;
-    width: auto;
-    background-color: #f1f1f1;
+    font-size: 14px;
+    padding-left: 0px;
+    background-color: rgba(0, 161, 228, 0.4);
 }
 
+/*Affects the individual list items*/
 li a {
-    /*display: block;
+    display: block;
     color: #000;
-    padding: 8px 16px;*/
-    text-decoration: none;
+    padding: 5px;
 }
 
 /* Change the link color on hover */
 li a:hover {
     background-color: #555;
     color: white;
+    text-decoration: none;
 }
 
-.active {
+/*.active {
     background-color: #4CAF50;
     color: white;
-}
+}*/
 
-#body {
-    /*display: flex;*/
-}
 
-#public_navigation {
-    /*width: 150px;*/
-}
-
-#public_navigation {
-    /*width: 300px;*/
-}
-
-.hidden {
+/*.hidden {
     display: none;
+}*/
+
+/*The side nav title heads*/
+h2 {
+    font-size: 16px;
+    margin-left: 10px;
 }
 
-    /* The switch - the box around the slider */
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 34px;
-    }
+/*div for category/policy switcher*/
+.cat_pol_switcher{
+    padding: 0;
+}
 
-    /* Hide default HTML checkbox */
-    .switch input {display:none;}
+/* The switch control appearance*/
+.switch {
+    position: relative;
+    margin-left: 15px; 
+    width: 80px;
+    height: 34px;
+}
 
-    /* The slider */
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      -webkit-transition: .4s;
-      transition: .4s;
-    }
+/* Hide default HTML checkbox */
+.switch input {display:none;}
 
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      -webkit-transition: .4s;
-      transition: .4s;
-    }
+/* The slider back area*/
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
 
-    input:checked + .slider {
-      background-color: #2196F3;
-    }
+/*the slider white circle*/
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
 
-    input:focus + .slider {
-      box-shadow: 0 0 1px #2196F3;
-    }
+/*Slider changed color*/
+input:checked + .slider {
+    background-color: #2196F3;
+}
 
-    input:checked + .slider:before {
-      -webkit-transform: translateX(26px);
-      -ms-transform: translateX(26px);
-      transform: translateX(26px);
-    }
+/*input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}*/
 
-    /* Rounded sliders */
-    .slider.round {
-      border-radius: 34px;
-    }
+/*The Slider Movement Animation*/
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
 
-    .slider.round:before {
-      border-radius: 50%;
-    }
+/* Outer Rounded slider part */
+.slider.round {
+    border-radius: 34px;
+}
 
+/* Inner Rounded slider part */
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/*The main part of the content, which involves 'public' info, search bar, and date filters*/
 #public_info {
-
+    background-color: rgba(237, 28, 36, 0.5);
 }
 
-.category tr th:nth-child(3n), .category tr td:nth-child(3n) {
+
+/*.category tr th:nth-child(3n), .category tr td:nth-child(3n) {
     display: none;
 }
 
 .doctype tr th:nth-child(1), .doctype tr th:nth-child(3), .doctype tr td:nth-child(1), .doctype tr td:nth-child(3){
     display: none;
-}
+}*/
 
 /*.policy tr th:first-child, .policy tr td:first-child{
     background: red;
     display: none;
 }*/
 
+/*DocType sublist item font adjustments*/
 #docType_list li a{
     font-size: 80%;
-    text-align: center;
-    list-style-type: circle;
+    margin-left: 10px;
 }
 
-.buttondiv {
-    height: 60px;
-}
-
+/*Anchors with class 'button' changes (i.e. Clear Button)*/
 a.button {
-     background: url(../Images/clear.png) no-repeat bottom left;
+     background: url(../Images/clear.png) no-repeat center;
      display: block;
      background-size: 60px 20px;
      height: inherit;
-     /*background-repeat: no-repeat;*/
      text-indent: -9999px;
 }
 
-#abc, table {
+/*Constant 'public' info display*/
+.public_name_id {
+    text-align: center;
+}
+
+/*Table design*/
+table {
     width: 100%;
-    padding: 0;
+}
+
+th, td {
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+tr {
+
+}
+
+td {
+    
 }
 
 .pagedList {
@@ -159,4 +193,36 @@ a.button {
 
 .pagination{
 
+}
+
+/*The nav lists and it's title*/
+.nav_lists{
+    width: inherit;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.nav_lists ul{
+    float: left;/* Make this div as wide as its contents */
+
+    /* Colours and borders for illustration purposes */
+    width: 1000px;
+}
+
+.abc {
+    overflow: hidden;/* Makes #outer contain its floated children */
+    width:initial;
+}
+
+#public_navigation {
+
+}
+
+.filter {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+li {
+    font-size: 20px;
 }
