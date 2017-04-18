@@ -62,7 +62,7 @@ namespace DocSearch2._1.Controllers
                 }
             }
             else {
-                //"04/10/2017" example date
+                //"04/10/2017" example expected date
                 DateTime issueDateMin = DateTime.ParseExact(IssueDateMinRange, "d", CultureInfo.InvariantCulture);
                 DateTime issueDateMax = DateTime.ParseExact(IssueDateMaxRange, "d", CultureInfo.InvariantCulture);
 
