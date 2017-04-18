@@ -37,13 +37,7 @@
         return false;
     };
 
-    //var postNavbar = function () {
-    //    alert("hi");
-    //};
-
-    //function postNavbar() {
-    //    alert("hih");
-    //};
+    
 
     if (!Modernizr.inputtypes.date) {
 

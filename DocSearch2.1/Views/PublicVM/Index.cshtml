@@ -31,6 +31,14 @@
                         console.log($this.data("subclass"));
                         $('#public_table').removeClass().addClass($this.data("subclass"));
                     };
+
+                    function clearFields() {
+                        $this = $(this);
+
+                        $this.closest('form').find("input[type=search]").val("");
+                        $this.closest('form').find("input[name='IssueDateMinRange']").val("@Model.OrderBy(d => d.IssueDate).First().IssueDate.Value.ToShortDateString()");
+                        $this.closest('form').find("input[name='IssueDateMaxRange']").val("@Model.OrderByDescending(d => d.IssueDate).First().IssueDate.Value.ToShortDateString()");
+                    }
                 </script>
 
                 <div id="category_section">
@@ -145,18 +153,16 @@
 
                 <div class="filter col-md-2 buttondiv">
                     @Ajax.ActionLink("Clear Search", "Index", new
-               {
-                   publicId = Model.First().Folder_ID
-               }, new AjaxOptions
-               {
-                   HttpMethod = "GET",
-                   InsertionMode = InsertionMode.Replace,
-                   UpdateTargetId = "public_table"
-                   //,
-                   //OnComplete = "clear_fields();" will need to clear form fields
-               }, new { @class = "button" })
+                       {
+                           publicId = Model.First().Folder_ID
+                       }, new AjaxOptions
+                       {
+                           HttpMethod = "GET",
+                           InsertionMode = InsertionMode.Replace,
+                           UpdateTargetId = "public_table",
+                           OnComplete = "clearFields" //will need to clear form fields
+                       }, new { @class = "button" })
                     <input type="submit" value="Search and Filter" />
-
                 </div>
             </form>
         </div>
