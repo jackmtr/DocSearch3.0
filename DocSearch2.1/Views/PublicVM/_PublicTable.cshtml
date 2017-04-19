@@ -7,10 +7,14 @@
                 <tr>
                     <th>
                         @*@Html.DisplayNameFor(model => model.ToList().First().DocumentTypeName)*@
-                        @Ajax.ActionLink("Type of Document", "Index", new { publicId = Model.First().Folder_ID, filter = "document" }, new AjaxOptions
+                        @Ajax.ActionLink("Type of Document", "Index", new
+                   {
+                       publicId = Model.First().Folder_ID,
+                       filter = "document"
+                   }, new AjaxOptions
                    {
                        HttpMethod = "GET",
-                       InsertionMode = InsertionMode.Replace,
+                       InsertionMode = InsertionMode.ReplaceWith,
                        UpdateTargetId = "public_table"
                    })
                     </th>
@@ -19,7 +23,7 @@
                         @Ajax.ActionLink("Issue Date", "Index", new { publicId = Model.First().Folder_ID, filter = "issue" }, new AjaxOptions
                    {
                        HttpMethod = "GET",
-                       InsertionMode = InsertionMode.Replace,
+                       InsertionMode = InsertionMode.ReplaceWith,
                        UpdateTargetId = "public_table"
                    })
                     </th>
@@ -28,7 +32,7 @@
                         @Ajax.ActionLink("Effective Date", "Index", new { publicId = Model.First().Folder_ID, filter = "effective" }, new AjaxOptions
                    {
                        HttpMethod = "GET",
-                       InsertionMode = InsertionMode.Replace,
+                       InsertionMode = InsertionMode.ReplaceWith,
                        UpdateTargetId = "public_table"
                    })
                     </th>
