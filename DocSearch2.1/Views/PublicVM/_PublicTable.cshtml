@@ -6,13 +6,31 @@
             <thead class="thead-default">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.ToList().First().DocumentTypeName)
+                        @*@Html.DisplayNameFor(model => model.ToList().First().DocumentTypeName)*@
+                        @Ajax.ActionLink("Type of Document", "Index", new { publicId = Model.First().Folder_ID, filter = "document" }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "public_table"
+                   })
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.ToList().First().IssueDate)
+                        @*@Html.DisplayNameFor(model => model.ToList().First().IssueDate)*@
+                        @Ajax.ActionLink("Issue Date", "Index", new { publicId = Model.First().Folder_ID, filter = "issue" }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "public_table"
+                   })
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.ToList().First().EffectiveDate)
+                        @*@Html.DisplayNameFor(model => model.ToList().First().EffectiveDate)*@
+                        @Ajax.ActionLink("Effective Date", "Index", new { publicId = Model.First().Folder_ID, filter = "effective" }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "public_table"
+                   })
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.ToList().First().Description)

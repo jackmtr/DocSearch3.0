@@ -32,33 +32,38 @@ namespace DocSearch2._1.Controllers
         // GET: PublicVM
         [HttpGet] // dunno if need this, was causing issues with the search return request
         //I think the search submit is coming back as a post
-        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string category = null, string policyNumber = null, string documentTypeName = null, string searchTerm = null, string IssueDateMinRange = "01/15/1990", string IssueDateMaxRange = "04/11/2017", int page = 1)
+        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string category = null, string policyNumber = null, string documentTypeName = null, string filter = null, string searchTerm = null, string IssueDateMinRange = "01/15/1990", string IssueDateMaxRange = "04/11/2017", int page = 1)
         {
             IEnumerable<PublicVM> publicModel = null;
 
             TempData.Keep("Client_Name");
             TempData.Keep("Client_Id");
 
-            if ((category != null) || (documentTypeName != null) || (policyNumber != null)) {
+            if ((category != null) || (documentTypeName != null) || (policyNumber != null) || (filter != null)) {
                 if (category != null)
                 {
                     publicModel = repository
                         .SelectAll(Folder_ID)
-                        .Where(r => r.CategoryName == category)
-                        .ToPagedList(page, 10);
+                        .Where(r => r.CategoryName == category);
+                    //.ToPagedList(page, 10);
                 }
                 else if (documentTypeName != null)
                 {
                     publicModel = repository
                         .SelectAll(Folder_ID)
-                        .Where(r => r.DocumentTypeName == documentTypeName)
-                        .ToPagedList(page, 10);
+                        .Where(r => r.DocumentTypeName == documentTypeName);
+                    //.ToPagedList(page, 10);
+                }
+                else if (policyNumber != null)
+                {
+                    publicModel = repository
+                        .SelectAll(Folder_ID)
+                        .Where(r => r.RefNumber == policyNumber);
+                    //.ToPagedList(page, 10);
                 }
                 else {
                     publicModel = repository
-                        .SelectAll(Folder_ID)
-                        .Where(r => r.RefNumber == policyNumber)
-                        .ToPagedList(page, 10);
+                        .SelectAll(Folder_ID);
                 }
             }
             else {
@@ -76,6 +81,23 @@ namespace DocSearch2._1.Controllers
 
 
             if (Request.IsAjaxRequest()) {
+
+                if (filter == "document")
+                {
+                    publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, 10);
+                }
+                else if (filter == "issue")
+                {
+                    publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 10);
+                }
+                else if (filter == "effective")
+                {
+                    publicModel = publicModel.OrderBy(r => r.EffectiveDate).ToPagedList(page, 10);
+                }
+                else {
+                    publicModel = publicModel.ToPagedList(page, 10);
+                }
+
                 return PartialView("_PublicTable", publicModel);
             }
 
