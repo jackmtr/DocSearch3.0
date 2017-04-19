@@ -231,3 +231,11 @@ td {
 li {
     font-size: 20px;
 }
+
+/*Preview Image sizing*/
+.previewImg {
+    width: auto;
+    max-width: 150px;
+    height: auto;
+    max-height: 100px;    
+}
