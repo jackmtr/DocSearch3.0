@@ -8,14 +8,15 @@ header {
 /*Makes the nav height to match remaining screen height, breaks for mobile*/
 #public_navigation {
     background-color: rgba(191, 215, 48, 0.7);
-    height:90vh;
+    height: 90vh;
     width: 20%;
 }
 
 /*Makes the main content height to match remaining screen height, breaks for mobile*/
 #public_info {
-    height:90vh;
+    height: 90vh;
     width: 80%;
+    overflow:auto; /*Makes it that the parent div will adjust height to dynamic table height*/
 }
 
 /*Affects the nav bar list, as well as the pagedList*/

@@ -59,7 +59,12 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
-                    <td>@Html.ActionLink(item.FileType, "FileDisplay", new { documentId = item.Document_ID }, new { target = "_blank" }) </td>
+                    <td>
+                        @Html.ActionLink(item.FileType, "FileDisplay", new { documentId = item.Document_ID }, new { target = "_blank" }) 
+                        @if (item.FileType == "Picture JPEG") {
+                            @Html.ActionLink("[Preview]", "FileDisplay", new { documentId = item.Document_ID })
+                        }
+                    </td>
                     <td>OPEN ME</td>
                 </tr>
             }
