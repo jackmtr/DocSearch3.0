@@ -134,11 +134,13 @@
         </div>
 
         <!--Search Box, Date Filters, clear, and submit button-->
-        <div class="row">
-            <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#public_table">
+        <div>
+            <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#public_table" class="row">
                 <div class="filter col-md-4">
                     @*<label for="search">Search Description: </label>*@
+
                     Search Description: 
+                    <br/> <!--Eventually no br and do this by css probably-->
                     <input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />
                     <input type="search" name="searchTerm" />
                 </div>
