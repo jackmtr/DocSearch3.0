@@ -37,7 +37,7 @@ namespace DocSearch2._1.Repositories
                                 where d.Issue_DT != null
                                 //where d.Folder_ID == SqlFunctions.StringConvert((double)publicNumber)
                                 select new {
-                                       f.Folder_ID, d.Document_ID, dt.DocumentType_ID, DtName = dt.Name, d.Issue_DT, d.Description, cat.Category_ID, CatName = cat.Name , dr.Date1_DT, dr.RefNumber
+                                       f.Folder_ID, d.Document_ID, dt.DocumentType_ID, DtName = dt.Name, d.Issue_DT, d.Description, cat.Category_ID, CatName = cat.Name , dr.Date1_DT, dr.RefNumber, d.FileType
                                    }).ToList();
 
             foreach (var item in documentList) {
@@ -53,6 +53,7 @@ namespace DocSearch2._1.Repositories
                 objpvm.CategoryName = item.CatName;
                 objpvm.EffectiveDate = item.Date1_DT;
                 objpvm.RefNumber = item.RefNumber;
+                objpvm.FileType = item.FileType;
 
                 PublicVMList.Add(objpvm);
             }

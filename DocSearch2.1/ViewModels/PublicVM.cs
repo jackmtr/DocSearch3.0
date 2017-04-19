@@ -37,6 +37,8 @@ namespace DocSearch2._1.ViewModels
 
         public string RefNumber { get; set; } //tbl_DocReference.RefNumber
 
+        public string FileType { get; set; } //tbl_Document.FileType
+
         //file stuff properties need to be added
         //think about adding jquery.ui to project through nuget
         //look into knockout.js

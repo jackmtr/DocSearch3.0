@@ -59,7 +59,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
-                    <td>@Html.ActionLink("File", "FileDisplay", new { documentId = item.Document_ID }, new { target = "_blank" }) </td>
+                    <td>@Html.ActionLink(item.FileType, "FileDisplay", new { documentId = item.Document_ID }, new { target = "_blank" }) </td>
                     <td>OPEN ME</td>
                 </tr>
             }
