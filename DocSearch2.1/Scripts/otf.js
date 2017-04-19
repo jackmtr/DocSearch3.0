@@ -67,4 +67,8 @@
 
     $("#body").on("click", ".pagedList a", getPage);
 
+    $('#category_policy_toggle').click(function () {
+        $("#category_section, #policy_section").toggleClass("hidden");
+    })
+
 });

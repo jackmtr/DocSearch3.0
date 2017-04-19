@@ -2,23 +2,26 @@
 
 <div id="public_table" class="row">
     <div id ="public_table_inner" class="col-md-12">
-        <table class="table-bordered">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ToList().First().DocumentTypeName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ToList().First().IssueDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ToList().First().EffectiveDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ToList().First().Description)
-                </th>
-                <th>File</th>
-                <th>...</th>
-            </tr>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-default">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ToList().First().DocumentTypeName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ToList().First().IssueDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ToList().First().EffectiveDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ToList().First().Description)
+                    </th>
+                    <th>File</th>
+                    <th>...</th>
+                </tr>
+            </thead>
+
             @foreach (var item in Model)
             {
                 <tr>

@@ -45,10 +45,10 @@ li a:hover {
     color: white;
 }*/
 
-
-/*.hidden {
+/*Used to toggle which sub-bar to see*/
+.hidden {
     display: none;
-}*/
+}
 
 /*The side nav title heads*/
 h2 {
@@ -129,19 +129,21 @@ input:checked + .slider:before {
     background-color: rgba(237, 28, 36, 0.5);
 }
 
-
-/*.category tr th:nth-child(3n), .category tr td:nth-child(3n) {
+/*Hides select columns when in subcategory - category*/
+.category tr th:nth-child(3n), .category tr td:nth-child(3n) {
     display: none;
 }
 
+/*Hides select columns when in subcategory - doctype*/
 .doctype tr th:nth-child(1), .doctype tr th:nth-child(3), .doctype tr td:nth-child(1), .doctype tr td:nth-child(3){
     display: none;
-}*/
+}
 
-/*.policy tr th:first-child, .policy tr td:first-child{
+/*Hides select columns when in subcategory - policy*/
+.policy tr th:first-child, .policy tr td:first-child{
     background: red;
     display: none;
-}*/
+}
 
 /*DocType sublist item font adjustments*/
 #docType_list li a{
@@ -173,6 +175,7 @@ th, td {
     padding-right: 5px;
     text-align: center;
     font-size: 16px;
+    border: 1px solid black !important;
 }
 
 tr {
@@ -180,7 +183,7 @@ tr {
 }
 
 td {
-    
+    background: white;
 }
 
 .pagedList {

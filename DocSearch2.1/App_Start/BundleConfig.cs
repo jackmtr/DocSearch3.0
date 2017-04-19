@@ -38,6 +38,7 @@ namespace DocSearch2._1
             */
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-grid.css",
                       "~/Content/bootstrap-theme.css",
                       "~/Content/PagedList.css",
                       "~/Content/jquery-ui*",

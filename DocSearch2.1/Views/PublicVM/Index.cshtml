@@ -28,7 +28,6 @@
                 <script type="text/javascript">
                     function postNavbar() {
                         $this = $(this);
-                        console.log($this.data("subclass"));
                         $('#public_table').removeClass().addClass($this.data("subclass"));
                     };
 
@@ -200,12 +199,13 @@
     </div>
 </div>
 
-@section CustomScripts{
+@*@section CustomScripts{
     <script>
         (function () {
             $('#category_policy_toggle').click(function () {
+                alert('hi');
                 $("#category_section, #policy_section").toggleClass("hidden");
             })
         })();
     </script>  
-}
+}*@
