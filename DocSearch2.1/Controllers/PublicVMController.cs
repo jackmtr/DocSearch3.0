@@ -74,8 +74,8 @@ namespace DocSearch2._1.Controllers
                 publicModel = repository
                     .SelectAll(Folder_ID)
                     .Where(r => searchTerm == null || r.Description.Contains(searchTerm))
-                    .Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax))
-                    .ToPagedList(page, 10);
+                    .Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax));
+                    //.ToPagedList(page, 10);
                 //need to greatly refine this search feature
             }
 
@@ -103,6 +103,7 @@ namespace DocSearch2._1.Controllers
 
             if (publicModel != null)
             {
+                publicModel = publicModel.ToPagedList(page, 10);
                 return View(publicModel);
             }
             else {
