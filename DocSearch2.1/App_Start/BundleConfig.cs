@@ -40,6 +40,7 @@ namespace DocSearch2._1
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-grid.css",
                       "~/Content/bootstrap-theme.css",
+                      "~/Content/font-awesome.css",
                       "~/Content/PagedList.css",
                       "~/Content/jquery-ui*",
                       "~/Content/Site.css"

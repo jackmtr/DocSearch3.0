@@ -6,35 +6,62 @@
             <thead class="thead-default">
                 <tr>
                     <th>
-                        @*@Html.DisplayNameFor(model => model.ToList().First().DocumentTypeName)*@
-                        @Ajax.ActionLink("Type of Document", "Index", new
+                        @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
                        publicId = Model.First().Folder_ID,
                        filter = "document"
-                   }, new AjaxOptions
-                   {
-                       HttpMethod = "GET",
-                       InsertionMode = InsertionMode.ReplaceWith,
-                       UpdateTargetId = "public_table"
-                   })
+                   }), "#public_table", "replace-with", "GET", "Type of Document", "fa-sort"))
+
+                        <!--Works, but could be done better (custom extension method)-->
+                        @*<a href="@Url.Action("Index", "PublicVM", new {
+                                    publicId = Model.First().Folder_ID,
+                                    filter = "document"})"
+                            data-ajax-update="#public_table" 
+                            data-ajax-mode="replace-with" 
+                            data-ajax-method="GET" 
+                            data-ajax="true">
+                            Type of Document<i class="fa fa-sort"></i>
+                        </a>*@
+
+                        <!--Simplest, but couldnt add glphicons or font awesome-->
+                        @*@Ajax.ActionLink("Type of Document", "Index", new
+                        {
+                            publicId = Model.First().Folder_ID,
+                            filter = "document"
+                        }, new AjaxOptions
+                        {
+                            HttpMethod = "GET",
+                            InsertionMode = InsertionMode.ReplaceWith,
+                            UpdateTargetId = "public_table"
+                        })*@
                     </th>
                     <th>
-                        @*@Html.DisplayNameFor(model => model.ToList().First().IssueDate)*@
-                        @Ajax.ActionLink("Issue Date", "Index", new { publicId = Model.First().Folder_ID, filter = "issue" }, new AjaxOptions
+                        @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                   {
+                       publicId = Model.First().Folder_ID,
+                       filter = "issue"
+                   }), "#public_table", "replace-with", "GET", "Issue Date", "fa-sort"))
+
+                        @*@Ajax.ActionLink("Issue Date", "Index", new { publicId = Model.First().Folder_ID, filter = "issue" }, new AjaxOptions
                    {
                        HttpMethod = "GET",
                        InsertionMode = InsertionMode.ReplaceWith,
                        UpdateTargetId = "public_table"
-                   })
+                   })*@
                     </th>
                     <th>
-                        @*@Html.DisplayNameFor(model => model.ToList().First().EffectiveDate)*@
-                        @Ajax.ActionLink("Effective Date", "Index", new { publicId = Model.First().Folder_ID, filter = "effective" }, new AjaxOptions
+                        @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                   {
+                       publicId = Model.First().Folder_ID,
+                       filter = "effective"
+                   }), "#public_table", "replace-with", "GET", "Effective Date", "fa-sort"))
+
+                        @*@Ajax.ActionLink("Effective Date", "Index", new { publicId = Model.First().Folder_ID, filter = "effective" }, new AjaxOptions
                    {
                        HttpMethod = "GET",
                        InsertionMode = InsertionMode.ReplaceWith,
                        UpdateTargetId = "public_table"
-                   })
+                   })*@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.ToList().First().Description)
