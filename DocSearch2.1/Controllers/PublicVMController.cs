@@ -15,6 +15,8 @@ namespace DocSearch2._1.Controllers
     {
         private IPublicRepository repository = null;
         private IDocumentRepository repository1 = null;
+        private static bool sortAscending = true;
+        private static string prevFilter;
 
         public PublicVMController() {
             this.repository = new PublicRepository();
@@ -84,15 +86,47 @@ namespace DocSearch2._1.Controllers
 
                 if (filter == "document")
                 {
-                    publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, 10);
+                    if (prevFilter == filter)
+                    {
+                        sortAscending = !sortAscending;
+                    }
+                    else {
+                        sortAscending = true;
+                    }
+
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, 10);
+                    else publicModel = publicModel.OrderByDescending(r => r.DocumentTypeName).ToPagedList(page, 10);
+
+                    prevFilter = filter;
                 }
                 else if (filter == "issue")
                 {
-                    publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 10);
+                    if (prevFilter == filter)
+                    {
+                        sortAscending = !sortAscending;
+                    }
+                    else {
+                        sortAscending = true;
+                    }
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 10);
+                    else publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 10);
+
+                    prevFilter = filter;
                 }
                 else if (filter == "effective")
                 {
-                    publicModel = publicModel.OrderBy(r => r.EffectiveDate).ToPagedList(page, 10);
+                    if (prevFilter == filter)
+                    {
+                        sortAscending = !sortAscending;
+                    }
+                    else {
+                        sortAscending = true;
+                    }
+
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.EffectiveDate).ToPagedList(page, 10);
+                    else publicModel = publicModel.OrderByDescending(r => r.EffectiveDate).ToPagedList(page, 10);
+
+                    prevFilter = filter;
                 }
                 else {
                     publicModel = publicModel.ToPagedList(page, 10);
