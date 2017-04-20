@@ -101,4 +101,10 @@
         $("#category_section, #policy_section").toggleClass("hidden");
     })
 
+    //active navbar class addition
+    $(".nav_lists a").on("click", function () {
+        $(".nav_lists").find(".active").removeClass("active");
+        $(this).parent().addClass("active");
+    });
+
 });

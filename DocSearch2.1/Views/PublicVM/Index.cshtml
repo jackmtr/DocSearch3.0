@@ -6,10 +6,10 @@
 }
 <div id ="main-row" class="row">
 
-    <div id="public_navigation" class="col-md-2 hidden-sm hidden-xs">
-        
+    <nav id="public_navigation" class="navbar navbar-default col-md-2 hidden-sm hidden-xs">
+
         <div class="row">
-            
+
             <div class="cat_pol_switcher col-md-12">
                 <h2>Category/Policy</h2>
 
@@ -20,9 +20,9 @@
                 </label>
             </div>
         </div>
-        
-        <div class="abc row">
-            <div class="nav_lists col-md-12">
+
+        <div class="nav_lists_outer row">
+            <div class="nav_lists col-md-2">
 
                 @* Need a better way to place this JS *@
                 <script type="text/javascript">
@@ -44,41 +44,42 @@
                 <div id="category_section">
                     <h2>Categories</h2>
                     <ul id="category_list">
-                        @foreach (var item in Model.GroupBy(m => m.CategoryName).Select(g => g.First())){
+                        @foreach (var item in Model.GroupBy(m => m.CategoryName).Select(g => g.First()))
+                        {
                             <li>
                                 @* Should eventually turn these ajax actionlinks into html actionlinks and make a more customizable ajax call though otf.js *@
                                 @Ajax.ActionLink(item.CategoryName, "Index", new
-                           {
-                               publicId = item.Folder_ID,
-                               category = item.CategoryName
-                           }, new AjaxOptions
-                           {
-                               HttpMethod = "GET",
-                               InsertionMode = InsertionMode.Replace,
-                               UpdateTargetId = "public_table",
-                               OnComplete = "postNavbar"
-                           }, new
-                           {
-                               data_subclass = "category"
-                           })
+                        {
+                            publicId = item.Folder_ID,
+                            category = item.CategoryName
+                        }, new AjaxOptions
+                        {
+                            HttpMethod = "GET",
+                            InsertionMode = InsertionMode.Replace,
+                            UpdateTargetId = "public_table",
+                            OnComplete = "postNavbar"
+                        }, new
+                        {
+                            data_subclass = "category"
+                        })
                                 <ul id="docType_list">
                                     @foreach (var category in Model.Where(m => m.CategoryName == item.CategoryName).GroupBy(m => m.DocumentTypeName).Select(g => g.First()))
                                     {
                                         <li>
                                             @Ajax.ActionLink(category.DocumentTypeName, "Index", new
-                                       {
-                                           publicId = category.Folder_ID,
-                                           documentTypeName = category.DocumentTypeName
-                                       }, new AjaxOptions
-                                       {
-                                           HttpMethod = "GET",
-                                           InsertionMode = InsertionMode.Replace,
-                                           UpdateTargetId = "public_table",
-                                           OnComplete = "postNavbar"
-                                       }, new
-                                       {
-                                           data_subclass = "doctype"
-                                       })
+                                    {
+                                        publicId = category.Folder_ID,
+                                        documentTypeName = category.DocumentTypeName
+                                    }, new AjaxOptions
+                                    {
+                                        HttpMethod = "GET",
+                                        InsertionMode = InsertionMode.Replace,
+                                        UpdateTargetId = "public_table",
+                                        OnComplete = "postNavbar"
+                                    }, new
+                                    {
+                                        data_subclass = "doctype"
+                                    })
                                         </li>
                                     }
                                 </ul>
@@ -86,10 +87,10 @@
                         }
                     </ul>
                 </div>
-                
+
                 <div id="policy_section" class="hidden">
                     <h2>Policies</h2>
-                    <ul id="policy_list" >
+                    <ul id="policy_list">
                         @foreach (var policy in Model.GroupBy(m => m.RefNumber).Select(g => g.First()))
                         {
                             if (policy.RefNumber.Length >= 1)
@@ -97,33 +98,33 @@
                                 <li>
                                     @*<a href="#">@policy.RefNumber</a>*@
                                     @Ajax.ActionLink(policy.RefNumber, "Index", new
-                               {
-                                   publicId = policy.Folder_ID,
-                                   policyNumber = policy.RefNumber
-                               }, new AjaxOptions
-                               {
-                                   HttpMethod = "GET",
-                                   InsertionMode = InsertionMode.Replace,
-                                   UpdateTargetId = "public_table",
-                                   OnComplete = "postNavbar"
-                               }, new
-                               {
-                                   data_subclass = "policy"
-                               })
+                            {
+                                publicId = policy.Folder_ID,
+                                policyNumber = policy.RefNumber
+                            }, new AjaxOptions
+                            {
+                                HttpMethod = "GET",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "public_table",
+                                OnComplete = "postNavbar"
+                            }, new
+                            {
+                                data_subclass = "policy"
+                            })
                                 </li>
                             }
                         }
                     </ul>
                 </div>
-                
-            </div>
 
-        </div>
+            </div><!--nav_lists col-md-12-->
 
-    </div>
+        </div><!--nav_lists_outer row--> 
+
+    </nav>
 
     <div id="public_info" class="col-md-10">
-        
+
         <div class="public_name_id row">
             <div class="col-md-6">
                 <h3>Name: @TempData["Client_Name"]</h3>
@@ -139,62 +140,61 @@
                 <div class="filter col-md-4">
                     @*<label for="search">Search Description: </label>*@
 
-                    Search Description: 
-                    <br/> <!--Eventually no br and do this by css probably-->
+                    Search Description:
+                    <br /> <!--Eventually no br and do this by css probably-->
                     <input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />
                     <input type="search" name="searchTerm" />
                 </div>
                 <div class="filter col-md-3">
-                    Low Range Date: 
+                    Low Range Date:
                     @Html.TextBox("IssueDateMinRange", String.Format("{0:d}", Model.OrderBy(d => d.IssueDate).First().IssueDate.Value), new { @class = "datefield", type = "date" })
                 </div>
                 <div class="filter col-md-3">
-                    High Range Date: 
+                    High Range Date:
                     @Html.TextBox("IssueDateMaxRange", String.Format("{0:d}", Model.OrderByDescending(d => d.IssueDate).First().IssueDate.Value), new { @class = "datefield", type = "date" })
                 </div>
 
                 <div class="filter col-md-2 buttondiv">
                     @Ajax.ActionLink("Clear Search", "Index", new
-                       {
-                           publicId = Model.First().Folder_ID
-                       }, new AjaxOptions
-                       {
-                           HttpMethod = "GET",
-                           InsertionMode = InsertionMode.ReplaceWith,
-                           UpdateTargetId = "public_table",
-                           OnComplete = "clearFields" //will need to clear form fields
-                       }, new { @class = "button" })
+            {
+                publicId = Model.First().Folder_ID
+            }, new AjaxOptions
+            {
+                HttpMethod = "GET",
+                InsertionMode = InsertionMode.ReplaceWith,
+                UpdateTargetId = "public_table",
+                OnComplete = "clearFields" //will need to clear form fields
+            }, new { @class = "button" })
                     <input type="submit" value="Search and Filter" />
                 </div>
             </form>
         </div>
-       
+
         <!--Easy way of doing ajax call, but not as easily customizable-->
         @*@using (Ajax.BeginForm("Index", "PublicVM", null,
-                new AjaxOptions
-                {
-                    HttpMethod = "get",
-                    InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "public_table"
-                }))
-        {
-            <input type="hidden" name="publicId" value="@Model.First().Folder_ID" />
-            <input type="search" name="searchTerm" />
-            <input type="submit" value="Search Description" />
-        }*@
+                    new AjaxOptions
+                    {
+                        HttpMethod = "get",
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "public_table"
+                    }))
+            {
+                <input type="hidden" name="publicId" value="@Model.First().Folder_ID" />
+                <input type="search" name="searchTerm" />
+                <input type="submit" value="Search Description" />
+            }*@
 
         <!--Below is the synchronous way of making the search, probably wont use-->
         @*<form method="get">
-            <input type="hidden" name="publicId" value="@Model.First().Folder_ID" />
-            <input type="search" name="searchTerm" />
-            <input type="submit" value="Search" />
-        </form>*@ <!--Should do using html helpers over basic html-->
-
+                <input type="hidden" name="publicId" value="@Model.First().Folder_ID" />
+                <input type="search" name="searchTerm" />
+                <input type="submit" value="Search" />
+            </form>*@ <!--Should do using html helpers over basic html-->
         @*@using (Html.BeginForm("Index", "PublicVM", FormMethod.Get)) {
-            @Html.Hidden("Folder_Id")
-            @Html.TextBox("searchTerm")
-            <input type="submit" value="Search" />
-        }*@
+                @Html.Hidden("Folder_Id")
+                @Html.TextBox("searchTerm")
+                <input type="submit" value="Search" />
+            }*@
 
         @Html.Partial("_PublicTable", Model)
 

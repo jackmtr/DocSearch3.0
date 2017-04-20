@@ -41,10 +41,10 @@ li a:hover {
     text-decoration: none;
 }
 
-/*.active {
-    background-color: #4CAF50;
+.active {
+    background-color: white;
     color: white;
-}*/
+}
 
 /*Used to toggle which sub-bar to see*/
 .hidden {
@@ -149,7 +149,7 @@ input:checked + .slider:before {
 /*DocType sublist item font adjustments*/
 #docType_list li a{
     font-size: 80%;
-    margin-left: 10px;
+    padding-left: 10px;
 }
 
 /*Anchors with class 'button' changes (i.e. Clear Button)*/
@@ -163,7 +163,14 @@ a.button {
 
 /*Constant 'public' info display*/
 .public_name_id {
+    height: 75px;
     text-align: center;
+}
+
+.public_name_id h3 {
+    position: absolute;
+    top: 25%;
+    left: 25%;
 }
 
 /*Table design*/
@@ -202,19 +209,18 @@ td {
 
 /*The nav lists and it's title*/
 .nav_lists{
-    width: inherit;
     padding-left: 0;
     padding-right: 0;
 }
 
 .nav_lists ul{
     float: left;/* Make this div as wide as its contents */
-
     /* Colours and borders for illustration purposes */
     width: 1000px;
 }
 
-.abc {
+
+.nav_lists_outer {
     overflow: hidden;/* Makes #outer contain its floated children */
     width:initial;
 }
