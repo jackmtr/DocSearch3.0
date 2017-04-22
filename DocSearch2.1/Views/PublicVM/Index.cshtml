@@ -43,6 +43,24 @@
 
                 <div id="category_section">
                     <h2>Categories</h2>
+
+                    <ul>
+                        @foreach (var item in ViewBag.NavBar) {
+                            <li>
+                                @item.CategoryName
+                                <ul>
+                                    @foreach (var dt in item.DocumentTypeName)
+                                    {
+                                        <li>
+                                            @dt
+                                        </li>
+                                    }
+                                </ul>
+
+                            </li>
+                        }
+                    </ul>
+
                     <ul id="category_list">
                         @foreach (var item in Model.GroupBy(m => m.CategoryName).Select(g => g.First()))
                         {

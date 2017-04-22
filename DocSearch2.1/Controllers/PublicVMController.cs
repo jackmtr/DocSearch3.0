@@ -137,6 +137,36 @@ namespace DocSearch2._1.Controllers
 
             if (publicModel != null)
             {
+                //
+                /*
+                 * for Ramins Account
+                 * Only want 3 objects in the end
+                 * {Policy, [Declaration, Policy Wording, Binder]}, {Accounting, [Policy Invoice], {Underwriting, [Appraisal/Survey]}}
+                 */
+
+                IEnumerable<PublicVM> nb = publicModel.OrderBy(e => e.CategoryName).GroupBy(e => e.CategoryName).Select(g => g.First());
+
+                List<NavBar> nbl = new List<NavBar>();
+
+                foreach (PublicVM pvm in nb) {
+
+                    NavBar nbitem = new NavBar();
+
+                    nbitem.CategoryName = pvm.CategoryName;
+
+                    foreach (PublicVM pp in publicModel.GroupBy(g => g.DocumentTypeName).Select(g => g.First())) {
+                        if (pp.CategoryName == nbitem.CategoryName && !nbl.Any(s => s.DocumentTypeName.Contains(pp.DocumentTypeName))) {
+                            nbitem.DocumentTypeName.Add(pp.DocumentTypeName);
+                        }
+                    }
+
+                    nbl.Add(nbitem);
+                        
+                }
+
+                ViewBag.NavBar = nbl;
+                //
+
                 publicModel = publicModel.ToPagedList(page, 10);
                 return View(publicModel);
             }
