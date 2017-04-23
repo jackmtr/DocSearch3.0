@@ -44,42 +44,95 @@
                 <div id="category_section">
                     <h2>Categories</h2>
 
-                    <ul>
-                        @foreach (var item in ViewBag.NavBar) {
+                    <ul id="category_list">
+                        @foreach (var item in ViewBag.CategoryNavBar)
+                        {
                             <li>
-                                @item.CategoryName
-                                <ul>
+                                <a href="@Url.Action("Index", "PublicVM", new {
+                                        publicId = Model.First().Folder_ID,
+                                        category = item.CategoryName
+                                    })"
+                                   data-ajax-update="#public_table"
+                                   data-ajax-mode="replace"
+                                   data-ajax-method="GET"
+                                   data-subclass="category"
+                                   data-ajax-complete="postNavbar"
+                                   data-ajax="true">
+                                    @item.CategoryName
+                                </a>
+                                <ul id="docType_list">
                                     @foreach (var dt in item.DocumentTypeName)
                                     {
                                         <li>
-                                            @dt
+                                            <a href="@Url.Action("Index", "PublicVM", new {
+                                                        publicId = Model.First().Folder_ID,
+                                                        documentTypeName = dt
+                                                    })"
+                                               data-ajax-update="#public_table"
+                                               data-ajax-mode="replace"
+                                               data-ajax-method="GET"
+                                               data-subclass="doctype"
+                                               data-ajax-complete="postNavbar"
+                                               data-ajax="true">
+                                                @dt
+                                            </a>
                                         </li>
                                     }
                                 </ul>
-
                             </li>
                         }
                     </ul>
+                </div>
+
+                <div id="policy_section" class="hidden">
+                    <h2>Policies</h2>
+                    <ul id="policy_list">
+                        @foreach (var policy in ViewBag.PolicyNavBar)
+                        {
+                            if (policy.Length >= 1)
+                            {
+                                <li>
+                                    <a href="@Url.Action("Index", "PublicVM", new
+                                        {
+                                            publicId = Model.First().Folder_ID,
+                                            policyNumber = policy
+                                        })"
+                                       data-ajax-update="#public_table"
+                                       data-ajax-mode="replace"
+                                       data-ajax-method="GET"
+                                       data-subclass="policy"
+                                       data-ajax-complete="postNavbar"
+                                       data-ajax="true">
+                                        @policy
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+
+                <!--Flawed code because it depends on the pagination model instead of overall model-->
+                @*<div id="category_section">
+                    <h2>Categories</h2>
 
                     <ul id="category_list">
                         @foreach (var item in Model.GroupBy(m => m.CategoryName).Select(g => g.First()))
                         {
                             <li>
-                                @* Should eventually turn these ajax actionlinks into html actionlinks and make a more customizable ajax call though otf.js *@
                                 @Ajax.ActionLink(item.CategoryName, "Index", new
-                        {
-                            publicId = item.Folder_ID,
-                            category = item.CategoryName
-                        }, new AjaxOptions
-                        {
-                            HttpMethod = "GET",
-                            InsertionMode = InsertionMode.Replace,
-                            UpdateTargetId = "public_table",
-                            OnComplete = "postNavbar"
-                        }, new
-                        {
-                            data_subclass = "category"
-                        })
+                                    {
+                                        publicId = item.Folder_ID,
+                                        category = item.CategoryName
+                                    }, new AjaxOptions
+                                    {
+                                        HttpMethod = "GET",
+                                        InsertionMode = InsertionMode.Replace,
+                                        UpdateTargetId = "public_table",
+                                        OnComplete = "postNavbar"
+                                    }, new
+                                    {
+                                        data_subclass = "category"
+                                    })
                                 <ul id="docType_list">
                                     @foreach (var category in Model.Where(m => m.CategoryName == item.CategoryName).GroupBy(m => m.DocumentTypeName).Select(g => g.First()))
                                     {
@@ -104,9 +157,9 @@
                             </li>
                         }
                     </ul>
-                </div>
+                    </div>
 
-                <div id="policy_section" class="hidden">
+                    <div id="policy_section" class="hidden">
                     <h2>Policies</h2>
                     <ul id="policy_list">
                         @foreach (var policy in Model.GroupBy(m => m.RefNumber).Select(g => g.First()))
@@ -114,7 +167,6 @@
                             if (policy.RefNumber.Length >= 1)
                             {
                                 <li>
-                                    @*<a href="#">@policy.RefNumber</a>*@
                                     @Ajax.ActionLink(policy.RefNumber, "Index", new
                             {
                                 publicId = policy.Folder_ID,
@@ -133,7 +185,7 @@
                             }
                         }
                     </ul>
-                </div>
+                    </div>*@
 
             </div><!--nav_lists col-md-12-->
 

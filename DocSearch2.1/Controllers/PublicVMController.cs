@@ -136,14 +136,7 @@ namespace DocSearch2._1.Controllers
             }
 
             if (publicModel != null)
-            {
-                //
-                /*
-                 * for Ramins Account
-                 * Only want 3 objects in the end
-                 * {Policy, [Declaration, Policy Wording, Binder]}, {Accounting, [Policy Invoice], {Underwriting, [Appraisal/Survey]}}
-                 */
-
+            {        
                 IEnumerable<PublicVM> nb = publicModel.OrderBy(e => e.CategoryName).GroupBy(e => e.CategoryName).Select(g => g.First());
 
                 List<NavBar> nbl = new List<NavBar>();
@@ -159,13 +152,11 @@ namespace DocSearch2._1.Controllers
                             nbitem.DocumentTypeName.Add(pp.DocumentTypeName);
                         }
                     }
-
                     nbl.Add(nbitem);
-                        
                 }
 
-                ViewBag.NavBar = nbl;
-                //
+                ViewBag.CategoryNavBar = nbl;
+                ViewBag.PolicyNavBar = publicModel.OrderBy(e => e.RefNumber).GroupBy(e => e.RefNumber).Select(g => g.First().RefNumber);
 
                 publicModel = publicModel.ToPagedList(page, 10);
                 return View(publicModel);
