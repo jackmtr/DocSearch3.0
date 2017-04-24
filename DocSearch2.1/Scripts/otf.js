@@ -106,5 +106,4 @@
         $(".nav_lists").find(".active").removeClass("active");
         $(this).parent().addClass("active");
     });
-
 });

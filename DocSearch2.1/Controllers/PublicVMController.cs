@@ -73,12 +73,16 @@ namespace DocSearch2._1.Controllers
                 DateTime issueDateMin = DateTime.ParseExact(IssueDateMinRange, "d", CultureInfo.InvariantCulture);
                 DateTime issueDateMax = DateTime.ParseExact(IssueDateMaxRange, "d", CultureInfo.InvariantCulture);
 
-                publicModel = repository
-                    .SelectAll(Folder_ID)
-                    .Where(r => searchTerm == null || r.Description.Contains(searchTerm))
+                //false means seachterm will return an empty result
+                ViewData["goodSearch"] = true;
+
+                publicModel = repository.SelectAll(Folder_ID);
+
+                if (searchTerm != null) ViewData["goodSearch"] = publicModel.Any(pub => pub.Description.Contains(searchTerm));
+
+                publicModel = publicModel
+                    .Where(r => searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.Contains(searchTerm) == true : true))
                     .Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax));
-                    //.ToPagedList(page, 10);
-                //need to greatly refine this search feature
             }
 
 

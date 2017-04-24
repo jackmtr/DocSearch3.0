@@ -105,3 +105,9 @@
 
 </div>
 
+@if ((bool)ViewData["goodSearch"] == false)
+{
+    <script type="text/javascript">
+                alert('Sorry, your search came up empty.  Clearing Search.');
+    </script>
+}
