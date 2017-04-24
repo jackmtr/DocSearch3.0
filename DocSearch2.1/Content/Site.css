@@ -245,3 +245,7 @@ li {
     height: auto;
     max-height: 100px;    
 }
+
+h4 {
+    text-align: center;
+}

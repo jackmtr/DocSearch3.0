@@ -1,6 +1,6 @@
 ﻿@model IPagedList<PublicVM>
 
-<div id="public_table" class="row">
+<div id="public_table" class="row" data-currentRecord="@ViewData["currentRecordsCount"]">
     <div id ="public_table_inner" class="col-md-12">
         <table class="table table-bordered table-hover">
             <thead class="thead-default">

@@ -15,6 +15,7 @@
 
             $target.replaceWith($newHtml);
             $newHtml.children("table").effect("highlight");
+            updateCurrentCount();
         });
 
         return false;
@@ -65,7 +66,10 @@
         
         $('#dynamic').remove();
     }
-    
+
+    var updateCurrentCount1 = function () {
+        alert('hi');
+    }
 
     if (!Modernizr.inputtypes.date) {
 
@@ -106,4 +110,5 @@
         $(".nav_lists").find(".active").removeClass("active");
         $(this).parent().addClass("active");
     });
+
 });

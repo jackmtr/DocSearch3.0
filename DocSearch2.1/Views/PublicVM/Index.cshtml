@@ -39,6 +39,13 @@
                         $this.closest('form').find("input[name='IssueDateMinRange']").val('@Model.OrderBy(d => d.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)');
                         $this.closest('form').find("input[name='IssueDateMaxRange']").val('@Model.OrderByDescending(d => d.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)');
                     }
+
+                    function updateCurrentCount() {
+                        
+                        var currentCount = $('#public_table').data('currentrecord');
+                        $('#currentCount').text(currentCount);
+                    }
+
                 </script>
 
                 <div id="category_section">
@@ -53,10 +60,11 @@
                                         category = item.CategoryName
                                     })"
                                    data-ajax-update="#public_table"
-                                   data-ajax-mode="replace"
+                                   data-ajax-mode="replace-with"
                                    data-ajax-method="GET"
                                    data-subclass="category"
                                    data-ajax-complete="postNavbar"
+                                   data-ajax-success="updateCurrentCount"
                                    data-ajax="true">
                                     @item.CategoryName
                                 </a>
@@ -69,10 +77,11 @@
                                                         documentTypeName = dt
                                                     })"
                                                data-ajax-update="#public_table"
-                                               data-ajax-mode="replace"
+                                               data-ajax-mode="replace-with"
                                                data-ajax-method="GET"
                                                data-subclass="doctype"
                                                data-ajax-complete="postNavbar"
+                                               data-ajax-success="updateCurrentCount"
                                                data-ajax="true">
                                                 @dt
                                             </a>
@@ -98,10 +107,11 @@
                                             policyNumber = policy
                                         })"
                                        data-ajax-update="#public_table"
-                                       data-ajax-mode="replace"
+                                       data-ajax-mode="replace-with"
                                        data-ajax-method="GET"
                                        data-subclass="policy"
                                        data-ajax-complete="postNavbar"
+                                       data-ajax-success="updateCurrentCount"
                                        data-ajax="true">
                                         @policy
                                     </a>
@@ -110,87 +120,8 @@
                         }
                     </ul>
                 </div>
-
-                <!--Flawed code because it depends on the pagination model instead of overall model-->
-                @*<div id="category_section">
-                    <h2>Categories</h2>
-
-                    <ul id="category_list">
-                        @foreach (var item in Model.GroupBy(m => m.CategoryName).Select(g => g.First()))
-                        {
-                            <li>
-                                @Ajax.ActionLink(item.CategoryName, "Index", new
-                                    {
-                                        publicId = item.Folder_ID,
-                                        category = item.CategoryName
-                                    }, new AjaxOptions
-                                    {
-                                        HttpMethod = "GET",
-                                        InsertionMode = InsertionMode.Replace,
-                                        UpdateTargetId = "public_table",
-                                        OnComplete = "postNavbar"
-                                    }, new
-                                    {
-                                        data_subclass = "category"
-                                    })
-                                <ul id="docType_list">
-                                    @foreach (var category in Model.Where(m => m.CategoryName == item.CategoryName).GroupBy(m => m.DocumentTypeName).Select(g => g.First()))
-                                    {
-                                        <li>
-                                            @Ajax.ActionLink(category.DocumentTypeName, "Index", new
-                                    {
-                                        publicId = category.Folder_ID,
-                                        documentTypeName = category.DocumentTypeName
-                                    }, new AjaxOptions
-                                    {
-                                        HttpMethod = "GET",
-                                        InsertionMode = InsertionMode.Replace,
-                                        UpdateTargetId = "public_table",
-                                        OnComplete = "postNavbar"
-                                    }, new
-                                    {
-                                        data_subclass = "doctype"
-                                    })
-                                        </li>
-                                    }
-                                </ul>
-                            </li>
-                        }
-                    </ul>
-                    </div>
-
-                    <div id="policy_section" class="hidden">
-                    <h2>Policies</h2>
-                    <ul id="policy_list">
-                        @foreach (var policy in Model.GroupBy(m => m.RefNumber).Select(g => g.First()))
-                        {
-                            if (policy.RefNumber.Length >= 1)
-                            {
-                                <li>
-                                    @Ajax.ActionLink(policy.RefNumber, "Index", new
-                            {
-                                publicId = policy.Folder_ID,
-                                policyNumber = policy.RefNumber
-                            }, new AjaxOptions
-                            {
-                                HttpMethod = "GET",
-                                InsertionMode = InsertionMode.Replace,
-                                UpdateTargetId = "public_table",
-                                OnComplete = "postNavbar"
-                            }, new
-                            {
-                                data_subclass = "policy"
-                            })
-                                </li>
-                            }
-                        }
-                    </ul>
-                    </div>*@
-
             </div><!--nav_lists col-md-12-->
-
         </div><!--nav_lists_outer row--> 
-
     </nav>
 
     <div id="public_info" class="col-md-10">
@@ -203,16 +134,20 @@
                 <h3>ID: @TempData["Client_Id"]</h3>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12"><h4>Returning <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents</h4></div>
+        </div>
+        
 
         <!--Search Box, Date Filters, clear, and submit button-->
         <div>
             <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#public_table" class="row">
                 <div class="filter col-md-4">
-                    @*<label for="search">Search Description: </label>*@
 
                     Search Description:
                     <br /> <!--Eventually no br and do this by css probably-->
                     <input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />
+
                     <input type="search" name="searchTerm" />
                 </div>
                 <div class="filter col-md-3">
@@ -226,57 +161,25 @@
 
                 <div class="filter col-md-2 buttondiv">
                     @Ajax.ActionLink("Clear Search", "Index", new
-            {
-                publicId = Model.First().Folder_ID
-            }, new AjaxOptions
-            {
-                HttpMethod = "GET",
-                InsertionMode = InsertionMode.ReplaceWith,
-                UpdateTargetId = "public_table",
-                OnComplete = "clearFields" //will need to clear form fields
-            }, new { @class = "button" })
+               {
+                   publicId = Model.First().Folder_ID
+               }, new AjaxOptions
+               {
+                   HttpMethod = "GET",
+                   InsertionMode = InsertionMode.ReplaceWith,
+                   UpdateTargetId = "public_table",
+                   OnComplete = "clearFields",
+                   OnSuccess = "updateCurrentCount"
+               }, new { @class = "button" })
                     <input type="submit" value="Search and Filter" />
                 </div>
             </form>
         </div>
-
-        <!--Easy way of doing ajax call, but not as easily customizable-->
-        @*@using (Ajax.BeginForm("Index", "PublicVM", null,
-                    new AjaxOptions
-                    {
-                        HttpMethod = "get",
-                        InsertionMode = InsertionMode.Replace,
-                        UpdateTargetId = "public_table"
-                    }))
-            {
-                <input type="hidden" name="publicId" value="@Model.First().Folder_ID" />
-                <input type="search" name="searchTerm" />
-                <input type="submit" value="Search Description" />
-            }*@
-
-        <!--Below is the synchronous way of making the search, probably wont use-->
-        @*<form method="get">
-                <input type="hidden" name="publicId" value="@Model.First().Folder_ID" />
-                <input type="search" name="searchTerm" />
-                <input type="submit" value="Search" />
-            </form>*@ <!--Should do using html helpers over basic html-->
-        @*@using (Html.BeginForm("Index", "PublicVM", FormMethod.Get)) {
-                @Html.Hidden("Folder_Id")
-                @Html.TextBox("searchTerm")
-                <input type="submit" value="Search" />
-            }*@
-
         @Html.Partial("_PublicTable", Model)
     </div>
 </div>
 
 @*@section CustomScripts{
     <script>
-        (function () {
-            $('#category_policy_toggle').click(function () {
-                alert('hi');
-                $("#category_section, #policy_section").toggleClass("hidden");
-            })
-        })();
     </script>  
 }*@

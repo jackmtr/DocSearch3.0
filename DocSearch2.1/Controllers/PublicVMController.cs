@@ -41,48 +41,58 @@ namespace DocSearch2._1.Controllers
             TempData.Keep("Client_Name");
             TempData.Keep("Client_Id");
 
+            //false means seachterm will return an empty result
+            ViewData["goodSearch"] = true;
+            ViewData["currentNav"] = null;
+
             if ((category != null) || (documentTypeName != null) || (policyNumber != null) || (filter != null)) {
                 if (category != null)
                 {
                     publicModel = repository
                         .SelectAll(Folder_ID)
                         .Where(r => r.CategoryName == category);
-                    //.ToPagedList(page, 10);
+                    ViewData["currentNav"] = "category";
                 }
                 else if (documentTypeName != null)
                 {
                     publicModel = repository
                         .SelectAll(Folder_ID)
                         .Where(r => r.DocumentTypeName == documentTypeName);
-                    //.ToPagedList(page, 10);
+                    ViewData["currentNav"] = "documentTypeName";
                 }
                 else if (policyNumber != null)
                 {
                     publicModel = repository
                         .SelectAll(Folder_ID)
                         .Where(r => r.RefNumber == policyNumber);
-                    //.ToPagedList(page, 10);
+                    ViewData["currentNav"] = "policyNumber";
                 }
                 else {
                     publicModel = repository
                         .SelectAll(Folder_ID);
+                    ViewData["currentNav"] = null;
                 }
+                ViewData["currentRecordsCount"] = publicModel.Count();
             }
             else {
                 //"04/10/2017" example expected date
                 DateTime issueDateMin = DateTime.ParseExact(IssueDateMinRange, "d", CultureInfo.InvariantCulture);
                 DateTime issueDateMax = DateTime.ParseExact(IssueDateMaxRange, "d", CultureInfo.InvariantCulture);
 
-                //false means seachterm will return an empty result
-                ViewData["goodSearch"] = true;
-
                 publicModel = repository.SelectAll(Folder_ID);
+
+                //
+                ViewData["allRecordsCount"]= publicModel.Count();
+                ViewData["currentRecordsCount"] = ViewData["allRecordsCount"];
+                //
 
                 if (searchTerm != null) ViewData["goodSearch"] = publicModel.Any(pub => pub.Description.Contains(searchTerm));
 
                 publicModel = publicModel
                     .Where(r => searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.Contains(searchTerm) == true : true))
                     .Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax));
+
+                ViewData["currentRecordsCount"] = publicModel.Count();
             }
 
 
@@ -162,6 +172,7 @@ namespace DocSearch2._1.Controllers
                 ViewBag.CategoryNavBar = nbl;
                 ViewBag.PolicyNavBar = publicModel.OrderBy(e => e.RefNumber).GroupBy(e => e.RefNumber).Select(g => g.First().RefNumber);
 
+                ViewData["currentRecordsCount"] = publicModel.Count();
                 publicModel = publicModel.ToPagedList(page, 10);
                 return View(publicModel);
             }
