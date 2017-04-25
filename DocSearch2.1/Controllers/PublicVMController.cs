@@ -36,7 +36,7 @@ namespace DocSearch2._1.Controllers
         // GET: PublicVM
         [HttpGet] // dunno if need this, was causing issues with the search return request
         //I think the search submit is coming back as a post
-        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string category = null, string policyNumber = null, string documentTypeName = null, string filter = null, string searchTerm = null, string IssueDateMinRange = "01/15/1990", string IssueDateMaxRange = "04/11/2017", int page = 1)
+        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string category = null, string policyNumber = null, string documentTypeName = null, string filter = null, string searchTerm = null, string IssueDateMinRange = "01/01/1990", string IssueDateMaxRange = "12/31/2017", int page = 1)
         {
             //if (searchTerm == "") searchTerm = null;
 
@@ -44,6 +44,8 @@ namespace DocSearch2._1.Controllers
 
             TempData.Keep("Client_Name");
             TempData.Keep("Client_Id");
+            TempData.Keep("IssueDateMin");
+            TempData.Keep("IssueDateMax");
 
             //false means seachterm will return an empty result
             ViewData["goodSearch"] = true;
@@ -106,22 +108,10 @@ namespace DocSearch2._1.Controllers
                 ViewData["currentRecordsCount"] = publicModel.Count();
             }
             else {
-                ////"04/10/2017" example expected date
-                //DateTime issueDateMin = DateTime.ParseExact(IssueDateMinRange, "d", CultureInfo.InvariantCulture);
-                //DateTime issueDateMax = DateTime.ParseExact(IssueDateMaxRange, "d", CultureInfo.InvariantCulture);
-
-                publicModel = repository.SelectAll(Folder_ID);
+                publicModel = repository.SelectAll(Folder_ID).OrderByDescending(r => r.IssueDate);
 
                 ViewData["allRecordsCount"]= publicModel.Count();
                 ViewData["currentRecordsCount"] = ViewData["allRecordsCount"];
-
-                //if (searchTerm != null) ViewData["goodSearch"] = publicModel.Any(pub => pub.Description.Contains(searchTerm));
-
-                //publicModel = publicModel
-                //    .Where(r => searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.Contains(searchTerm) == true : true))
-                //    .Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax));
-
-                //ViewData["currentRecordsCount"] = publicModel.Count();
             }
 
             //"04/10/2017" example expected date
@@ -148,8 +138,8 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, 5);
-                    else publicModel = publicModel.OrderByDescending(r => r.DocumentTypeName).ToPagedList(page, 5);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, 25);
+                    else publicModel = publicModel.OrderByDescending(r => r.DocumentTypeName).ToPagedList(page, 25);
 
                     prevFilter = filter;
                 }
@@ -162,8 +152,8 @@ namespace DocSearch2._1.Controllers
                     else {
                         sortAscending = true;
                     }
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 5);
-                    else publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 5);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 25);
+                    else publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 25);
 
                     prevFilter = filter;
                 }
@@ -177,13 +167,13 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.EffectiveDate).ToPagedList(page, 5);
-                    else publicModel = publicModel.OrderByDescending(r => r.EffectiveDate).ToPagedList(page, 5);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.EffectiveDate).ToPagedList(page, 25);
+                    else publicModel = publicModel.OrderByDescending(r => r.EffectiveDate).ToPagedList(page, 25);
 
                     prevFilter = filter;
                 }
                 else {
-                    publicModel = publicModel.ToPagedList(page, 5);
+                    publicModel = publicModel.ToPagedList(page, 25);
                 }
 
                 return PartialView("_PublicTable", publicModel);
@@ -213,7 +203,10 @@ namespace DocSearch2._1.Controllers
                 ViewBag.PolicyNavBar = publicModel.OrderBy(e => e.RefNumber).GroupBy(e => e.RefNumber).Select(g => g.First().RefNumber);
 
                 ViewData["currentRecordsCount"] = publicModel.Count();
-                publicModel = publicModel.ToPagedList(page, 5);
+                TempData["IssueDateMin"] = publicModel.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+                TempData["IssueDateMax"] = publicModel.OrderByDescending(r => r.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+
+                publicModel = publicModel.ToPagedList(page, 25);
                 return View(publicModel);
             }
             else {
