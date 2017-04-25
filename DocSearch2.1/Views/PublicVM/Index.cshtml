@@ -38,6 +38,7 @@
 
                         $this.closest('form').find("input[name='IssueDateMinRange']").val('@Model.OrderBy(d => d.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)');
                         $this.closest('form').find("input[name='IssueDateMaxRange']").val('@Model.OrderByDescending(d => d.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)');
+                        $(".active").removeClass('active');
                     }
 
                     function updateCurrentCount() {
