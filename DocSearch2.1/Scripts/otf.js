@@ -38,9 +38,9 @@
         return false;
     };
 
-    var showPreview = function (e) {
-
-        var $a = $(this);
+    //function to preview image (jpeg)
+    function showPreview($this, e) {
+        var $a = $this;
         var id = $a.attr('id');
 
         var options = {
@@ -62,9 +62,9 @@
         });
     }
 
-    var losePreview = function () {
-        
-        $('#dynamic').remove();
+    //function to destroy preview image
+    function losePreview() {
+        $('.previewImg').remove();
     }
 
     var updateCurrentCount1 = function () {
@@ -80,27 +80,23 @@
         });
     }
 
-    //$("#category_list").menu();
-
-    //$("#category_list").menu(
-    //"focus", null, $("#category_list").menu().find(".ui-menu-item:last"));
-    //$(menu).mouseleave(function () {
-    //    menu.menu('collapseAll');
-    //});
-
-    //$("#category_list").accordion({
-    //    collapsible: true,
-    //    navigation: true,
-    //    clearStyle: true,
-    //    event: "mouseover"
-    //});
-
     $("form[data-otf-ajax='true']").submit(ajaxFormSubmit);
 
     $("#body").on("click", ".pagedList a", getPage);
 
-    $("#body").on({ click: function () { $(this).toggleClass("active"); }, mouseenter: showPreview, mouseleave: losePreview }, ".preview");
+    //image previewer on event
+    $("#body").on("mouseenter", ".preview_image", function (e) {
 
+        $this = $(this).children("a");
+        showPreview($this, e);
+    });
+
+    //image previewer off event
+    $("#body").on("mouseleave", ".preview_image", function () {
+        losePreview();
+    });
+
+    //functionality of category/policy slider
     $('#category_policy_toggle').click(function () {
         $("#category_section, #policy_section").toggleClass("hidden");
     })
@@ -111,6 +107,7 @@
         $(this).parent().addClass("active");
     });
 
+    //allows category list item hover to highlight every doctype in it
     $(".category_nav > div > a").hover( function () {
         $(this).parent().toggleClass("nav_cate_hover");
     });
