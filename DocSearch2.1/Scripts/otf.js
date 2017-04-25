@@ -111,4 +111,8 @@
         $(this).parent().addClass("active");
     });
 
+    $(".category_nav > div > a").hover( function () {
+        $(this).parent().toggleClass("nav_cate_hover");
+    });
+
 });

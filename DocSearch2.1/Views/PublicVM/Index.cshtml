@@ -54,40 +54,42 @@
                     <ul id="category_list">
                         @foreach (var item in ViewBag.CategoryNavBar)
                         {
-                            <li>
-                                <a href="@Url.Action("Index", "PublicVM", new {
+                            <li class="category_nav">
+                                <div>
+                                    <a href="@Url.Action("Index", "PublicVM", new {
                                         publicId = Model.First().Folder_ID,
                                         category = item.CategoryName
                                     })"
-                                   data-ajax-update="#public_table"
-                                   data-ajax-mode="replace-with"
-                                   data-ajax-method="GET"
-                                   data-subclass="category"
-                                   data-ajax-complete="postNavbar"
-                                   data-ajax-success="updateCurrentCount"
-                                   data-ajax="true">
-                                    @item.CategoryName
-                                </a>
-                                <ul id="docType_list">
-                                    @foreach (var dt in item.DocumentTypeName)
-                                    {
-                                        <li>
-                                            <a href="@Url.Action("Index", "PublicVM", new {
+                                       data-ajax-update="#public_table"
+                                       data-ajax-mode="replace-with"
+                                       data-ajax-method="GET"
+                                       data-subclass="category"
+                                       data-ajax-complete="postNavbar"
+                                       data-ajax-success="updateCurrentCount"
+                                       data-ajax="true">
+                                        @item.CategoryName
+                                    </a>
+                                    <ul id="docType_list">
+                                        @foreach (var dt in item.DocumentTypeName)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("Index", "PublicVM", new {
                                                         publicId = Model.First().Folder_ID,
                                                         documentTypeName = dt
                                                     })"
-                                               data-ajax-update="#public_table"
-                                               data-ajax-mode="replace-with"
-                                               data-ajax-method="GET"
-                                               data-subclass="doctype"
-                                               data-ajax-complete="postNavbar"
-                                               data-ajax-success="updateCurrentCount"
-                                               data-ajax="true">
-                                                @dt
-                                            </a>
-                                        </li>
-                                    }
-                                </ul>
+                                                   data-ajax-update="#public_table"
+                                                   data-ajax-mode="replace-with"
+                                                   data-ajax-method="GET"
+                                                   data-subclass="doctype"
+                                                   data-ajax-complete="postNavbar"
+                                                   data-ajax-success="updateCurrentCount"
+                                                   data-ajax="true">
+                                                    @dt
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
                             </li>
                         }
                     </ul>

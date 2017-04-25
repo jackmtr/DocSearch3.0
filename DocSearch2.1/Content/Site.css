@@ -41,9 +41,25 @@ li a:hover {
     text-decoration: none;
 }
 
+
+/*#category_list > li:hover,  #category_list > li li:hover{
+    background-color: #555;
+
+}*/
+
+.nav_cate_hover{
+    background-color: #555;
+    color: white;
+    text-decoration: none;
+    overflow: auto;
+    clear: both;
+}
+
 .active {
     background-color: white;
     color: white;
+    overflow: hidden;
+    clear: both;
 }
 
 /*Used to toggle which sub-bar to see*/
