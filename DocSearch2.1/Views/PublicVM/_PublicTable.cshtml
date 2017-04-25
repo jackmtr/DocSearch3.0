@@ -98,7 +98,7 @@
         </table>
 
         <div class="pagedList col-md-6 col-md-offset-3" data-otf-target="#public_table">
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID }),
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"]}),
             PagedListRenderOptions.MinimalWithItemCountText)
         </div>
     </div>

@@ -23,6 +23,8 @@ namespace DocSearch2._1.Controllers
             this.repository1 = new DocumentRepository();
         }
 
+        //***Check if model dates are populating correctly
+
         //keep for future testing
         /*
         public PublicVMController(IPublicRepository repository) {
@@ -34,8 +36,10 @@ namespace DocSearch2._1.Controllers
         // GET: PublicVM
         [HttpGet] // dunno if need this, was causing issues with the search return request
         //I think the search submit is coming back as a post
-        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string category = null, string policyNumber = null, string documentTypeName = null, string filter = null, string searchTerm = null, string IssueDateMinRange = "01/15/1990", string IssueDateMaxRange = "04/11/2017", int page = 1)
+        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string category = null, string policyNumber = null, string documentTypeName = null, string filter = null, string searchTerm = null, string IssueDateMinRange = "01/15/1990", string IssueDateMaxRange = "04/11/2017", int page = 1)
         {
+            //if (searchTerm == "") searchTerm = null;
+
             IEnumerable<PublicVM> publicModel = null;
 
             TempData.Keep("Client_Name");
@@ -45,13 +49,14 @@ namespace DocSearch2._1.Controllers
             ViewData["goodSearch"] = true;
             ViewData["currentNav"] = null;
 
-            if ((category != null) || (documentTypeName != null) || (policyNumber != null) || (filter != null)) {
+            if ((subNav != null)||(category != null) || (documentTypeName != null) || (policyNumber != null) || (filter != null)) {
                 if (category != null)
                 {
                     publicModel = repository
                         .SelectAll(Folder_ID)
                         .Where(r => r.CategoryName == category);
                     ViewData["currentNav"] = "category";
+                    ViewData["currentNavTitle"] = category;
                 }
                 else if (documentTypeName != null)
                 {
@@ -59,6 +64,7 @@ namespace DocSearch2._1.Controllers
                         .SelectAll(Folder_ID)
                         .Where(r => r.DocumentTypeName == documentTypeName);
                     ViewData["currentNav"] = "documentTypeName";
+                    ViewData["currentNavTitle"] = documentTypeName;
                 }
                 else if (policyNumber != null)
                 {
@@ -66,11 +72,29 @@ namespace DocSearch2._1.Controllers
                         .SelectAll(Folder_ID)
                         .Where(r => r.RefNumber == policyNumber);
                     ViewData["currentNav"] = "policyNumber";
+                    ViewData["currentNavTitle"] = policyNumber;
                 }
                 else {
                     publicModel = repository
                         .SelectAll(Folder_ID);
-                    ViewData["currentNav"] = null;
+
+                    if (subNav == "category")
+                    {
+                        publicModel = publicModel.Where(r => r.CategoryName == prevNav);
+                        ViewData["currentNav"] = "category";
+                        ViewData["currentNavTitle"] = prevNav;
+                    }
+                    else if (subNav == "documentTypeName")
+                    {
+                        publicModel = publicModel.Where(r => r.DocumentTypeName == prevNav);
+                        ViewData["currentNav"] = "documentTypeName";
+                        ViewData["currentNavTitle"] = prevNav;
+                    }
+                    else {
+                        publicModel = publicModel.Where(r => r.RefNumber == prevNav);
+                        ViewData["currentNav"] = "policyNumber";
+                        ViewData["currentNavTitle"] = prevNav;
+                    }
                 }
                 ViewData["currentRecordsCount"] = publicModel.Count();
             }
