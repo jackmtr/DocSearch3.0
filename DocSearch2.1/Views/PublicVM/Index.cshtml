@@ -27,27 +27,26 @@
                 @* Need a better way to place this JS *@
                 <script type="text/javascript">
 
-                    //adds the class to adjust table columns
-                    //function postNavbar() {
-                    //    $this = $(this);
-                    //    $('#public_table').removeClass().addClass($this.data("subclass"));
-                    //};
-
+                    //adjust table for subnav column, also clears input fields
                     function postNavbar() {
-
                         $className = $('.active').children("a").data("subclass");
                         $('#public_table').removeClass().addClass($className);
+                        clearFields();
                     }
 
                     //function to clear table/navbar/form to look like original content
                     function clearFields() {
-                        $this = $(this);
 
-                        $this.closest('form').find("input[type=search]").val("");
+                        $form = $('form');
 
-                        $this.closest('form').find("input[name='IssueDateMinRange']").val('@Model.OrderBy(d => d.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)');
-                        $this.closest('form').find("input[name='IssueDateMaxRange']").val('@Model.OrderByDescending(d => d.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)');
-                        $(".active").removeClass('active');
+                        $form.find("input[type=search]").val("");
+
+                        $form.find("input[name='IssueDateMinRange']").val('@Model.OrderBy(d => d.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)');
+                        $form.find("input[name='IssueDateMaxRange']").val('@Model.OrderByDescending(d => d.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)');
+
+                        if ($(this) == "a") {
+                            $(".active").removeClass('active');
+                        }
                     }
 
                     function updateCurrentCount() {
