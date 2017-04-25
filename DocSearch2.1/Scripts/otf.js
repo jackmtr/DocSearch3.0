@@ -3,11 +3,23 @@
     //submits the search and date filter form
     var ajaxFormSubmit = function () {
         var $form = $(this);
-        var options = {
-            url: $form.attr("action"),
-            type: $form.attr("method"),
-            data: $form.serialize()
-        };
+
+        $category = $(".active a").data('subclass')
+        $docType = $(".active a").data('subclass-title')
+
+        if ($category != undefined && $docType != undefined) {
+            var options = {
+                url: $form.attr("action"),//maybe add to this to check for attributes somehow
+                type: $form.attr("method"),
+                data: $form.serialize() + "&subNav=" + $category + "&" + "prevNav=" + $docType //or add to the data somehow
+            };
+        } else {
+            var options = {
+                url: $form.attr("action"),//maybe add to this to check for attributes somehow
+                type: $form.attr("method"),
+                data: $form.serialize()//or add to the data somehow
+            };
+        }
 
         $.ajax(options).done(function (data) {
 

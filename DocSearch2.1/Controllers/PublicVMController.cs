@@ -63,7 +63,7 @@ namespace DocSearch2._1.Controllers
                     publicModel = repository
                         .SelectAll(Folder_ID)
                         .Where(r => r.DocumentTypeName == documentTypeName);
-                    ViewData["currentNav"] = "documentTypeName";
+                    ViewData["currentNav"] = "doctype";
                     ViewData["currentNavTitle"] = documentTypeName;
                 }
                 else if (policyNumber != null)
@@ -85,10 +85,10 @@ namespace DocSearch2._1.Controllers
                         ViewData["currentNav"] = "category";
                         ViewData["currentNavTitle"] = prevNav;
                     }
-                    else if (subNav == "documentTypeName")
+                    else if (subNav == "doctype")
                     {
                         publicModel = publicModel.Where(r => r.DocumentTypeName == prevNav);
-                        ViewData["currentNav"] = "documentTypeName";
+                        ViewData["currentNav"] = "doctype";
                         ViewData["currentNavTitle"] = prevNav;
                     }
                     else {
@@ -106,24 +106,35 @@ namespace DocSearch2._1.Controllers
                 ViewData["currentRecordsCount"] = publicModel.Count();
             }
             else {
-                //"04/10/2017" example expected date
-                DateTime issueDateMin = DateTime.ParseExact(IssueDateMinRange, "d", CultureInfo.InvariantCulture);
-                DateTime issueDateMax = DateTime.ParseExact(IssueDateMaxRange, "d", CultureInfo.InvariantCulture);
+                ////"04/10/2017" example expected date
+                //DateTime issueDateMin = DateTime.ParseExact(IssueDateMinRange, "d", CultureInfo.InvariantCulture);
+                //DateTime issueDateMax = DateTime.ParseExact(IssueDateMaxRange, "d", CultureInfo.InvariantCulture);
 
                 publicModel = repository.SelectAll(Folder_ID);
 
                 ViewData["allRecordsCount"]= publicModel.Count();
                 ViewData["currentRecordsCount"] = ViewData["allRecordsCount"];
 
-                if (searchTerm != null) ViewData["goodSearch"] = publicModel.Any(pub => pub.Description.Contains(searchTerm));
+                //if (searchTerm != null) ViewData["goodSearch"] = publicModel.Any(pub => pub.Description.Contains(searchTerm));
 
-                publicModel = publicModel
-                    .Where(r => searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.Contains(searchTerm) == true : true))
-                    .Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax));
+                //publicModel = publicModel
+                //    .Where(r => searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.Contains(searchTerm) == true : true))
+                //    .Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax));
 
-                ViewData["currentRecordsCount"] = publicModel.Count();
+                //ViewData["currentRecordsCount"] = publicModel.Count();
             }
 
+            //"04/10/2017" example expected date
+            DateTime issueDateMin = DateTime.ParseExact(IssueDateMinRange, "d", CultureInfo.InvariantCulture);
+            DateTime issueDateMax = DateTime.ParseExact(IssueDateMaxRange, "d", CultureInfo.InvariantCulture);
+
+            if (searchTerm != null) ViewData["goodSearch"] = publicModel.Any(pub => pub.Description.Contains(searchTerm));
+
+            publicModel = publicModel
+                .Where(r => searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.Contains(searchTerm) == true : true))
+                .Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax));
+
+            ViewData["currentRecordsCount"] = publicModel.Count();
 
             if (Request.IsAjaxRequest()) {
 

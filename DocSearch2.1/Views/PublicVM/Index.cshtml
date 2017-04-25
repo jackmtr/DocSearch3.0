@@ -74,6 +74,7 @@
                                        data-ajax-mode="replace-with"
                                        data-ajax-method="GET"
                                        data-subclass="category"
+                                       data-subclass-title=@item.CategoryName
                                        data-ajax-complete="postNavbar"
                                        data-ajax-success="updateCurrentCount"
                                        data-ajax="true">
@@ -91,6 +92,7 @@
                                                    data-ajax-mode="replace-with"
                                                    data-ajax-method="GET"
                                                    data-subclass="doctype"
+                                                   data-subclass-title=@dt
                                                    data-ajax-complete="postNavbar"
                                                    data-ajax-success="updateCurrentCount"
                                                    data-ajax="true">
@@ -122,6 +124,7 @@
                                        data-ajax-mode="replace-with"
                                        data-ajax-method="GET"
                                        data-subclass="policy"
+                                       data-subclass-title=@policy
                                        data-ajax-complete="postNavbar"
                                        data-ajax-success="updateCurrentCount"
                                        data-ajax="true">
@@ -152,10 +155,9 @@
         
 
         <!--Search Box, Date Filters, clear, and submit button-->
-        <div>
+        <div> <!--static form needs to pull this info somehow: subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"]-->
             <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#public_table" class="row">
                 <div class="filter col-md-4">
-
                     Search Description:
                     <br /> <!--Eventually no br and do this by css probably-->
                     <input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />
@@ -183,7 +185,7 @@
                    OnComplete = "clearFields",
                    OnSuccess = "updateCurrentCount"
                }, new { @class = "button" })
-                    <input type="submit" value="Search and Filter" />
+                    <input type="submit" value="Search and Filter"/>
                 </div>
             </form>
         </div>
