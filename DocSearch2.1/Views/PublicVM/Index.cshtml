@@ -26,11 +26,20 @@
 
                 @* Need a better way to place this JS *@
                 <script type="text/javascript">
-                    function postNavbar() {
-                        $this = $(this);
-                        $('#public_table').removeClass().addClass($this.data("subclass"));
-                    };
 
+                    //adds the class to adjust table columns
+                    //function postNavbar() {
+                    //    $this = $(this);
+                    //    $('#public_table').removeClass().addClass($this.data("subclass"));
+                    //};
+
+                    function postNavbar() {
+
+                        $className = $('.active').children("a").data("subclass");
+                        $('#public_table').removeClass().addClass($className);
+                    }
+
+                    //function to clear table/navbar/form to look like original content
                     function clearFields() {
                         $this = $(this);
 

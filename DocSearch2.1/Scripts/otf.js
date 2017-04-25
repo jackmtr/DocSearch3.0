@@ -1,5 +1,6 @@
 ﻿$(function () {
 
+    //submits the search and date filter form
     var ajaxFormSubmit = function () {
         var $form = $(this);
         var options = {
@@ -21,6 +22,7 @@
         return false;
     };
 
+    //pagination effect
     var getPage = function () {
 
         var $a = $(this); //this is the anchor
@@ -34,7 +36,9 @@
         $.ajax(options).done(function (data) {
             var target = $a.parents("div.pagedList").attr("data-otf-target");
             $(target).replaceWith(data);
+            postNavbar();
         });
+
         return false;
     };
 
@@ -67,9 +71,6 @@
         $('.previewImg').remove();
     }
 
-    var updateCurrentCount1 = function () {
-        alert('hi');
-    }
 
     if (!Modernizr.inputtypes.date) {
 
@@ -80,8 +81,10 @@
         });
     }
 
+    //event for form submit
     $("form[data-otf-ajax='true']").submit(ajaxFormSubmit);
 
+    //event for pagination buttons
     $("#body").on("click", ".pagedList a", getPage);
 
     //image previewer on event
@@ -111,5 +114,4 @@
     $(".category_nav > div > a").hover( function () {
         $(this).parent().toggleClass("nav_cate_hover");
     });
-
 });

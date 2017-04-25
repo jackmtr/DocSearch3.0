@@ -74,7 +74,8 @@ namespace DocSearch2._1.Controllers
                     ViewData["currentNav"] = "policyNumber";
                     ViewData["currentNavTitle"] = policyNumber;
                 }
-                else {
+                else if (subNav != null)
+                {
                     publicModel = repository
                         .SelectAll(Folder_ID);
 
@@ -96,6 +97,12 @@ namespace DocSearch2._1.Controllers
                         ViewData["currentNavTitle"] = prevNav;
                     }
                 }
+                else {
+                    //this code may never be hit
+                    publicModel = repository
+                        .SelectAll(Folder_ID);
+                }
+
                 ViewData["currentRecordsCount"] = publicModel.Count();
             }
             else {
@@ -105,10 +112,8 @@ namespace DocSearch2._1.Controllers
 
                 publicModel = repository.SelectAll(Folder_ID);
 
-                //
                 ViewData["allRecordsCount"]= publicModel.Count();
                 ViewData["currentRecordsCount"] = ViewData["allRecordsCount"];
-                //
 
                 if (searchTerm != null) ViewData["goodSearch"] = publicModel.Any(pub => pub.Description.Contains(searchTerm));
 
@@ -132,8 +137,8 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, 10);
-                    else publicModel = publicModel.OrderByDescending(r => r.DocumentTypeName).ToPagedList(page, 10);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, 5);
+                    else publicModel = publicModel.OrderByDescending(r => r.DocumentTypeName).ToPagedList(page, 5);
 
                     prevFilter = filter;
                 }
@@ -146,8 +151,8 @@ namespace DocSearch2._1.Controllers
                     else {
                         sortAscending = true;
                     }
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 10);
-                    else publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 10);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 5);
+                    else publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 5);
 
                     prevFilter = filter;
                 }
@@ -161,13 +166,13 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.EffectiveDate).ToPagedList(page, 10);
-                    else publicModel = publicModel.OrderByDescending(r => r.EffectiveDate).ToPagedList(page, 10);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.EffectiveDate).ToPagedList(page, 5);
+                    else publicModel = publicModel.OrderByDescending(r => r.EffectiveDate).ToPagedList(page, 5);
 
                     prevFilter = filter;
                 }
                 else {
-                    publicModel = publicModel.ToPagedList(page, 10);
+                    publicModel = publicModel.ToPagedList(page, 5);
                 }
 
                 return PartialView("_PublicTable", publicModel);
@@ -197,7 +202,7 @@ namespace DocSearch2._1.Controllers
                 ViewBag.PolicyNavBar = publicModel.OrderBy(e => e.RefNumber).GroupBy(e => e.RefNumber).Select(g => g.First().RefNumber);
 
                 ViewData["currentRecordsCount"] = publicModel.Count();
-                publicModel = publicModel.ToPagedList(page, 10);
+                publicModel = publicModel.ToPagedList(page, 5);
                 return View(publicModel);
             }
             else {
