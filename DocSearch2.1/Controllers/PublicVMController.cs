@@ -36,11 +36,14 @@ namespace DocSearch2._1.Controllers
         // GET: PublicVM
         [HttpGet] // dunno if need this, was causing issues with the search return request
         //I think the search submit is coming back as a post
-        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string category = null, string policyNumber = null, string documentTypeName = null, string filter = null, string searchTerm = null, string IssueDateMinRange = "01/01/1990", string IssueDateMaxRange = "12/31/2017", int page = 1)
+        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string category = null, string policyNumber = null, string documentTypeName = null, string filter = null, string searchTerm = null, string IssueDateMinRange = null, string IssueDateMaxRange = null, int page = 1)
         {
             //if (searchTerm == "") searchTerm = null;
 
             IEnumerable<PublicVM> publicModel = null;
+
+            publicModel = repository
+                        .SelectAll(Folder_ID);
 
             TempData.Keep("Client_Name");
             TempData.Keep("Client_Id");
@@ -51,27 +54,38 @@ namespace DocSearch2._1.Controllers
             ViewData["goodSearch"] = true;
             ViewData["currentNav"] = null;
 
+
+            if (IssueDateMinRange == null)
+            {
+                TempData["IssueDateMin"] = publicModel.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+                IssueDateMinRange = (string)TempData["IssueDateMin"];
+            }
+
+            if (IssueDateMaxRange == null)
+            {
+                TempData["IssueDateMax"] = publicModel.OrderByDescending(r => r.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+                IssueDateMaxRange = (string)TempData["IssueDateMax"];
+            }
+
+
             if ((subNav != null)||(category != null) || (documentTypeName != null) || (policyNumber != null) || (filter != null)) {
                 if (category != null)
                 {
-                    publicModel = repository
-                        .SelectAll(Folder_ID)
+                    publicModel = publicModel
                         .Where(r => r.CategoryName == category);
                     ViewData["currentNav"] = "category";
                     ViewData["currentNavTitle"] = category;
                 }
                 else if (documentTypeName != null)
                 {
-                    publicModel = repository
-                        .SelectAll(Folder_ID)
+                    publicModel = publicModel
                         .Where(r => r.DocumentTypeName == documentTypeName);
                     ViewData["currentNav"] = "doctype";
                     ViewData["currentNavTitle"] = documentTypeName;
                 }
                 else if (policyNumber != null)
                 {
-                    publicModel = repository
-                        .SelectAll(Folder_ID)
+                    publicModel = publicModel
                         .Where(r => r.RefNumber == policyNumber);
                     ViewData["currentNav"] = "policyNumber";
                     ViewData["currentNavTitle"] = policyNumber;
@@ -108,11 +122,14 @@ namespace DocSearch2._1.Controllers
                 ViewData["currentRecordsCount"] = publicModel.Count();
             }
             else {
-                publicModel = repository.SelectAll(Folder_ID).OrderByDescending(r => r.IssueDate); //might not be best place to sort by date
+                publicModel = publicModel.OrderByDescending(r => r.IssueDate); //might not be best place to sort by date
 
                 ViewData["allRecordsCount"]= publicModel.Count();
                 ViewData["currentRecordsCount"] = ViewData["allRecordsCount"];
             }
+
+            //
+
 
             //"04/10/2017" example expected date
             DateTime issueDateMin = DateTime.ParseExact(IssueDateMinRange, "d", CultureInfo.InvariantCulture);
@@ -179,6 +196,9 @@ namespace DocSearch2._1.Controllers
                     publicModel = publicModel.ToPagedList(page, 25);
                 }
 
+                //ViewBag.IssueDateMin = TempData["IssueDateMin"];
+                //ViewBag.IssueDateMax = TempData["IssueDateMax"];
+
                 return PartialView("_PublicTable", publicModel);
             }
 
@@ -206,8 +226,6 @@ namespace DocSearch2._1.Controllers
                 ViewBag.PolicyNavBar = publicModel.OrderBy(e => e.RefNumber).GroupBy(e => e.RefNumber).Select(g => g.First().RefNumber);
 
                 ViewData["currentRecordsCount"] = publicModel.Count();
-                TempData["IssueDateMin"] = publicModel.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
-                TempData["IssueDateMax"] = publicModel.OrderByDescending(r => r.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
 
                 publicModel = publicModel.ToPagedList(page, 25);
                 return View(publicModel);
