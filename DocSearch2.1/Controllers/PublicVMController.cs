@@ -128,9 +128,6 @@ namespace DocSearch2._1.Controllers
                 ViewData["currentRecordsCount"] = ViewData["allRecordsCount"];
             }
 
-            //
-
-
             //"04/10/2017" example expected date
             DateTime issueDateMin = DateTime.ParseExact(IssueDateMinRange, "d", CultureInfo.InvariantCulture);
             DateTime issueDateMax = DateTime.ParseExact(IssueDateMaxRange, "d", CultureInfo.InvariantCulture);
@@ -196,9 +193,6 @@ namespace DocSearch2._1.Controllers
                     publicModel = publicModel.ToPagedList(page, 25);
                 }
 
-                //ViewBag.IssueDateMin = TempData["IssueDateMin"];
-                //ViewBag.IssueDateMax = TempData["IssueDateMax"];
-
                 return PartialView("_PublicTable", publicModel);
             }
 
@@ -228,6 +222,7 @@ namespace DocSearch2._1.Controllers
                 ViewData["currentRecordsCount"] = publicModel.Count();
 
                 publicModel = publicModel.ToPagedList(page, 25);
+
                 return View(publicModel);
             }
             else {

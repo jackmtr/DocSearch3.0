@@ -5,13 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div id ="main-row" class="row">
-
     <nav id="public_navigation" class="navbar navbar-default col-md-2 hidden-sm hidden-xs">
 
         <div class="row">
 
             <div class="cat_pol_switcher col-md-12">
                 <h2>Category/Policy</h2>
+                <h1>@ViewBag.Example</h1>
 
                 <!-- Rounded switch -->
                 <label class="switch">
@@ -41,10 +41,8 @@
 
                         $form.find("input[type=search]").val("");
 
-                        //$form.find("input[name='IssueDateMinRange']").val('Model.OrderBy(d => d.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)');
-                        //$form.find("input[name='IssueDateMaxRange']").val('Model.OrderByDescending(d => d.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)');
-                        $form.find("input[name='IssueDateMinRange']").val(@TempData["IssueDateMin"]);
-                        $form.find("input[name='IssueDateMaxRange']").val(@TempData["IssueDateMax"]);
+                        $form.find("input[name='IssueDateMinRange']").val('@TempData["IssueDateMin"]');
+                        $form.find("input[name='IssueDateMaxRange']").val('@TempData["IssueDateMax"]');
 
                         if ($(this) == "a") {
                             $(".active").removeClass('active');
@@ -186,6 +184,7 @@
                    OnComplete = "clearFields",
                    OnSuccess = "updateCurrentCount"
                }, new { @class = "button" })
+
                     <input type="submit" value="Search and Filter"/>
                 </div>
             </form>
