@@ -32,7 +32,8 @@
                         $className = $('.active').children("a").data("subclass");
                         $('#public_table').removeClass().addClass($className);
 
-                        if (!$(this).hasClass('filterLink')) {
+                        //need to check for form submit, then not do clearFields
+                        if ($(this).hasClass('navLink') || $(this).hasClass('button')) {
                             clearFields();
                         }
                     }
@@ -74,6 +75,7 @@
                                             subNav = "category",
                                             prevNav = item.CategoryName
                                         })"
+                                       class="navLink"
                                        data-ajax-update="#public_table"
                                        data-ajax-mode="replace-with"
                                        data-ajax-method="GET"
@@ -93,6 +95,7 @@
                                                         subNav = "doctype",
                                                         prevNav = dt
                                                     })"
+                                                   class="navLink"
                                                    data-ajax-update="#public_table"
                                                    data-ajax-mode="replace-with"
                                                    data-ajax-method="GET"
@@ -127,6 +130,7 @@
                                             subNav = "policy",
                                             prevNav = policy
                                         })"
+                                       class="navLink"
                                        data-ajax-update="#public_table"
                                        data-ajax-mode="replace-with"
                                        data-ajax-method="GET"

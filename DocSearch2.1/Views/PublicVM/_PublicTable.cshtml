@@ -82,6 +82,8 @@
 @if ((bool)ViewData["goodSearch"] == false)
 {
     <script type="text/javascript">
-                alert('Sorry, your search came up empty.  Clearing Search.');
+        //this needs to be a call back
+        clearFields();
+        alert('Sorry, your search came up empty.  Clearing Search.');
     </script>
 }

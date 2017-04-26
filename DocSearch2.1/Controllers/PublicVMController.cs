@@ -41,6 +41,8 @@ namespace DocSearch2._1.Controllers
             //persist client name, id
             TempData.Keep("Client_Name");
             TempData.Keep("Client_Id");
+
+            //this value is currently being retained when navbar is being clicked, it shouldnt be
             TempData.Keep("SearchTerm");
 
             //false means seachterm will return an empty result
