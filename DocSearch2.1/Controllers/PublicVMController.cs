@@ -41,6 +41,7 @@ namespace DocSearch2._1.Controllers
             //persist client name, id
             TempData.Keep("Client_Name");
             TempData.Keep("Client_Id");
+            TempData.Keep("SearchTerm");
 
             //false means seachterm will return an empty result
             ViewData["goodSearch"] = true;
@@ -136,6 +137,7 @@ namespace DocSearch2._1.Controllers
                 if (searchTerm != null)
                 {
                     ViewData["goodSearch"] = publicModel.Any(pub => pub.Description.Contains(searchTerm));
+                    TempData["SearchTerm"] = searchTerm;
                     //can probably refine this LINQ query
                     publicModel = publicModel.Where(r => searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.Contains(searchTerm) == true : true));
                 }

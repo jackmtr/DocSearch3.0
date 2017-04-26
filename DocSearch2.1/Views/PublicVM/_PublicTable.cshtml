@@ -12,7 +12,8 @@
                        filter = "document",
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
-                   }), "#public_table", "replace-with", "GET", "Type of Document", "fa-sort"))
+                       searchTerm = TempData["SearchTerm"]
+                   }), "#public_table", "replace-with", "GET", "Type of Document", "fa-sort", "filterLink"))
                     </th>
                     <th>
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
@@ -20,8 +21,9 @@
                        publicId = Model.First().Folder_ID,
                        filter = "issue",
                        subNav = ViewData["currentNav"],
-                       prevNav = ViewData["currentNavTitle"]
-                   }), "#public_table", "replace-with", "GET", "Issue Date", "fa-sort"))
+                       prevNav = ViewData["currentNavTitle"],
+                       searchTerm = TempData["SearchTerm"]
+                   }), "#public_table", "replace-with", "GET", "Issue Date", "fa-sort", "filterLink"))
                     </th>
                     <th>
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
@@ -29,8 +31,9 @@
                        publicId = Model.First().Folder_ID,
                        filter = "effective",
                        subNav = ViewData["currentNav"],
-                       prevNav = ViewData["currentNavTitle"]
-                   }), "#public_table", "replace-with", "GET", "Effective Date", "fa-sort"))
+                       prevNav = ViewData["currentNavTitle"],
+                       searchTerm = TempData["SearchTerm"]
+                   }), "#public_table", "replace-with", "GET", "Effective Date", "fa-sort", "filterLink"))
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.ToList().First().Description)

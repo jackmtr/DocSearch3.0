@@ -31,7 +31,10 @@
                     function postNavbar() {
                         $className = $('.active').children("a").data("subclass");
                         $('#public_table').removeClass().addClass($className);
-                        clearFields();
+
+                        if (!$(this).hasClass('filterLink')) {
+                            clearFields();
+                        }
                     }
 
                     //function to clear table/navbar/form to look like original content
@@ -44,6 +47,7 @@
                         $form.find("input[name='IssueDateMinRange']").val('@TempData["IssueDateMin"]');
                         $form.find("input[name='IssueDateMaxRange']").val('@TempData["IssueDateMax"]');
 
+                        //may want to be more specific with check
                         if ($(this) == "a") {
                             $(".active").removeClass('active');
                         }
