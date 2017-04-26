@@ -167,11 +167,11 @@
                 </div>
                 <div class="filter col-md-3">
                     Low Range Date:
-                    @Html.TextBox("IssueDateMinRange", String.Format("{0:d}", Model.OrderBy(d => d.IssueDate).First().IssueDate.Value), new { @class = "datefield", type = "date" })
+                    @Html.TextBox("IssueDateMinRange", TempData["IssueDateMin"], new { @class = "datefield", type = "date" })
                 </div>
                 <div class="filter col-md-3">
                     High Range Date:
-                    @Html.TextBox("IssueDateMaxRange", String.Format("{0:d}", Model.OrderByDescending(d => d.IssueDate).First().IssueDate.Value), new { @class = "datefield", type = "date" })
+                    @Html.TextBox("IssueDateMaxRange", TempData["IssueDateMax"], new { @class = "datefield", type = "date" })
                 </div>
 
                 <div class="filter col-md-2 buttondiv">

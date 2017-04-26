@@ -108,7 +108,7 @@ namespace DocSearch2._1.Controllers
                 ViewData["currentRecordsCount"] = publicModel.Count();
             }
             else {
-                publicModel = repository.SelectAll(Folder_ID).OrderByDescending(r => r.IssueDate);
+                publicModel = repository.SelectAll(Folder_ID).OrderByDescending(r => r.IssueDate); //might not be best place to sort by date
 
                 ViewData["allRecordsCount"]= publicModel.Count();
                 ViewData["currentRecordsCount"] = ViewData["allRecordsCount"];
@@ -118,7 +118,10 @@ namespace DocSearch2._1.Controllers
             DateTime issueDateMin = DateTime.ParseExact(IssueDateMinRange, "d", CultureInfo.InvariantCulture);
             DateTime issueDateMax = DateTime.ParseExact(IssueDateMaxRange, "d", CultureInfo.InvariantCulture);
 
-            if (searchTerm != null) ViewData["goodSearch"] = publicModel.Any(pub => pub.Description.Contains(searchTerm));
+            if (searchTerm != null)
+            {
+                ViewData["goodSearch"] = publicModel.Any(pub => pub.Description.Contains(searchTerm));
+            }
 
             publicModel = publicModel
                 .Where(r => searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.Contains(searchTerm) == true : true))
