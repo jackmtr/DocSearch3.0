@@ -66,9 +66,10 @@
                             <li class="category_nav">
                                 <div>
                                     <a href="@Url.Action("Index", "PublicVM", new {
-                                        publicId = Model.First().Folder_ID,
-                                        category = item.CategoryName
-                                    })"
+                                            publicId = Model.First().Folder_ID,
+                                            subNav = "category",
+                                            prevNav = item.CategoryName
+                                        })"
                                        data-ajax-update="#public_table"
                                        data-ajax-mode="replace-with"
                                        data-ajax-method="GET"
@@ -85,7 +86,8 @@
                                             <li>
                                                 <a href="@Url.Action("Index", "PublicVM", new {
                                                         publicId = Model.First().Folder_ID,
-                                                        documentTypeName = dt
+                                                        subNav = "doctype",
+                                                        prevNav = dt
                                                     })"
                                                    data-ajax-update="#public_table"
                                                    data-ajax-mode="replace-with"
@@ -117,7 +119,9 @@
                                     <a href="@Url.Action("Index", "PublicVM", new
                                         {
                                             publicId = Model.First().Folder_ID,
-                                            policyNumber = policy
+                                            policyNumber = policy,
+                                            subNav = "policy",
+                                            prevNav = policy
                                         })"
                                        data-ajax-update="#public_table"
                                        data-ajax-mode="replace-with"

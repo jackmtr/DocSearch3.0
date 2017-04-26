@@ -36,25 +36,24 @@ namespace DocSearch2._1.Controllers
         // GET: PublicVM
         [HttpGet] // dunno if need this, was causing issues with the search return request
         //I think the search submit is coming back as a post
-        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string category = null, string policyNumber = null, string documentTypeName = null, string filter = null, string searchTerm = null, string IssueDateMinRange = null, string IssueDateMaxRange = null, int page = 1)
+        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = "issue", string searchTerm = null, string IssueDateMinRange = null, string IssueDateMaxRange = null, int page = 1)
         {
-            //if (searchTerm == "") searchTerm = null;
+            //persist client name, id
+            TempData.Keep("Client_Name");
+            TempData.Keep("Client_Id");
 
+            //false means seachterm will return an empty result
+            ViewData["goodSearch"] = true;
+            //viewdata to save state
+            ViewData["currentNav"] = null;
+
+            //declare and instantiate the original full PublicVM data for the client
             IEnumerable<PublicVM> publicModel = null;
 
             publicModel = repository
                         .SelectAll(Folder_ID);
 
-            TempData.Keep("Client_Name");
-            TempData.Keep("Client_Id");
-            TempData.Keep("IssueDateMin");
-            TempData.Keep("IssueDateMax");
-
-            //false means seachterm will return an empty result
-            ViewData["goodSearch"] = true;
-            ViewData["currentNav"] = null;
-
-
+            //instantiating the overall min and max date ranges for this client if date inputs were null
             if (IssueDateMinRange == null)
             {
                 TempData["IssueDateMin"] = publicModel.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
@@ -67,34 +66,47 @@ namespace DocSearch2._1.Controllers
                 IssueDateMaxRange = (string)TempData["IssueDateMax"];
             }
 
+            //Formatting the display date into SQL likeable date type
+            //"04/10/2017" example expected date
+            DateTime issueDateMin = DateTime.ParseExact(IssueDateMinRange, "d", CultureInfo.InvariantCulture);
+            DateTime issueDateMax = DateTime.ParseExact(IssueDateMaxRange, "d", CultureInfo.InvariantCulture);
 
-            if ((subNav != null)||(category != null) || (documentTypeName != null) || (policyNumber != null) || (filter != null)) {
-                if (category != null)
-                {
-                    publicModel = publicModel
-                        .Where(r => r.CategoryName == category);
-                    ViewData["currentNav"] = "category";
-                    ViewData["currentNavTitle"] = category;
-                }
-                else if (documentTypeName != null)
-                {
-                    publicModel = publicModel
-                        .Where(r => r.DocumentTypeName == documentTypeName);
-                    ViewData["currentNav"] = "doctype";
-                    ViewData["currentNavTitle"] = documentTypeName;
-                }
-                else if (policyNumber != null)
-                {
-                    publicModel = publicModel
-                        .Where(r => r.RefNumber == policyNumber);
-                    ViewData["currentNav"] = "policyNumber";
-                    ViewData["currentNavTitle"] = policyNumber;
-                }
-                else if (subNav != null)
-                {
-                    publicModel = repository
-                        .SelectAll(Folder_ID);
+            //count of total records unfiltered of this client
+            ViewData["allRecordsCount"] = publicModel.Count();
 
+            //**Populates the navbar
+            IEnumerable<PublicVM> nb = publicModel.OrderBy(e => e.CategoryName).GroupBy(e => e.CategoryName).Select(g => g.First());
+
+            List<NavBar> nbl = new List<NavBar>();
+
+            foreach (PublicVM pvm in nb)
+            {
+
+                NavBar nbitem = new NavBar();
+
+                nbitem.CategoryName = pvm.CategoryName;
+
+                foreach (PublicVM pp in publicModel.GroupBy(g => g.DocumentTypeName).Select(g => g.First()))
+                {
+                    if (pp.CategoryName == nbitem.CategoryName && !nbl.Any(s => s.DocumentTypeName.Contains(pp.DocumentTypeName)))
+                    {
+                        nbitem.DocumentTypeName.Add(pp.DocumentTypeName);
+                    }
+                }
+                nbl.Add(nbitem);
+            }
+
+            ViewBag.CategoryNavBar = nbl;
+            ViewBag.PolicyNavBar = publicModel.OrderBy(e => e.RefNumber).GroupBy(e => e.RefNumber).Select(g => g.First().RefNumber);
+            //**End of navbar population data
+
+            
+            if (Request.IsAjaxRequest())
+            {
+                //**STARTING ACTUAL FILTERING/SORTING OF MODEL**
+                //*filtering by category/doctype/policy
+                if (subNav != null)
+                {
                     if (subNav == "category")
                     {
                         publicModel = publicModel.Where(r => r.CategoryName == prevNav);
@@ -113,38 +125,25 @@ namespace DocSearch2._1.Controllers
                         ViewData["currentNavTitle"] = prevNav;
                     }
                 }
-                else {
-                    //this code may never be hit
-                    publicModel = repository
-                        .SelectAll(Folder_ID);
+
+                //think about combining the search and date conditions
+                //*filtering by date conditions
+                publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax));
+
+
+                //*filtering by searchconditions
+                //checks if the search term will return any results
+                if (searchTerm != null)
+                {
+                    ViewData["goodSearch"] = publicModel.Any(pub => pub.Description.Contains(searchTerm));
+                    //can probably refine this LINQ query
+                    publicModel = publicModel.Where(r => searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.Contains(searchTerm) == true : true));
                 }
 
+                //record count after category/doctype/policy/search/date filter
                 ViewData["currentRecordsCount"] = publicModel.Count();
-            }
-            else {
-                publicModel = publicModel.OrderByDescending(r => r.IssueDate); //might not be best place to sort by date
 
-                ViewData["allRecordsCount"]= publicModel.Count();
-                ViewData["currentRecordsCount"] = ViewData["allRecordsCount"];
-            }
-
-            //"04/10/2017" example expected date
-            DateTime issueDateMin = DateTime.ParseExact(IssueDateMinRange, "d", CultureInfo.InvariantCulture);
-            DateTime issueDateMax = DateTime.ParseExact(IssueDateMaxRange, "d", CultureInfo.InvariantCulture);
-
-            if (searchTerm != null)
-            {
-                ViewData["goodSearch"] = publicModel.Any(pub => pub.Description.Contains(searchTerm));
-            }
-
-            publicModel = publicModel
-                .Where(r => searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.Contains(searchTerm) == true : true))
-                .Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax));
-
-            ViewData["currentRecordsCount"] = publicModel.Count();
-
-            if (Request.IsAjaxRequest()) {
-
+                //*sorting data
                 if (filter == "document")
                 {
                     if (prevFilter == filter)
@@ -157,20 +156,6 @@ namespace DocSearch2._1.Controllers
 
                     if (sortAscending) publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, 10);
                     else publicModel = publicModel.OrderByDescending(r => r.DocumentTypeName).ToPagedList(page, 10);
-
-                    prevFilter = filter;
-                }
-                else if (filter == "issue")
-                {
-                    if (prevFilter == filter)
-                    {
-                        sortAscending = !sortAscending;
-                    }
-                    else {
-                        sortAscending = true;
-                    }
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 10);
-                    else publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 10);
 
                     prevFilter = filter;
                 }
@@ -189,45 +174,41 @@ namespace DocSearch2._1.Controllers
 
                     prevFilter = filter;
                 }
-                else {
-                    publicModel = publicModel.ToPagedList(page, 10);
-                }
-
-                return PartialView("_PublicTable", publicModel);
-            }
-
-            if (publicModel != null)
-            {        
-                IEnumerable<PublicVM> nb = publicModel.OrderBy(e => e.CategoryName).GroupBy(e => e.CategoryName).Select(g => g.First());
-
-                List<NavBar> nbl = new List<NavBar>();
-
-                foreach (PublicVM pvm in nb) {
-
-                    NavBar nbitem = new NavBar();
-
-                    nbitem.CategoryName = pvm.CategoryName;
-
-                    foreach (PublicVM pp in publicModel.GroupBy(g => g.DocumentTypeName).Select(g => g.First())) {
-                        if (pp.CategoryName == nbitem.CategoryName && !nbl.Any(s => s.DocumentTypeName.Contains(pp.DocumentTypeName))) {
-                            nbitem.DocumentTypeName.Add(pp.DocumentTypeName);
-                        }
+                else { 
+                    //must be filter = "issue" 
+                    if (prevFilter == filter)
+                    {
+                        sortAscending = !sortAscending;
                     }
-                    nbl.Add(nbitem);
+                    else {
+                        sortAscending = true;
+                    }
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 10);
+                    else publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 10);
+
+                    prevFilter = filter;
                 }
+                //**ENDING FILTERING OF MODEL**
 
-                ViewBag.CategoryNavBar = nbl;
-                ViewBag.PolicyNavBar = publicModel.OrderBy(e => e.RefNumber).GroupBy(e => e.RefNumber).Select(g => g.First().RefNumber);
-
-                ViewData["currentRecordsCount"] = publicModel.Count();
-
-                publicModel = publicModel.ToPagedList(page, 10);
-
-                return View(publicModel);
+                if (publicModel != null)
+                {
+                    return PartialView("_PublicTable", publicModel);
+                }
+                else {
+                    return HttpNotFound();
+                }
             }
-            else {
+            else { 
+                //pretty much should only be the initial synchronous load to come in here
+                if (publicModel != null)
+                {        
+                    publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 10);
 
-                return HttpNotFound();
+                    return View(publicModel);
+                }
+                else {
+                    return HttpNotFound();
+                }
             }
         }
 
