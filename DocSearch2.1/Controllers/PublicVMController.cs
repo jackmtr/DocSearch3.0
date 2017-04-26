@@ -56,6 +56,8 @@ namespace DocSearch2._1.Controllers
             publicModel = repository
                         .SelectAll(Folder_ID);
 
+            publicModel = publicModel.Where(n => n.EffectiveDate != null);
+
             //instantiating the overall min and max date ranges for this client if date inputs were null
             if (IssueDateMinRange == null)
             {
@@ -158,8 +160,8 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, 10);
-                    else publicModel = publicModel.OrderByDescending(r => r.DocumentTypeName).ToPagedList(page, 10);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, 20);
+                    else publicModel = publicModel.OrderByDescending(r => r.DocumentTypeName).ToPagedList(page, 20);
 
                     prevFilter = filter;
                 }
@@ -173,8 +175,8 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.EffectiveDate).ToPagedList(page, 10);
-                    else publicModel = publicModel.OrderByDescending(r => r.EffectiveDate).ToPagedList(page, 10);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.EffectiveDate).ToPagedList(page, 20);
+                    else publicModel = publicModel.OrderByDescending(r => r.EffectiveDate).ToPagedList(page, 20);
 
                     prevFilter = filter;
                 }
@@ -187,8 +189,8 @@ namespace DocSearch2._1.Controllers
                     else {
                         sortAscending = true;
                     }
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 10);
-                    else publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 10);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 20);
+                    else publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 20);
 
                     prevFilter = filter;
                 }
@@ -206,7 +208,7 @@ namespace DocSearch2._1.Controllers
                 //pretty much should only be the initial synchronous load to come in here
                 if (publicModel != null)
                 {        
-                    publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 10);
+                    publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 20);
 
                     return View(publicModel);
                 }

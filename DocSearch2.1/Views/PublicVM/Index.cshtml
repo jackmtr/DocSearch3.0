@@ -73,14 +73,14 @@
                                     <a href="@Url.Action("Index", "PublicVM", new {
                                             publicId = Model.First().Folder_ID,
                                             subNav = "category",
-                                            prevNav = item.CategoryName
+                                            prevNav = @item.CategoryName
                                         })"
                                        class="navLink"
                                        data-ajax-update="#public_table"
                                        data-ajax-mode="replace-with"
                                        data-ajax-method="GET"
                                        data-subclass="category"
-                                       data-subclass-title=@item.CategoryName
+                                       data-subclass-title="@item.CategoryName"
                                        data-ajax-complete="postNavbar"
                                        data-ajax-success="updateCurrentCount"
                                        data-ajax="true">
@@ -93,14 +93,14 @@
                                                 <a href="@Url.Action("Index", "PublicVM", new {
                                                         publicId = Model.First().Folder_ID,
                                                         subNav = "doctype",
-                                                        prevNav = dt
+                                                        prevNav = @dt
                                                     })"
                                                    class="navLink"
                                                    data-ajax-update="#public_table"
                                                    data-ajax-mode="replace-with"
                                                    data-ajax-method="GET"
                                                    data-subclass="doctype"
-                                                   data-subclass-title=@dt
+                                                   data-subclass-title="@dt"
                                                    data-ajax-complete="postNavbar"
                                                    data-ajax-success="updateCurrentCount"
                                                    data-ajax="true">
@@ -128,18 +128,18 @@
                                             publicId = Model.First().Folder_ID,
                                             policyNumber = policy,
                                             subNav = "policy",
-                                            prevNav = policy
+                                            prevNav = @policy
                                         })"
                                        class="navLink"
                                        data-ajax-update="#public_table"
                                        data-ajax-mode="replace-with"
                                        data-ajax-method="GET"
                                        data-subclass="policy"
-                                       data-subclass-title=@policy
+                                       data-subclass-title="@policy"
                                        data-ajax-complete="postNavbar"
                                        data-ajax-success="updateCurrentCount"
                                        data-ajax="true">
-                                        @policy
+                                       @policy
                                     </a>
                                 </li>
                             }
