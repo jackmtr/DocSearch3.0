@@ -155,8 +155,8 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, 25);
-                    else publicModel = publicModel.OrderByDescending(r => r.DocumentTypeName).ToPagedList(page, 25);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, 10);
+                    else publicModel = publicModel.OrderByDescending(r => r.DocumentTypeName).ToPagedList(page, 10);
 
                     prevFilter = filter;
                 }
@@ -169,8 +169,8 @@ namespace DocSearch2._1.Controllers
                     else {
                         sortAscending = true;
                     }
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 25);
-                    else publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 25);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 10);
+                    else publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 10);
 
                     prevFilter = filter;
                 }
@@ -184,13 +184,13 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.EffectiveDate).ToPagedList(page, 25);
-                    else publicModel = publicModel.OrderByDescending(r => r.EffectiveDate).ToPagedList(page, 25);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.EffectiveDate).ToPagedList(page, 10);
+                    else publicModel = publicModel.OrderByDescending(r => r.EffectiveDate).ToPagedList(page, 10);
 
                     prevFilter = filter;
                 }
                 else {
-                    publicModel = publicModel.ToPagedList(page, 25);
+                    publicModel = publicModel.ToPagedList(page, 10);
                 }
 
                 return PartialView("_PublicTable", publicModel);
@@ -221,7 +221,7 @@ namespace DocSearch2._1.Controllers
 
                 ViewData["currentRecordsCount"] = publicModel.Count();
 
-                publicModel = publicModel.ToPagedList(page, 25);
+                publicModel = publicModel.ToPagedList(page, 10);
 
                 return View(publicModel);
             }

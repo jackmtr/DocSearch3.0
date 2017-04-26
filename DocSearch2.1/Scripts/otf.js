@@ -39,6 +39,10 @@
 
         var $a = $(this); //this is the anchor
 
+        if ($a.parent('li').hasClass('disabled') == true) {
+            return false;
+        }
+
         var options = {
             url: $a.attr("href"),
             data: $("form").serialize(),
@@ -48,7 +52,7 @@
         $.ajax(options).done(function (data) {
             var target = $a.parents("div.pagedList").attr("data-otf-target");
             $(target).replaceWith(data);
-            postNavbar();
+            //postNavbar();
         });
 
         return false;
@@ -97,7 +101,7 @@
     $("form[data-otf-ajax='true']").submit(ajaxFormSubmit);
 
     //event for pagination buttons
-    $("#body").on("click", ".pagedList a", getPage);
+    $("#body").on("click", ".pagination a", getPage);
 
     //image previewer on event
     $("#body").on("mouseenter", ".preview_image", function (e) {
