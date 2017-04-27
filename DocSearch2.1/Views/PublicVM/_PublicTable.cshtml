@@ -5,7 +5,7 @@
         <table class="table table-bordered table-hover">
             <thead class="thead-default">
                 <tr>
-                    <th>
+                    <th> <!--0-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
                        publicId = Model.First().Folder_ID,
@@ -15,7 +15,7 @@
                        searchTerm = TempData["SearchTerm"]
                    }), "#public_table", "replace-with", "GET", "Type of Document", "fa-sort", "filterLink"))
                     </th>
-                    <th>
+                    <th> <!--1-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
                        publicId = Model.First().Folder_ID,
@@ -25,7 +25,9 @@
                        searchTerm = TempData["SearchTerm"]
                    }), "#public_table", "replace-with", "GET", "Issue Date", "fa-sort", "filterLink"))
                     </th>
-                    <th>
+                    <th>Method</th> <!--2-->
+                    <th>Policy# (RefNumber)</th> <!--3-->
+                    <th> <!--4-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
                        publicId = Model.First().Folder_ID,
@@ -35,11 +37,15 @@
                        searchTerm = TempData["SearchTerm"]
                    }), "#public_table", "replace-with", "GET", "Effective Date", "fa-sort", "filterLink"))
                     </th>
-                    <th>
+                    <th>Type (DataType.Name)</th> <!--5-->
+                    <th>Originator</th><!--6-->
+                    <th>Reason</th><!--7-->
+                    <th>Supplier#</th><!--8-->
+                    <th><!--9-->
                         @Html.DisplayNameFor(model => model.ToList().First().Description)
                     </th>
-                    <th>File</th>
-                    <th>...</th>
+                    <th>File</th><!--10-->
+                    <th>...</th><!--11-->
                 </tr>
             </thead>
 
@@ -52,9 +58,15 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.IssueDate)
                     </td>
+                    <td>Method Stuff</td>
+                    <td>Policy #s</td>
                     <td>
                         @Html.DisplayFor(modelItem => item.EffectiveDate)
                     </td>
+                    <td>Types for DataTypeName</td>
+                    <td>Jackie Cheng</td>
+                    <td>B/c reasons</td>
+                    <td>Vincent Nguyen Company</td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>

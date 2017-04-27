@@ -18,7 +18,6 @@ namespace DocSearch2._1.ViewModels
         public string DocumentTypeName { get; set; } //tbl_DocumentType.Name
 
         [Display(Name = "Issue Date")]
-        //[DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}")]
         public Nullable<DateTime> IssueDate { get; set; } //tbl_Document.Issue_DT
 
@@ -30,8 +29,6 @@ namespace DocSearch2._1.ViewModels
         public string CategoryName { get; set; } //tbl_Category.Name
 
         [Display(Name = "Effective Date")]
-        //[DataType(DataType.Date)]
-        //[DisplayFormat(DataFormatString = "{0:d}")]
         [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}")]
         public Nullable<DateTime> EffectiveDate { get; set; } //tbl_DocReference.Date1_DT
 
@@ -39,8 +36,15 @@ namespace DocSearch2._1.ViewModels
 
         public string FileType { get; set; } //tbl_Document.FileType
 
-        //file stuff properties need to be added
-        //think about adding jquery.ui to project through nuget
+        //////
+
+        //[Optional]
+        public string Method { get; set; } //tbl_Document.Method
+
+        //[Optional]
+        public string Originator { get; set; } //tbl_Document.Originator
+
+
         //look into knockout.js
     }
 }

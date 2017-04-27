@@ -30,7 +30,16 @@
                     //adjust table for subnav column, also clears input fields
                     function postNavbar() {
                         $className = $('.active').children("a").data("subclass");
-                        $('#public_table').removeClass().addClass($className);
+                        $classNameTitle = $('.active').children("a").data("subclass-title");
+
+                        if ($classNameTitle == "Correspondence") {
+                            $('#public_table').removeClass().addClass("correspondence");
+                        } else if ($classNameTitle == "Declaration/Endorsement") {
+                            $('#public_table').removeClass().addClass("declaration");
+                        } else {
+                            $('#public_table').removeClass().addClass($className);
+                        }
+                        
 
                         //need to check for form submit, then not do clearFields
                         if ($(this).hasClass('navLink') || $(this).hasClass('button')) {
