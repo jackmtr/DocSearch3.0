@@ -182,15 +182,15 @@ namespace DocSearch2._1.Controllers
                 }
                 else { 
                     //must be filter = "issue" 
-                    if (prevFilter == filter)
+                    if (prevFilter == filter && subNav == prevNav)
                     {
                         sortAscending = !sortAscending;
                     }
                     else {
                         sortAscending = true;
                     }
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 20);
-                    else publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 20);
+                    if (sortAscending) publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 20);
+                    else publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 20);
 
                     prevFilter = filter;
                 }
