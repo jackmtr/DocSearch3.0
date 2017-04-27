@@ -37,26 +37,8 @@ namespace DocSearch2._1.Repositories
                                 where d.Folder_ID == publicNumberInt
                                 from dr in ps.DefaultIfEmpty()
                                 select new {
-                                       f.Folder_ID, d.Document_ID, dt.DocumentType_ID, DtName = dt.Name, d.Issue_DT, d.Description, cat.Category_ID, CatName = cat.Name , dr.Date1_DT, dr.RefNumber, d.FileType, d.Method, d.Originator
+                                       f.Folder_ID, d.Document_ID, dt.DocumentType_ID, DtName = dt.Name, d.Issue_DT, d.Description, cat.Category_ID, CatName = cat.Name , dr.Date1_DT, dr.RefNumber, d.FileType, d.Method, d.Originator, d.Reason, dr.Number1
                                    }).ToList();
-
-            //
-
-            
-
-            //bool foo = documentList.Any(r => r.CatName == "Correspondence");
-            //foreach ()
-
-            //if (documentList.Any(r => r.CatName == "Correspondence")) {
-
-            //   documentList = (from dl in documentList
-            //                    join d in _db.tbl_Document on dl.Document_ID equals d.Document_ID
-            //                    select new
-            //                    {
-            //                        dl.Folder_ID, dl.Document_ID, dl.DocumentType_ID, dl.DtName, dl.Issue_DT, dl.Description, dl.Category_ID, dl.CatName, dl.Date1_DT, dl.RefNumber, dl.FileType, d.Method, d.Originator
-            //                    }).ToList();
-            //}
-            //
 
             foreach (var item in documentList) {
                 PublicVM objpvm = new PublicVM();
@@ -74,6 +56,8 @@ namespace DocSearch2._1.Repositories
                 objpvm.FileType = item.FileType;
                 objpvm.Method = item.Method;
                 objpvm.Originator = item.Originator;
+                objpvm.Reason = item.Reason;
+                objpvm.Supplier = item.Number1;
 
                 PublicVMList.Add(objpvm);
             }

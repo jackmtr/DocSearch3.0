@@ -44,6 +44,12 @@ namespace DocSearch2._1.ViewModels
         //[Optional]
         public string Originator { get; set; } //tbl_Document.Originator
 
+        //[Optional]
+        public string Reason { get; set; } //tbl_Document.Reason
+
+        //[Optional]
+        public string Supplier { get; set; } //tbl_DocReference.Number1
+
 
         //look into knockout.js
     }
