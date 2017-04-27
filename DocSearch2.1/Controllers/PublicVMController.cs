@@ -166,6 +166,21 @@ namespace DocSearch2._1.Controllers
 
                     prevFilter = filter;
                 }
+                else if (filter == "policy")
+                {
+                    if (prevFilter == filter)
+                    {
+                        sortAscending = !sortAscending;
+                    }
+                    else {
+                        sortAscending = true;
+                    }
+
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.RefNumber).ToPagedList(page, 20);
+                    else publicModel = publicModel.OrderByDescending(r => r.RefNumber).ToPagedList(page, 20);
+
+                    prevFilter = filter;
+                }
                 else if (filter == "effective")
                 {
                     if (prevFilter == filter)
@@ -181,9 +196,39 @@ namespace DocSearch2._1.Controllers
 
                     prevFilter = filter;
                 }
+                else if (filter == "originator")
+                {
+                    if (prevFilter == filter)
+                    {
+                        sortAscending = !sortAscending;
+                    }
+                    else {
+                        sortAscending = true;
+                    }
+
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.Originator).ToPagedList(page, 20);
+                    else publicModel = publicModel.OrderByDescending(r => r.Originator).ToPagedList(page, 20);
+
+                    prevFilter = filter;
+                }
+                else if (filter == "supplier")
+                {
+                    if (prevFilter == filter)
+                    {
+                        sortAscending = !sortAscending;
+                    }
+                    else {
+                        sortAscending = true;
+                    }
+
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.Supplier).ToPagedList(page, 20);
+                    else publicModel = publicModel.OrderByDescending(r => r.Supplier).ToPagedList(page, 20);
+
+                    prevFilter = filter;
+                }
                 else { 
                     //must be filter = "issue" 
-                    if (prevFilter == filter && subNav == prevNav)
+                    if (prevFilter == filter)
                     {
                         sortAscending = !sortAscending;
                     }
