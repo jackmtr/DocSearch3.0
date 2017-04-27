@@ -56,7 +56,8 @@ namespace DocSearch2._1.Controllers
             publicModel = repository
                         .SelectAll(Folder_ID);
 
-            publicModel = publicModel.Where(n => n.EffectiveDate != null);
+            //second conditional is for no doc reference documents
+            publicModel = publicModel.Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null);
 
             //instantiating the overall min and max date ranges for this client if date inputs were null
             if (IssueDateMinRange == null)
