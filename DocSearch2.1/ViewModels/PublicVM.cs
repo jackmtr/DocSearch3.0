@@ -38,7 +38,7 @@ namespace DocSearch2._1.ViewModels
 
         //////
 
-        //[Optional]
+        //[Optional] would this be usefull?
         public string Method { get; set; } //tbl_Document.Method
 
         //[Optional]

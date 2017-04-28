@@ -20,8 +20,6 @@ namespace DocSearch2._1.Repositories
 
         //add parameterized constructor
 
-        
-
         public IEnumerable<PublicVM> SelectAll(string publicNumber) {
 
             List<PublicVM> PublicVMList = new List<PublicVM>();
@@ -62,6 +60,38 @@ namespace DocSearch2._1.Repositories
                 PublicVMList.Add(objpvm);
             }
             return PublicVMList;
+        }
+
+        public IEnumerable<MiscPublicData> GetMiscPublicData(string publicNumber)
+        {
+
+            //should be able to create a function to do this repetitive code from both functions
+            List<MiscPublicData> MiscPublicList = new List<MiscPublicData>();
+
+            int publicNumberInt = Int32.Parse(publicNumber); //should be able to be done in LINQ
+
+            var documentList = (from d in _db.tbl_Document
+                                where d.Folder_ID == publicNumberInt
+                                select new
+                                {
+                                    d.Division_CD,
+                                    d.CreatorFirstName,
+                                    d.CreatorLastName,
+                                    d.LastUser_DT
+                                }).ToList();
+
+            foreach (var item in documentList)
+            {
+                MiscPublicData mpd = new MiscPublicData();
+
+                mpd.Branch = item.Division_CD;
+                mpd.Creator = item.CreatorFirstName + " " + item.CreatorLastName;
+                mpd.ArchiveTime = item.LastUser_DT;
+
+                MiscPublicList.Add(mpd);
+            }
+
+            return MiscPublicList;
         }
 
         public void Dispose() {

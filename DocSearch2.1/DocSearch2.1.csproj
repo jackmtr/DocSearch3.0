@@ -260,6 +260,7 @@
     <Compile Include="Repositories\IFolderRepository.cs" />
     <Compile Include="Repositories\IPublicRepository.cs" />
     <Compile Include="Repositories\PublicRepository.cs" />
+    <Compile Include="ViewModels\MiscPublicData.cs" />
     <Compile Include="ViewModels\NavBar.cs" />
     <Compile Include="ViewModels\PublicVM.cs" />
   </ItemGroup>
