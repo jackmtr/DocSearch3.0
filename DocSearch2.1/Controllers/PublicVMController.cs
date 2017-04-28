@@ -36,7 +36,7 @@ namespace DocSearch2._1.Controllers
         // GET: PublicVM
         [HttpGet] // dunno if need this, was causing issues with the search return request
         //I think the search submit is coming back as a post
-        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = "issue", string searchTerm = null, string IssueDateMinRange = null, string IssueDateMaxRange = null, int page = 1)
+        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueDateMinRange = null, string IssueDateMaxRange = null, int page = 1)
         {
             //persist client name, id
             TempData.Keep("Client_Name");
@@ -226,15 +226,15 @@ namespace DocSearch2._1.Controllers
 
                     prevFilter = filter;
                 }
-                else { 
-                    //must be filter = "issue" 
-                    if (prevFilter == filter)
+                else {
+                    if (filter == null)
                     {
-                        sortAscending = !sortAscending;
-                    }
-                    else {
                         sortAscending = true;
                     }
+                    else {
+                        sortAscending = !sortAscending;
+                    }
+
                     if (sortAscending) publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 20);
                     else publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 20);
 

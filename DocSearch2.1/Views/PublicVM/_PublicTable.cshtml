@@ -1,11 +1,11 @@
 ﻿@model IPagedList<PublicVM>
 
-<div id="public_table" class="row" data-currentRecord="@ViewData["currentRecordsCount"]">
+<div id="public_table" class="row default-table" data-currentRecord="@ViewData["currentRecordsCount"]">
     <div id ="public_table_inner" class="col-md-12">
         <table class="table table-bordered table-hover">
             <thead class="thead-default">
                 <tr>
-                    <th> <!--0-->
+                    <th> <!--1-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
                        publicId = Model.First().Folder_ID,
@@ -15,7 +15,7 @@
                        searchTerm = TempData["SearchTerm"]
                    }), "#public_table", "replace-with", "GET", "Type of Document", "fa-sort", "filterLink"))
                     </th>
-                    <th> <!--1-->
+                    <th> <!--2-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
                        publicId = Model.First().Folder_ID,
@@ -25,8 +25,8 @@
                        searchTerm = TempData["SearchTerm"]
                    }), "#public_table", "replace-with", "GET", "Issue Date", "fa-sort", "filterLink"))
                     </th>
-                    <th>Method</th> <!--2-->
-                    <th> <!--3, plug in-->
+                    <th>Method</th> <!--3-->
+                    <th> <!--4-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                     {
                         publicId = Model.First().Folder_ID,
@@ -36,7 +36,7 @@
                         searchTerm = TempData["SearchTerm"]
                     }), "#public_table", "replace-with", "GET", "Policy #", "fa-sort", "filterLink"))
                     </th> 
-                    <th> <!--4-->
+                    <th> <!--5-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
                        publicId = Model.First().Folder_ID,
@@ -46,10 +46,7 @@
                        searchTerm = TempData["SearchTerm"]
                    }), "#public_table", "replace-with", "GET", "Effective Date", "fa-sort", "filterLink"))
                     </th>
-                    <th> <!--5, plug in-->
-                        Document Type
-                    </th> 
-                    <th><!--6, plug in-->
+                    <th><!--6-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                     {
                         publicId = Model.First().Folder_ID,
@@ -95,9 +92,6 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.EffectiveDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DocumentTypeName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Originator)
