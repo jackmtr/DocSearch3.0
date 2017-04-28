@@ -8,7 +8,10 @@ namespace DocSearch2._1.ViewModels
 {
     public class MiscPublicData
     {
+        public int Document_ID { get; set; }
+
         public string Branch { get; set; }
+
         public string Creator { get; set; }
 
         [Display(Name = "Archive Time")]

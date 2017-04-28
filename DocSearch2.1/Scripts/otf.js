@@ -87,6 +87,33 @@
         $('.previewImg').remove();
     }
 
+    function createMiscTable(link) {
+        var options = {
+            url: link.attr("action"),
+            type: link.attr("method"),
+            data: link.serialize()
+        };
+
+        $.ajax(options).done(function (data) {
+
+            var id = link.attr("data-otf-target");
+
+            var $target = $(id);
+            var $newHtml = $(data);
+            $newHtml.attr("id", id.substring(1, id.length));
+
+            $target.replaceWith($newHtml);
+        })
+    }
+
+    function destroyMiscTable(link) {
+
+        var id = link.attr("data-otf-target");
+        var $target = $(id);
+
+        $target.empty();
+    }
+
 
     if (!Modernizr.inputtypes.date) {
 
@@ -129,5 +156,19 @@
     //allows category list item hover to highlight every doctype in it
     $(".category_nav > div > a").hover( function () {
         $(this).parent().toggleClass("nav_cate_hover");
+    });
+
+    $("#body").on("click", ".miscTableLink", function () {
+
+        var $link = $(this);
+
+        $link.toggleClass("showData");
+
+        if ($link.hasClass("showData")) {
+            createMiscTable($link);
+        } else {
+            destroyMiscTable($link);
+        }
+        return false;
     });
 });

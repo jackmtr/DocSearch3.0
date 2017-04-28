@@ -267,13 +267,13 @@ namespace DocSearch2._1.Controllers
         public ActionResult MiscData([Bind(Prefix = "documentId")] string Document_ID) {
 
             //declare and instantiate the original full MiscPublicData data for the client
-            IEnumerable<MiscPublicData> publicModel = null;
+            MiscPublicData documentData = null;
 
-            publicModel = documentRepository.GetMiscPublicData(Document_ID);
+            documentData = documentRepository.GetMiscPublicData(Document_ID);
 
-            if (publicModel != null)
+            if (documentData != null)
             {
-                return PartialView(publicModel);
+                return PartialView(documentData);
             }
             else {
                 return HttpNotFound();

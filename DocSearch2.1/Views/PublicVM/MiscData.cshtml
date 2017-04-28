@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DocSearch2._1.ViewModels.MiscPublicData>
+﻿@model DocSearch2._1.ViewModels.MiscPublicData
 
 <tr>
     <td colspan="11">
@@ -15,20 +15,18 @@
                 </th>
             </tr>
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Branch)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Creator)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ArchiveTime)
-                    </td>
-                </tr>
-            }
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Branch)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Creator)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.ArchiveTime)
+                </td>
+            </tr>
+
         </table>
     </td>
 </tr>

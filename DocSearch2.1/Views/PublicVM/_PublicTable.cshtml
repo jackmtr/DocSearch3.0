@@ -13,7 +13,7 @@
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
                        searchTerm = TempData["SearchTerm"]
-                   }), "#public_table", "replace-with", "GET", "Type of Document", "fa-sort", "filterLink"))
+                   }), "#public_table", "replace-with", "GET", "Type of Document", "fa-sort", "filterLink", "postNavbar"))
                     </th>
                     <th> <!--2-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
@@ -23,7 +23,7 @@
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
                        searchTerm = TempData["SearchTerm"]
-                   }), "#public_table", "replace-with", "GET", "Issue Date", "fa-sort", "filterLink"))
+                   }), "#public_table", "replace-with", "GET", "Issue Date", "fa-sort", "filterLink", "postNavbar"))
                     </th>
                     <th>Method</th> <!--3-->
                     <th> <!--4-->
@@ -34,7 +34,7 @@
                         subNav = ViewData["currentNav"],
                         prevNav = ViewData["currentNavTitle"],
                         searchTerm = TempData["SearchTerm"]
-                    }), "#public_table", "replace-with", "GET", "Policy #", "fa-sort", "filterLink"))
+                    }), "#public_table", "replace-with", "GET", "Policy #", "fa-sort", "filterLink", "postNavbar"))
                     </th> 
                     <th> <!--5-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
@@ -44,7 +44,7 @@
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
                        searchTerm = TempData["SearchTerm"]
-                   }), "#public_table", "replace-with", "GET", "Effective Date", "fa-sort", "filterLink"))
+                   }), "#public_table", "replace-with", "GET", "Effective Date", "fa-sort", "filterLink", "postNavbar"))
                     </th>
                     <th><!--6-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
@@ -54,7 +54,7 @@
                         subNav = ViewData["currentNav"],
                         prevNav = ViewData["currentNavTitle"],
                         searchTerm = TempData["SearchTerm"]
-                    }), "#public_table", "replace-with", "GET", "Originator", "fa-sort", "filterLink"))
+                    }), "#public_table", "replace-with", "GET", "Originator", "fa-sort", "filterLink", "postNavbar"))
                     </th>
                     <th>Reason</th><!--7-->
                     <th>
@@ -65,7 +65,7 @@
                         subNav = ViewData["currentNav"],
                         prevNav = ViewData["currentNavTitle"],
                         searchTerm = TempData["SearchTerm"]
-                    }), "#public_table", "replace-with", "GET", "Supplier #", "fa-sort", "filterLink"))
+                    }), "#public_table", "replace-with", "GET", "Supplier #", "fa-sort", "filterLink", "postNavbar"))
                     </th><!--8-->
                     <th><!--9-->
                         @Html.DisplayNameFor(model => model.ToList().First().Description)
@@ -115,12 +115,17 @@
                             }
                         </td>
                         <td>
-                            @Ajax.ActionLink("More", "MiscData", new { documentId = item.Document_ID }, new AjaxOptions
+                            @*@Ajax.ActionLink("More", "MiscData", new { documentId = item.Document_ID }, new AjaxOptions
                    {
                        HttpMethod = "GET",
                        InsertionMode = InsertionMode.ReplaceWith,
                        UpdateTargetId = @item.Document_ID.ToString()
-                   })
+                   })*@
+                            @*@Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("MiscData", "PublicVM", new
+                            {
+                                documentId = item.Document_ID
+                            }), "#"+@item.Document_ID.ToString(), "replace-with", "GET", "More", "fa-sort", "miscTableLink", ""))*@
+                            <a href="#" class="miscTableLink" method="get" action="@Url.Action("MiscData", new { documentId = item.Document_ID })" data-otf-ajax="true" data-otf-target="#@item.Document_ID.ToString()">More</a>
                         </td>
                     </tr>
                     <tr id="@item.Document_ID"></tr>

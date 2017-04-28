@@ -12,7 +12,7 @@ namespace DocSearch2._1.Repositories
     {
         tbl_Document SelectById(string id);
 
-        IEnumerable<MiscPublicData> GetMiscPublicData(string publicNumber);
+        MiscPublicData GetMiscPublicData(string publicNumber);
 
         void Dispose();
     }
