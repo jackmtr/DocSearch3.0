@@ -287,6 +287,7 @@
     <Content Include="Views\Shared\Errors.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\PublicVM\_PublicTable.cshtml" />
+    <Content Include="Views\PublicVM\MiscData.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

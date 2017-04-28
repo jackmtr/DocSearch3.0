@@ -13,14 +13,14 @@ namespace DocSearch2._1.Controllers
 {
     public class PublicVMController : Controller
     {
-        private IPublicRepository repository = null;
-        private IDocumentRepository repository1 = null;
+        private IPublicRepository publicRepository = null;
+        private IDocumentRepository documentRepository = null;
         private static bool sortAscending = true;
         private static string prevFilter;
 
         public PublicVMController() {
-            this.repository = new PublicRepository();
-            this.repository1 = new DocumentRepository();
+            this.publicRepository = new PublicRepository();
+            this.documentRepository = new DocumentRepository();
         }
 
         //***Check if model dates are populating correctly
@@ -53,7 +53,7 @@ namespace DocSearch2._1.Controllers
             //declare and instantiate the original full PublicVM data for the client
             IEnumerable<PublicVM> publicModel = null;
 
-            publicModel = repository
+            publicModel = publicRepository
                         .SelectAll(Folder_ID);
 
             //second conditional is for no doc reference documents
@@ -264,10 +264,26 @@ namespace DocSearch2._1.Controllers
             }
         }
 
+        public ActionResult MiscData([Bind(Prefix = "documentId")] string Document_ID) {
+
+            //declare and instantiate the original full MiscPublicData data for the client
+            IEnumerable<MiscPublicData> publicModel = null;
+
+            publicModel = documentRepository.GetMiscPublicData(Document_ID);
+
+            if (publicModel != null)
+            {
+                return PartialView(publicModel);
+            }
+            else {
+                return HttpNotFound();
+            }
+        }
+
         // Get: File
         public ActionResult FileDisplay([Bind(Prefix = "documentId")] string id) {
 
-            var file = repository1.SelectById(id);
+            var file = documentRepository.SelectById(id);
 
             string MimeType = null;
 
@@ -321,7 +337,8 @@ namespace DocSearch2._1.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            repository.Dispose();
+            publicRepository.Dispose();
+            documentRepository.Dispose();
 
             base.Dispose(disposing);
         }

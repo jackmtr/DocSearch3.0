@@ -4,7 +4,7 @@
     <div id ="public_table_inner" class="col-md-12">
         <table class="table table-bordered table-hover">
             <thead class="thead-default">
-                <tr>
+                <tr class="main-rows">
                     <th> <!--1-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
@@ -71,51 +71,62 @@
                         @Html.DisplayNameFor(model => model.ToList().First().Description)
                     </th>
                     <th>File</th><!--10-->
-                    <th>More</th><!--11-->
+                    <th>Misc</th><!--11-->
                 </tr>
             </thead>
-
-            @foreach (var item in Model)
+            <tbody>
+                @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DocumentTypeName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IssueDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Method)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RefNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EffectiveDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Originator)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Reason)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Supplier)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.ActionLink(item.FileType, "FileDisplay", new { documentId = item.Document_ID }, new { target = "_blank" }) 
-                        @if (item.FileType == "Picture JPEG") {
-                            <div class = "preview_image">
-                                @Html.ActionLink("[Preview]", "FileDisplay", new { documentId = item.Document_ID }, new { @class = "preview", id = item.Document_ID })
-                            </div>
-                        }
-                    </td>
-                    <td>OPEN ME</td>
-                </tr>
-            }
+                    <tr class="main-rows">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DocumentTypeName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IssueDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Method)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RefNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EffectiveDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Originator)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Reason)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Supplier)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.ActionLink(item.FileType, "FileDisplay", new { documentId = item.Document_ID }, new { target = "_blank" })
+                            @if (item.FileType == "Picture JPEG")
+                            {
+                                <div class="preview_image">
+                                    @Html.ActionLink("[Preview]", "FileDisplay", new { documentId = item.Document_ID }, new { @class = "preview", id = item.Document_ID })
+                                </div>
+                            }
+                        </td>
+                        <td>
+                            @Ajax.ActionLink("More", "MiscData", new { documentId = item.Document_ID }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.ReplaceWith,
+                       UpdateTargetId = @item.Document_ID.ToString()
+                   })
+                        </td>
+                    </tr>
+                    <tr id="@item.Document_ID"></tr>
+                }
+            </tbody>
+
         </table>
 
         <div class="pagedList col-md-6 col-md-offset-3" data-otf-target="#public_table" >

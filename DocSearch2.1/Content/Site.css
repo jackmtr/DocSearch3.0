@@ -152,42 +152,42 @@ input:checked + .slider:before {
 /*Default Table columns*/
 /*show 1, 2, 9, 10, 11*/
 /*hide 3, 4, 5, 6, 7, 8*/
-.default-table tr th:nth-child(-4n + 8), .default-table tr td:nth-child(-4n + 8), .default-table tr th:nth-child(-3n + 6), .default-table tr td:nth-child(-3n + 6), .default-table tr th:nth-child(7), .default-table tr td:nth-child(7), .default-table tr th:nth-child(5), .default-table tr td:nth-child(5){
+.default-table .main-rows>th:nth-child(-4n + 8), .default-table .main-rows>td:nth-child(-4n + 8), .default-table .main-rows>th:nth-child(-3n + 6), .default-table .main-rows>td:nth-child(-3n + 6), .default-table .main-rows>th:nth-child(7), .default-table .main-rows>td:nth-child(7), .default-table .main-rows>th:nth-child(5), .default-table .main-rows>td:nth-child(5){
     display: none;
 }
 
 /*show 1, 2, 9, 10*/
 /*hide 3, 4, 5, 6, 7, 8, 11*/
 /*Hides select columns when in subcategory - category*/
-.category tr th:nth-child(-4n + 11), .category tr td:nth-child(-4n + 11), .category tr th:nth-child(-4n + 8), .category tr td:nth-child(-4n + 8), .category tr th:nth-child(11), .category tr td:nth-child(11), .category tr th:nth-child(6), .category tr td:nth-child(6), .category tr th:nth-child(5), .category tr td:nth-child(5){
+.category .main-rows>th:nth-child(-4n + 11), .category .main-rows>td:nth-child(-4n + 11), .category .main-rows>th:nth-child(-4n + 8), .category .main-rows>td:nth-child(-4n + 8), .category .main-rows>th:nth-child(11), .category .main-rows>td:nth-child(11), .category .main-rows>th:nth-child(6), .category .main-rows>td:nth-child(6), .category .main-rows>th:nth-child(5), .category .main-rows>td:nth-child(5){
     display: none;
 }
 
 /*2, 9, 10, 11*/
 /*1, 3, 4, 5, 6, 7, 8*/
 /*Hides select columns when in subcategory - doctype*/
-.doctype tr th:nth-child(-4n+8), .doctype tr td:nth-child(-4n+8), .doctype tr th:nth-child(-2n+7), .doctype tr td:nth-child(-2n+7), .doctype tr th:nth-child(6), .doctype tr td:nth-child(6), .doctype tr th:nth-child(5), .doctype tr td:nth-child(5){
+.doctype .main-rows>th:nth-child(-4n+8), .doctype .main-rows>td:nth-child(-4n+8), .doctype .main-rows>th:nth-child(-2n+7), .doctype .main-rows>td:nth-child(-2n+7), .doctype .main-rows>th:nth-child(6), .doctype .main-rows>td:nth-child(6), .doctype .main-rows>th:nth-child(5), .doctype .main-rows>td:nth-child(5){
     display: none;
 }
 
 /*1, 2, 5, 9, 10, 11*/
 /*3, 4, 6, 7, 8*/
 /*Hides select columns when in subcategory - policy*/
-.policy tr th:nth-child(-4n+8), .policy tr td:nth-child(-4n+8), .policy tr th:nth-child(7), .policy tr td:nth-child(7), .policy tr th:nth-child(6), .policy tr td:nth-child(6), .policy tr th:nth-child(3), .policy tr td:nth-child(3){
+.policy .main-rows>th:nth-child(-4n+8), .policy .main-rows>td:nth-child(-4n+8), .policy .main-rows>th:nth-child(7), .policy .main-rows>td:nth-child(7), .policy .main-rows>th:nth-child(6), .policy .main-rows>td:nth-child(6), .policy .main-rows>th:nth-child(3), .policy .main-rows>td:nth-child(3){
     display: none;
 }
 
 /*1, 2, 3, 6, 9, 10, 11*/
 /*4, 5, 7, 8*/
 /*Hides select columns when in policy - correspondence*/
-.correspondence tr th:nth-child(-4n+8), .correspondence tr td:nth-child(-4n+8), .correspondence tr th:nth-child(7), .correspondence tr td:nth-child(7), .correspondence tr th:nth-child(5), .correspondence tr td:nth-child(5){
+.correspondence .main-rows>th:nth-child(-4n+8), .correspondence .main-rows>td:nth-child(-4n+8), .correspondence .main-rows>th:nth-child(7), .correspondence .main-rows>td:nth-child(7), .correspondence .main-rows>th:nth-child(5), .correspondence .main-rows>td:nth-child(5){
     display: none;
 }
 
 /*2, 4, 5, 7, 8, 9, 10, 11*/
 /*1, 3, 6*/
 /*Hides select columns when in doctype - declaration/endorsement*/
-.declaration tr th:nth-child(-3n+6), .declaration tr td:nth-child(-3n+6), .declaration tr th:nth-child(1), .declaration tr td:nth-child(1){
+.declaration .main-rows>th:nth-child(-3n+6), .declaration .main-rows>td:nth-child(-3n+6), .declaration .main-rows>th:nth-child(1), .declaration .main-rows>td:nth-child(1){
     display: none;
 }
 
