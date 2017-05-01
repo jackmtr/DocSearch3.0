@@ -7,9 +7,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Branch)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Creator)
-                </th>
                 @if ((string)ViewData["currentNav"] == "policyNumber" || (string)ViewData["currentNavTitle"] == "Correspondence") {
                     <th>
                         @Html.DisplayNameFor(model => model.Reason)
@@ -21,6 +18,9 @@
                     </th>
                 }
                 <th>
+                    @Html.DisplayNameFor(model => model.Creator)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.ArchiveTime)
                 </th>
             </tr>
@@ -29,9 +29,7 @@
                 <td>
                     @Html.DisplayFor(model => model.Branch)
                 </td>
-                <td>
-                    @Html.DisplayFor(model => model.Creator)
-                </td>
+
                 @if ((string)ViewData["currentNav"] == "policyNumber" || (string)ViewData["currentNavTitle"] == "Correspondence")
                 {
                     <td>
@@ -44,6 +42,9 @@
                         @Html.DisplayFor(model => model.Recipient)
                     </td>
                 }
+                <td>
+                    @Html.DisplayFor(model => model.Creator)
+                </td>
                 <td>
                     @Html.DisplayFor(model => model.ArchiveTime)
                 </td>

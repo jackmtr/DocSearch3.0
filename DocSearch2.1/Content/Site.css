@@ -11,14 +11,40 @@ header {
 #public_navigation {
     background-color: rgba(191, 215, 48, 0.7);
     height: 90vh;
-    width: 20%;
+    width: 25%;
+    padding: 0;
 }
+
+
+/*make the nav button have some margin, while list has none*/
+.nav-button {
+    margin-top: 10%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 5%;
+    height: 10%;
+}
+/*
+.nav_lists_outer {
+    height: 90vh;
+}
+
+.nav_lists {
+    height: 100vh;
+}*/
+
+/*Needed to allow a scrollable policy list if needed*/
+#policy_section {
+    height: 100%;
+    width: auto;
+}
+/**/
 
 /*Makes the main content height to match remaining screen height, breaks for mobile*/
 #public_info {
     height: 90vh;
-    width: 80%;
-    overflow:auto; /*Makes it that the parent div will adjust height to dynamic table height*/
+    width: 75%;
+    overflow-y:auto; /*Makes it that the parent div will adjust height to dynamic table height*/
 }
 
 /*Affects the nav bar list, as well as the pagedList*/
@@ -256,22 +282,22 @@ td {
 .nav_lists{
     padding-left: 0;
     padding-right: 0;
+    width: inherit;
+    height: 100%;
 }
 
 .nav_lists ul{
-    float: left;/* Make this div as wide as its contents */
+    /*float: left; NOT DOING ANYTHING. Make this div as wide as its contents */
     /* Colours and borders for illustration purposes */
-    width: 1000px;
+    width: inherit;
 }
 
 
 .nav_lists_outer {
-    overflow: hidden;/* Makes #outer contain its floated children */
-    width:initial;
-}
-
-#public_navigation {
-
+    /*overflow-y: hidden; Makes #outer contain its floated children */
+    margin: 0;
+    width: 100%;
+    height: 80%;
 }
 
 .filter {
@@ -293,4 +319,11 @@ li {
 
 h4 {
     text-align: center;
+}
+
+/*Give a scroll to the ul policy list*/
+#policy_list{
+    width: 100%;
+    height: inherit;
+    overflow-y: scroll;
 }
