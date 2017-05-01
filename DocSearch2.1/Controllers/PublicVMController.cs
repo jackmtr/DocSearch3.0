@@ -253,7 +253,8 @@ namespace DocSearch2._1.Controllers
             else { 
                 //pretty much should only be the initial synchronous load to come in here
                 if (publicModel != null)
-                {        
+                {
+                    ViewData["currentRecordsCount"] = publicModel.Count();
                     publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 20);
 
                     return View(publicModel);
