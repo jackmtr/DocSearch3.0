@@ -28,6 +28,7 @@ namespace DocSearch2._1.Repositories
             int documentNumberInt = Int32.Parse(id);
 
             var documentData = (from d in _db.tbl_Document
+                                join dr in _db.tbl_DocReference on d.Document_ID equals dr.Document_ID
                                 where d.Document_ID == documentNumberInt
                                 select new
                                 {
@@ -35,9 +36,12 @@ namespace DocSearch2._1.Repositories
                                     d.Division_CD,
                                     d.CreatorFirstName,
                                     d.CreatorLastName,
-                                    d.LastUser_DT
-                                }).Single();
-
+                                    d.LastUser_DT,
+                                    d.Reason,
+                                    d.tbl_DocReference
+                                }).First();
+            //instead of doing .First(), should be a better way of bringing over just 1 record since they SHOULD(?) all be the same, probably a better LINQ statement
+            //torn between making a subclass for docReference to pull those 3 properties from, or just use the full dataset.  
 
             MiscPublicData mpd = new MiscPublicData();
 
@@ -45,6 +49,8 @@ namespace DocSearch2._1.Repositories
             mpd.Branch = documentData.Division_CD;
             mpd.Creator = documentData.CreatorFirstName + " " + documentData.CreatorLastName;
             mpd.ArchiveTime = documentData.LastUser_DT;
+            mpd.Reason = documentData.Reason;
+            mpd.DocReferences = documentData.tbl_DocReference;
 
             return mpd;
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocSearch2._1.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,6 +18,10 @@ namespace DocSearch2._1.ViewModels
         [Display(Name = "Archive Time")]
         //[DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}")]
         public Nullable<DateTime> ArchiveTime { get; set; }
+
+        public string Reason { get; set; }
+
+        public ICollection<tbl_DocReference> DocReferences { get; set; }
 
     }
 }
