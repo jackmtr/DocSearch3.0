@@ -300,9 +300,13 @@ td {
     height: 80%;
 }
 
+/*Gives the input boxes a better look*/
 .filter {
     text-align: center;
     margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 li {
@@ -327,3 +331,16 @@ h4 {
     height: inherit;
     overflow-y: scroll;
 }
+
+form {
+    margin-right: 10px;
+}
+
+@media(max-width:767px){
+    .main-rows > th:nth-child(1), .main-rows > td:nth-child(1), .main-rows > th:nth-child(3), .main-rows > td:nth-child(3), .main-rows > th:nth-child(4), .main-rows > td:nth-child(4), .main-rows > th:nth-child(5), .main-rows > td:nth-child(5), .main-rows > th:nth-child(6), .main-rows > td:nth-child(6), .main-rows > th:nth-child(7), .main-rows > td:nth-child(7), .main-rows > th:nth-child(8), .main-rows > td:nth-child(8), .main-rows > th:nth-child(11), .main-rows > td:nth-child(11) {
+        display: none;
+    }
+}
+@media(min-width:768px){}
+@media(min-width:992px){}
+@media(min-width:1200px){}

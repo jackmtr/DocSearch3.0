@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div id ="main-row" class="row">
-    <nav id="public_navigation" class="navbar navbar-default col-md-2 hidden-sm hidden-xs">
+    <nav id="public_navigation" class="navbar navbar-default col-sm-2">
 
         <div class="nav-button row">
             <div class="cat_pol_switcher col-md-12">
@@ -161,7 +161,7 @@
         </div><!--nav_lists_outer row--> 
     </nav>
 
-    <div id="public_info" class="col-md-10">
+    <div id="public_info" class="col-sm-10">
 
         <div class="public_name_id row">
             <div class="col-md-6">
@@ -177,25 +177,23 @@
         
 
         <!--Search Box, Date Filters, clear, and submit button-->
-        <div> <!--static form needs to pull this info somehow: subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"]-->
+        <div>
             <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#public_table" class="row">
-                <div class="filter col-md-4">
-                    Search Description:
-                    <br /> <!--Eventually no br and do this by css probably-->
+                <div class="filter col-md-3">
+                    <label for="search">Search Description:</label>
                     <input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />
 
                     <input type="search" name="searchTerm" />
                 </div>
                 <div class="filter col-md-3">
-                    Low Range Date:
+                    <label for="IssueDateMinRange">Low Range Date:</label>
                     @Html.TextBox("IssueDateMinRange", TempData["IssueDateMin"], new { @class = "datefield", type = "date" })
                 </div>
                 <div class="filter col-md-3">
-                    High Range Date:
+                    <label for="IssueDateMaxRange">High Range Date:</label>
                     @Html.TextBox("IssueDateMaxRange", TempData["IssueDateMax"], new { @class = "datefield", type = "date" })
                 </div>
-
-                <div class="filter col-md-2 buttondiv">
+                <div class="filter col-md-3 buttondiv">
                     @Ajax.ActionLink("Clear Search", "Index", new
                {
                    publicId = Model.First().Folder_ID
