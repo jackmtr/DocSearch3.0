@@ -38,7 +38,7 @@ header {
 }
 
 /*Affects the nav bar list, as well as the pagedList*/
-ul {
+#category_section ul {
     list-style-type: none;
     font-size: 14px;
     padding-left: 0px;
@@ -238,6 +238,7 @@ a.button {
 table {
     width: 100%;
     table-layout: auto;
+    border-collapse:;
 }
 
 th, td {
@@ -246,6 +247,10 @@ th, td {
     text-align: center;
     font-size: 16px;
     border: 1px solid black !important;
+}
+
+th, .main-rows > td:nth-child(11) {
+    white-space:nowrap;
 }
 
 td {
@@ -311,6 +316,25 @@ form {
 
 .category_nav > div > a {
     font-weight: bold;
+}
+
+
+.pagedList {
+        margin-left: auto;
+    margin-right: auto;
+}
+
+.pagination li{
+    /*display: inline;
+    float: left;*/
+}
+
+.PagedList-pageCountAndLocation {
+    white-space:nowrap;
+}
+
+form input {
+    text-align: center;
 }
 
 @media(max-width:767px){
