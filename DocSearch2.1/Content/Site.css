@@ -1,6 +1,4 @@
-﻿
-
-/*Sets the top Westland Banner, at fixed height*/
+﻿/*Sets the top Westland Banner, at fixed height*/
 header {  
     background: url(../Images/logo.png) no-repeat bottom;
     background-color: #26728a;
@@ -9,12 +7,12 @@ header {
 
 /*Makes the nav height to match remaining screen height, breaks for mobile*/
 #public_navigation {
-    background-color: rgba(191, 215, 48, 0.7);
+    background-color: lightgrey;
     height: 90vh;
     width: 25%;
+    /*min-width: 200px;*/
     padding: 0;
 }
-
 
 /*make the nav button have some margin, while list has none*/
 .nav-button {
@@ -24,26 +22,18 @@ header {
     margin-bottom: 5%;
     height: 10%;
 }
-/*
-.nav_lists_outer {
-    height: 90vh;
-}
-
-.nav_lists {
-    height: 100vh;
-}*/
 
 /*Needed to allow a scrollable policy list if needed*/
 #policy_section {
     height: 100%;
-    width: auto;
+    width: auto; /*might not be needed*/
 }
-/**/
 
 /*Makes the main content height to match remaining screen height, breaks for mobile*/
 #public_info {
     height: 90vh;
     width: 75%;
+    flex: auto;
     overflow-y:auto; /*Makes it that the parent div will adjust height to dynamic table height*/
 }
 
@@ -70,10 +60,10 @@ li a:hover {
 }
 
 
-/*#category_list > li:hover,  #category_list > li li:hover{
+#category_list > li:hover,  #category_list > li li:hover{
     background-color: #555;
 
-}*/
+}
 
 .nav_cate_hover{
     background-color: #555;
@@ -84,7 +74,7 @@ li a:hover {
 }
 
 .active {
-    background-color: white;
+    background-color: grey;
     color: white;
     overflow: hidden;
     clear: both;
@@ -125,7 +115,7 @@ h2 {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: black;
     -webkit-transition: .4s;
     transition: .4s;
 }
@@ -171,7 +161,7 @@ input:checked + .slider:before {
 
 /*The main part of the content, which involves 'public' info, search bar, and date filters*/
 #public_info {
-    background-color: rgba(237, 28, 36, 0.5);
+    background-color: white;
 }
 
 
@@ -258,24 +248,8 @@ th, td {
     border: 1px solid black !important;
 }
 
-tr {
-
-}
-
 td {
     background: white;
-}
-
-.pagedList {
-    
-}
-
-.pagination{
-
-}
-
-.pagination{
-
 }
 
 /*The nav lists and it's title*/
@@ -291,7 +265,6 @@ td {
     /* Colours and borders for illustration purposes */
     width: inherit;
 }
-
 
 .nav_lists_outer {
     /*overflow-y: hidden; Makes #outer contain its floated children */
@@ -336,9 +309,14 @@ form {
     margin-right: 10px;
 }
 
+.category_nav > div > a {
+    font-weight: bold;
+}
+
 @media(max-width:767px){
     .main-rows > th:nth-child(1), .main-rows > td:nth-child(1), .main-rows > th:nth-child(3), .main-rows > td:nth-child(3), .main-rows > th:nth-child(4), .main-rows > td:nth-child(4), .main-rows > th:nth-child(5), .main-rows > td:nth-child(5), .main-rows > th:nth-child(6), .main-rows > td:nth-child(6), .main-rows > th:nth-child(7), .main-rows > td:nth-child(7), .main-rows > th:nth-child(8), .main-rows > td:nth-child(8), .main-rows > th:nth-child(11), .main-rows > td:nth-child(11) {
         display: none;
+        overflow: scroll;
     }
 }
 @media(min-width:768px){}
