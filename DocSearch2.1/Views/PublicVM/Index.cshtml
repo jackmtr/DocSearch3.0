@@ -129,7 +129,7 @@
                         <!--need to check for no reference number documents with the policy !- null-->
                         @foreach (var policy in ViewBag.PolicyNavBar)
                         {
-                            if (policy != null) 
+                            if (policy != null && policy.Length > 0) 
                             {
                                 <li>
                                     <a href="@Url.Action("Index", "PublicVM", new
