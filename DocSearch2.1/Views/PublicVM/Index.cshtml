@@ -31,14 +31,16 @@
                         $className = $('.active').children("a").data("subclass");
                         $classNameTitle = $('.active').children("a").data("subclass-title");
 
-                        if ($classNameTitle == "Correspondence") {
-                            $('#public_table').removeClass().addClass("correspondence");
-                        } else if ($classNameTitle == "Declaration/Endorsement") {
-                            $('#public_table').removeClass().addClass("declaration");
-                        } else {
-                            $('#public_table').removeClass().addClass($className);
+                        //first if statement checks if $className has a value or is undefined
+                        if ($className) {
+                            if ($classNameTitle == "Correspondence") {
+                                $('#public_table').removeClass().addClass("correspondence");
+                            } else if ($classNameTitle == "Declaration/Endorsement") {
+                                $('#public_table').removeClass().addClass("declaration");
+                            } else {
+                                $('#public_table').removeClass().addClass($className);
+                            }
                         }
-                        
 
                         //need to check for form submit, then not do clearFields
                         if ($(this).hasClass('navLink') || $(this).hasClass('button')) {
