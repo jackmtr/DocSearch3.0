@@ -21,6 +21,8 @@ namespace DocSearch2._1.ViewModels
 
         public string Reason { get; set; }
 
+        public string Recipient { get; set; }
+
         public ICollection<tbl_DocReference> DocReferences { get; set; }
 
     }

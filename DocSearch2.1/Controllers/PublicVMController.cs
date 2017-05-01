@@ -264,8 +264,7 @@ namespace DocSearch2._1.Controllers
             }
         }
 
-        public ActionResult MiscData([Bind(Prefix = "documentId")] string Document_ID) {
-
+        public ActionResult MiscData([Bind(Prefix = "documentId")] string Document_ID, string subNav, string prevNav) {
             //declare and instantiate the original full MiscPublicData data for the client
             MiscPublicData documentData = null;
 
@@ -273,6 +272,9 @@ namespace DocSearch2._1.Controllers
 
             if (documentData != null)
             {
+                ViewData["currentNav"] = subNav;
+                ViewData["currentNavTitle"] = prevNav;
+
                 return PartialView(documentData);
             }
             else {

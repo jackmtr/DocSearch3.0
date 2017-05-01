@@ -28,8 +28,10 @@ namespace DocSearch2._1.Repositories
             int documentNumberInt = Int32.Parse(id);
 
             var documentData = (from d in _db.tbl_Document
-                                join dr in _db.tbl_DocReference on d.Document_ID equals dr.Document_ID
+                                //not every document will have a corrosponding docReference
+                                join dr in _db.tbl_DocReference on d.Document_ID equals dr.Document_ID into ps
                                 where d.Document_ID == documentNumberInt
+                                from dr in ps.DefaultIfEmpty()
                                 select new
                                 {
                                     d.Document_ID,
@@ -38,6 +40,7 @@ namespace DocSearch2._1.Repositories
                                     d.CreatorLastName,
                                     d.LastUser_DT,
                                     d.Reason,
+                                    d.Recipient,
                                     d.tbl_DocReference
                                 }).First();
             //instead of doing .First(), should be a better way of bringing over just 1 record since they SHOULD(?) all be the same, probably a better LINQ statement
@@ -50,6 +53,7 @@ namespace DocSearch2._1.Repositories
             mpd.Creator = documentData.CreatorFirstName + " " + documentData.CreatorLastName;
             mpd.ArchiveTime = documentData.LastUser_DT;
             mpd.Reason = documentData.Reason;
+            mpd.Recipient = documentData.Recipient;
             mpd.DocReferences = documentData.tbl_DocReference;
 
             return mpd;

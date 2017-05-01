@@ -28,6 +28,28 @@
             </tr>
 
         </table>
+
+        @if ((string)ViewData["currentNav"] == "doctype") {
+            <br/>
+            <table>
+                <tr>
+                    <th>Reference Number</th>
+                    <th>Document Type</th>
+                    <th>Effective Date</th>
+                    <th>Description</th>
+                </tr>
+                
+                @foreach (var item in Model.DocReferences)
+                {
+                    <tr>
+                        <td>@item.RefNumber</td>
+                        <td>@item.RefNumberType_CD</td>
+                        <td>@item.Date1_DT</td>
+                        <td>@item.Text1</td>
+                    </tr>
+                }
+            </table>
+        }
     </td>
 </tr>
 
