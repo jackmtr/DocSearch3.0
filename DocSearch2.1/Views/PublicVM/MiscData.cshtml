@@ -10,6 +10,16 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Creator)
                 </th>
+                @if ((string)ViewData["currentNav"] == "policyNumber" || (string)ViewData["currentNavTitle"] == "Correspondence") {
+                    <th>
+                        @Html.DisplayNameFor(model => model.Reason)
+                    </th>
+                }
+                @if ((string)ViewData["currentNavTitle"] == "Correspondence") {
+                    <th>
+                        @Html.DisplayNameFor(model => model.Recipient)
+                    </th>
+                }
                 <th>
                     @Html.DisplayNameFor(model => model.ArchiveTime)
                 </th>
@@ -22,6 +32,18 @@
                 <td>
                     @Html.DisplayFor(model => model.Creator)
                 </td>
+                @if ((string)ViewData["currentNav"] == "policyNumber" || (string)ViewData["currentNavTitle"] == "Correspondence")
+                {
+                    <td>
+                        @Html.DisplayFor(model => model.Reason)
+                    </td>
+                }
+                @if ((string)ViewData["currentNavTitle"] == "Correspondence")
+                {
+                    <td>
+                        @Html.DisplayFor(model => model.Recipient)
+                    </td>
+                }
                 <td>
                     @Html.DisplayFor(model => model.ArchiveTime)
                 </td>
@@ -38,14 +60,23 @@
                     <th>Effective Date</th>
                     <th>Description</th>
                 </tr>
-                
-                @foreach (var item in Model.DocReferences)
+                @if ((Model.DocReferences.Count > 0))
                 {
+                    foreach (var item in Model.DocReferences)
+                    {
+                        <tr>
+                            <td>@item.RefNumber</td>
+                            <td>@item.RefNumberType_CD</td>
+                            <td>@item.Date1_DT</td>
+                            <td>@item.Text1</td>
+                        </tr>
+                    }
+                }
+                else {
                     <tr>
-                        <td>@item.RefNumber</td>
-                        <td>@item.RefNumberType_CD</td>
-                        <td>@item.Date1_DT</td>
-                        <td>@item.Text1</td>
+                        <td colspan="10">
+                            You currently do not have any policies to reference.
+                        </td>
                     </tr>
                 }
             </table>
