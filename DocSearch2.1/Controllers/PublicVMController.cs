@@ -161,8 +161,8 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, 20);
-                    else publicModel = publicModel.OrderByDescending(r => r.DocumentTypeName).ToPagedList(page, 20);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, 15);
+                    else publicModel = publicModel.OrderByDescending(r => r.DocumentTypeName).ToPagedList(page, 15);
 
                     prevFilter = filter;
                 }
@@ -176,8 +176,8 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.RefNumber).ToPagedList(page, 20);
-                    else publicModel = publicModel.OrderByDescending(r => r.RefNumber).ToPagedList(page, 20);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.RefNumber).ToPagedList(page, 15);
+                    else publicModel = publicModel.OrderByDescending(r => r.RefNumber).ToPagedList(page, 15);
 
                     prevFilter = filter;
                 }
@@ -191,8 +191,8 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.EffectiveDate).ToPagedList(page, 20);
-                    else publicModel = publicModel.OrderByDescending(r => r.EffectiveDate).ToPagedList(page, 20);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.EffectiveDate).ToPagedList(page, 15);
+                    else publicModel = publicModel.OrderByDescending(r => r.EffectiveDate).ToPagedList(page, 15);
 
                     prevFilter = filter;
                 }
@@ -206,8 +206,8 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.Originator).ToPagedList(page, 20);
-                    else publicModel = publicModel.OrderByDescending(r => r.Originator).ToPagedList(page, 20);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.Originator).ToPagedList(page, 15);
+                    else publicModel = publicModel.OrderByDescending(r => r.Originator).ToPagedList(page, 15);
 
                     prevFilter = filter;
                 }
@@ -221,8 +221,8 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.Supplier).ToPagedList(page, 20);
-                    else publicModel = publicModel.OrderByDescending(r => r.Supplier).ToPagedList(page, 20);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.Supplier).ToPagedList(page, 15);
+                    else publicModel = publicModel.OrderByDescending(r => r.Supplier).ToPagedList(page, 15);
 
                     prevFilter = filter;
                 }
@@ -235,8 +235,8 @@ namespace DocSearch2._1.Controllers
                         sortAscending = !sortAscending;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 20);
-                    else publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 20);
+                    if (sortAscending) publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 15);
+                    else publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 15);
 
                     prevFilter = filter;
                 }
@@ -255,7 +255,7 @@ namespace DocSearch2._1.Controllers
                 if (publicModel != null)
                 {
                     ViewData["currentRecordsCount"] = publicModel.Count();
-                    publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 20);
+                    publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 15);
 
                     return View(publicModel);
                 }
