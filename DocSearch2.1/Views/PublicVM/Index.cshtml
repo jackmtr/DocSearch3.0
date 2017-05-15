@@ -171,7 +171,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12"><h4>Returning <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents</h4></div>
+            <div class="col-md-12"><h4>Returning <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents between </h4></div>
         </div>
         
 
@@ -185,12 +185,13 @@
                     <input type="search" name="searchTerm" />
                 </div>
                 <div class="filter col-md-3">
-                    <label for="IssueDateMinRange">Low Range Date:</label>
-                    @Html.TextBox("IssueDateMinRange", TempData["IssueDateMin"], new { @class = "datefield", type = "date" })
+                    <label for="IssueDateMinRange">Starting year:</label>
+                    @*@Html.TextBox("IssueDateMinRange", TempData["IssueDateMin"], new { @class = "datefield", type = "date" })*@
+
                 </div>
                 <div class="filter col-md-3">
-                    <label for="IssueDateMaxRange">High Range Date:</label>
-                    @Html.TextBox("IssueDateMaxRange", TempData["IssueDateMax"], new { @class = "datefield", type = "date" })
+                    <label for="IssueDateMaxRange">Ending year:</label>
+                    @*@Html.TextBox("IssueDateMaxRange", TempData["IssueDateMax"], new { @class = "datefield", type = "date" })*@
                 </div>
                 <div class="filter col-md-3 buttondiv">
                     @Ajax.ActionLink("Clear Search", "Index", new

@@ -62,13 +62,13 @@ namespace DocSearch2._1.Controllers
             //instantiating the overall min and max date ranges for this client if date inputs were null
             if (IssueDateMinRange == null)
             {
-                TempData["IssueDateMin"] = publicModel.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+                TempData["IssueDateMin"] = publicModel.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
                 IssueDateMinRange = (string)TempData["IssueDateMin"];
             }
 
             if (IssueDateMaxRange == null)
             {
-                TempData["IssueDateMax"] = publicModel.OrderByDescending(r => r.IssueDate).First().IssueDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+                TempData["IssueDateMax"] = publicModel.OrderByDescending(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
                 IssueDateMaxRange = (string)TempData["IssueDateMax"];
             }
 
