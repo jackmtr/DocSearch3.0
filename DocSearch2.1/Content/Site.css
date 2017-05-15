@@ -16,12 +16,18 @@ header {
 
 /*make the nav button have some margin, while list has none*/
 .nav-button {
-    margin-top: 10%;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
     margin-bottom: 5%;
     height: 10%;
 }
+    .nav-button * {
+        font-size: 14px;
+        padding: 0;
+        margin: 0;
+    }
+
 
 /*Needed to allow a scrollable policy list if needed*/
 #policy_section {
@@ -98,8 +104,7 @@ h2 {
 
 /* The switch control appearance*/
 .switch {
-    position: relative;
-    margin-left: 15px; 
+    position: relative; 
     width: 60px;
     height: 34px;
 }
