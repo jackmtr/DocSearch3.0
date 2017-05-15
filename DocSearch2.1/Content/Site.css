@@ -20,7 +20,7 @@ header {
     margin-left: 5%;
     margin-right: 5%;
     margin-bottom: 5%;
-    height: 10%;
+    height: 5%;
 }
     .nav-button * {
         font-size: 14px;
@@ -215,8 +215,8 @@ input:checked + .slider:before {
 
 /*DocType sublist item font adjustments*/
 #docType_list li a{
-    font-size: 70%;
-    padding-left: 10px;
+    font-size: 16px;
+    padding-left: 20px;
 }
 
 /*Anchors with class 'button' changes (i.e. Clear Button)*/
@@ -275,11 +275,18 @@ th a {
     height: 100%;
 }
 
-.nav_lists ul{
-    /*float: left; NOT DOING ANYTHING. Make this div as wide as its contents */
-    /* Colours and borders for illustration purposes */
-    width: inherit;
-}
+    .nav_lists ul{
+        /*float: left; NOT DOING ANYTHING. Make this div as wide as its contents */
+        /* Colours and borders for illustration purposes */
+        width: inherit;
+    }
+
+    .nav_lists h2 {
+        font-size: 25px;
+        text-align: center;
+        margin: 10px;
+    }
+
 
 .nav_lists_outer {
     /*overflow-y: hidden; Makes #outer contain its floated children */
@@ -325,6 +332,7 @@ form {
 }
 
 .category_nav > div > a {
+    font-size: 20px;
     font-weight: bold;
 }
 
