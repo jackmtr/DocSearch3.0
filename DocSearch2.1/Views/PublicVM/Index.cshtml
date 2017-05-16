@@ -24,7 +24,6 @@
 
                 @* Need a better way to place this JS *@
                 <script type="text/javascript">
-
                     //adjust table for subnav column, also clears input fields
                     function postNavbar() {
                         $className = $('.active').children("a").data("subclass");
@@ -42,6 +41,9 @@
                         }
 
                         //need to check for form submit, then not do clearFields
+                        //if ($(this).hasClass('navLink') || $(this).hasClass('button')) {
+                        //    clearFields();
+                        //}
                         if ($(this).hasClass('navLink') || $(this).hasClass('button')) {
                             clearFields();
                         }
@@ -51,21 +53,27 @@
                     function clearFields() {
 
                         $form = $('form');
-
                         $form.find("input[type=search]").val("");
 
-                        $form.find("input[name='IssueDateMinRange']").val('@TempData["IssueDateMin"]');
-                        $form.find("input[name='IssueDateMaxRange']").val('@TempData["IssueDateMax"]');
+                        $form.find("select option:eq(0)").prop("selected", true);
 
                         //may want to be more specific with check
                         if ($(this) == "a") {
                             $(".active").removeClass('active');
                         }
+
+                        //need to figure out how to update status bar years
+                        //maybe change jquery connection for year status bar to look for selected option instead of current style
                     }
 
                     function updateCurrentCount() {
-                        
+
                         var currentCount = $('#public_table').data('currentrecord');
+                        var currentLowYear = $('#public_table').data('currentlowyear');
+                        var currentHighYear = $('#public_table').data('currenthighyear');
+
+                        $('#currentLowYear').text(currentLowYear);
+                        $('#currentHighYear').text(currentHighYear);
                         $('#currentCount').text(currentCount);
                     }
 
@@ -171,9 +179,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12"><h4>Returning <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents between </h4></div>
+            <div class="col-md-12"><h4>Returning <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents between <span id="currentLowYear">@(((List<SelectListItem>)TempData["IssueDateMin"]).First().Text)</span> and <span id="currentHighYear">@(((List<SelectListItem>)TempData["IssueDateMin"]).Last().Text)</span></h4></div>
         </div>
-        
 
         <!--Search Box, Date Filters, clear, and submit button-->
         <div>
@@ -186,12 +193,12 @@
                 </div>
                 <div class="filter col-md-3">
                     <label for="IssueDateMinRange">Starting year:</label>
-                    @*@Html.TextBox("IssueDateMinRange", TempData["IssueDateMin"], new { @class = "datefield", type = "date" })*@
+                    @Html.DropDownList("IssueYearMinRange", TempData["IssueDateMin"] as List<SelectListItem>, "Select a Year", new { @class = "datefield", type = "date" })
 
                 </div>
                 <div class="filter col-md-3">
                     <label for="IssueDateMaxRange">Ending year:</label>
-                    @*@Html.TextBox("IssueDateMaxRange", TempData["IssueDateMax"], new { @class = "datefield", type = "date" })*@
+                    @Html.DropDownList("IssueYearMaxRange", TempData["IssueDateMax"] as List<SelectListItem>, "Select a Year", new { @class = "datefield", type = "date" })
                 </div>
                 <div class="filter col-md-3 buttondiv">
                     @Ajax.ActionLink("Clear Search", "Index", new

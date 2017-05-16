@@ -36,7 +36,7 @@ namespace DocSearch2._1.Controllers
         // GET: PublicVM
         [HttpGet] // dunno if need this, was causing issues with the search return request
         //I think the search submit is coming back as a post
-        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueDateMinRange = null, string IssueDateMaxRange = null, int page = 1)
+        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1)
         {
             //persist client name, id
             TempData.Keep("Client_Name");
@@ -59,23 +59,38 @@ namespace DocSearch2._1.Controllers
             //second conditional is for no doc reference documents
             publicModel = publicModel.Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null);
 
-            //instantiating the overall min and max date ranges for this client if date inputs were null
-            if (IssueDateMinRange == null)
+            //instantiating the overall min and max YEAR ranges for this client if date inputs were null, maybe combine into one conditional
+            if (IssueYearMinRange == null || IssueYearMinRange == "")
             {
-                TempData["IssueDateMin"] = publicModel.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
-                IssueDateMinRange = (string)TempData["IssueDateMin"];
+                IssueYearMinRange = publicModel.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
             }
 
-            if (IssueDateMaxRange == null)
+            if (IssueYearMaxRange == null || IssueYearMaxRange == "")
             {
-                TempData["IssueDateMax"] = publicModel.OrderByDescending(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
-                IssueDateMaxRange = (string)TempData["IssueDateMax"];
+                IssueYearMaxRange = publicModel.OrderByDescending(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
             }
+
+            //creating the options for the dropdown list
+            IList<SelectListItem> years = new List<SelectListItem>();
+
+            for (int i = Int32.Parse(IssueYearMinRange); i <= Int32.Parse(IssueYearMaxRange); i++)
+            {
+                SelectListItem year = new SelectListItem();
+                year.Selected = false;
+                year.Text = year.Value = i.ToString();
+                years.Add(year);
+            }
+
+            TempData["IssueDateMin"] = TempData["IssueDateMax"] = years;
 
             //Formatting the display date into SQL likeable date type
             //"04/10/2017" example expected date
-            DateTime issueDateMin = DateTime.ParseExact(IssueDateMinRange, "d", CultureInfo.InvariantCulture);
-            DateTime issueDateMax = DateTime.ParseExact(IssueDateMaxRange, "d", CultureInfo.InvariantCulture);
+            //DateTime issueDateMin = DateTime.ParseExact(IssueYearMinRange, "d", CultureInfo.InvariantCulture);
+            //DateTime issueDateMax = DateTime.ParseExact(IssueYearMaxRange, "d", CultureInfo.InvariantCulture);
+
+            //Formatting changed to only support inputted YEAR now
+            DateTime issueDateMin = DateTime.ParseExact(String.Format("01/01/{0}", IssueYearMinRange), "d", CultureInfo.InvariantCulture);
+            DateTime issueDateMax = DateTime.ParseExact(String.Format("12/31/{0}", IssueYearMaxRange), "d", CultureInfo.InvariantCulture);
 
             //count of total records unfiltered of this client
             ViewData["allRecordsCount"] = publicModel.Count();
@@ -132,20 +147,42 @@ namespace DocSearch2._1.Controllers
                     }
                 }
 
-                //think about combining the search and date conditions
-                //*filtering by date conditions
-                publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax));
+                //*filtering by date and search conditions
+                //checks if the date filter and search term will return any results
+                if (!publicModel.Any(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax)) || (searchTerm != null && !publicModel.Any(pub => pub.Description.Contains(searchTerm)))){
+
+                    ViewData["goodSearch"] = false;
+
+                    ///so inefficient, need to be redone
+                    //instantiating the overall min and max YEAR ranges for this client if date inputs were null, maybe combine into one conditional
+
+                    IssueYearMinRange = publicModel.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+                    IssueYearMaxRange = publicModel.OrderByDescending(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+
+                    //creating the options for the dropdown list
+                    years = new List<SelectListItem>();
+
+                    for (int i = Int32.Parse(IssueYearMinRange); i <= Int32.Parse(IssueYearMaxRange); i++)
+                    {
+                        SelectListItem year = new SelectListItem();
+                        year.Selected = false;
+                        year.Text = year.Value = i.ToString();
+                        years.Add(year);
+                    }
+
+                    TempData["IssueDateMin"] = TempData["IssueDateMax"] = years;
+                    ///
 
 
-                //*filtering by searchconditions
-                //checks if the search term will return any results
-                if (searchTerm != null)
-                {
-                    ViewData["goodSearch"] = publicModel.Any(pub => pub.Description.Contains(searchTerm));
+                } else {
+                    publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax));
                     TempData["SearchTerm"] = searchTerm;
                     //can probably refine this LINQ query
                     publicModel = publicModel.Where(r => searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.Contains(searchTerm) == true : true));
                 }
+                //may want to widen results if goodSearch is false
+
+
 
                 //record count after category/doctype/policy/search/date filter
                 ViewData["currentRecordsCount"] = publicModel.Count();

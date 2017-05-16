@@ -1,6 +1,15 @@
 ﻿@model IPagedList<PublicVM>
 
-<div id="public_table" class="row default-table" data-currentRecord="@ViewData["currentRecordsCount"]">
+@if ((bool)ViewData["goodSearch"] == false)
+{
+    <script type="text/javascript">
+        //this needs to be a call back
+        clearFields();
+        alert('Sorry, your search came up empty.  Clearing Search.');
+    </script>
+}
+
+<div id="public_table" class="row default-table" data-currentRecord="@ViewData["currentRecordsCount"]" data-currentLowYear="@(((List<SelectListItem>)TempData["IssueDateMin"]).First().Text)" data-currentHighYear ="@(((List<SelectListItem>)TempData["IssueDateMin"]).Last().Text)">
     <div id ="public_table_inner" class="col-md-12">
         <table class="table table-bordered table-hover">
             <thead class="thead-default">
@@ -141,12 +150,3 @@
     </div>
 
 </div>
-
-@if ((bool)ViewData["goodSearch"] == false)
-{
-    <script type="text/javascript">
-        //this needs to be a call back
-        clearFields();
-        alert('Sorry, your search came up empty.  Clearing Search.');
-    </script>
-}

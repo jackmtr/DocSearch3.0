@@ -2,6 +2,7 @@
 
     //submits the search and date filter form
     var ajaxFormSubmit = function () {
+
         var $form = $(this);
         $category = $(".active a").data('subclass');
         $docType = $(".active a").data('subclass-title');
