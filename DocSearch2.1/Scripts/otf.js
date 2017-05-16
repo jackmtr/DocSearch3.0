@@ -112,7 +112,8 @@
         var id = link.attr("data-otf-target");
         var $target = $(id);
 
-        $target.empty();
+        //said it was broken in browser
+        //$target.empty();
     }
 
 
@@ -171,5 +172,19 @@
             destroyMiscTable($link);
         }
         return false;
+    });
+
+    $('select[name^="IssueYearMinRange"]').change(function () {
+        var value = this.value;
+
+        $('select[name^="IssueYearMinRange"] option').removeAttr('selected');
+        $('select[name^="IssueYearMinRange"] option[value="' + value + '"]').attr("selected", "selected");
+    });
+
+    $('select[name^="IssueYearMaxRange"]').change(function () {
+        var value = this.value;
+
+        $('select[name^="IssueYearMaxRange"] option').removeAttr('selected');
+        $('select[name^="IssueYearMaxRange"] option[value="' + value + '"]').attr("selected", "selected");
     });
 });

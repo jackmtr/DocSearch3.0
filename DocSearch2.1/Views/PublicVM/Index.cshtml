@@ -55,7 +55,9 @@
                         $form = $('form');
                         $form.find("input[type=search]").val("");
 
-                        $form.find("select option:eq(0)").prop("selected", true);
+                        $form.find("select option").removeAttr('selected');
+                        $form.find("#IssueYearMinRange option:eq(0)").prop("selected", true);
+                        $form.find("#IssueYearMaxRange option:eq(0)").prop("selected", true);
 
                         //may want to be more specific with check
                         if ($(this) == "a") {
@@ -69,11 +71,22 @@
                     function updateCurrentCount() {
 
                         var currentCount = $('#public_table').data('currentrecord');
-                        var currentLowYear = $('#public_table').data('currentlowyear');
-                        var currentHighYear = $('#public_table').data('currenthighyear');
+                        var currentLowYear = $('#IssueYearMinRange option:selected').val();
+                        var currentHighYear = $('#IssueYearMaxRange option:selected').val();
 
-                        $('#currentLowYear').text(currentLowYear);
-                        $('#currentHighYear').text(currentHighYear);
+
+                        if (currentLowYear.length > 0) {
+                            $('#currentLowYear').text(currentLowYear);
+                        } else {
+                            $('#currentLowYear').text("2009");
+                        }
+
+                        if (currentHighYear.length > 0) {
+                            $('#currentHighYear').text(currentHighYear);
+                        } else {
+                            $('#currentHighYear').text("2017");
+                        }
+
                         $('#currentCount').text(currentCount);
                     }
 
@@ -209,8 +222,8 @@
                    HttpMethod = "GET",
                    InsertionMode = InsertionMode.ReplaceWith,
                    UpdateTargetId = "public_table",
-                   OnComplete = "clearFields",
-                   OnSuccess = "updateCurrentCount"
+                   OnComplete = "updateCurrentCount",
+                   OnSuccess = "clearFields"
                }, new { @class = "button" })
 
                     <input type="submit" value="Search and Filter"/>

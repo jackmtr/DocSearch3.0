@@ -45,6 +45,9 @@ namespace DocSearch2._1.Controllers
             //this value is currently being retained when navbar is being clicked, it shouldnt be
             TempData.Keep("SearchTerm");
 
+            TempData.Keep("IssueDateMin");
+            TempData.Keep("IssueDateMax");
+
             //false means seachterm will return an empty result
             ViewData["goodSearch"] = true;
             //viewdata to save state
@@ -70,18 +73,21 @@ namespace DocSearch2._1.Controllers
                 IssueYearMaxRange = publicModel.OrderByDescending(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
             }
 
-            //creating the options for the dropdown list
-            IList<SelectListItem> years = new List<SelectListItem>();
+            if (!Request.IsAjaxRequest()) {
+                //creating the options for the dropdown list
+                IList<SelectListItem> years = new List<SelectListItem>();
 
-            for (int i = Int32.Parse(IssueYearMinRange); i <= Int32.Parse(IssueYearMaxRange); i++)
-            {
-                SelectListItem year = new SelectListItem();
-                year.Selected = false;
-                year.Text = year.Value = i.ToString();
-                years.Add(year);
+                for (int i = Int32.Parse(IssueYearMinRange); i <= Int32.Parse(IssueYearMaxRange); i++)
+                {
+                    SelectListItem year = new SelectListItem();
+                    year.Selected = false;
+                    year.Text = year.Value = i.ToString();
+                    years.Add(year);
+                }
+
+                TempData["IssueDateMin"] = TempData["IssueDateMax"] = years;
             }
 
-            TempData["IssueDateMin"] = TempData["IssueDateMax"] = years;
 
             //Formatting the display date into SQL likeable date type
             //"04/10/2017" example expected date
@@ -160,17 +166,17 @@ namespace DocSearch2._1.Controllers
                     IssueYearMaxRange = publicModel.OrderByDescending(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
 
                     //creating the options for the dropdown list
-                    years = new List<SelectListItem>();
+                    //years = new List<SelectListItem>();
 
-                    for (int i = Int32.Parse(IssueYearMinRange); i <= Int32.Parse(IssueYearMaxRange); i++)
-                    {
-                        SelectListItem year = new SelectListItem();
-                        year.Selected = false;
-                        year.Text = year.Value = i.ToString();
-                        years.Add(year);
-                    }
+                    //for (int i = Int32.Parse(IssueYearMinRange); i <= Int32.Parse(IssueYearMaxRange); i++)
+                    //{
+                    //    SelectListItem year = new SelectListItem();
+                    //    year.Selected = false;
+                    //    year.Text = year.Value = i.ToString();
+                    //    years.Add(year);
+                    //}
 
-                    TempData["IssueDateMin"] = TempData["IssueDateMax"] = years;
+                    //TempData["IssueDateMin"] = TempData["IssueDateMax"] = years;
                     ///
 
 
