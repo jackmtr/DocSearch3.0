@@ -226,6 +226,7 @@
                 
                 $('#clearButton').click();
                 $('#searchInputBox').focus();
+                alert(document.documentElement.clientWidth);
                 e.preventDefault();
             }
         } else if (e.which == 13) {
@@ -239,7 +240,7 @@
 
     $('#searchInputBox').focus();
     //$('.description').textfill({ maxFontPixels: 36 });
-
+    
     //$('#public_table').load(function () {
     //    alert('hi');
     //});
@@ -247,5 +248,12 @@
     //$(document).ajaxComplete(function (e) {
     //    alert();
     //    $('#searchInputBox').focus();
+    //});
+    //$(window).on('resize', function () {
+    //    $(function () {
+    //        $('.nav-button').textfill({
+    //            maxFontPixels: 36
+    //        });
+    //    });
     //});
 });
