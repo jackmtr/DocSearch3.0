@@ -64,6 +64,8 @@
                             $(".active").removeClass('active');
                         }
 
+                        $('#searchInputBox').focus();
+
                         //need to figure out how to update status bar years
                         //maybe change jquery connection for year status bar to look for selected option instead of current style
                     }
@@ -202,7 +204,7 @@
                     <label for="search">Search Description:</label>
                     <input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />
 
-                    <input type="search" name="searchTerm" />
+                    <input id="searchInputBox" type="search" name="searchTerm" />
                 </div>
                 <div class="filter col-md-3">
                     <label for="IssueDateMinRange">Starting year:</label>
@@ -214,7 +216,7 @@
                     @Html.DropDownList("IssueYearMaxRange", TempData["IssueDateMax"] as List<SelectListItem>, "Select a Year", new { @class = "datefield", type = "date" })
                 </div>
                 <div class="filter col-md-3 buttondiv">
-                    @Ajax.ActionLink("Clear Search", "Index", new
+                    @Ajax.ActionLink("Reset Search", "Index", new
                {
                    publicId = Model.First().Folder_ID
                }, new AjaxOptions
@@ -224,8 +226,8 @@
                    UpdateTargetId = "public_table",
                    OnComplete = "updateCurrentCount",
                    OnSuccess = "clearFields"
-               }, new { @class = "button" })
-                    <input type="submit" value="Search and Filter"/>
+               }, new { @class = "button", id="clearButton" })
+                    <input id="formSubmitId" type="submit" value="Search and Filter"/>
                 </div>
             </form>
         </div>

@@ -51,7 +51,7 @@
 
         var options = {
             url: $a.attr("href"),
-            data: $("form").serialize(),
+            data: $("form").serialize() + "&pageSize=" + $pageSize,
             type: "get"
         };
 
@@ -204,5 +204,42 @@
 
     //    $('select[name^="pageSize"] option').removeAttr('selected');
     //    $('select[name^="pageSize"] option[value="' + value + '"]').attr("selected", "selected");
+    //});
+
+    //if (window.history && window.history.pushState) {
+
+    //    window.history.pushState('forward', null, './#forward');
+
+    //    $(window).on('popstate', function () {
+    //        alert('hi');
+    //        $('#clearButton').click();
+    //    });
+
+    //}
+
+    var rx = /INPUT|SELECT|TEXTAREA/i;
+
+    $(document).bind("keydown", function (e) {
+        if (e.which == 8) { // 8 == backspace
+            if (rx.test(e.target.tagName) && e.target.id == "formSubmitId" || !rx.test(e.target.tagName) || e.target.disabled || e.target.readOnly) {
+                
+                $('#clearButton').click();
+                $('#searchInputBox').focus();
+                e.preventDefault();
+            }
+        } else if (e.which == 13) {
+            if (e.target.id != "searchInputBox") {
+                //rx.test(e.target.tagName) && 
+                $('#formSubmitId').click();
+                e.preventDefault();
+            }
+        }
+    });
+
+    $('#searchInputBox').focus();
+
+    //$(document).ajaxComplete(function (e) {
+    //    alert();
+    //    $('#searchInputBox').focus();
     //});
 });
