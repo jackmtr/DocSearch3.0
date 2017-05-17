@@ -108,12 +108,10 @@
     }
 
     function destroyMiscTable(link) {
-
         var id = link.attr("data-otf-target");
         var $target = $(id);
 
-        //said it was broken in browser
-        //$target.empty();
+        $target.empty();
     }
 
 

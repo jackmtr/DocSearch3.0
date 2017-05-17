@@ -146,6 +146,14 @@
         <div class="pagedList col-md-6 col-md-offset-3" data-otf-target="#public_table" >
             @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"]}),
             PagedListRenderOptions.MinimalWithItemCountText)
+            <fieldset>Records per page:
+                <select id="pageSize" name="pageSize">
+                    <option value=10>10</option>
+                    <option value=20>20</option>
+                    <option value=50>50</option>
+                    <option value=1000>All</option>
+                </select>
+            </fieldset>
         </div>
     </div>
 
