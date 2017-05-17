@@ -3,7 +3,7 @@
     //submits the search and date filter form
     var ajaxFormSubmit = function () {
 
-        $pageSize = $('#pageSize option:selected').val();
+        var $pageSize = $('#pageSize option:selected').val();
 
         //$('select[name^="IssueYearMinRange"] option').removeAttr('selected');
 
@@ -43,6 +43,7 @@
     //pagination effect
     var getPage = function () {
 
+        var $pageSize = $('#pageSize option:selected').val(); 
         var $a = $(this); //this is the anchor
 
         if ($a.parent('li').hasClass('disabled') == true) {
@@ -237,6 +238,7 @@
     });
 
     $('#searchInputBox').focus();
+    //$('.description').textfill({ maxFontPixels: 36 });
 
     //$('#public_table').load(function () {
     //    alert('hi');

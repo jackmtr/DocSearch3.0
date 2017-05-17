@@ -377,3 +377,14 @@ form input {
 @media(min-width:768px){}
 @media(min-width:992px){}
 @media(min-width:1200px){}
+
+/*.description {
+    width: 200px;
+    max-width: 400px;
+    height: 50px;
+    overflow: hidden;
+    white-space: nowrap;
+}*/
+.description {
+    max-width: 300px;
+}

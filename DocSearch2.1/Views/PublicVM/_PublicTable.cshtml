@@ -111,8 +111,11 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Supplier)
                         </td>
-                        <td>
+                        <td class="description">
                             @Html.DisplayFor(modelItem => item.Description)
+                            @*<span>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </span>*@
                         </td>
                         <td>
                             @Html.ActionLink(item.FileType, "FileDisplay", new { documentId = item.Document_ID }, new { target = "_blank" })

@@ -12,6 +12,7 @@ namespace DocSearch2._1
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery-ui.js",
                         "~/Scripts/jquery.unobtrusive*",
+                        //"~/Scripts/jquery.textfill.min.js",
                         "~/Scripts/jquery.validate*",
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/otf.js"));//not installed yet
