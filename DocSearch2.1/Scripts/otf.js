@@ -238,6 +238,10 @@
 
     $('#searchInputBox').focus();
 
+    //$('#public_table').load(function () {
+    //    alert('hi');
+    //});
+
     //$(document).ajaxComplete(function (e) {
     //    alert();
     //    $('#searchInputBox').focus();

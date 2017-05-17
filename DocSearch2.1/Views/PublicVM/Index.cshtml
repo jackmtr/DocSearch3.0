@@ -205,15 +205,25 @@
                     <input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />
 
                     <input id="searchInputBox" type="search" name="searchTerm" />
+                    <fieldset>
+                        Records per page:
+                        <select id="pageSize" name="pageSize">
+                            <option value=10>10</option>
+                            <option value=20 selected>20</option>
+                            <option value=50>50</option>
+                            <option value=1000>All</option>
+                        </select>
+                    </fieldset>
                 </div>
                 <div class="filter col-md-3">
                     <label for="IssueDateMinRange">Starting year:</label>
                     @Html.DropDownList("IssueYearMinRange", TempData["IssueDateMin"] as List<SelectListItem>, "Select a Year", new { @class = "datefield", type = "date" })
-
+                    <br/>
                 </div>
                 <div class="filter col-md-3">
                     <label for="IssueDateMaxRange">Ending year:</label>
                     @Html.DropDownList("IssueYearMaxRange", TempData["IssueDateMax"] as List<SelectListItem>, "Select a Year", new { @class = "datefield", type = "date" })
+                    <br />
                 </div>
                 <div class="filter col-md-3 buttondiv">
                     @Ajax.ActionLink("Reset Search", "Index", new
@@ -232,15 +242,6 @@
             </form>
         </div>
         @Html.Partial("_PublicTable", Model)
-        <fieldset>
-            Records per page:
-            <select id="pageSize" name="pageSize">
-                <option value=10>10</option>
-                <option value=20 selected>20</option>
-                <option value=50>50</option>
-                <option value=1000>All</option>
-            </select>
-        </fieldset>
     </div>
 </div>
 
