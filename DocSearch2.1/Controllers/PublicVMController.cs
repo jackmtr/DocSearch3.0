@@ -95,6 +95,13 @@ namespace DocSearch2._1.Controllers
             //DateTime issueDateMax = DateTime.ParseExact(IssueYearMaxRange, "d", CultureInfo.InvariantCulture);
 
             //Formatting changed to only support inputted YEAR now
+
+            if (Int32.Parse(IssueYearMaxRange) < Int32.Parse(IssueYearMinRange)) {
+                string temp = IssueYearMinRange;
+                IssueYearMinRange = IssueYearMaxRange;
+                IssueYearMaxRange = temp;
+            }
+
             DateTime issueDateMin = DateTime.ParseExact(String.Format("01/01/{0}", IssueYearMinRange), "d", CultureInfo.InvariantCulture);
             DateTime issueDateMax = DateTime.ParseExact(String.Format("12/31/{0}", IssueYearMaxRange), "d", CultureInfo.InvariantCulture);
 
