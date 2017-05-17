@@ -60,7 +60,7 @@
                         $form.find("#IssueYearMaxRange option:eq(0)").prop("selected", true);
 
                         //may want to be more specific with check
-                        if ($(this) == "a") {
+                        if ($(this).prop('tagName') == "A") {
                             $(".active").removeClass('active');
                         }
 

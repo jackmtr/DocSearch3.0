@@ -4,18 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport"
           content="width=device-width,
-               initial-scale=1.0
-               " />                <!--,maximum-scale=1.0, user-scalable=no-->
+               initial-scale=1.0" />
+    <!--,maximum-scale=1.0, user-scalable=no-->
     <title>@ViewBag.Title</title>
     @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">*@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr") <!--modernizr must be in head of script-->
 </head>
 <body>
-    <header>
-
-    </header>
-    <div id="body" class="container-fluid"><!-- content-wrapper main-content clear-fix-->
+    <header></header>
+    <div id="body" class="container-fluid">
+        <!-- content-wrapper main-content clear-fix-->
         @RenderBody()
     </div>
     <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
