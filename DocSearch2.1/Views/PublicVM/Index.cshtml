@@ -231,6 +231,15 @@
             </form>
         </div>
         @Html.Partial("_PublicTable", Model)
+        <fieldset>
+            Records per page:
+            <select id="pageSize" name="pageSize">
+                <option value=10>10</option>
+                <option value=20 selected>20</option>
+                <option value=50>50</option>
+                <option value=1000>All</option>
+            </select>
+        </fieldset>
     </div>
 </div>
 

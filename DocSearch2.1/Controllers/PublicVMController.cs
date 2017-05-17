@@ -36,7 +36,7 @@ namespace DocSearch2._1.Controllers
         // GET: PublicVM
         [HttpGet] // dunno if need this, was causing issues with the search return request
         //I think the search submit is coming back as a post
-        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1)
+        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1, int pageSize = 20)
         {
             //persist client name, id
             TempData.Keep("Client_Name");
@@ -204,8 +204,8 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, 15);
-                    else publicModel = publicModel.OrderByDescending(r => r.DocumentTypeName).ToPagedList(page, 15);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, pageSize);
+                    else publicModel = publicModel.OrderByDescending(r => r.DocumentTypeName).ToPagedList(page, pageSize);
 
                     prevFilter = filter;
                 }
@@ -219,8 +219,8 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.RefNumber).ToPagedList(page, 15);
-                    else publicModel = publicModel.OrderByDescending(r => r.RefNumber).ToPagedList(page, 15);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.RefNumber).ToPagedList(page, pageSize);
+                    else publicModel = publicModel.OrderByDescending(r => r.RefNumber).ToPagedList(page, pageSize);
 
                     prevFilter = filter;
                 }
@@ -234,8 +234,8 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.EffectiveDate).ToPagedList(page, 15);
-                    else publicModel = publicModel.OrderByDescending(r => r.EffectiveDate).ToPagedList(page, 15);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.EffectiveDate).ToPagedList(page, pageSize);
+                    else publicModel = publicModel.OrderByDescending(r => r.EffectiveDate).ToPagedList(page, pageSize);
 
                     prevFilter = filter;
                 }
@@ -249,8 +249,8 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.Originator).ToPagedList(page, 15);
-                    else publicModel = publicModel.OrderByDescending(r => r.Originator).ToPagedList(page, 15);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.Originator).ToPagedList(page, pageSize);
+                    else publicModel = publicModel.OrderByDescending(r => r.Originator).ToPagedList(page, pageSize);
 
                     prevFilter = filter;
                 }
@@ -264,8 +264,8 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.Supplier).ToPagedList(page, 15);
-                    else publicModel = publicModel.OrderByDescending(r => r.Supplier).ToPagedList(page, 15);
+                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.Supplier).ToPagedList(page, pageSize);
+                    else publicModel = publicModel.OrderByDescending(r => r.Supplier).ToPagedList(page, pageSize);
 
                     prevFilter = filter;
                 }
@@ -278,8 +278,8 @@ namespace DocSearch2._1.Controllers
                         sortAscending = !sortAscending;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 15);
-                    else publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, 15);
+                    if (sortAscending) publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, pageSize);
+                    else publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, pageSize);
 
                     prevFilter = filter;
                 }
@@ -298,7 +298,7 @@ namespace DocSearch2._1.Controllers
                 if (publicModel != null)
                 {
                     ViewData["currentRecordsCount"] = publicModel.Count();
-                    publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, 15);
+                    publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, pageSize);
 
                     return View(publicModel);
                 }

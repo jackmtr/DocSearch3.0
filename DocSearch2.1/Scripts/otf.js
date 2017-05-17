@@ -3,7 +3,12 @@
     //submits the search and date filter form
     var ajaxFormSubmit = function () {
 
-        var $form = $(this);
+        $pageSize = $('#pageSize option:selected').val();
+
+        //$('select[name^="IssueYearMinRange"] option').removeAttr('selected');
+
+        var $form = $('form');
+
         $category = $(".active a").data('subclass');
         $docType = $(".active a").data('subclass-title');
 
@@ -11,13 +16,13 @@
             var options = {
                 url: $form.attr("action"),//maybe add to this to check for attributes somehow
                 type: $form.attr("method"),
-                data: $form.serialize() + "&subNav=" + $category + "&" + "prevNav=" + $docType //or add to the data somehow
+                data: $form.serialize() + "&subNav=" + $category + "&prevNav=" + $docType + "&pageSize=" + $pageSize //or add to the data somehow
             };
         } else {
             var options = {
                 url: $form.attr("action"),//maybe add to this to check for attributes somehow
                 type: $form.attr("method"),
-                data: $form.serialize()//or add to the data somehow
+                data: $form.serialize() + "&pageSize=" + $pageSize//or add to the data somehow
             };
         }
 
@@ -185,4 +190,19 @@
         $('select[name^="IssueYearMaxRange"] option').removeAttr('selected');
         $('select[name^="IssueYearMaxRange"] option[value="' + value + '"]').attr("selected", "selected");
     });
+
+    $('#pageSize').change(function () {
+        var value = this.value;
+
+        $('select[name^="pageSize"] option').removeAttr('selected');
+        $('select[name^="pageSize"] option[value="' + value + '"]').attr("selected", "selected");
+        ajaxFormSubmit();
+    });
+
+    //$("#body").on('change', '#pageSize', function () {
+    //    var value = this.value;
+
+    //    $('select[name^="pageSize"] option').removeAttr('selected');
+    //    $('select[name^="pageSize"] option[value="' + value + '"]').attr("selected", "selected");
+    //});
 });
