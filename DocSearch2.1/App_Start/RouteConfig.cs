@@ -9,15 +9,21 @@ namespace DocSearch2._1
 {
     public class RouteConfig
     {
+        //used as the main function that directs url into the right controller-action.
         public static void RegisterRoutes(RouteCollection routes)
         {
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}"); //allows to see code files directly in browser if direct path file used for url
 
+            //since this is a one page web application with all successive requests made async, this generic maproute should suffice.
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            //additional pages may be added when IT editing features are implemented:
+                //secret log in page for select IT personel
+                //may either allow editing for IT role directly on same page, or create a completely new page(s) for these features
         }
     }
 }
