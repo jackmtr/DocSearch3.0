@@ -8,6 +8,8 @@ using System.Web.Mvc;
 
 namespace DocSearch2._1.Controllers
 {
+    //this controller is the inbetween for this API taking the selected WAS' db tbl_Folder.Name and give the main PublicVMController's index method the tbl_Folder.Folder_ID and some static folder info (name and id)
+    //this controller may not honestly be needed in the end, and the PublicVM can do the functionality here too.
     public class FolderController : Controller
     {
         private IFolderRepository repository = null;
@@ -16,7 +18,7 @@ namespace DocSearch2._1.Controllers
             this.repository = new FolderRepository();
         }
 
-        //keep for future testing
+        //keep for potential of future testing of db connection
         /*
         public FolderController(IFolderRepository repository) {
             this.repository = repository;
@@ -32,9 +34,11 @@ namespace DocSearch2._1.Controllers
             TempData["Client_Name"] = folder.Name;
             TempData["Client_Id"] = folder.Number;
 
+            //redirectToAction allows controller chaining
             return RedirectToAction("Index", "PublicVM", new { publicId = folder.Folder_ID });
         }
 
+        //Dispose any open connection when finished (db in this regard)
         protected override void Dispose(bool disposing)
         {
             repository.Dispose();
