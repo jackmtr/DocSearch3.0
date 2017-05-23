@@ -173,6 +173,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\FolderController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PublicVMController.cs" />
     <Compile Include="CustomHelpers\CustomLink.cs" />
     <Compile Include="Global.asax.cs">
