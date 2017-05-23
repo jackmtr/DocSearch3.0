@@ -19,11 +19,12 @@ namespace DocSearch2._1.Controllers
         private static string prevFilter;
 
         public PublicVMController() {
+            //public repo for publicVM actions
             this.publicRepository = new PublicRepository();
+
+            //doc repo for document actions
             this.documentRepository = new DocumentRepository();
         }
-
-        //***Check if model dates are populating correctly
 
         //keep for future testing
         /*
@@ -34,19 +35,20 @@ namespace DocSearch2._1.Controllers
         */
 
         // GET: PublicVM
-        [HttpGet] // dunno if need this, was causing issues with the search return request
-        //I think the search submit is coming back as a post
+        [HttpGet]
         public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1, int pageSize = 20)
         {
+            //TempData can be used to send data between controllers and views through one request, .keep() is used to continue keeping after one request
             //persist client name, id
             TempData.Keep("Client_Name");
             TempData.Keep("Client_Id");
-
-            //this value is currently being retained when navbar is being clicked, it shouldnt be
+            
+            //***Pseudo save state immitation
+            //persist search term, inputted dates
             TempData.Keep("SearchTerm");
-
             TempData.Keep("IssueDateMin");
             TempData.Keep("IssueDateMax");
+
 
             //false means seachterm will return an empty result
             ViewData["goodSearch"] = true;
@@ -57,20 +59,27 @@ namespace DocSearch2._1.Controllers
             IEnumerable<PublicVM> publicModel = null;
 
             publicModel = publicRepository
-                        .SelectAll(Folder_ID);
+                            .SelectAll(Folder_ID);
 
-            //second conditional is for no doc reference documents
-            publicModel = publicModel.Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null);
+            //second conditional is for no doc reference documents, a unique westland condition
+            publicModel = publicModel
+                            .Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null);
 
             //instantiating the overall min and max YEAR ranges for this client if date inputs were null, maybe combine into one conditional
             if (IssueYearMinRange == null || IssueYearMinRange == "")
             {
-                IssueYearMinRange = publicModel.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+                IssueYearMinRange = publicModel
+                                        .OrderBy(r => r.IssueDate)
+                                        .First()
+                                            .IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
             }
 
             if (IssueYearMaxRange == null || IssueYearMaxRange == "")
             {
-                IssueYearMaxRange = publicModel.OrderByDescending(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+                IssueYearMaxRange = publicModel
+                                        .OrderByDescending(r => r.IssueDate)
+                                        .First()
+                                            .IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
             }
 
             if (!Request.IsAjaxRequest()) {
@@ -90,12 +99,6 @@ namespace DocSearch2._1.Controllers
 
 
             //Formatting the display date into SQL likeable date type
-            //"04/10/2017" example expected date
-            //DateTime issueDateMin = DateTime.ParseExact(IssueYearMinRange, "d", CultureInfo.InvariantCulture);
-            //DateTime issueDateMax = DateTime.ParseExact(IssueYearMaxRange, "d", CultureInfo.InvariantCulture);
-
-            //Formatting changed to only support inputted YEAR now
-
             if (Int32.Parse(IssueYearMaxRange) < Int32.Parse(IssueYearMinRange)) {
                 string temp = IssueYearMinRange;
                 IssueYearMinRange = IssueYearMaxRange;
@@ -108,8 +111,11 @@ namespace DocSearch2._1.Controllers
             //count of total records unfiltered of this client
             ViewData["allRecordsCount"] = publicModel.Count();
 
-            //**Populates the navbar
-            IEnumerable<PublicVM> nb = publicModel.OrderBy(e => e.CategoryName).GroupBy(e => e.CategoryName).Select(g => g.First());
+            //**Populating the navbar
+            IEnumerable<PublicVM> nb = publicModel
+                                        .OrderBy(e => e.CategoryName)
+                                        .GroupBy(e => e.CategoryName)
+                                        .Select(g => g.First());
 
             List<NavBar> nbl = new List<NavBar>();
 
@@ -120,7 +126,9 @@ namespace DocSearch2._1.Controllers
 
                 nbitem.CategoryName = pvm.CategoryName;
 
-                foreach (PublicVM pp in publicModel.GroupBy(g => g.DocumentTypeName).Select(g => g.First()))
+                foreach (PublicVM pp in publicModel
+                                        .GroupBy(g => g.DocumentTypeName)
+                                        .Select(g => g.First()))
                 {
                     if (pp.CategoryName == nbitem.CategoryName && !nbl.Any(s => s.DocumentTypeName.Contains(pp.DocumentTypeName)))
                     {
@@ -131,7 +139,10 @@ namespace DocSearch2._1.Controllers
             }
 
             ViewBag.CategoryNavBar = nbl;
-            ViewBag.PolicyNavBar = publicModel.OrderBy(e => e.RefNumber).GroupBy(e => e.RefNumber).Select(g => g.First().RefNumber);
+            ViewBag.PolicyNavBar = publicModel
+                                    .OrderBy(e => e.RefNumber)
+                                    .GroupBy(e => e.RefNumber)
+                                    .Select(g => g.First().RefNumber);
             //**End of navbar population data
 
             
@@ -164,37 +175,25 @@ namespace DocSearch2._1.Controllers
                 //checks if the date filter and search term will return any results
                 if (!publicModel.Any(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax)) || (searchTerm != null && !publicModel.Any(pub => pub.Description.Contains(searchTerm)))){
 
+                    //lets view know that no results are coming back to it
                     ViewData["goodSearch"] = false;
 
                     ///so inefficient, need to be redone
                     //instantiating the overall min and max YEAR ranges for this client if date inputs were null, maybe combine into one conditional
-
-                    IssueYearMinRange = publicModel.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
-                    IssueYearMaxRange = publicModel.OrderByDescending(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
-
-                    //creating the options for the dropdown list
-                    //years = new List<SelectListItem>();
-
-                    //for (int i = Int32.Parse(IssueYearMinRange); i <= Int32.Parse(IssueYearMaxRange); i++)
-                    //{
-                    //    SelectListItem year = new SelectListItem();
-                    //    year.Selected = false;
-                    //    year.Text = year.Value = i.ToString();
-                    //    years.Add(year);
-                    //}
-
-                    //TempData["IssueDateMin"] = TempData["IssueDateMax"] = years;
-                    ///
-
-
+                    IssueYearMinRange = publicModel
+                                            .OrderBy(r => r.IssueDate)
+                                            .First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+                    IssueYearMaxRange = publicModel
+                                            .OrderByDescending(r => r.IssueDate)
+                                            .First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
                 } else {
                     publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax));
                     TempData["SearchTerm"] = searchTerm;
                     //can probably refine this LINQ query
-                    publicModel = publicModel.Where(r => searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.Contains(searchTerm) == true : true));
+                    publicModel = publicModel
+                                    .Where(r => searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.Contains(searchTerm) == true : true));
                 }
                 //may want to widen results if goodSearch is false
-
 
 
                 //record count after category/doctype/policy/search/date filter
@@ -211,8 +210,20 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, pageSize);
-                    else publicModel = publicModel.OrderByDescending(r => r.DocumentTypeName).ToPagedList(page, pageSize);
+                    //if (sortAscending) publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, pageSize);
+                    //else publicModel = publicModel.OrderByDescending(r => r.DocumentTypeName).ToPagedList(page, pageSize);
+
+                    if (sortAscending)
+                    {
+                        publicModel = publicModel
+                                        .OrderBy(r => r.DocumentTypeName)
+                                            .ToPagedList(page, pageSize);
+                    }
+                    else {
+                        publicModel = publicModel
+                                        .OrderByDescending(r => r.DocumentTypeName)
+                                            .ToPagedList(page, pageSize);
+                    }
 
                     prevFilter = filter;
                 }
@@ -226,8 +237,12 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.RefNumber).ToPagedList(page, pageSize);
-                    else publicModel = publicModel.OrderByDescending(r => r.RefNumber).ToPagedList(page, pageSize);
+                    if (sortAscending) publicModel = publicModel
+                                                        .OrderBy(r => r.RefNumber)
+                                                        .ToPagedList(page, pageSize);
+                    else publicModel = publicModel
+                                            .OrderByDescending(r => r.RefNumber)
+                                            .ToPagedList(page, pageSize);
 
                     prevFilter = filter;
                 }
@@ -241,8 +256,12 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.EffectiveDate).ToPagedList(page, pageSize);
-                    else publicModel = publicModel.OrderByDescending(r => r.EffectiveDate).ToPagedList(page, pageSize);
+                    if (sortAscending) publicModel = publicModel
+                                                        .OrderBy(r => r.EffectiveDate)
+                                                        .ToPagedList(page, pageSize);
+                    else publicModel = publicModel
+                                            .OrderByDescending(r => r.EffectiveDate)
+                                            .ToPagedList(page, pageSize);
 
                     prevFilter = filter;
                 }
@@ -256,8 +275,12 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.Originator).ToPagedList(page, pageSize);
-                    else publicModel = publicModel.OrderByDescending(r => r.Originator).ToPagedList(page, pageSize);
+                    if (sortAscending) publicModel = publicModel
+                                                        .OrderBy(r => r.Originator)
+                                                        .ToPagedList(page, pageSize);
+                    else publicModel = publicModel
+                                            .OrderByDescending(r => r.Originator)
+                                            .ToPagedList(page, pageSize);
 
                     prevFilter = filter;
                 }
@@ -271,8 +294,12 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderBy(r => r.Supplier).ToPagedList(page, pageSize);
-                    else publicModel = publicModel.OrderByDescending(r => r.Supplier).ToPagedList(page, pageSize);
+                    if (sortAscending) publicModel = publicModel
+                                                        .OrderBy(r => r.Supplier)
+                                                        .ToPagedList(page, pageSize);
+                    else publicModel = publicModel
+                                            .OrderByDescending(r => r.Supplier)
+                                            .ToPagedList(page, pageSize);
 
                     prevFilter = filter;
                 }
@@ -285,8 +312,12 @@ namespace DocSearch2._1.Controllers
                         sortAscending = !sortAscending;
                     }
 
-                    if (sortAscending) publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, pageSize);
-                    else publicModel = publicModel.OrderBy(r => r.IssueDate).ToPagedList(page, pageSize);
+                    if (sortAscending) publicModel = publicModel
+                                                        .OrderByDescending(r => r.IssueDate)
+                                                        .ToPagedList(page, pageSize);
+                    else publicModel = publicModel
+                                            .OrderBy(r => r.IssueDate)
+                                            .ToPagedList(page, pageSize);
 
                     prevFilter = filter;
                 }
@@ -305,7 +336,9 @@ namespace DocSearch2._1.Controllers
                 if (publicModel != null)
                 {
                     ViewData["currentRecordsCount"] = publicModel.Count();
-                    publicModel = publicModel.OrderByDescending(r => r.IssueDate).ToPagedList(page, pageSize);
+                    publicModel = publicModel
+                                    .OrderByDescending(r => r.IssueDate)
+                                    .ToPagedList(page, pageSize);
 
                     return View(publicModel);
                 }
@@ -319,7 +352,8 @@ namespace DocSearch2._1.Controllers
             //declare and instantiate the original full MiscPublicData data for the client
             MiscPublicData documentData = null;
 
-            documentData = documentRepository.GetMiscPublicData(Document_ID);
+            documentData = documentRepository
+                                .GetMiscPublicData(Document_ID);
 
             if (documentData != null)
             {
