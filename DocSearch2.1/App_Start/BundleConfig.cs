@@ -8,65 +8,31 @@ namespace DocSearch2._1
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            //in production mode, these script files will combine and minify into one script for performance boost
             bundles.Add(new ScriptBundle("~/bundles/otf").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery-ui.js",
+                        "~/Scripts/jquery-ui.js", 
                         "~/Scripts/jquery.unobtrusive*",
-                        //"~/Scripts/jquery.textfill.min.js",
-                        "~/Scripts/jquery.validate*",
+                        "~/Scripts/jquery.validate*", //might not be using
                         "~/Scripts/bootstrap.js",
-                        "~/Scripts/otf.js"));//not installed yet
+                        "~/Scripts/otf.js")); //my custom js script
 
-            //bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-            //            "~/Scripts/jquery-{version}.js",
-            //            "~/Scripts/jquery-{version}.slim.js"));
-            //keep one jquery only in the end.
-            //bundler might even only take one by nature
-
-            /*bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
-                        */
+            // Use the development version of Modernizr to develop with and learn from. Then, when you're
+            // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
+            //modernizr must be implemented in the head (unlike the other scripts at end of body) as it is used to allow older browsers understand html5
+            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
+                        "~/Scripts/modernizr-*")); 
             
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
-
-            /*
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
-            */
+            // style sheet bundler
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/bootstrap-grid.css",
-                      "~/Content/bootstrap-theme.css",
-                      "~/Content/font-awesome.css",
-                      "~/Content/PagedList.css",
+                      "~/Content/bootstrap-grid.css", //extra table options
+                      "~/Content/bootstrap-theme.css", //used mainly for table appearance, could be removed for a more basic look
+                      "~/Content/font-awesome.css", //for icons
+                      "~/Content/PagedList.css", //pagination
                       "~/Content/jquery-ui*",
-                      "~/Content/Site.css"
+                      "~/Content/Site.css" //custom css file
                       ));
-
-            /*
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-            "~/Scripts/jquery-{version}.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
-
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
-
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
-
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
-             * */
         }
     }
 }
