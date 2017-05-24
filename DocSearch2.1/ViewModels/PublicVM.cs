@@ -18,7 +18,6 @@ namespace DocSearch2._1.ViewModels
         public string DocumentTypeName { get; set; } //tbl_DocumentType.Name
 
         [Display(Name = "Issue Date")]
-        //[DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}")]
         [DataType(DataType.Date)]
         public Nullable<DateTime> IssueDate { get; set; } //tbl_Document.Issue_DT
 
@@ -30,7 +29,6 @@ namespace DocSearch2._1.ViewModels
         public string CategoryName { get; set; } //tbl_Category.Name
 
         [Display(Name = "Effective Date")]
-        //[DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}")]
         [DataType(DataType.Date)]
         public Nullable<DateTime> EffectiveDate { get; set; } //tbl_DocReference.Date1_DT
 
@@ -38,20 +36,13 @@ namespace DocSearch2._1.ViewModels
 
         public string FileType { get; set; } //tbl_Document.FileType
 
-        //////
-
-        //[Optional] would this be usefull?
         public string Method { get; set; } //tbl_Document.Method
 
-        //[Optional]
         public string Originator { get; set; } //tbl_Document.Originator
 
-        //[Optional]
         public string Reason { get; set; } //tbl_Document.Reason
 
-        //[Optional]
         public string Supplier { get; set; } //tbl_DocReference.Number1
-
 
         //look into knockout.js
     }

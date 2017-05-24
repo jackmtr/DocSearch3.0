@@ -38,65 +38,50 @@ namespace DocSearch2._1.Controllers
         [HttpGet]
         public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1, int pageSize = 20)
         {
+            //**GLOBAL VARIABLES
             //TempData can be used to send data between controllers and views through one request, .keep() is used to continue keeping after one request
-            //persist client name, id
+            //persist client name, id, search term, inputted dates
             TempData.Keep("Client_Name");
-            TempData.Keep("Client_Id");
-            
+            TempData.Keep("Client_Id");        
             //***Pseudo save state immitation
-            //persist search term, inputted dates
             TempData.Keep("SearchTerm");
-            TempData.Keep("IssueDateMin");
-            TempData.Keep("IssueDateMax");
+            //TempData.Keep("IssueDateMin");
+            //TempData.Keep("IssueDateMax");
+            TempData.Keep("YearRange");
 
-
-            //false means seachterm will return an empty result
+            //ViewData["goodSearch"] = false means seachterm will return an empty result
             ViewData["goodSearch"] = true;
-            //viewdata to save state
+            //ViewData["currentNav"] used to populate view's link route value for subNav, which in turn populates subNav variable.  Used to save subnav state
             ViewData["currentNav"] = null;
 
             //declare and instantiate the original full PublicVM data for the client
             IEnumerable<PublicVM> publicModel = null;
 
-            publicModel = publicRepository
-                            .SelectAll(Folder_ID);
 
-            //second conditional is for no doc reference documents, a unique westland condition
-            publicModel = publicModel
+            //**POPULATING MAIN MODEL, second conditional is for no doc reference documents, a unique westland condition
+            publicModel = publicRepository
+                            .SelectAll(Folder_ID)
                             .Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null);
 
             //instantiating the overall min and max YEAR ranges for this client if date inputs were null, maybe combine into one conditional
             if (IssueYearMinRange == null || IssueYearMinRange == "")
             {
-                IssueYearMinRange = publicModel
-                                        .OrderBy(r => r.IssueDate)
-                                        .First()
-                                            .IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+                IssueYearMinRange = RetrieveYear(publicModel, true);
             }
 
             if (IssueYearMaxRange == null || IssueYearMaxRange == "")
             {
-                IssueYearMaxRange = publicModel
-                                        .OrderByDescending(r => r.IssueDate)
-                                        .First()
-                                            .IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+                IssueYearMaxRange = RetrieveYear(publicModel, false);
             }
 
+            //should only be run on initial load of page
             if (!Request.IsAjaxRequest()) {
+
                 //creating the options for the dropdown list
-                IList<SelectListItem> years = new List<SelectListItem>();
-
-                for (int i = Int32.Parse(IssueYearMinRange); i <= Int32.Parse(IssueYearMaxRange); i++)
-                {
-                    SelectListItem year = new SelectListItem();
-                    year.Selected = false;
-                    year.Text = year.Value = i.ToString();
-                    years.Add(year);
-                }
-
-                TempData["IssueDateMin"] = TempData["IssueDateMax"] = years;
+                //doesnt look like I needed two variables to hold this list
+                //TempData["IssueDateMin"] = TempData["IssueDateMax"] = YearRangePopulate(IssueYearMinRange, IssueYearMaxRange);
+                TempData["YearRange"] = YearRangePopulate(IssueYearMinRange, IssueYearMaxRange);
             }
-
 
             //Formatting the display date into SQL likeable date type
             if (Int32.Parse(IssueYearMaxRange) < Int32.Parse(IssueYearMinRange)) {
@@ -173,8 +158,10 @@ namespace DocSearch2._1.Controllers
 
                 //*filtering by date and search conditions
                 //checks if the date filter and search term will return any results
-                if (!publicModel.Any(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax)) || (searchTerm != null && !publicModel.Any(pub => pub.Description.Contains(searchTerm)))){
-
+                //changed the search condition syntax, had a bug with pink, 10 page size, then 2015 max
+                /*if (!publicModel.Any(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax)) || (searchTerm != null && !publicModel.Any(pub => pub.Description.Contains(searchTerm))))
+                {*/
+                if (!publicModel.Any(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && (searchTerm == null || r.Description.Contains(searchTerm)))){ 
                     //lets view know that no results are coming back to it
                     ViewData["goodSearch"] = false;
 
@@ -209,9 +196,6 @@ namespace DocSearch2._1.Controllers
                     else {
                         sortAscending = true;
                     }
-
-                    //if (sortAscending) publicModel = publicModel.OrderBy(r => r.DocumentTypeName).ToPagedList(page, pageSize);
-                    //else publicModel = publicModel.OrderByDescending(r => r.DocumentTypeName).ToPagedList(page, pageSize);
 
                     if (sortAscending)
                     {
@@ -428,6 +412,43 @@ namespace DocSearch2._1.Controllers
             documentRepository.Dispose();
 
             base.Dispose(disposing);
+        }
+
+        private IList<SelectListItem> YearRangePopulate(string IssueYearMinRange, string IssueYearMaxRange)
+        {
+
+            IList<SelectListItem> years = new List<SelectListItem>();
+
+            for (int i = Int32.Parse(IssueYearMinRange); i <= Int32.Parse(IssueYearMaxRange); i++)
+            {
+                SelectListItem year = new SelectListItem();
+                year.Selected = false;
+                year.Text = year.Value = i.ToString();
+                years.Add(year);
+            }
+
+            return years;
+        }
+
+        private string RetrieveYear(IEnumerable<PublicVM> model, bool ascending)
+        {
+            string year;
+
+            if (ascending)
+            {
+                year = model
+                            .OrderBy(r => r.IssueDate)
+                                    .First()
+                                        .IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+            }
+            else {
+                year = model
+                            .OrderByDescending(r => r.IssueDate)
+                                    .First()
+                                        .IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+            }
+
+            return year;
         }
     }
 }

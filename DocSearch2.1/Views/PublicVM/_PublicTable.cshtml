@@ -3,13 +3,13 @@
 @if ((bool)ViewData["goodSearch"] == false)
 {
     <script type="text/javascript">
-        //this needs to be a call back
+        //these functions should be synchronous, atm not
         clearFields();
         alert('Sorry, your search came up empty.  Clearing Search.');
     </script>
 }
 
-<div id="public_table" class="row default-table" data-currentRecord="@ViewData["currentRecordsCount"]" data-currentLowYear="@(((List<SelectListItem>)TempData["IssueDateMin"]).First().Text)" data-currentHighYear ="@(((List<SelectListItem>)TempData["IssueDateMin"]).Last().Text)">
+<div id="public_table" class="row default-table" data-currentRecord="@ViewData["currentRecordsCount"]" data-currentLowYear="@(((List<SelectListItem>)TempData["YearRange"]).First().Text)" data-currentHighYear ="@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)">
     <div id ="public_table_inner" class="col-md-12">
         <table class="table table-bordered table-hover">
             <thead class="thead-default">
@@ -113,9 +113,6 @@
                         </td>
                         <td class="description">
                             @Html.DisplayFor(modelItem => item.Description)
-                            @*<span>
-                                @Html.DisplayFor(modelItem => item.Description)
-                            </span>*@
                         </td>
                         <td>
                             @Html.ActionLink(item.FileType, "FileDisplay", new { documentId = item.Document_ID }, new { target = "_blank" })
@@ -127,16 +124,6 @@
                             }
                         </td>
                         <td>
-                            @*@Ajax.ActionLink("More", "MiscData", new { documentId = item.Document_ID }, new AjaxOptions
-                   {
-                       HttpMethod = "GET",
-                       InsertionMode = InsertionMode.ReplaceWith,
-                       UpdateTargetId = @item.Document_ID.ToString()
-                   })*@
-                            @*@Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("MiscData", "PublicVM", new
-                            {
-                                documentId = item.Document_ID
-                            }), "#"+@item.Document_ID.ToString(), "replace-with", "GET", "More", "fa-sort", "miscTableLink", ""))*@
                             <a href="#" class="miscTableLink" method="get" action="@Url.Action("MiscData", new { documentId = item.Document_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"],  })" data-otf-ajax="true" data-otf-target="#@item.Document_ID.ToString()">More<i class="fa fa-expand"></i></a>
                         </td>
                     </tr>

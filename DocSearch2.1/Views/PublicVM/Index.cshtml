@@ -41,9 +41,6 @@
                         }
 
                         //need to check for form submit, then not do clearFields
-                        //if ($(this).hasClass('navLink') || $(this).hasClass('button')) {
-                        //    clearFields();
-                        //}
                         if ($(this).hasClass('navLink') || $(this).hasClass('button')) {
                             clearFields();
                         }
@@ -194,7 +191,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12"><h4>Returning <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents between <span id="currentLowYear">@(((List<SelectListItem>)TempData["IssueDateMin"]).First().Text)</span> and <span id="currentHighYear">@(((List<SelectListItem>)TempData["IssueDateMin"]).Last().Text)</span></h4></div>
+            <div class="col-md-12"><h4>Returning <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents between <span id="currentLowYear">@(((List<SelectListItem>)TempData["YearRange"]).First().Text)</span> and <span id="currentHighYear">@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)</span></h4></div>
         </div>
 
         <!--Search Box, Date Filters, clear, and submit button-->
@@ -217,12 +214,12 @@
                 </div>
                 <div class="filter col-md-3">
                     <label for="IssueDateMinRange">Starting year:</label>
-                    @Html.DropDownList("IssueYearMinRange", TempData["IssueDateMin"] as List<SelectListItem>, "Select a Year", new { @class = "datefield", type = "date" })
+                    @Html.DropDownList("IssueYearMinRange", TempData["YearRange"] as List<SelectListItem>, "Select a Year", new { @class = "datefield", type = "date" })
                     <br/>
                 </div>
                 <div class="filter col-md-3">
                     <label for="IssueDateMaxRange">Ending year:</label>
-                    @Html.DropDownList("IssueYearMaxRange", TempData["IssueDateMax"] as List<SelectListItem>, "Select a Year", new { @class = "datefield", type = "date" })
+                    @Html.DropDownList("IssueYearMaxRange", TempData["YearRange"] as List<SelectListItem>, "Select a Year", new { @class = "datefield", type = "date" })
                     <br />
                 </div>
                 <div class="filter col-md-3 buttondiv">
@@ -244,8 +241,3 @@
         @Html.Partial("_PublicTable", Model)
     </div>
 </div>
-
-@*@section CustomScripts{
-    <script>
-    </script>  
-}*@
