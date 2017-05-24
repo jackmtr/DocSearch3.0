@@ -63,6 +63,7 @@ namespace DocSearch2._1.Controllers
                             .SelectAll(Folder_ID)
                             .Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null);
 
+            ////this entire code could be put into a function
             //instantiating the overall min and max YEAR ranges for this client if date inputs were null, maybe combine into one conditional
             if (IssueYearMinRange == null || IssueYearMinRange == "")
             {
@@ -89,6 +90,7 @@ namespace DocSearch2._1.Controllers
                 IssueYearMinRange = IssueYearMaxRange;
                 IssueYearMaxRange = temp;
             }
+            ////
 
             DateTime issueDateMin = DateTime.ParseExact(String.Format("01/01/{0}", IssueYearMinRange), "d", CultureInfo.InvariantCulture);
             DateTime issueDateMax = DateTime.ParseExact(String.Format("12/31/{0}", IssueYearMaxRange), "d", CultureInfo.InvariantCulture);
