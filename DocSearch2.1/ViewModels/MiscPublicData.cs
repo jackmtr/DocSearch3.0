@@ -16,7 +16,7 @@ namespace DocSearch2._1.ViewModels
         public string Creator { get; set; }
 
         [Display(Name = "Archive Time")]
-        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy hh:mmtt}")]
+        [DataType(DataType.DateTime)]
         public Nullable<DateTime> ArchiveTime { get; set; }
 
         public string Reason { get; set; }

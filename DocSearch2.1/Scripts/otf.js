@@ -1,12 +1,11 @@
 ﻿$(function () {
 
-    //submits the search and date filter form
+    //**FUNCTIONS
+
+    //submits the search and date filter form asynchronously
     var ajaxFormSubmit = function () {
 
         var $pageSize = $('#pageSize option:selected').val();
-
-        //$('select[name^="IssueYearMinRange"] option').removeAttr('selected');
-
         var $form = $('form');
 
         $category = $(".active a").data('subclass');
@@ -40,7 +39,7 @@
         return false;
     };
 
-    //pagination effect
+    //pagination function
     var getPage = function () {
 
         var $pageSize = $('#pageSize option:selected').val(); 
@@ -59,7 +58,6 @@
         $.ajax(options).done(function (data) {
             var target = $a.parents("div.pagedList").attr("data-otf-target");
             $(target).replaceWith(data);
-            //postNavbar();
         });
 
         return false;
@@ -94,6 +92,7 @@
         $('.previewImg').remove();
     }
 
+    //function to create the misc table and append it to the table
     function createMiscTable(link) {
         var options = {
             url: link.attr("action"),
@@ -113,6 +112,7 @@
         })
     }
 
+    //function to destroy the misc table
     function destroyMiscTable(link) {
         var id = link.attr("data-otf-target");
         var $target = $(id);
@@ -121,14 +121,10 @@
     }
 
 
-    if (!Modernizr.inputtypes.date) {
+    //**EVENTS
 
-        $(".datefield").each(function () {
-            var displayedDate = $(this).val();
-            var date = new Date(displayedDate);
-            $(this).datepicker().datepicker("setDate", date);
-        });
-    }
+    //will load the user to have focus inside search bar
+    $('#searchInputBox').focus();
 
     //event for form submit
     $("form[data-otf-ajax='true']").submit(ajaxFormSubmit);
@@ -159,11 +155,13 @@
         $(this).parent().addClass("active");
     });
 
+    //doesnt seem to be needed
     //allows category list item hover to highlight every doctype in it
-    $(".category_nav > div > a").hover( function () {
-        $(this).parent().toggleClass("nav_cate_hover");
-    });
+    //$(".category_nav > div > a").hover( function () {
+    //    $(this).parent().toggleClass("nav_cate_hover");
+    //});
 
+    //event for click on 'MORE', which brings up a misc table
     $("#body").on("click", ".miscTableLink", function () {
 
         var $link = $(this);
@@ -178,6 +176,7 @@
         return false;
     });
 
+    //event for selecting a min start year from 'Starting Year' dropdown
     $('select[name^="IssueYearMinRange"]').change(function () {
         var value = this.value;
 
@@ -185,6 +184,7 @@
         $('select[name^="IssueYearMinRange"] option[value="' + value + '"]').attr("selected", "selected");
     });
 
+    //event for selecting a min start year from 'Ending Year' dropdown
     $('select[name^="IssueYearMaxRange"]').change(function () {
         var value = this.value;
 
@@ -192,6 +192,7 @@
         $('select[name^="IssueYearMaxRange"] option[value="' + value + '"]').attr("selected", "selected");
     });
 
+    //event for selecting a 'records per page' from dropdown
     $('#pageSize').change(function () {
         var value = this.value;
 
@@ -200,60 +201,25 @@
         ajaxFormSubmit();
     });
 
-    //$("#body").on('change', '#pageSize', function () {
-    //    var value = this.value;
-
-    //    $('select[name^="pageSize"] option').removeAttr('selected');
-    //    $('select[name^="pageSize"] option[value="' + value + '"]').attr("selected", "selected");
-    //});
-
-    //if (window.history && window.history.pushState) {
-
-    //    window.history.pushState('forward', null, './#forward');
-
-    //    $(window).on('popstate', function () {
-    //        alert('hi');
-    //        $('#clearButton').click();
-    //    });
-
-    //}
-
-    var rx = /INPUT|SELECT|TEXTAREA/i;
-
+    
+    //event for clicking the backspace or enter key in select scenerios
     $(document).bind("keydown", function (e) {
-        if (e.which == 8) { // 8 == backspace
+
+        var rx = /INPUT|SELECT|TEXTAREA/i; //will be used to check which markup you are in while clicking on backspace
+
+        if (e.which == 8) { // 8 is 'backspace' in ASCII
             if (rx.test(e.target.tagName) && e.target.id == "formSubmitId" || !rx.test(e.target.tagName) || e.target.disabled || e.target.readOnly) {
                 
                 $('#clearButton').click();
                 $('#searchInputBox').focus();
-                alert(document.documentElement.clientWidth);
                 e.preventDefault();
             }
-        } else if (e.which == 13) {
+        } else if (e.which == 13) { // 13 is 'enter' in ASCII
             if (e.target.id != "searchInputBox") {
-                //rx.test(e.target.tagName) && 
+
                 $('#formSubmitId').click();
                 e.preventDefault();
             }
         }
     });
-
-    $('#searchInputBox').focus();
-    //$('.description').textfill({ maxFontPixels: 36 });
-    
-    //$('#public_table').load(function () {
-    //    alert('hi');
-    //});
-
-    //$(document).ajaxComplete(function (e) {
-    //    alert();
-    //    $('#searchInputBox').focus();
-    //});
-    //$(window).on('resize', function () {
-    //    $(function () {
-    //        $('.nav-button').textfill({
-    //            maxFontPixels: 36
-    //        });
-    //    });
-    //});
 });
