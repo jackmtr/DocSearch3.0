@@ -45,8 +45,6 @@ namespace DocSearch2._1.Controllers
             TempData.Keep("Client_Id");        
             //***Pseudo save state immitation
             TempData.Keep("SearchTerm");
-            //TempData.Keep("IssueDateMin");
-            //TempData.Keep("IssueDateMax");
             TempData.Keep("YearRange");
 
             //ViewData["goodSearch"] = false means seachterm will return an empty result
@@ -63,7 +61,6 @@ namespace DocSearch2._1.Controllers
                             .SelectAll(Folder_ID)
                             .Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null);
 
-            ////this entire code could be put into a function
             //instantiating the overall min and max YEAR ranges for this client if date inputs were null, maybe combine into one conditional
             if (IssueYearMinRange == null || IssueYearMinRange == "")
             {
@@ -80,7 +77,6 @@ namespace DocSearch2._1.Controllers
 
                 //creating the options for the dropdown list
                 //doesnt look like I needed two variables to hold this list
-                //TempData["IssueDateMin"] = TempData["IssueDateMax"] = YearRangePopulate(IssueYearMinRange, IssueYearMaxRange);
                 TempData["YearRange"] = YearRangePopulate(IssueYearMinRange, IssueYearMaxRange);
             }
 
@@ -90,7 +86,6 @@ namespace DocSearch2._1.Controllers
                 IssueYearMinRange = IssueYearMaxRange;
                 IssueYearMaxRange = temp;
             }
-            ////
 
             DateTime issueDateMin = DateTime.ParseExact(String.Format("01/01/{0}", IssueYearMinRange), "d", CultureInfo.InvariantCulture);
             DateTime issueDateMax = DateTime.ParseExact(String.Format("12/31/{0}", IssueYearMaxRange), "d", CultureInfo.InvariantCulture);
@@ -98,41 +93,78 @@ namespace DocSearch2._1.Controllers
             //count of total records unfiltered of this client
             ViewData["allRecordsCount"] = publicModel.Count();
 
-            //**Populating the navbar
-            IEnumerable<PublicVM> nb = publicModel
-                                        .OrderBy(e => e.CategoryName)
-                                        .GroupBy(e => e.CategoryName)
-                                        .Select(g => g.First());
+            //**Populating the navbar, put into function
+            populateNavBar(publicModel);
 
-            List<NavBar> nbl = new List<NavBar>();
+            //**Populating the navbar, put into function
+            //IEnumerable<PublicVM> nb = publicModel
+            //                            .OrderBy(e => e.CategoryName)
+            //                            .GroupBy(e => e.CategoryName)
+            //                            .Select(g => g.First());
 
-            foreach (PublicVM pvm in nb)
-            {
+            //List<NavBar> nbl = new List<NavBar>();
 
-                NavBar nbitem = new NavBar();
+            //foreach (PublicVM pvm in nb)
+            //{
 
-                nbitem.CategoryName = pvm.CategoryName;
+            //    NavBar nbitem = new NavBar();
 
-                foreach (PublicVM pp in publicModel
-                                        .GroupBy(g => g.DocumentTypeName)
-                                        .Select(g => g.First()))
-                {
-                    if (pp.CategoryName == nbitem.CategoryName && !nbl.Any(s => s.DocumentTypeName.Contains(pp.DocumentTypeName)))
-                    {
-                        nbitem.DocumentTypeName.Add(pp.DocumentTypeName);
-                    }
-                }
-                nbl.Add(nbitem);
-            }
+            //    nbitem.CategoryName = pvm.CategoryName;
 
-            ViewBag.CategoryNavBar = nbl;
-            ViewBag.PolicyNavBar = publicModel
-                                    .OrderBy(e => e.RefNumber)
-                                    .GroupBy(e => e.RefNumber)
-                                    .Select(g => g.First().RefNumber);
+            //    foreach (PublicVM pp in publicModel
+            //                            .GroupBy(g => g.DocumentTypeName)
+            //                            .Select(g => g.First()))
+            //    {
+            //        if (pp.CategoryName == nbitem.CategoryName && !nbl.Any(s => s.DocumentTypeName.Contains(pp.DocumentTypeName)))
+            //        {
+            //            nbitem.DocumentTypeName.Add(pp.DocumentTypeName);
+            //        }
+            //    }
+            //    nbl.Add(nbitem);
+            //}
+
+            //ViewBag.CategoryNavBar = nbl;
+            //ViewBag.PolicyNavBar = publicModel
+            //                        .OrderBy(e => e.RefNumber)
+            //                        .GroupBy(e => e.RefNumber)
+            //                        .Select(g => g.First().RefNumber);
             //**End of navbar population data
+            /*
+            private void populateNavBar(IEnumerable<PublicVM> model){
+                IEnumerable<PublicVM> nb = model
+                                            .OrderBy(e => e.CategoryName)
+                                            .GroupBy(e => e.CategoryName)
+                                            .Select(g => g.First());
 
-            
+                List<NavBar> nbl = new List<NavBar>();
+
+                foreach (PublicVM pvm in nb)
+                {
+
+                    NavBar nbitem = new NavBar();
+
+                    nbitem.CategoryName = pvm.CategoryName;
+
+                    foreach (PublicVM pp in model
+                                            .GroupBy(g => g.DocumentTypeName)
+                                            .Select(g => g.First()))
+                    {
+                        if (pp.CategoryName == nbitem.CategoryName && !nbl.Any(s => s.DocumentTypeName.Contains(pp.DocumentTypeName)))
+                        {
+                            nbitem.DocumentTypeName.Add(pp.DocumentTypeName);
+                        }
+                    }
+                    nbl.Add(nbitem);
+                }
+
+                ViewBag.CategoryNavBar = nbl;
+                ViewBag.PolicyNavBar = model
+                                        .OrderBy(e => e.RefNumber)
+                                        .GroupBy(e => e.RefNumber)
+                                        .Select(g => g.First().RefNumber);            
+            }
+            */
+
             if (Request.IsAjaxRequest())
             {
                 //**STARTING ACTUAL FILTERING/SORTING OF MODEL**
@@ -169,12 +201,14 @@ namespace DocSearch2._1.Controllers
 
                     ///so inefficient, need to be redone
                     //instantiating the overall min and max YEAR ranges for this client if date inputs were null, maybe combine into one conditional
-                    IssueYearMinRange = publicModel
-                                            .OrderBy(r => r.IssueDate)
-                                            .First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
-                    IssueYearMaxRange = publicModel
-                                            .OrderByDescending(r => r.IssueDate)
-                                            .First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+
+                    //I'm not sure if this is even used anymore
+                    //IssueYearMinRange = publicModel
+                    //                        .OrderBy(r => r.IssueDate)
+                    //                        .First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+                    //IssueYearMaxRange = publicModel
+                    //                        .OrderByDescending(r => r.IssueDate)
+                    //                        .First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
                 } else {
                     publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax));
                     TempData["SearchTerm"] = searchTerm;
@@ -451,6 +485,41 @@ namespace DocSearch2._1.Controllers
             }
 
             return year;
+        }
+
+        private void populateNavBar(IEnumerable<PublicVM> model)
+        {
+            IEnumerable<PublicVM> nb = model
+                                        .OrderBy(e => e.CategoryName)
+                                        .GroupBy(e => e.CategoryName)
+                                        .Select(g => g.First());
+
+            List<NavBar> nbl = new List<NavBar>();
+
+            foreach (PublicVM pvm in nb)
+            {
+
+                NavBar nbitem = new NavBar();
+
+                nbitem.CategoryName = pvm.CategoryName;
+
+                foreach (PublicVM pp in model
+                                        .GroupBy(g => g.DocumentTypeName)
+                                        .Select(g => g.First()))
+                {
+                    if (pp.CategoryName == nbitem.CategoryName && !nbl.Any(s => s.DocumentTypeName.Contains(pp.DocumentTypeName)))
+                    {
+                        nbitem.DocumentTypeName.Add(pp.DocumentTypeName);
+                    }
+                }
+                nbl.Add(nbitem);
+            }
+
+            ViewBag.CategoryNavBar = nbl;
+            ViewBag.PolicyNavBar = model
+                                    .OrderBy(e => e.RefNumber)
+                                    .GroupBy(e => e.RefNumber)
+                                    .Select(g => g.First().RefNumber);
         }
     }
 }
