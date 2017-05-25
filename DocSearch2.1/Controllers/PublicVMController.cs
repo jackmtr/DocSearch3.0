@@ -108,30 +108,17 @@ namespace DocSearch2._1.Controllers
 
                 //*filtering by date and search conditions
                 //checks if the date filter and search term will return any results
-                //changed the search condition syntax, had a bug with pink, 10 page size, then 2015 max
-                if (!publicModel.Any(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && (searchTerm == null || r.Description.Contains(searchTerm)))){ 
-                    //lets view know that no results are coming back to it
+                if (!publicModel.Any(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && (searchTerm == null || r.Description.Contains(searchTerm)))){
+
+                    //ViewData["goodSearch"] = false means no records is found
                     ViewData["goodSearch"] = false;
-
-                    ///so inefficient, need to be redone
-                    //instantiating the overall min and max YEAR ranges for this client if date inputs were null, maybe combine into one conditional
-
-                    //I'm not sure if this is even used anymore
-                    //IssueYearMinRange = publicModel
-                    //                        .OrderBy(r => r.IssueDate)
-                    //                        .First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
-                    //IssueYearMaxRange = publicModel
-                    //                        .OrderByDescending(r => r.IssueDate)
-                    //                        .First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
                 } else {
-                    publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax));
+                    publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && 
+                        (searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.Contains(searchTerm) == true : true)));
+
                     TempData["SearchTerm"] = searchTerm;
-                    //can probably refine this LINQ query
-                    publicModel = publicModel
-                                    .Where(r => searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.Contains(searchTerm) == true : true));
                 }
                 //may want to widen results if goodSearch is false
-
 
                 //record count after category/doctype/policy/search/date filter
                 ViewData["currentRecordsCount"] = publicModel.Count();
@@ -171,12 +158,17 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel
-                                                        .OrderBy(r => r.RefNumber)
-                                                        .ToPagedList(page, pageSize);
-                    else publicModel = publicModel
-                                            .OrderByDescending(r => r.RefNumber)
-                                            .ToPagedList(page, pageSize);
+                    if (sortAscending)
+                    {
+                        publicModel = publicModel
+                                       .OrderBy(r => r.RefNumber)
+                                       .ToPagedList(page, pageSize);
+                    }
+                    else {
+                        publicModel = publicModel
+                                         .OrderByDescending(r => r.RefNumber)
+                                         .ToPagedList(page, pageSize);
+                    }
 
                     prevFilter = filter;
                 }
@@ -190,13 +182,17 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel
-                                                        .OrderBy(r => r.EffectiveDate)
-                                                        .ToPagedList(page, pageSize);
-                    else publicModel = publicModel
-                                            .OrderByDescending(r => r.EffectiveDate)
-                                            .ToPagedList(page, pageSize);
-
+                    if (sortAscending)
+                    {
+                        publicModel = publicModel
+                                       .OrderBy(r => r.EffectiveDate)
+                                       .ToPagedList(page, pageSize);
+                    }
+                    else {
+                        publicModel = publicModel
+                                         .OrderByDescending(r => r.EffectiveDate)
+                                         .ToPagedList(page, pageSize);
+                    }
                     prevFilter = filter;
                 }
                 else if (filter == "originator")
@@ -209,12 +205,17 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel
-                                                        .OrderBy(r => r.Originator)
-                                                        .ToPagedList(page, pageSize);
-                    else publicModel = publicModel
-                                            .OrderByDescending(r => r.Originator)
-                                            .ToPagedList(page, pageSize);
+                    if (sortAscending)
+                    {
+                        publicModel = publicModel
+                                       .OrderBy(r => r.Originator)
+                                       .ToPagedList(page, pageSize);
+                    }
+                    else {
+                        publicModel = publicModel
+                                         .OrderByDescending(r => r.Originator)
+                                         .ToPagedList(page, pageSize);
+                    }
 
                     prevFilter = filter;
                 }
@@ -228,12 +229,17 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    if (sortAscending) publicModel = publicModel
-                                                        .OrderBy(r => r.Supplier)
-                                                        .ToPagedList(page, pageSize);
-                    else publicModel = publicModel
-                                            .OrderByDescending(r => r.Supplier)
-                                            .ToPagedList(page, pageSize);
+                    if (sortAscending)
+                    {
+                        publicModel = publicModel
+                                       .OrderBy(r => r.Supplier)
+                                       .ToPagedList(page, pageSize);
+                    }
+                    else {
+                        publicModel = publicModel
+                                         .OrderByDescending(r => r.Supplier)
+                                         .ToPagedList(page, pageSize);
+                    }
 
                     prevFilter = filter;
                 }
@@ -246,12 +252,17 @@ namespace DocSearch2._1.Controllers
                         sortAscending = !sortAscending;
                     }
 
-                    if (sortAscending) publicModel = publicModel
-                                                        .OrderByDescending(r => r.IssueDate)
-                                                        .ToPagedList(page, pageSize);
-                    else publicModel = publicModel
-                                            .OrderBy(r => r.IssueDate)
-                                            .ToPagedList(page, pageSize);
+                    if (sortAscending)
+                    {
+                        publicModel = publicModel
+                                       .OrderByDescending(r => r.IssueDate)
+                                       .ToPagedList(page, pageSize);
+                    }
+                    else {
+                        publicModel = publicModel
+                                         .OrderBy(r => r.IssueDate)
+                                         .ToPagedList(page, pageSize);
+                    }
 
                     prevFilter = filter;
                 }
