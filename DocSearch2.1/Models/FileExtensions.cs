@@ -10,4 +10,8 @@ namespace DocSearch2._1.Models
     {
         pdf = 1, gif, jpg, msg, ppt, xls, csv, xlsx, doc, dot, docx, html
     }
+
+    public enum subNavOptions {
+        category, doctype, policy
+    }
 }

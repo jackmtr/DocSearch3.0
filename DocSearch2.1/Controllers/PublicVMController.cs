@@ -96,105 +96,19 @@ namespace DocSearch2._1.Controllers
             //**Populating the navbar, put into function
             populateNavBar(publicModel);
 
-            //**Populating the navbar, put into function
-            //IEnumerable<PublicVM> nb = publicModel
-            //                            .OrderBy(e => e.CategoryName)
-            //                            .GroupBy(e => e.CategoryName)
-            //                            .Select(g => g.First());
-
-            //List<NavBar> nbl = new List<NavBar>();
-
-            //foreach (PublicVM pvm in nb)
-            //{
-
-            //    NavBar nbitem = new NavBar();
-
-            //    nbitem.CategoryName = pvm.CategoryName;
-
-            //    foreach (PublicVM pp in publicModel
-            //                            .GroupBy(g => g.DocumentTypeName)
-            //                            .Select(g => g.First()))
-            //    {
-            //        if (pp.CategoryName == nbitem.CategoryName && !nbl.Any(s => s.DocumentTypeName.Contains(pp.DocumentTypeName)))
-            //        {
-            //            nbitem.DocumentTypeName.Add(pp.DocumentTypeName);
-            //        }
-            //    }
-            //    nbl.Add(nbitem);
-            //}
-
-            //ViewBag.CategoryNavBar = nbl;
-            //ViewBag.PolicyNavBar = publicModel
-            //                        .OrderBy(e => e.RefNumber)
-            //                        .GroupBy(e => e.RefNumber)
-            //                        .Select(g => g.First().RefNumber);
-            //**End of navbar population data
-            /*
-            private void populateNavBar(IEnumerable<PublicVM> model){
-                IEnumerable<PublicVM> nb = model
-                                            .OrderBy(e => e.CategoryName)
-                                            .GroupBy(e => e.CategoryName)
-                                            .Select(g => g.First());
-
-                List<NavBar> nbl = new List<NavBar>();
-
-                foreach (PublicVM pvm in nb)
-                {
-
-                    NavBar nbitem = new NavBar();
-
-                    nbitem.CategoryName = pvm.CategoryName;
-
-                    foreach (PublicVM pp in model
-                                            .GroupBy(g => g.DocumentTypeName)
-                                            .Select(g => g.First()))
-                    {
-                        if (pp.CategoryName == nbitem.CategoryName && !nbl.Any(s => s.DocumentTypeName.Contains(pp.DocumentTypeName)))
-                        {
-                            nbitem.DocumentTypeName.Add(pp.DocumentTypeName);
-                        }
-                    }
-                    nbl.Add(nbitem);
-                }
-
-                ViewBag.CategoryNavBar = nbl;
-                ViewBag.PolicyNavBar = model
-                                        .OrderBy(e => e.RefNumber)
-                                        .GroupBy(e => e.RefNumber)
-                                        .Select(g => g.First().RefNumber);            
-            }
-            */
-
             if (Request.IsAjaxRequest())
             {
                 //**STARTING ACTUAL FILTERING/SORTING OF MODEL**
+
                 //*filtering by category/doctype/policy
                 if (subNav != null)
                 {
-                    if (subNav == "category")
-                    {
-                        publicModel = publicModel.Where(r => r.CategoryName == prevNav);
-                        ViewData["currentNav"] = "category";
-                        ViewData["currentNavTitle"] = prevNav;
-                    }
-                    else if (subNav == "doctype")
-                    {
-                        publicModel = publicModel.Where(r => r.DocumentTypeName == prevNav);
-                        ViewData["currentNav"] = "doctype";
-                        ViewData["currentNavTitle"] = prevNav;
-                    }
-                    else {
-                        publicModel = publicModel.Where(r => r.RefNumber == prevNav);
-                        ViewData["currentNav"] = "policyNumber";
-                        ViewData["currentNavTitle"] = prevNav;
-                    }
+                    publicModel = subNavFilter(publicModel, subNav, prevNav);
                 }
 
                 //*filtering by date and search conditions
                 //checks if the date filter and search term will return any results
                 //changed the search condition syntax, had a bug with pink, 10 page size, then 2015 max
-                /*if (!publicModel.Any(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax)) || (searchTerm != null && !publicModel.Any(pub => pub.Description.Contains(searchTerm))))
-                {*/
                 if (!publicModel.Any(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && (searchTerm == null || r.Description.Contains(searchTerm)))){ 
                     //lets view know that no results are coming back to it
                     ViewData["goodSearch"] = false;
@@ -520,6 +434,27 @@ namespace DocSearch2._1.Controllers
                                     .OrderBy(e => e.RefNumber)
                                     .GroupBy(e => e.RefNumber)
                                     .Select(g => g.First().RefNumber);
+        }
+
+        private IEnumerable<PublicVM> subNavFilter(IEnumerable<PublicVM> model, string subNav, string prevNav)
+        {
+            switch (subNav)
+            {
+                case "category":
+                    model = model.Where(r => r.CategoryName == prevNav);
+                    break;
+                case "doctype":
+                    model = model.Where(r => r.DocumentTypeName == prevNav);
+                    break;
+                case "policy":
+                    model = model.Where(r => r.RefNumber == prevNav);
+                    break;
+            }
+
+            ViewData["currentNav"] = subNav;
+            ViewData["currentNavTitle"] = prevNav;
+
+            return model;
         }
     }
 }

@@ -101,7 +101,7 @@
                                 <div>
                                     <a href="@Url.Action("Index", "PublicVM", new {
                                             publicId = Model.First().Folder_ID,
-                                            subNav = "category",
+                                            subNav = subNavOptions.category,
                                             prevNav = @item.CategoryName
                                         })"
                                        class="navLink"
@@ -121,7 +121,7 @@
                                             <li>
                                                 <a href="@Url.Action("Index", "PublicVM", new {
                                                         publicId = Model.First().Folder_ID,
-                                                        subNav = "doctype",
+                                                        subNav = subNavOptions.doctype,
                                                         prevNav = @dt
                                                     })"
                                                    class="navLink"
@@ -157,7 +157,7 @@
                                         {
                                             publicId = Model.First().Folder_ID,
                                             policyNumber = policy,
-                                            subNav = "policy",
+                                            subNav = subNavOptions.policy,
                                             prevNav = @policy
                                         })"
                                        class="navLink"
