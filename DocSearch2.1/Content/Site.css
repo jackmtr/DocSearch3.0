@@ -198,7 +198,7 @@ header {
                 list-style-type: none;
                 font-size: 14px;
                 padding-left: 0px;
-                background-color: rgba(0, 161, 228, 0.4);
+                background-color: rgba(65, 103, 118, 0.40);
             }
 
             /*affects the cate/policy title*/
@@ -373,11 +373,15 @@ header {
 
 /*gives style to current active navbar list item*/
 .active {
-    background-color: grey;
-    color: white;
+    /*background-color: #26728a;*/
+    background-color: #4e4848;
     overflow: hidden;
     clear: both;
 }
+
+    .active * {
+        color: white;
+    }
 
 /*Preview Image sizing*/
 .previewImg {
@@ -447,7 +451,7 @@ header {
     }
 
     /*DocType sublist item font adjustments*/
-    #docType_list li a{
+    #docType_list li a, #policy_list li a{
         font-size: 12px;
     }
 }
