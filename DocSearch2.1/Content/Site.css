@@ -105,7 +105,7 @@ header {
     }
         /*affects the categories/policies span texts */
         .nav-button * {
-            font-size: 1vw;
+            font-size: 15px;
             font-weight: bold;
             padding: 0;
             margin: 0;
@@ -396,7 +396,48 @@ header {
         display: none;
         overflow: scroll;
     }
+
+
 }
 @media(min-width:768px){}
-@media(min-width:992px){}
-@media(min-width:1200px){}
+
+@media (max-width: 800px){
+    .div-table {
+        display: table;
+        content: "";
+        clear: both;
+        width: 100%;
+    }
+
+    .cat_pol_switcher {
+        margin-top: 20px;
+    }
+
+    .nav-button {
+        padding: 10px;
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+        /* The slider back area*/
+        .slider {
+            top: -20px;
+            left: 20px;
+            right: 10px;
+            bottom: 0;
+        }
+
+            /*the slider white circle*/
+            .slider:before {
+                left: 2px;
+                bottom: 25px;
+            }
+
+            /*The Slider Movement Animation*/
+            input:checked + .slider:before {
+                -webkit-transform: translateY(20px);
+                -ms-transform: translateY(20px);
+                transform: translateY(20px);
+            }
+}
