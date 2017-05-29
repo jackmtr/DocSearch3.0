@@ -31,9 +31,15 @@ namespace DocSearch2._1.Controllers
         {
             tbl_Folder folder = repository.SelectByNumber(Number);
 
-            TempData["Client_Name"] = folder.Name;
-            TempData["Client_Id"] = folder.Number;
 
+            try
+            {
+                TempData["Client_Name"] = folder.Name;
+                TempData["Client_Id"] = folder.Number;
+            }
+            catch {
+                return HttpNotFound();
+            }
             //redirectToAction allows controller chaining
             return RedirectToAction("Index", "PublicVM", new { publicId = folder.Folder_ID });
         }
