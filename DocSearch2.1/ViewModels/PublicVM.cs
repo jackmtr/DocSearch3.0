@@ -18,7 +18,8 @@ namespace DocSearch2._1.ViewModels
         public string DocumentTypeName { get; set; } //tbl_DocumentType.Name
 
         [Display(Name = "Issue Date")]
-        [DataType(DataType.Date)]
+        //[DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public Nullable<DateTime> IssueDate { get; set; } //tbl_Document.Issue_DT
 
         public string Description { get; set; } //tbl_Document.Description
