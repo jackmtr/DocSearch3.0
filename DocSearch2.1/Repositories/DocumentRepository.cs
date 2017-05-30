@@ -21,13 +21,17 @@ namespace DocSearch2._1.Repositories
             return _db.tbl_Document.Find(Int32.Parse(id));
         }
 
-        public IEnumerable<tbl_Document> SelectAll(int id) {
+        public IEnumerable<tbl_Document> SelectAll(string id) {
 
-            IEnumerable<tbl_Document> documents = (from d in _db.tbl_Document
-                             where d.Folder_ID == id
-                             select d);
+            //IEnumerable<tbl_Document> documents = (from d in _db.tbl_Document
+            //                 where d.Folder_ID == Int32.Parse(id)
+            //                 select d);
 
-            return documents;
+            int intId = Int32.Parse(id);
+
+            return _db.tbl_Document.Where(d => d.Folder_ID == intId);
+
+            //return documents;
         }
 
         public MiscPublicData GetMiscPublicData(string id)
