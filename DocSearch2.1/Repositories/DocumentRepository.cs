@@ -21,6 +21,15 @@ namespace DocSearch2._1.Repositories
             return _db.tbl_Document.Find(Int32.Parse(id));
         }
 
+        public IEnumerable<tbl_Document> SelectAll(int id) {
+
+            IEnumerable<tbl_Document> documents = (from d in _db.tbl_Document
+                             where d.Folder_ID == id
+                             select d);
+
+            return documents;
+        }
+
         public MiscPublicData GetMiscPublicData(string id)
         {
             //should be able to create a function to do this repetitive code from both functions

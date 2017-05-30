@@ -17,3 +17,14 @@
 
     <input type="submit" value="Submit" />
 }
+
+<br/><br />
+
+@using (Html.BeginForm("DownloadAllDocuments", "Folder", FormMethod.Get)) {
+    <h1>Download all files from this Folder</h1>
+
+    @Html.Label("ClientId", "Client Id ")
+    @Html.TextBox("ClientId", 1186367);
+
+    <input type="submit" value="Submit" />
+}

@@ -13,9 +13,11 @@ namespace DocSearch2._1.Controllers
     public class FolderController : Controller
     {
         private IFolderRepository repository = null;
+        private IDocumentRepository documentRepository = null;
 
         public FolderController() {
             this.repository = new FolderRepository();
+            this.documentRepository = new DocumentRepository();
         }
 
         //keep for potential of future testing of db connection
@@ -42,6 +44,64 @@ namespace DocSearch2._1.Controllers
             }
             //redirectToAction allows controller chaining
             return RedirectToAction("Index", "PublicVM", new { publicId = folder.Folder_ID });
+        }
+
+        public ActionResult DownloadAllDocuments([Bind(Prefix = "ClientId")] string Number) {
+
+            tbl_Folder folder = repository.SelectByNumber(Number);
+
+            //IEnumerable<tbl_Document> files = documentRepository.SelectAll(folder.Folder_ID);
+            tbl_Document file = documentRepository.SelectById("105397706");
+
+            string MimeType = null;
+
+            switch (file.FileExtension.ToLower().Trim())
+            {
+
+                case "pdf":
+                    MimeType = "application/pdf";
+                    break;
+
+                case "gif":
+                    MimeType = "image/gif";
+                    break;
+
+                case "jpg":
+                    MimeType = "image/jpeg";
+                    break;
+
+                case "msg":
+                    MimeType = "application/vnd.outlook";
+                    break;
+
+                case "ppt":
+                    MimeType = "application/vnd.ms-powerpoint";
+                    break;
+
+                case "xls":
+                case "csv":
+                    MimeType = "application/vnd.ms-excel";
+                    break;
+
+                case "xlsx":
+                    MimeType = "application/vnd.ms-excel.12";
+                    break;
+
+                case "doc":
+                case "dot":
+                    MimeType = "application/msword";
+                    break;
+
+                case "docx":
+                    MimeType = "application/vnd.ms-word.document.12";
+                    break;
+
+                default:
+                    MimeType = "text/html";
+                    break;
+            }
+
+            return File(file.ArchivedFile, MimeType, "abc.pdf");
         }
 
         //Dispose any open connection when finished (db in this regard)
