@@ -58,8 +58,12 @@ namespace DocSearch2._1.Controllers
 
             //**POPULATING MAIN MODEL, second conditional is for no doc reference documents, a unique westland condition
             publicModel = publicRepository
-                            .SelectAll(Folder_ID)
-                            .Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null);
+                            .SelectAll(Folder_ID);
+            
+            publicModel = publicModel.Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null || n.DocumentType_ID == 13); //need better queries
+            //should combine the above LINQ statements when done testing and development
+
+            publicModel = publicModel.GroupBy(x => x.Document_ID).Select(x => x.First());
 
             //instantiating the overall min and max YEAR ranges for this client if date inputs were null, maybe combine into one conditional
             if (IssueYearMinRange == null || IssueYearMinRange == "")
@@ -442,6 +446,7 @@ namespace DocSearch2._1.Controllers
 
             ViewBag.CategoryNavBar = nbl;
             ViewBag.PolicyNavBar = model
+                                    .Where(e => e.EffectiveDate != null) //needs to be removed because (T) ref# and (F) EffDate needs to be brought through model, but this criteria should not be used to populate the navbar policies
                                     .OrderBy(e => e.RefNumber)
                                     .GroupBy(e => e.RefNumber)
                                     .Select(g => g.First().RefNumber);
