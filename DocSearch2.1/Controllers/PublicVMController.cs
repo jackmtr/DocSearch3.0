@@ -60,7 +60,7 @@ namespace DocSearch2._1.Controllers
             publicModel = publicRepository
                             .SelectAll(Folder_ID);
             
-            publicModel = publicModel.Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null || n.DocumentType_ID == 13); //need better queries
+            publicModel = publicModel.Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null); //need better queries|| n.DocumentType_ID == 13 was removed bc looks to be redundant now with fixes
             //should combine the above LINQ statements when done testing and development
 
             publicModel = publicModel.GroupBy(x => x.Document_ID).Select(x => x.First());
