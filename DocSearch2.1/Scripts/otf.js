@@ -167,6 +167,11 @@
 
         var $link = $(this);
 
+        $link.parents('tr').siblings().find('a').each(function () {
+            destroyMiscTable($(this));
+            $(this).removeClass('showData');
+        });
+
         $link.toggleClass("showData");
 
         if ($link.hasClass("showData")) {
@@ -174,6 +179,7 @@
         } else {
             destroyMiscTable($link);
         }
+
         return false;
     });
 
