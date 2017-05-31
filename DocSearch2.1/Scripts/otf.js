@@ -107,6 +107,7 @@
             var $target = $(id);
             var $newHtml = $(data);
             $newHtml.attr("id", id.substring(1, id.length));
+            $newHtml.addClass("misc_table");
 
             $target.replaceWith($newHtml);
         })

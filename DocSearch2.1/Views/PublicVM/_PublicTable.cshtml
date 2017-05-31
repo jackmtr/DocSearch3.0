@@ -127,7 +127,7 @@
                             <a href="#" class="miscTableLink" method="get" action="@Url.Action("MiscData", new { documentId = item.Document_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"],  })" data-otf-ajax="true" data-otf-target="#@item.Document_ID.ToString()">More<i class="fa fa-expand"></i></a>
                         </td>
                     </tr>
-                    <tr id="@item.Document_ID"></tr>
+                    <tr class="misc_table" id="@item.Document_ID"></tr>
                 }
             </tbody>
         </table>
