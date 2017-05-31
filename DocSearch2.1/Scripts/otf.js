@@ -169,10 +169,10 @@
 
         $link.parents('tr').siblings().find('a').each(function () {
             destroyMiscTable($(this));
-            $(this).removeClass('showData');
+            $(this).removeClass('showData').closest('tr').removeClass("misc_table");
         });
 
-        $link.toggleClass("showData");
+        $link.toggleClass("showData").closest('tr').toggleClass("misc_table");
 
         if ($link.hasClass("showData")) {
             createMiscTable($link);
