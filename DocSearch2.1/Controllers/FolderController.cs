@@ -1,5 +1,7 @@
 ﻿using DocSearch2._1.Models;
 using DocSearch2._1.Repositories;
+//mb temp
+using DocSearch2._1.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,11 +18,15 @@ namespace DocSearch2._1.Controllers
     {
         private IFolderRepository repository = null;
         private IDocumentRepository documentRepository = null;
+        //possibly tempory
+        private IPublicRepository publicRepository = null;
         private static string directoryPath = @"C:\Users\jcheng\Downloads";
 
         public FolderController() {
             this.repository = new FolderRepository();
             this.documentRepository = new DocumentRepository();
+            //temp
+            this.publicRepository = new PublicRepository();
         }
 
         //keep for potential of future testing of db connection
@@ -50,10 +56,8 @@ namespace DocSearch2._1.Controllers
         public ActionResult DownloadAllDocuments([Bind(Prefix = "ClientId")] string Number) {
 
             tbl_Folder folder = repository.SelectByNumber(Number);
-
+            
             IEnumerable<tbl_Document> files = documentRepository.SelectAll(folder.Folder_ID.ToString());
-
-            //string MimeType = null;
 
             byte[] result;
 
@@ -64,51 +68,6 @@ namespace DocSearch2._1.Controllers
                     foreach (var file in files) {
 
                         var zipEntry = zipArchive.CreateEntry(file.Document_ID.ToString() + "." + file.FileExtension);
-
-                        //switch (file.FileExtension.ToLower().Trim())
-                        //{
-                        //    case "pdf":
-                        //        MimeType = "application/pdf";
-                        //        break;
-
-                        //    case "gif":
-                        //        MimeType = "image/gif";
-                        //        break;
-
-                        //    case "jpg":
-                        //        MimeType = "image/jpeg";
-                        //        break;
-
-                        //    case "msg":
-                        //        MimeType = "application/vnd.outlook";
-                        //        break;
-
-                        //    case "ppt":
-                        //        MimeType = "application/vnd.ms-powerpoint";
-                        //        break;
-
-                        //    case "xls":
-                        //    case "csv":
-                        //        MimeType = "application/vnd.ms-excel";
-                        //        break;
-
-                        //    case "xlsx":
-                        //        MimeType = "application/vnd.ms-excel.12";
-                        //        break;
-
-                        //    case "doc":
-                        //    case "dot":
-                        //        MimeType = "application/msword";
-                        //        break;
-
-                        //    case "docx":
-                        //        MimeType = "application/vnd.ms-word.document.12";
-                        //        break;
-
-                        //    default:
-                        //        MimeType = "text/html";
-                        //        break;
-                        //}
 
                         using (var entryStream = zipEntry.Open()) {
                             using (var tmpMemory = new MemoryStream(file.ArchivedFile))
@@ -124,6 +83,17 @@ namespace DocSearch2._1.Controllers
             }
 
             return new FileContentResult(result, "application/zip") { FileDownloadName = Number + ".zip" };
+            
+            ////tempory just to create table for ASAP reasons
+            /*
+            IEnumerable<PublicVM> publicModel = publicRepository
+                            .SelectAll(folder.Folder_ID.ToString());
+
+            publicModel = publicModel.Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null).GroupBy(x => x.Document_ID).Select(x => x.First()).OrderBy(x => x.Document_ID);
+
+            return View(publicModel);
+            */
+            ////
         }
 
         //Dispose any open connection when finished (db in this regard)

@@ -288,6 +288,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\PublicVM\_PublicTable.cshtml" />
     <Content Include="Views\PublicVM\MiscData.cshtml" />
+    <Content Include="Views\Folder\DownloadAllDocuments.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
