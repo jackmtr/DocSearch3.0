@@ -77,8 +77,10 @@
                         var currentHighYear = $('#IssueYearMaxRange option:selected').val();
 
                         if (currentLowYear.length > 0) {
+                            //takes user input
                             $('#currentLowYear').text(currentLowYear);
                         } else {
+                            //defaults back to original low
                             currentLowYear = $('#IssueYearMinRange option:eq(1)').val();
                             $('#currentLowYear').text(currentLowYear);
                         }
