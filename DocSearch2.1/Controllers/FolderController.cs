@@ -72,6 +72,7 @@ namespace DocSearch2._1.Controllers
 
                     foreach (var file in files) {
                         if (file.ArchivedFile != null) {
+                            //according to Ramin, creation of an ArchivedFile and Submitting an ArchivedFile are different steps, so there could be 'dirty' records/documents in WAS db that has no ArchivedFile Fields records
                             var zipEntry = zipArchive.CreateEntry(file.Document_ID.ToString() + "." + file.FileExtension); //creates a unit of space for the individual file to be placed in
 
                             using (var entryStream = zipEntry.Open()) {
@@ -88,7 +89,7 @@ namespace DocSearch2._1.Controllers
                 result = zipArchiveMemoryStream.ToArray(); //I think this is the ziped item
             }
 
-            return new FileContentResult(result, "application/zip") { FileDownloadName = Number + ".zip" };
+            return new FileContentResult(result, "application/zip") { FileDownloadName = "AllArchivedFilesFor_" + Number + ".zip" };
             
             ////tempory just to create table for ASAP reasons
             /*
