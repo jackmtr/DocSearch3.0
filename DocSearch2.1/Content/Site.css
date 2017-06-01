@@ -486,14 +486,3 @@ header {
 th {
     background-color: #c2c1c1 !important;
 }
-
-select {
-  /*text-align: center;*/
-  text-align-last: center;
-  /* webkit*/
-}
-option {
-  /*text-align: left;*/
-  /* reset to left*/
-  /*text-align: center;*/
-}
