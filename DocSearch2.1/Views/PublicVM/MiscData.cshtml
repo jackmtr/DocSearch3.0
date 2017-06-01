@@ -70,15 +70,8 @@
                             <td>
                                 @if (item.Date1_DT.HasValue)
                                 {
-                                    //DateTime d = item.Date1_DT.GetValueOrDefault(DateTime.Now).ToShortDateString;
-
-                                    //Dim d As Date = item.Date1_DT
-                                    //    @d.ToShortDateString
-                                    //var date = item.Date1_DT.Value.ToShortDateString();
-                                    var date = item.Date1_DT.Value.ToString("dd MMM yyyy");
-                                    @date;
+                                    @item.Date1_DT.Value.ToString("dd MMM yyyy");
                                 }
-                                @*item.Date1_DT*@
                             </td>
                             <td>@item.Text1</td>
                         </tr>
