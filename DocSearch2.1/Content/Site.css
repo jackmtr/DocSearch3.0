@@ -456,6 +456,25 @@ header {
     }
 }
 
+
+/*everything after here needs to be refactored into upper styling*/
 .misc_table {
     background-color: #e5e5e5;
+}
+    .misc_table tr {
+        
+    }
+
+    .misc_table table {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .ref_table {
+        margin-top: 12px;
+    }
+
+th {
+    background-color: #c2c1c1 !important;
 }
