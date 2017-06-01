@@ -71,13 +71,14 @@ namespace DocSearch2._1.Controllers
                 using (var zipArchive = new ZipArchive(zipArchiveMemoryStream, ZipArchiveMode.Create, true)) {
 
                     foreach (var file in files) {
+                        if (file.ArchivedFile != null) {
+                            var zipEntry = zipArchive.CreateEntry(file.Document_ID.ToString() + "." + file.FileExtension); //creates a unit of space for the individual file to be placed in
 
-                        var zipEntry = zipArchive.CreateEntry(file.Document_ID.ToString() + "." + file.FileExtension); //creates a unit of space for the individual file to be placed in
-
-                        using (var entryStream = zipEntry.Open()) {
-                            using (var tmpMemory = new MemoryStream(file.ArchivedFile))
-                            {
-                                tmpMemory.CopyTo(entryStream); //copies the data into the unit space
+                            using (var entryStream = zipEntry.Open()) {
+                                using (var tmpMemory = new MemoryStream(file.ArchivedFile))
+                                {
+                                    tmpMemory.CopyTo(entryStream); //copies the data into the unit space
+                                }
                             }
                         }
                     }
