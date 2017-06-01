@@ -338,10 +338,10 @@ header {
     display: none;
 }
 
-/*not sure if working*/
-/*.main-rows > td:nth-child(11) {
+/*makes the 'More(symbol)' stick together in Misc Table*/
+.main-rows > td:nth-child(11) {
     white-space:nowrap;
-}*/
+}
 
     /*affects the description td records*/
     .description {
