@@ -79,10 +79,12 @@ namespace DocSearch2._1.Controllers
             //should only be run on initial load of page
             if (!Request.IsAjaxRequest()) {
 
-                //creating the options for the dropdown list
-                //doesnt look like I needed two variables to hold this list
+            //    //creating the options for the dropdown list
+            //    //doesnt look like I needed two variables to hold this list
                 TempData["YearRange"] = YearRangePopulate(IssueYearMinRange, IssueYearMaxRange);
             }
+
+            //TempData["YearRange"] = YearRangePopulate(IssueYearMinRange, IssueYearMaxRange);
 
             //Formatting the display date into SQL likeable date type
             if (Int32.Parse(IssueYearMaxRange) < Int32.Parse(IssueYearMinRange)) {
