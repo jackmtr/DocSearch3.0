@@ -25,7 +25,8 @@ namespace DocSearch2._1.Repositories
 
             int clientId = Int32.Parse(number);
 
-            return _db.tbl_Folder.SingleOrDefault(folder => folder.Number == clientId);
+            //.AsNoTracking reduces resources by making this read only      
+            return _db.tbl_Folder.AsNoTracking().SingleOrDefault(folder => folder.Number == clientId);
         }
 
         public void Dispose() {

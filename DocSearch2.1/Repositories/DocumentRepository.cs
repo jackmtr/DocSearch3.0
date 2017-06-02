@@ -29,7 +29,7 @@ namespace DocSearch2._1.Repositories
 
             int intId = Int32.Parse(id);
 
-            return _db.tbl_Document.Where(d => d.Folder_ID == intId);
+            return _db.tbl_Document.AsNoTracking().Where(d => d.Folder_ID == intId);
 
             //return documents;
         }
@@ -40,7 +40,7 @@ namespace DocSearch2._1.Repositories
 
             int documentNumberInt = Int32.Parse(id);
 
-            var documentData = (from d in _db.tbl_Document
+            var documentData = (from d in _db.tbl_Document.AsNoTracking() //.AsNoTracking reduces resources by making this read only      
                                 //not every document will have a corrosponding docReference
                                 join dr in _db.tbl_DocReference on d.Document_ID equals dr.Document_ID into ps
                                 where d.Document_ID == documentNumberInt
