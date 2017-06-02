@@ -172,6 +172,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\FolderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PublicVMController.cs" />
@@ -289,6 +290,7 @@
     <Content Include="Views\PublicVM\_PublicTable.cshtml" />
     <Content Include="Views\PublicVM\MiscData.cshtml" />
     <Content Include="Views\Folder\DownloadAllDocuments.cshtml" />
+    <Content Include="Views\Shared\_CategoryNavBar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -298,6 +300,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

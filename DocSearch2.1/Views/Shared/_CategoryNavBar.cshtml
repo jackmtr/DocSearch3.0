@@ -1,0 +1,54 @@
+﻿@model IPagedList<PublicVM>
+<div id="category_section">
+    <h2>Categories</h2>
+
+    <ul id="category_list">
+        @foreach (var item in ViewBag.CategoryNavBar)
+        {
+            <li class="category_nav">
+                <div>
+                    <a href="@Url.Action("Index", "PublicVM", new {
+                                            publicId = Model.First().Folder_ID,
+                                            subNav = subNavOptions.category,
+                                            prevNav = @item.CategoryName
+                                        })"
+                       class="navLink"
+                       data-ajax-update="#public_table"
+                       data-ajax-mode="replace-with"
+                       data-ajax-method="GET"
+                       data-subclass="category"
+                       data-subclass-title="@item.CategoryName"
+                       data-ajax-complete="postNavbar"
+                       data-ajax-success="updateCurrentCount"
+                       data-ajax="true">
+                        @item.CategoryName
+                    </a>
+                    <ul id="docType_list">
+                        @foreach (var dt in item.DocumentTypeName)
+                        {
+                            <li>
+                                <a href="@Url.Action("Index", "PublicVM", new {
+                                                        publicId = Model.First().Folder_ID,
+                                                        subNav = subNavOptions.doctype,
+                                                        prevNav = @dt
+                                                    })"
+                                   class="navLink"
+                                   data-ajax-update="#public_table"
+                                   data-ajax-mode="replace-with"
+                                   data-ajax-method="GET"
+                                   data-subclass="doctype"
+                                   data-subclass-title="@dt"
+                                   data-ajax-complete="postNavbar"
+                                   data-ajax-success="updateCurrentCount"
+                                   data-ajax="true">
+                                    @dt
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+

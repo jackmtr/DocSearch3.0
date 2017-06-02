@@ -12,6 +12,8 @@ namespace DocSearch2._1.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            //System.Web.HttpContext.Current.Session["Role"] = "User";
+
             return View();
         }
     }

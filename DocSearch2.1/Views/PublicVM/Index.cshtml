@@ -97,7 +97,7 @@
 
                 </script>
 
-                <div id="category_section">
+                @*<div id="category_section">
                     <h2>Categories</h2>
 
                     <ul id="category_list">
@@ -148,7 +148,9 @@
                             </li>
                         }
                     </ul>
-                </div>
+                </div>*@
+
+                @Html.Partial("~/Views/Shared/_CategoryNavBar.cshtml", Model);
 
                 <div id="policy_section" class="hidden">
                     <h2>Policies</h2>

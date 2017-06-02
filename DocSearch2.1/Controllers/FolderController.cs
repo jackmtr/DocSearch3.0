@@ -37,10 +37,13 @@ namespace DocSearch2._1.Controllers
         */
 
         // GET: Folder
-        public ActionResult Index([Bind(Prefix = "ClientId")] string Number)
+        public ActionResult Index([Bind(Prefix = "ClientId")] string Number, string Role)
         {
             tbl_Folder folder = repository.SelectByNumber(Number);
 
+            //ViewData["Role"] = System.Web.HttpContext.Current.Session["Role"] as String;
+
+            System.Web.HttpContext.Current.Session["Role"] = Role;
 
             try
             {
@@ -49,6 +52,11 @@ namespace DocSearch2._1.Controllers
             }
             catch {
                 return HttpNotFound();
+            }
+
+            if (System.Web.HttpContext.Current.Session["Role"] as String == "Admin") {
+
+                return RedirectToAction("Index", "Admin", new { publicId = folder.Folder_ID });
             }
             return RedirectToAction("Index", "PublicVM", new { publicId = folder.Folder_ID });
         }
