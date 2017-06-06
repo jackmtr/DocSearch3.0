@@ -391,6 +391,11 @@ header {
         color: white;
     }
 
+
+.preview_image {
+    display: inline-block;
+}
+
 /*Preview Image sizing*/
 .previewImg {
     width: auto;
@@ -485,4 +490,8 @@ header {
 
 th {
     background-color: #c2c1c1 !important;
+}
+
+#dynamic {
+    border: solid black 4px;
 }

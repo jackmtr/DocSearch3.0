@@ -118,6 +118,7 @@
                             @Html.ActionLink(item.FileType, "FileDisplay", new { documentId = item.Document_ID }, new { target = "_blank" })
                             @if (item.FileType == "Picture JPEG")
                             {
+                                <br/>
                                 <div class="preview_image">
                                     @Html.ActionLink("[Preview]", "FileDisplay", new { documentId = item.Document_ID }, new { @class = "preview", id = item.Document_ID+'a' })
                                 </div>

@@ -157,14 +157,15 @@
         showPreview($this, e);
     });
 
+
     //image previewer off event, seems to work better with more opputunities to destroy itself
     $("#body").on("mouseleave", ".preview_image", function () {
         losePreview();
     });
 
-    $("#body").on("mouseleave", ".preview", function () {
-        losePreview();
-    });
+    //$("#body").on("mouseleave", ".preview", function () {
+    //    losePreview();
+    //});
 
 
     //functionality of category/policy slider
