@@ -297,6 +297,10 @@ header {
         /*Figure out how to immitate button animation*/
 }
 
+.main-rows > td:nth-child(9) {
+    text-align: left; /*This left aligns description, may keep for preference*/
+}
+
 
 /*****Tags from the PublicVM._PublicTable page******/
 
@@ -495,3 +499,4 @@ th {
 #dynamic {
     border: solid black 4px;
 }
+
