@@ -33,10 +33,11 @@ namespace DocSearch2._1.Repositories
                                 join dt in _db.tbl_DocumentType on d.DocumentType_ID equals dt.DocumentType_ID
                                 join cat in _db.tbl_Category on dt.Category_ID equals cat.Category_ID
                                 where d.Folder_ID == publicNumberInt
+                                where d.Active_IND == true //should only show active records, hide soft deleted ones
                                 from dr in ps.DefaultIfEmpty()
                                 select new {
-                                       f.Folder_ID, d.Document_ID, dt.DocumentType_ID, DtName = dt.Name, d.Issue_DT, d.Description, cat.Category_ID, CatName = cat.Name , dr.Date1_DT, dr.RefNumber, d.FileType, d.Method, d.Originator, d.Reason, dr.Number1
-                                   }).ToList();
+                                    f.Folder_ID, d.Document_ID, dt.DocumentType_ID, DtName = dt.Name, d.Issue_DT, d.Description, cat.Category_ID, CatName = cat.Name, dr.Date1_DT, dr.RefNumber, d.FileType, d.Method, d.Originator, d.Reason, dr.Number1
+                                }).ToList();
 
             foreach (var item in documentList) {
                 PublicVM objpvm = new PublicVM();
