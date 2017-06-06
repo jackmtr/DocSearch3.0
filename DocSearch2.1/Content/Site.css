@@ -240,7 +240,7 @@ header {
                 #policy_list{
                     width: 100%;
                     height: inherit;
-                    overflow-y: scroll;
+                    /*overflow-y: scroll; not sure if we need a scroll list anymore*/
                 }
 
 /*Makes the main content height to match remaining screen height, breaks for mobile*/
@@ -394,9 +394,9 @@ header {
 /*Preview Image sizing*/
 .previewImg {
     width: auto;
-    max-width: 150px;
+    max-width: 250px;
     height: auto;
-    max-height: 100px;    
+    max-height: 150px;    
 }
 
 

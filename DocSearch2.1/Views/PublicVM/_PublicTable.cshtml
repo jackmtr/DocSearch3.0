@@ -85,7 +85,7 @@
             </thead>
             <tbody>
                 @foreach (var item in Model)
-            {
+                {
                     <tr class="main-rows">
                         <td>
                             @Html.DisplayFor(modelItem => item.DocumentTypeName)
@@ -119,12 +119,12 @@
                             @if (item.FileType == "Picture JPEG")
                             {
                                 <div class="preview_image">
-                                    @Html.ActionLink("[Preview]", "FileDisplay", new { documentId = item.Document_ID }, new { @class = "preview", id = item.Document_ID })
+                                    @Html.ActionLink("[Preview]", "FileDisplay", new { documentId = item.Document_ID }, new { @class = "preview", id = item.Document_ID+'a' })
                                 </div>
                             }
                         </td>
                         <td>
-                            <a href="#" class="miscTableLink" method="get" action="@Url.Action("MiscData", new { documentId = item.Document_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"],  })" data-otf-ajax="true" data-otf-target="#@item.Document_ID.ToString()">More<i class="fa fa-expand"></i></a>
+                            <a href="#" class="miscTableLink" method="get" action="@Url.Action("MiscData", new { documentId = item.Document_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"], })" data-otf-ajax="true" data-otf-target="#@item.Document_ID.ToString()">More<i class="fa fa-expand"></i></a>
                         </td>
                     </tr>
                     <tr class="misc_table" id="@item.Document_ID"></tr>

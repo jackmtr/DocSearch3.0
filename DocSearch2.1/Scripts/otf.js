@@ -65,7 +65,7 @@
     //function to preview image (jpeg)
     function showPreview($this, e) {
         var $a = $this;
-        var id = $a.attr('id');
+        var id = $a.attr('id') + 'a';
 
         var options = {
             url: $a.attr("href"),
@@ -81,8 +81,12 @@
             var positionTop = e.clientY;
 
             img.attr('src', options.url);
+            
             img.appendTo('body');
-            img.css({ 'position': 'absolute', 'left': positionLeft, 'top': positionTop });
+
+            var imgWidth = document.getElementById('dynamic').clientWidth;
+
+            img.css({ 'position': 'absolute', 'left': positionLeft - imgWidth, 'top': positionTop });
         });
     }
 
@@ -153,10 +157,15 @@
         showPreview($this, e);
     });
 
-    //image previewer off event
+    //image previewer off event, seems to work better with more opputunities to destroy itself
     $("#body").on("mouseleave", ".preview_image", function () {
         losePreview();
     });
+
+    $("#body").on("mouseleave", ".preview", function () {
+        losePreview();
+    });
+
 
     //functionality of category/policy slider
     $('#category_policy_toggle').click(function () {
