@@ -150,7 +150,7 @@
                     </ul>
                 </div>*@
 
-                @Html.Partial("~/Views/Shared/_CategoryNavBar.cshtml", Model);
+                @Html.Partial("~/Views/Shared/_CategoryNavBar.cshtml", Model)
 
                 <div id="policy_section" class="hidden">
                     <h2>Policies</h2>
@@ -198,12 +198,12 @@
                 <h3>ID: @TempData["Client_Id"]</h3>
             </div>
         </div>
-        <div class="row">
+        <div id="status-bar" class="row">
             <div class="col-md-12"><h4>Returning <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents between <span id="currentLowYear">@(((List<SelectListItem>)TempData["YearRange"]).First().Text)</span> and <span id="currentHighYear">@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)</span></h4></div>
         </div>
 
         <!--Search Box, Date Filters, clear, and submit button-->
-        <div>
+        <div id="form-div">
             <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#public_table" class="row">
                 <div class="filter col-md-3">
                     <label for="search">Search Description:</label>
@@ -248,4 +248,5 @@
         </div>
         @Html.Partial("_PublicTable", Model)
     </div>
+    <div class="c_b"></div>
 </div>

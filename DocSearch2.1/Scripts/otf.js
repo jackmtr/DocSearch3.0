@@ -1,5 +1,4 @@
 ﻿$(function () {
-
     //**FUNCTIONS
 
     //submits the search and date filter form asynchronously
@@ -121,8 +120,17 @@
         $target.empty();
     }
 
+    function adjustSideBanner() {
+        var newHeight = $('#public_table').height() + $('#form-div').height() + $('#status-bar').height() + $('.public_name_id').height();
+
+        $('#public_navigation').css('height', newHeight);
+    }
+
 
     //**EVENTS
+
+    //will adjust left banner bar on load to dynamically match table size
+    adjustSideBanner();
 
     //will load the user to have focus inside search bar
     $('#searchInputBox').focus();
@@ -228,5 +236,10 @@
                 e.preventDefault();
             }
         }
+    });
+
+    $(document).ajaxComplete(function () {
+
+        adjustSideBanner();
     });
 });

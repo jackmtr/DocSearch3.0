@@ -27,11 +27,11 @@ namespace DocSearch2._1.Repositories
             int publicNumberInt = Int32.Parse(publicNumber); //should be able to be done in LINQ
 
             var documentList = (from d in _db.tbl_Document.AsNoTracking() //.AsNoTracking reduces resources by making this read only                        
-                                join f in _db.tbl_Folder on d.Folder_ID equals f.Folder_ID
+                                join f in _db.tbl_Folder.AsNoTracking() on d.Folder_ID equals f.Folder_ID
                                 //left outer join b/c not every document will have a reference number right away (aka no docreference)
-                                join dr in _db.tbl_DocReference on d.Document_ID equals dr.Document_ID into ps
-                                join dt in _db.tbl_DocumentType on d.DocumentType_ID equals dt.DocumentType_ID
-                                join cat in _db.tbl_Category on dt.Category_ID equals cat.Category_ID
+                                join dr in _db.tbl_DocReference.AsNoTracking() on d.Document_ID equals dr.Document_ID into ps
+                                join dt in _db.tbl_DocumentType.AsNoTracking() on d.DocumentType_ID equals dt.DocumentType_ID
+                                join cat in _db.tbl_Category.AsNoTracking() on dt.Category_ID equals cat.Category_ID
                                 where d.Folder_ID == publicNumberInt
                                 where d.Active_IND == true //should only show active records, hide soft deleted ones
                                 from dr in ps.DefaultIfEmpty()

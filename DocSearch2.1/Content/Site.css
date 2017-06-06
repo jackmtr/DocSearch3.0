@@ -84,12 +84,11 @@ header {
     height: 10vh;
 }
 
-
 /*****Tags from the PublicVM.Index page******/
 /*Makes the nav height to match remaining screen height, breaks for mobile*/
 #public_navigation {
     background-color: lightgrey;
-    height: 90vh;
+    /*height: inherit;*/
     width: 25%;
     /*min-width: 200px;*/
     padding: 0;
@@ -228,7 +227,7 @@ header {
 
             /*Needed to allow a scrollable policy list if needed*/
             #policy_section {
-                height: 100%;
+                /*height: 100%;*/
                 width: auto; /*might not be needed*/
             }
 
@@ -250,8 +249,9 @@ header {
     height: 90vh;
     width: 75%;
     flex: auto;
-    overflow-y:auto; /*Makes it that the parent div will adjust height to dynamic table height*/
+    /*overflow-y:auto;*/ /*Makes it that the parent div will adjust height to dynamic table height*/
     background-color: white;
+    /*overflow:hidden;*/
 }
 
     /*Constant 'public' info display*/
