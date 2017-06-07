@@ -168,12 +168,12 @@
                     </fieldset>
                 </div>
                 <div class="filter col-md-3">
-                    <label for="IssueDateMinRange">Starting year:</label>
+                    <label for="IssueDateMinRange">Issue Date Starting year:</label>
                     @Html.DropDownList("IssueYearMinRange", TempData["YearRange"] as List<SelectListItem>, "Select a Year", new { @class = "datefield", type = "date" })
                     <br/>
                 </div>
                 <div class="filter col-md-3">
-                    <label for="IssueDateMaxRange">Ending year:</label>
+                    <label for="IssueDateMaxRange">Issue Date Ending year:</label>
                     @Html.DropDownList("IssueYearMaxRange", TempData["YearRange"] as List<SelectListItem>, "Select a Year", new { @class = "datefield", type = "date" })
                     <br />
                 </div>
