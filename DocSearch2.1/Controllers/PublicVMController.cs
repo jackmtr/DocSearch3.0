@@ -367,6 +367,14 @@ namespace DocSearch2._1.Controllers
                     break;
             }
 
+            if (file.ArchivedFile == null) {
+                ViewData["repositoryRequestDocId"] = id;
+
+
+                return PartialView("_FileDisplay");
+                //return new EmptyResult();
+            }
+
             return File(file.ArchivedFile, MimeType); 
         }
 

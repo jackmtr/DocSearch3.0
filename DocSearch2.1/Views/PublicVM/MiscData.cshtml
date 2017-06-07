@@ -7,7 +7,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Branch)
                 </th>
-                @if ((string)ViewData["currentNav"] == "policyNumber" || (string)ViewData["currentNavTitle"] == "Correspondence") {
+                @if ((string)ViewData["currentNav"] == "policy" || (string)ViewData["currentNavTitle"] == "Correspondence" || (string)ViewData["currentNavTitle"] == "Client" || (string)ViewData["currentNavTitle"] == "External") {
                     <th>
                         @Html.DisplayNameFor(model => model.Reason)
                     </th>
@@ -30,10 +30,16 @@
                     @Html.DisplayFor(model => model.Branch)
                 </td>
 
-                @if ((string)ViewData["currentNav"] == "policyNumber" || (string)ViewData["currentNavTitle"] == "Correspondence")
+                @if ((string)ViewData["currentNav"] == "policy" || (string)ViewData["currentNavTitle"] == "Correspondence" || (string)ViewData["currentNavTitle"] == "Client" || (string)ViewData["currentNavTitle"] == "External")
                 {
                     <td>
-                        @Html.DisplayFor(model => model.Reason)
+                        @if (Model.Reason.Length < 1)
+                        {
+                            @Html.Raw("N/A");
+                        }
+                        else {
+                            @Html.DisplayFor(model => model.Reason)
+                        }
                     </td>
                 }
                 @if ((string)ViewData["currentNavTitle"] == "Correspondence")
@@ -72,8 +78,19 @@
                                 {
                                     @item.Date1_DT.Value.ToString("dd MMM yyyy");
                                 }
+                                else {
+                                    @Html.Raw("N/A");
+                                }
                             </td>
-                            <td>@item.Text1</td>
+                            <td>
+                                @if (item.Text1.Length < 1)
+                                {
+                                    @Html.Raw("N/A");
+                                }
+                                else {
+                                    @item.Text1
+                                }
+                            </td>
                         </tr>
                     }
                 }

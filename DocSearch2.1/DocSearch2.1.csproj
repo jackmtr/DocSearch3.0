@@ -291,6 +291,7 @@
     <Content Include="Views\PublicVM\MiscData.cshtml" />
     <Content Include="Views\Folder\DownloadAllDocuments.cshtml" />
     <Content Include="Views\Shared\_CategoryNavBar.cshtml" />
+    <Content Include="Views\PublicVM\_FileDisplay.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

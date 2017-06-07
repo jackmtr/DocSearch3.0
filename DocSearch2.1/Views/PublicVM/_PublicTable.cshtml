@@ -9,6 +9,20 @@
     </script>
 }
 
+
+@if (ViewData["repositoryRequestDocId"] != null )
+{
+    <script type="text/javascript">
+        var txt;
+
+        if (confirm("The file you are looking for has been moved to another repository. If you still want to view this file click on the button below to send a request to support.") == true) {
+            txt = "Send";
+        } else {
+            txt = "Return";
+        }
+    </script>
+}
+
 <div id="public_table" class="row default-table" data-currentRecord="@ViewData["currentRecordsCount"]" data-currentLowYear="@(((List<SelectListItem>)TempData["YearRange"]).First().Text)" data-currentHighYear ="@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)">
     <div id ="public_table_inner" class="col-md-12">
         <table class="table table-bordered table-hover">
@@ -106,7 +120,13 @@
                             @Html.DisplayFor(modelItem => item.Originator)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Reason)
+                            @if (item.Reason.Length < 1)
+                            {
+                                @Html.Raw("N/A");
+                            }
+                            else {
+                                @Html.DisplayFor(modelItem => item.Reason)
+                            }
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Supplier)
