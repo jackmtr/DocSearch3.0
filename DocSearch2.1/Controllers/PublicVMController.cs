@@ -36,8 +36,14 @@ namespace DocSearch2._1.Controllers
 
         // GET: PublicVM
         [HttpGet]
-        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1, int pageSize = 20)
+        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1, int pageSize = 20, bool Admin = false)
         {
+            if (System.Web.HttpContext.Current.Session["Role"] as String == "Admin") {
+                Admin = true;
+                //TempData.Keep("Role");
+                TempData["Role"] = "Admin";
+            } //checking for admin, this is temporary until a better auth check
+
             //**GLOBAL VARIABLES
             //TempData can be used to send data between controllers and views through one request, .keep() is used to continue keeping after one request
             //persist client name, id, search term, inputted dates

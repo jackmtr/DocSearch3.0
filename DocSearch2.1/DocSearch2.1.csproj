@@ -293,6 +293,7 @@
     <Content Include="Views\Shared\_CategoryNavBar.cshtml" />
     <Content Include="Views\PublicVM\_FileDisplay.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Shared\_Form.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

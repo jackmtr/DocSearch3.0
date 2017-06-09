@@ -54,10 +54,10 @@ namespace DocSearch2._1.Controllers
                 return HttpNotFound();
             }
 
-            if (System.Web.HttpContext.Current.Session["Role"] as String == "Admin") {
+            //if (System.Web.HttpContext.Current.Session["Role"] as String == "Admin") {
 
-                return RedirectToAction("Index", "Admin", new { publicId = folder.Folder_ID });
-            }
+            //    return RedirectToAction("Index", "Admin", new { publicId = folder.Folder_ID });
+            //}
             return RedirectToAction("Index", "PublicVM", new { publicId = folder.Folder_ID });
         }
 

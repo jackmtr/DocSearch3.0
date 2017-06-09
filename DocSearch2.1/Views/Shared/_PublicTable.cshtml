@@ -103,6 +103,10 @@
                     <th>Misc</th><!--11-->
                     @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                     {
+                        <th>DocumentId</th>
+                    }
+                    @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+                    {
                         <th>Select</th>
                     }
                 </tr>
@@ -157,6 +161,12 @@
                         <td>
                             <a href="#" class="miscTableLink" method="get" action="@Url.Action("MiscData", new { documentId = item.Document_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"], })" data-otf-ajax="true" data-otf-target="#@item.Document_ID.ToString()">More<i class="fa fa-expand"></i></a>
                         </td>
+                        @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem=> item.Document_ID)
+                            </td>
+                        }
                         @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                         {
                             <td>
