@@ -21,6 +21,13 @@ namespace DocSearch2._1.Models
             : base("name=WASEntities")
         {
         }
+
+        //The purged WAS db connection string (used only for very old data)
+        public WASEntities(string newDb)
+        : base("name=WASArchiveEntities")
+        {
+
+        }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

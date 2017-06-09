@@ -18,7 +18,15 @@ namespace DocSearch2._1.Repositories
 
         public tbl_Document SelectById(string id)
         {
-            return _db.tbl_Document.Find(Int32.Parse(id));
+            tbl_Document document = _db.tbl_Document.Find(Int32.Parse(id));
+
+            //if document exists and ArchiveFile is null, it will look into the purged WAS db instead.
+            if (document.ArchivedFile == null) {
+                this._db = new WASEntities("name=WASArchiveEntities");
+                document = _db.tbl_Document.Find(Int32.Parse(id));
+            }
+
+            return document;
         }
 
         public IEnumerable<tbl_Document> SelectAll(string id) {

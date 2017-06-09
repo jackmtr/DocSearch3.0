@@ -33,6 +33,9 @@ namespace DocSearch2._1.Controllers
             publicModel = publicRepository
                 .SelectAll(Folder_ID, "admin");
 
+            //**Populating the navbar, put into function
+            populateNavBar(publicModel);
+
             //instantiating the overall min and max YEAR ranges for this client if date inputs were null, maybe combine into one conditional
             if (IssueYearMinRange == null || IssueYearMinRange == "")
             {
@@ -92,6 +95,42 @@ namespace DocSearch2._1.Controllers
             }
 
             return years;
+        }
+
+        private void populateNavBar(IEnumerable<PublicVM> model)
+        {
+            IEnumerable<PublicVM> nb = model
+                                        .OrderBy(e => e.CategoryName)
+                                        .GroupBy(e => e.CategoryName)
+                                        .Select(g => g.First());
+
+            List<NavBar> nbl = new List<NavBar>();
+
+            foreach (PublicVM pvm in nb)
+            {
+
+                NavBar nbitem = new NavBar();
+
+                nbitem.CategoryName = pvm.CategoryName;
+
+                foreach (PublicVM pp in model
+                                        .GroupBy(g => g.DocumentTypeName)
+                                        .Select(g => g.First()))
+                {
+                    if (pp.CategoryName == nbitem.CategoryName && !nbl.Any(s => s.DocumentTypeName.Contains(pp.DocumentTypeName)))
+                    {
+                        nbitem.DocumentTypeName.Add(pp.DocumentTypeName);
+                    }
+                }
+                nbl.Add(nbitem);
+            }
+
+            ViewBag.CategoryNavBar = nbl;
+            ViewBag.PolicyNavBar = model
+                                    .Where(e => e.EffectiveDate != null) //needs to be removed because (T) ref# and (F) EffDate needs to be brought through model, but this criteria should not be used to populate the navbar policies
+                                    .OrderBy(e => e.RefNumber)
+                                    .GroupBy(e => e.RefNumber)
+                                    .Select(g => g.First().RefNumber);
         }
     }
 }
