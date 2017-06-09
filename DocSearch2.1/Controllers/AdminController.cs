@@ -1,17 +1,97 @@
-﻿using System;
+﻿using DocSearch2._1.Repositories;
+using DocSearch2._1.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using PagedList;
 using System.Web.Mvc;
+using System.Globalization;
 
 namespace DocSearch2._1.Controllers
 {
     public class AdminController : Controller
     {
-        // GET: Admin
-        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID)
+        private IPublicRepository publicRepository = null;
+
+        public AdminController()
         {
-            return View();
+            //public repo for publicVM actions
+            this.publicRepository = new PublicRepository();
+        }
+
+        // GET: Admin
+        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1)
+        {
+            IEnumerable<PublicVM> publicModel = null;
+
+            TempData.Keep("Role");
+            TempData["Role"] = "Admin";
+
+            ViewData["goodSearch"] = true;
+
+            publicModel = publicRepository
+                .SelectAll(Folder_ID, "admin");
+
+            //instantiating the overall min and max YEAR ranges for this client if date inputs were null, maybe combine into one conditional
+            if (IssueYearMinRange == null || IssueYearMinRange == "")
+            {
+                IssueYearMinRange = RetrieveYear(publicModel, true);
+            }
+
+            if (IssueYearMaxRange == null || IssueYearMaxRange == "")
+            {
+                IssueYearMaxRange = RetrieveYear(publicModel, false);
+            }
+
+            //should only be run on initial load of page
+            if (!Request.IsAjaxRequest())
+            {
+                //creating the options for the dropdown list
+                //doesnt look like I needed two variables to hold this list
+                TempData["YearRange"] = YearRangePopulate(IssueYearMinRange, IssueYearMaxRange);
+            }
+
+            publicModel = publicModel.ToPagedList(page, 50);
+
+            return View(publicModel);
+        }
+
+        private string RetrieveYear(IEnumerable<PublicVM> model, bool ascending)
+        {
+            string year;
+
+            if (ascending)
+            {
+                year = model
+                            .OrderBy(r => r.IssueDate)
+                                    .First()
+                                        .IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+            }
+            else {
+                year = model
+                            .OrderByDescending(r => r.IssueDate)
+                                    .First()
+                                        .IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+            }
+
+            return year;
+        }
+
+        private IList<SelectListItem> YearRangePopulate(string IssueYearMinRange, string IssueYearMaxRange)
+        {
+
+            IList<SelectListItem> years = new List<SelectListItem>();
+
+            for (int i = Int32.Parse(IssueYearMinRange); i <= Int32.Parse(IssueYearMaxRange); i++)
+            {
+                SelectListItem year = new SelectListItem();
+                year.Selected = false;
+                year.Text = year.Value = i.ToString();
+                years.Add(year);
+            }
+
+            return years;
         }
     }
 }

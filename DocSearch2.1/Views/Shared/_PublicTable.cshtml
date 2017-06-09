@@ -28,7 +28,8 @@
         <table class="table table-bordered table-hover">
             <thead class="thead-default">
                 <tr class="main-rows">
-                    <th> <!--1-->
+                    <th>
+                        <!--1-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
                        publicId = Model.First().Folder_ID,
@@ -38,7 +39,8 @@
                        searchTerm = TempData["SearchTerm"]
                    }), "#public_table", "replace-with", "GET", "Type of Document", "fa-sort", "filterLink", "postNavbar"))
                     </th>
-                    <th> <!--2-->
+                    <th>
+                        <!--2-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
                        publicId = Model.First().Folder_ID,
@@ -49,17 +51,19 @@
                    }), "#public_table", "replace-with", "GET", "Issue Date", "fa-sort", "filterLink", "postNavbar"))
                     </th>
                     <th>Method</th> <!--3-->
-                    <th> <!--4-->
+                    <th>
+                        <!--4-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                    {
-                        publicId = Model.First().Folder_ID,
-                        filter = "policy",
-                        subNav = ViewData["currentNav"],
-                        prevNav = ViewData["currentNavTitle"],
-                        searchTerm = TempData["SearchTerm"]
-                    }), "#public_table", "replace-with", "GET", "Policy #", "fa-sort", "filterLink", "postNavbar"))
-                    </th> 
-                    <th> <!--5-->
+                   {
+                       publicId = Model.First().Folder_ID,
+                       filter = "policy",
+                       subNav = ViewData["currentNav"],
+                       prevNav = ViewData["currentNavTitle"],
+                       searchTerm = TempData["SearchTerm"]
+                   }), "#public_table", "replace-with", "GET", "Policy #", "fa-sort", "filterLink", "postNavbar"))
+                    </th>
+                    <th>
+                        <!--5-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
                        publicId = Model.First().Folder_ID,
@@ -69,32 +73,38 @@
                        searchTerm = TempData["SearchTerm"]
                    }), "#public_table", "replace-with", "GET", "Effective Date", "fa-sort", "filterLink", "postNavbar"))
                     </th>
-                    <th><!--6-->
+                    <th>
+                        <!--6-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                    {
-                        publicId = Model.First().Folder_ID,
-                        filter = "originator",
-                        subNav = ViewData["currentNav"],
-                        prevNav = ViewData["currentNavTitle"],
-                        searchTerm = TempData["SearchTerm"]
-                    }), "#public_table", "replace-with", "GET", "Originator", "fa-sort", "filterLink", "postNavbar"))
+                   {
+                       publicId = Model.First().Folder_ID,
+                       filter = "originator",
+                       subNav = ViewData["currentNav"],
+                       prevNav = ViewData["currentNavTitle"],
+                       searchTerm = TempData["SearchTerm"]
+                   }), "#public_table", "replace-with", "GET", "Originator", "fa-sort", "filterLink", "postNavbar"))
                     </th>
                     <th>Reason</th><!--7-->
                     <th>
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                    {
-                        publicId = Model.First().Folder_ID,
-                        filter = "supplier",
-                        subNav = ViewData["currentNav"],
-                        prevNav = ViewData["currentNavTitle"],
-                        searchTerm = TempData["SearchTerm"]
-                    }), "#public_table", "replace-with", "GET", "Supplier #", "fa-sort", "filterLink", "postNavbar"))
+                   {
+                       publicId = Model.First().Folder_ID,
+                       filter = "supplier",
+                       subNav = ViewData["currentNav"],
+                       prevNav = ViewData["currentNavTitle"],
+                       searchTerm = TempData["SearchTerm"]
+                   }), "#public_table", "replace-with", "GET", "Supplier #", "fa-sort", "filterLink", "postNavbar"))
                     </th><!--8-->
-                    <th><!--9-->
+                    <th>
+                        <!--9-->
                         @Html.DisplayNameFor(model => model.ToList().First().Description)
                     </th>
                     <th>File</th><!--10-->
                     <th>Misc</th><!--11-->
+                    @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+                    {
+                        <th>Select</th>
+                    }
                 </tr>
             </thead>
             <tbody>
@@ -147,6 +157,12 @@
                         <td>
                             <a href="#" class="miscTableLink" method="get" action="@Url.Action("MiscData", new { documentId = item.Document_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"], })" data-otf-ajax="true" data-otf-target="#@item.Document_ID.ToString()">More<i class="fa fa-expand"></i></a>
                         </td>
+                        @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+                        {
+                            <td>
+                                <input type="checkbox" name="edit" value=@item.Document_ID />
+                            </td>
+                        }
                     </tr>
                     <tr class="misc_table" id="@item.Document_ID"></tr>
                 }

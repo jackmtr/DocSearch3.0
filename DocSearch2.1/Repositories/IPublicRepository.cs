@@ -9,7 +9,7 @@ namespace DocSearch2._1.Repositories
 {
     public interface IPublicRepository
     {
-        IEnumerable<PublicVM> SelectAll(string publicNumber);
+        IEnumerable<PublicVM> SelectAll(string publicNumber, string role);
 
         void Dispose();
     }

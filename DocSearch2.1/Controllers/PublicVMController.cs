@@ -58,7 +58,7 @@ namespace DocSearch2._1.Controllers
 
             //**POPULATING MAIN MODEL, second conditional is for no doc reference documents, a unique westland condition
             publicModel = publicRepository
-                            .SelectAll(Folder_ID);
+                            .SelectAll(Folder_ID, "client");
             
             publicModel = publicModel.Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null); //need better queries|| n.DocumentType_ID == 13 was removed bc looks to be redundant now with fixes
             //should combine the above LINQ statements when done testing and development
