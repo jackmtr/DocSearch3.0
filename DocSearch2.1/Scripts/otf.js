@@ -257,4 +257,21 @@
 
         adjustSideBanner();
     });
+
+    $('#editList').on("click", function () {
+        var editList = [];
+
+        $('#public_table input[type=checkbox]').each(function () {
+
+            $this = $(this);
+
+            if ($this.prop('checked')) {
+                editList.push($this.val());
+            }
+
+            //now need to send this data to a controller to handle
+        });
+
+        return false;
+    });
 });

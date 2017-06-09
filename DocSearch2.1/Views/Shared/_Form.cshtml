@@ -26,6 +26,10 @@
             <label for="IssueDateMaxRange">Issue Date Ending year:</label>
             @Html.DropDownList("IssueYearMaxRange", TempData["YearRange"] as List<SelectListItem>, "Select a Year", new { @class = "datefield", type = "date" })
             <br />
+            @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+            {
+                <button id="editList">Edit These Files</button>
+            }
         </div>
         <div class="filter col-md-3 buttondiv">
             @Ajax.ActionLink("Reset Search", "Index", new
