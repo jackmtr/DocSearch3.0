@@ -100,7 +100,7 @@
                         @Html.DisplayNameFor(model => model.ToList().First().Description)
                     </th>
                     <th>File</th><!--10-->
-                    <th>Misc</th><!--11-->
+                    <th>More</th><!--11-->
                     @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                     {
                         <th>DocumentId</th>
@@ -159,7 +159,7 @@
                             }
                         </td>
                         <td>
-                            <a href="#" class="miscTableLink" method="get" action="@Url.Action("MiscData", new { documentId = item.Document_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"], })" data-otf-ajax="true" data-otf-target="#@item.Document_ID.ToString()">More<i class="fa fa-expand"></i></a>
+                            <a href="#" class="miscTableLink" method="get" action="@Url.Action("MiscData", new { documentId = item.Document_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"], })" data-otf-ajax="true" data-otf-target="#@item.Document_ID.ToString()"><i class="fa fa-expand"></i></a>
                         </td>
                         @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                         {

@@ -7,7 +7,7 @@
             <input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />
 
             <input id="searchInputBox" type="search" name="searchTerm" />
-            <fieldset>
+            @*<fieldset>
                 Records per page:
                 <select id="pageSize" name="pageSize">
                     <option value=10>10</option>
@@ -15,7 +15,7 @@
                     <option value=50>50</option>
                     <option value=1000>All</option>
                 </select>
-            </fieldset>
+            </fieldset>*@
         </div>
         <div class="filter col-md-3">
             <label for="IssueDateMinRange">Issue Date Starting year:</label>
@@ -32,7 +32,7 @@
             }
         </div>
         <div class="filter col-md-3 buttondiv">
-            @Ajax.ActionLink("Reset Search", "Index", new
+            @*@Ajax.ActionLink("Reset Search", "Index", new
                {
                    publicId = Model.First().Folder_ID
                }, new AjaxOptions
@@ -42,7 +42,7 @@
                    UpdateTargetId = "public_table",
                    OnComplete = "updateCurrentCount",
                    OnSuccess = "clearFields"
-               }, new { @class = "button", id = "clearButton" })
+               }, new { @class = "button", id = "clearButton" })*@
             <input id="formSubmitId" type="submit" value="Search and Filter" />
         </div>
     </form>

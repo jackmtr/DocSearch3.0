@@ -13,7 +13,14 @@
     <meta name="description" content="Westland's Archiving Document Search" />
 </head>
 <body>
-    <header></header>
+    <header>
+        <h3 class="public_name_id">
+            @if (TempData["Client_Id"] != null)
+            {
+                @Html.Raw(TempData["Client_Id"] + " - " + TempData["Client_Name"]);
+            }
+        </h3>
+    </header>
     <div id="body" class="container-fluid">
         <!-- content-wrapper main-content clear-fix-->
         @RenderBody()
