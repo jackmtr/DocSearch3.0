@@ -31,7 +31,7 @@ namespace DocSearch2._1
                       "~/Content/font-awesome.css", //for icons
                       "~/Content/PagedList.css", //pagination
                       "~/Content/jquery-ui*",
-                      "~/Content/Site.css" //custom css file
+                      "~/Content/Site.css"
                       ));
         }
     }
