@@ -50,7 +50,17 @@
                        searchTerm = TempData["SearchTerm"]
                    }), "#public_table", "replace-with", "GET", "Issue Date", "fa-sort", "filterLink", "postNavbar"))
                     </th>
-                    <th>Method</th> <!--3-->
+                    <th>
+                        @*Method*@
+                        @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                   {
+                       publicId = Model.First().Folder_ID,
+                       filter = "method",
+                       subNav = ViewData["currentNav"],
+                       prevNav = ViewData["currentNavTitle"],
+                       searchTerm = TempData["SearchTerm"]
+                   }), "#public_table", "replace-with", "GET", "Method", "fa-sort", "filterLink", "postNavbar"))
+                    </th> <!--3-->
                     <th>
                         <!--4-->
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
@@ -84,7 +94,17 @@
                        searchTerm = TempData["SearchTerm"]
                    }), "#public_table", "replace-with", "GET", "Originator", "fa-sort", "filterLink", "postNavbar"))
                     </th>
-                    <th>Reason</th><!--7-->
+                    <th>
+                    @*Reason*@
+                        @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                   {
+                       publicId = Model.First().Folder_ID,
+                       filter = "reason",
+                       subNav = ViewData["currentNav"],
+                       prevNav = ViewData["currentNavTitle"],
+                       searchTerm = TempData["SearchTerm"]
+                   }), "#public_table", "replace-with", "GET", "Reason", "fa-sort", "filterLink", "postNavbar"))
+                    </th><!--7-->
                     <th>
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
@@ -97,9 +117,27 @@
                     </th><!--8-->
                     <th>
                         <!--9-->
-                        @Html.DisplayNameFor(model => model.ToList().First().Description)
+                        @*@Html.DisplayNameFor(model => model.ToList().First().Description)*@
+                        @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                   {
+                       publicId = Model.First().Folder_ID,
+                       filter = "description",
+                       subNav = ViewData["currentNav"],
+                       prevNav = ViewData["currentNavTitle"],
+                       searchTerm = TempData["SearchTerm"]
+                   }), "#public_table", "replace-with", "GET", "Description", "fa-sort", "filterLink", "postNavbar"))
                     </th>
-                    <th>File</th><!--10-->
+                    <th>
+                    @*File*@
+                        @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                   {
+                       publicId = Model.First().Folder_ID,
+                       filter = "file",
+                       subNav = ViewData["currentNav"],
+                       prevNav = ViewData["currentNavTitle"],
+                       searchTerm = TempData["SearchTerm"]
+                   }), "#public_table", "replace-with", "GET", "File", "fa-sort", "filterLink", "postNavbar"))
+                    </th><!--10-->
                     <th>More</th><!--11-->
                     @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                     {

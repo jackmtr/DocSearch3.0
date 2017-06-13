@@ -157,6 +157,34 @@ namespace DocSearch2._1.Controllers
 
                     prevFilter = filter;
                 }
+
+                else if (filter == "method")
+                {
+                    if (prevFilter == filter)
+                    {
+                        sortAscending = !sortAscending;
+                    }
+                    else
+                    {
+                        sortAscending = true;
+                    }
+
+                    if (sortAscending)
+                    {
+                        publicModel = publicModel
+                                       .OrderBy(r => r.Method)
+                                       .ToPagedList(page, pageSize);
+                    }
+                    else
+                    {
+                        publicModel = publicModel
+                                         .OrderByDescending(r => r.Method)
+                                         .ToPagedList(page, pageSize);
+                    }
+
+                    prevFilter = filter;
+                }
+
                 else if (filter == "policy")
                 {
                     if (prevFilter == filter)
@@ -228,6 +256,32 @@ namespace DocSearch2._1.Controllers
 
                     prevFilter = filter;
                 }
+                else if (filter == "reason")
+                {
+                    if (prevFilter == filter)
+                    {
+                        sortAscending = !sortAscending;
+                    }
+                    else
+                    {
+                        sortAscending = true;
+                    }
+
+                    if (sortAscending)
+                    {
+                        publicModel = publicModel
+                                       .OrderBy(r => r.Reason)
+                                       .ToPagedList(page, pageSize);
+                    }
+                    else
+                    {
+                        publicModel = publicModel
+                                         .OrderByDescending(r => r.Reason)
+                                         .ToPagedList(page, pageSize);
+                    }
+
+                    prevFilter = filter;
+                }
                 else if (filter == "supplier")
                 {
                     if (prevFilter == filter)
@@ -247,6 +301,58 @@ namespace DocSearch2._1.Controllers
                     else {
                         publicModel = publicModel
                                          .OrderByDescending(r => r.Supplier)
+                                         .ToPagedList(page, pageSize);
+                    }
+
+                    prevFilter = filter;
+                }
+                else if (filter == "description")
+                {
+                    if (prevFilter == filter)
+                    {
+                        sortAscending = !sortAscending;
+                    }
+                    else
+                    {
+                        sortAscending = true;
+                    }
+
+                    if (sortAscending)
+                    {
+                        publicModel = publicModel
+                                       .OrderBy(r => r.Description)
+                                       .ToPagedList(page, pageSize);
+                    }
+                    else
+                    {
+                        publicModel = publicModel
+                                         .OrderByDescending(r => r.Description)
+                                         .ToPagedList(page, pageSize);
+                    }
+
+                    prevFilter = filter;
+                }
+                else if (filter == "file")
+                {
+                    if (prevFilter == filter)
+                    {
+                        sortAscending = !sortAscending;
+                    }
+                    else
+                    {
+                        sortAscending = true;
+                    }
+
+                    if (sortAscending)
+                    {
+                        publicModel = publicModel
+                                       .OrderBy(r => r.FileType)
+                                       .ToPagedList(page, pageSize);
+                    }
+                    else
+                    {
+                        publicModel = publicModel
+                                         .OrderByDescending(r => r.FileType)
                                          .ToPagedList(page, pageSize);
                     }
 
