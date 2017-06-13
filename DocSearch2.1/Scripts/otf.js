@@ -274,4 +274,6 @@
 
         return false;
     });
+
+    $('#text-fill').textfill({ widthOnly: true, minFontPixels: 4, innerTag: "span" }); //trying to ensure the status line will shrink if needed
 });

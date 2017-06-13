@@ -136,47 +136,8 @@
     </nav>
 
     <div id="public_info" class="col-md-10">
-
-        @*<div class="public_name_id row">
-                <div class="col-md-6">
-                    <h3>Name: @TempData["Client_Name"]</h3>
-                </div>
-                <div class="col-md-6">
-                    <h3>ID: @TempData["Client_Id"]</h3>
-                </div>
-            </div>*@
-        <div id="status-bar" class="row">
-            <div class="col-md-3">
-                <fieldset>
-                    Records per page:
-                    <select id="pageSize" name="pageSize">
-                        <option value=10>10</option>
-                        <option value=20 selected>20</option>
-                        <option value=50>50</option>
-                        <option value=1000>All</option>
-                    </select>
-                </fieldset>
-            </div>
-            @*<div class="col-md-7"><h4>Returning <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents between <span id="currentLowYear">@(((List<SelectListItem>)TempData["YearRange"]).First().Text)</span> and <span id="currentHighYear">@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)</span></h4></div>*@
-            <div class="col-md-7"><h4>Returning <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents, <span id="currentLowYear">@(((List<SelectListItem>)TempData["YearRange"]).First().Text)</span> to <span id="currentHighYear">@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)</span></h4></div>
-            <div class="col-md-2">
-                @Ajax.ActionLink("Reset Search", "Index", new
-                {
-                    publicId = Model.First().Folder_ID
-                }, new AjaxOptions
-                {
-                    HttpMethod = "GET",
-                    InsertionMode = InsertionMode.ReplaceWith,
-                    UpdateTargetId = "public_table",
-                    OnComplete = "updateCurrentCount",
-                    OnSuccess = "clearFields"
-                }, new { @class = "button", id = "clearButton" })
-        </div>
-
+        @Html.Partial("_Form", Model)
+        @Html.Partial("_PublicTable", Model)
     </div>
-
-    @Html.Partial("_Form", Model)
-    @Html.Partial("_PublicTable", Model)
-</div>
 <div class="c_b"></div>
 </div>
