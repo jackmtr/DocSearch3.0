@@ -141,7 +141,17 @@
                     <th>More</th><!--11-->
                     @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                     {
-                        <th>DocumentId</th>
+                        <th>
+                            @*DocumentId*@
+                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                   {
+                       publicId = Model.First().Folder_ID,
+                       filter = "documentId",
+                       subNav = ViewData["currentNav"],
+                       prevNav = ViewData["currentNavTitle"],
+                       searchTerm = TempData["SearchTerm"]
+                   }), "#public_table", "replace-with", "GET", "Document Id", "fa-sort", "filterLink", "postNavbar"))
+                        </th>
                     }
                     @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                     {

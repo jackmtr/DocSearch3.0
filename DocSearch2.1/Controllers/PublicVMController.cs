@@ -358,6 +358,32 @@ namespace DocSearch2._1.Controllers
 
                     prevFilter = filter;
                 }
+                else if (filter == "documentId")
+                {
+                    if (prevFilter == filter)
+                    {
+                        sortAscending = !sortAscending;
+                    }
+                    else
+                    {
+                        sortAscending = true;
+                    }
+
+                    if (sortAscending)
+                    {
+                        publicModel = publicModel
+                                       .OrderBy(r => r.Document_ID)
+                                       .ToPagedList(page, pageSize);
+                    }
+                    else
+                    {
+                        publicModel = publicModel
+                                         .OrderByDescending(r => r.Document_ID)
+                                         .ToPagedList(page, pageSize);
+                    }
+
+                    prevFilter = filter;
+                }
                 else {
                     if (filter == null)
                     {
