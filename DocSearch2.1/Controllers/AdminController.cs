@@ -60,6 +60,8 @@ namespace DocSearch2._1.Controllers
             return View(publicModel);
         }
 
+
+
         private string RetrieveYear(IEnumerable<PublicVM> model, bool ascending)
         {
             string year;

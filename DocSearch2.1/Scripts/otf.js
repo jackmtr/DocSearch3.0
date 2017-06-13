@@ -1,4 +1,7 @@
 ﻿$(function () {
+    //**GLOBAL VARIABLES
+    var editList = [];
+
     //**FUNCTIONS
 
     //submits the search and date filter form asynchronously
@@ -259,20 +262,44 @@
     });
 
     $('#editList').on("click", function () {
-        var editList = [];
+        //var editList = [];
 
-        $('#public_table input[type=checkbox]').each(function () {
+        //$('#public_table input[type=checkbox]').each(function () {
 
-            $this = $(this);
+        //    $this = $(this);
 
-            if ($this.prop('checked')) {
-                editList.push($this.val());
-            }
+        //    if ($this.prop('checked')) {
+        //        editList.push($this.val());
+        //    }
 
-            //now need to send this data to a controller to handle
-        });
+        //    //now need to send this data to a controller to handle
+        //});
+
+        //alert(localStorage.getItem("editList"));
+
+        //var storedNames = JSON.parse(localStorage.getItem("editList"));
+        
+        //alert(storedNames);
+
+        //return false;
+
+        alert(JSON.stringify(editList));
 
         return false;
+    });
+
+    $('#public_table input[type=checkbox]').on("change", function () {
+
+        //var found = $.inArray()
+
+        if ($(this).prop('checked')) {
+            //editList[0] = $(this).val();
+            //localStorage.setItem("editList", JSON.stringify(editList));
+            editList.push($(this).val());
+        } else {
+            var removeItem = $(this).val();
+            editList.splice($.inArray(removeItem, editList), 1);
+        }
     });
 
     $('#text-fill').textfill({ widthOnly: true, minFontPixels: 4, innerTag: "span" }); //trying to ensure the status line will shrink if needed
