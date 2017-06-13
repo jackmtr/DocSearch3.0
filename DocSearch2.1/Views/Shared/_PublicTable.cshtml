@@ -218,7 +218,7 @@
                         @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                         {
                             <td>
-                                <input type="checkbox" name="edit" value=@item.Document_ID />
+                                <input type="checkbox" name="edit" value=@item.Document_ID id="@(item.Document_ID + "edit")" />
                             </td>
                         }
                     </tr>

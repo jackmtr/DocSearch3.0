@@ -138,6 +138,22 @@
         };
     }
 
+    function persistEditCheckList() {
+        var table = $('#public_table_inner table tbody');
+
+        table.find('.main-rows').each(function (i, el) {
+
+            var $this = $(this);
+            var $tds = $(this).find('td');
+            documentId = $tds.eq(11).text().trim();
+
+            if ($.inArray(documentId, editList) == 0) {
+
+                $("#" + documentId + "edit").prop('checked', true);
+            }
+        });
+    }
+
 
     //**EVENTS
 
@@ -259,48 +275,39 @@
     $(document).ajaxComplete(function () {
 
         adjustSideBanner();
+        persistEditCheckList();
     });
 
     $('#editList').on("click", function () {
-        //var editList = [];
-
-        //$('#public_table input[type=checkbox]').each(function () {
-
-        //    $this = $(this);
-
-        //    if ($this.prop('checked')) {
-        //        editList.push($this.val());
-        //    }
-
-        //    //now need to send this data to a controller to handle
-        //});
-
-        //alert(localStorage.getItem("editList"));
-
-        //var storedNames = JSON.parse(localStorage.getItem("editList"));
-        
-        //alert(storedNames);
-
-        //return false;
 
         alert(JSON.stringify(editList));
 
         return false;
     });
 
-    $('#public_table input[type=checkbox]').on("change", function () {
 
-        //var found = $.inArray()
-
+    $("#body").on("change", "#public_table input[type=checkbox]", function () {
         if ($(this).prop('checked')) {
-            //editList[0] = $(this).val();
-            //localStorage.setItem("editList", JSON.stringify(editList));
+
             editList.push($(this).val());
         } else {
             var removeItem = $(this).val();
             editList.splice($.inArray(removeItem, editList), 1);
         }
     });
+
+    //$('#public_table input[type=checkbox]').on("change", function () {
+
+    //    //var found = $.inArray()
+
+    //    if ($(this).prop('checked')) {
+
+    //        editList.push($(this).val());
+    //    } else {
+    //        var removeItem = $(this).val();
+    //        editList.splice($.inArray(removeItem, editList), 1);
+    //    }
+    //});
 
     $('#text-fill').textfill({ widthOnly: true, minFontPixels: 4, innerTag: "span" }); //trying to ensure the status line will shrink if needed
 });
