@@ -147,7 +147,7 @@
             var $tds = $(this).find('td');
             documentId = $tds.eq(11).text().trim();
 
-            if ($.inArray(documentId, editList) == 0) {
+            if ($.inArray(documentId, editList) >= 0) {
 
                 $("#" + documentId + "edit").prop('checked', true);
             }
@@ -279,8 +279,11 @@
     });
 
     $('#editList').on("click", function () {
+        
+        //localStorage.setItem("editList", JSON.stringify(editList));
 
-        alert(JSON.stringify(editList));
+        //alert(editList);
+
 
         return false;
     });
@@ -289,7 +292,7 @@
     $("#body").on("change", "#public_table input[type=checkbox]", function () {
         if ($(this).prop('checked')) {
 
-            editList.push($(this).val());
+            editList.push($(this).val().trim());
         } else {
             var removeItem = $(this).val();
             editList.splice($.inArray(removeItem, editList), 1);
