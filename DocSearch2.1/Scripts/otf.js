@@ -300,8 +300,10 @@
 
             $('#main-row').replaceWith($(data));
 
-            return false;
+            
         });
+
+        return false;
     });
 
 
