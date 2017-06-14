@@ -1,0 +1,111 @@
+﻿@model IEnumerable<DocSearch2._1.ViewModels.PublicVM>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Folder_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Document_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DocumentType_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DocumentTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IssueDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EffectiveDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RefNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Method)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Originator)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reason)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Supplier)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Folder_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Document_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DocumentType_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DocumentTypeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IssueDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EffectiveDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RefNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Method)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Originator)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Reason)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Supplier)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

@@ -280,12 +280,28 @@
 
     $('#editList').on("click", function () {
         
+        //jQuery.ajaxSettings.traditional = true
         //localStorage.setItem("editList", JSON.stringify(editList));
 
-        //alert(editList);
+        //$.get('/Admin/Edit', { vals: editList }, function (data) { })
+        var options = {
+            url: "/Admin/Edit",
+            type: "get",
+            traditional: true,
+            data: {
+                //EditList : JSON.stringify(editList)
+                //EditList: editList.toString()
+                EditList: editList
+            }
+        };
 
 
-        return false;
+        $.ajax(options).done(function (data) {
+
+            $('#main-row').replaceWith($(data));
+
+            return false;
+        });
     });
 
 

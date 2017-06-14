@@ -60,9 +60,18 @@ namespace DocSearch2._1.Controllers
             return View(publicModel);
         }
 
-        public ActionResult Edit() {
+        public ActionResult Edit(string[] EditList) {
 
+            IEnumerable<PublicVM> publicModel = null;
 
+            publicModel = publicRepository.SelectAll("34", "admin").Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null).Where(doc => EditList.Contains(doc.Document_ID.ToString())); ;
+
+            return PartialView("_EditTable", publicModel);
+            //return RedirectToAction("Edit1");
+        }
+
+        public ActionResult Edit1(string[] EditList)
+        {
             return View();
         }
 
