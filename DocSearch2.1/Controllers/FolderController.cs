@@ -45,6 +45,11 @@ namespace DocSearch2._1.Controllers
 
             System.Web.HttpContext.Current.Session["Role"] = Role;
 
+            if (System.Web.HttpContext.Current.Session["Role"] as String == "Admin")
+            {
+                TempData["Folder_Id"] = folder.Folder_ID;
+            }
+
             try
             {
                 TempData["Client_Name"] = folder.Name;

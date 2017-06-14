@@ -40,7 +40,9 @@
             @Html.DisplayNameFor(model => model.Supplier)
         </th>*@
         @*<th>Direction</th>*@
-        <th>Recepient</th>
+        <th>
+            @Html.DisplayNameFor(model => model.Recipient)
+        </th>
         @*<th>Recieved On</th>*@
         <th>Delete</th>
     </tr>
@@ -102,7 +104,9 @@
         @*<td>
                 @Html.DisplayFor(modelItem => item.Supplier)
             </td>*@
-        <td></td>
+        <td>
+            @Html.TextBoxFor(modelItem => item.Recipient)
+        </td>
         @*<td></td>*@
         <td>
             @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })

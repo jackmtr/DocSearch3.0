@@ -280,6 +280,8 @@
 
     $('#editList').on("click", function () {
         
+
+
         //jQuery.ajaxSettings.traditional = true
         //localStorage.setItem("editList", JSON.stringify(editList));
 

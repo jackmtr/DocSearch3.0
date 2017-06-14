@@ -7,6 +7,7 @@ using System.Web;
 using PagedList;
 using System.Web.Mvc;
 using System.Globalization;
+using DocSearch2._1.Models;
 
 namespace DocSearch2._1.Controllers
 {
@@ -62,9 +63,11 @@ namespace DocSearch2._1.Controllers
 
         public ActionResult Edit(string[] EditList) {
 
+            TempData.Keep("Folder_Id");
+
             IEnumerable<PublicVM> publicModel = null;
 
-            publicModel = publicRepository.SelectAll("34", "admin").Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null).Where(doc => EditList.Contains(doc.Document_ID.ToString())); ;
+            publicModel = publicRepository.SelectAll(TempData["Folder_Id"].ToString(), "admin").Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null).Where(doc => EditList.Contains(doc.Document_ID.ToString())); ;
 
             return PartialView("_EditTable", publicModel);
             //return RedirectToAction("Edit1");
