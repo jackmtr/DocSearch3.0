@@ -2,11 +2,12 @@
 
 <table class="table">
     <tr>
-        <!--NEED EDITABLE Direction-->
         <!--NEED EDITABLE Recipient-->
-        <!--NEED EDITABLE Recieved On-->
         <th>
             @Html.DisplayNameFor(model => model.Document_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DocumentTypeName)
@@ -16,9 +17,6 @@
         </th>
         <th><!--EDITABLE-->
             @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryName)
         </th>
         @*<th>
             @Html.DisplayNameFor(model => model.EffectiveDate)
@@ -41,16 +39,24 @@
         @*<th>
             @Html.DisplayNameFor(model => model.Supplier)
         </th>*@
-        <th>Direction</th>
+        @*<th>Direction</th>*@
         <th>Recepient</th>
-        <th>Recieved On</th>
+        @*<th>Recieved On</th>*@
         <th>Delete</th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
+        <!--Old DocSearch has option for editing Direction.  After thorough thought and discussion with support, I believe this is not needed to be changed.
+                1) Commons users has no option in seeing the Direction column
+                2) Support recalls no past issues from common users to edit this column
+            ***Same reasoning for Recived_On-->
         <td>
             @Html.DisplayFor(modelItem => item.Document_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DocumentTypeName)
@@ -60,20 +66,17 @@
         </td>
         <td>
             @*@Html.DisplayFor(modelItem => item.Description)*@
-            @Html.TextAreaFor(modelItem => item.Description, new { @class = "form-control", rows = "3"})
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CategoryName)
+            @Html.TextAreaFor(modelItem => item.Description, new { @class = "form-control", rows = "3" })
         </td>
         @*<td>
-            @Html.DisplayFor(modelItem => item.EffectiveDate)
-        </td>*@
+                @Html.DisplayFor(modelItem => item.EffectiveDate)
+            </td>*@
         @*<td>
-            @Html.DisplayFor(modelItem => item.RefNumber)
-        </td>*@
+                @Html.DisplayFor(modelItem => item.RefNumber)
+            </td>*@
         @*<td>
-            @Html.DisplayFor(modelItem => item.FileType)
-        </td>*@
+                @Html.DisplayFor(modelItem => item.FileType)
+            </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Method)
         </td>
@@ -97,11 +100,10 @@
             }, item.Reason, null)
         </td>
         @*<td>
-            @Html.DisplayFor(modelItem => item.Supplier)
-        </td>*@
+                @Html.DisplayFor(modelItem => item.Supplier)
+            </td>*@
         <td></td>
-        <td></td>
-        <td></td>
+        @*<td></td>*@
         <td>
             @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
         </td>

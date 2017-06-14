@@ -12,7 +12,7 @@
                         @Html.DisplayNameFor(model => model.Reason)
                     </th>
                 }
-                @if ((string)ViewData["currentNavTitle"] == "Correspondence") {
+                @if ((string)ViewData["currentNavTitle"] == "Correspondence" || (string)ViewData["currentNavTitle"] == "Client" || (string)ViewData["currentNavTitle"] == "External" || (string)ViewData["currentNavTitle"] == "Fax Confirmation") { 
                     <th>
                         @Html.DisplayNameFor(model => model.Recipient)
                     </th>
@@ -42,7 +42,7 @@
                         }
                     </td>
                 }
-                @if ((string)ViewData["currentNavTitle"] == "Correspondence")
+                @if ((string)ViewData["currentNavTitle"] == "Correspondence" || (string)ViewData["currentNavTitle"] == "Client" || (string)ViewData["currentNavTitle"] == "External" || (string)ViewData["currentNavTitle"] == "Fax Confirmation")
                 {
                     <td>
                         @Html.DisplayFor(model => model.Recipient)

@@ -44,6 +44,8 @@ namespace DocSearch2._1.ViewModels
 
         public string Supplier { get; set; } //tbl_DocReference.Number1
 
+        /*public string Recipient { get; set; }*/ //tbl_Document.Recipient
+
         //look into knockout.js
     }
 }
