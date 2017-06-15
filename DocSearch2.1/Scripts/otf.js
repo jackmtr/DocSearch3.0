@@ -128,7 +128,9 @@
     }
 
     function adjustSideBanner() {
-        var newHeight = $('#public_table').height() + $('#form-div').height() + $('#status-bar').height() + $('.public_name_id').height();
+
+        //var newHeight = $('#public_table').height() + $('#form-div').height() + $('#status-bar').height() + $('.public_name_id').height();
+        var newHeight = $('#form-div').height() + $('#public_table').height();
         var screenHeight = $(window).height() * 0.90;
 
         if (newHeight < screenHeight) {

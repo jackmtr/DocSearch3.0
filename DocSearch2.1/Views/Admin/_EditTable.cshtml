@@ -44,7 +44,7 @@
             @Html.DisplayNameFor(model => model.Recipient)
         </th>
         @*<th>Recieved On</th>*@
-        <th>Delete</th>
+        <th>Hide</th>
     </tr>
 
 @foreach (var item in Model)
@@ -64,7 +64,7 @@
             @Html.DisplayFor(modelItem => item.DocumentTypeName)
         </td>
         <td>
-            @Html.TextBoxFor(modelItem => item.IssueDate, "{0:dd MMM yyyy}", new { @class = "edit-issue" })
+            @Html.TextBoxFor(modelItem => item.IssueDate, "{0:dd MMM yyyy}", new { @class = "edit-issue", size = 10 })
         </td>
         <td>
             @*@Html.DisplayFor(modelItem => item.Description)*@
@@ -81,6 +81,12 @@
             </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Method)
+            @Html.DropDownListFor(modelItem => item.Method, new List<SelectListItem> {
+
+                new SelectListItem { Value = "0", Text = "Email" },
+                new SelectListItem { Value = "1", Text = "Fax" },
+                new SelectListItem { Value = "2", Text = "Mail" }
+            }, item.Reason, null)
         </td>
         <td>
             @*@Html.DisplayFor(modelItem => item.Originator)*@
@@ -92,12 +98,12 @@
 
                 new SelectListItem { Value = "0", Text = "Cancel/Lapse" },
                 new SelectListItem { Value = "1", Text = "Endorse" },
-                new SelectListItem { Value = "0", Text = "Renew" },
-                new SelectListItem { Value = "0", Text = "Quote" },
-                new SelectListItem { Value = "0", Text = "New" },
-                new SelectListItem { Value = "0", Text = "Statement" },
-                new SelectListItem { Value = "0", Text = "Reissue" },
-                new SelectListItem { Value = "0", Text = "Other" }
+                new SelectListItem { Value = "2", Text = "Renew" },
+                new SelectListItem { Value = "3", Text = "Quote" },
+                new SelectListItem { Value = "4", Text = "New" },
+                new SelectListItem { Value = "5", Text = "Statement" },
+                new SelectListItem { Value = "6", Text = "Reissue" },
+                new SelectListItem { Value = "7", Text = "Other" }
 
             }, item.Reason, null)
         </td>
@@ -109,7 +115,8 @@
         </td>
         @*<td></td>*@
         <td>
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+            @*Html.CheckBoxFor()*@
         </td>
     </tr>
 }
