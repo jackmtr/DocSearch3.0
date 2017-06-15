@@ -1,59 +1,79 @@
 ﻿@model IEnumerable<DocSearch2._1.ViewModels.PublicVM>
 
-<table class="table">
-    <tr>
-        <!--NEED EDITABLE Recipient-->
-        <th>
-            @Html.DisplayNameFor(model => model.Document_ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DocumentTypeName)
-        </th>
-        <th><!--EDITABLE-->
-            @Html.DisplayNameFor(model => model.IssueDate)
-        </th>
-        <th><!--EDITABLE-->
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.EffectiveDate)
-        </th>*@
-        @*<th>
-            @Html.DisplayNameFor(model => model.RefNumber)
-        </th>*@
-        @*<th>
-            @Html.DisplayNameFor(model => model.FileType)
-        </th>*@
-        <th><!--EDITABLE-->
-            @Html.DisplayNameFor(model => model.Method)
-        </th>
-        <th><!--EDITABLE-->
-            @Html.DisplayNameFor(model => model.Originator)
-        </th>
-        <th><!--EDITABLE-->
-            @Html.DisplayNameFor(model => model.Reason)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Supplier)
-        </th>*@
-        @*<th>Direction</th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.Recipient)
-        </th>
-        @*<th>Recieved On</th>*@
-        <th>Hide</th>
-    </tr>
-
+<table class="edit-table table">
+    <thead>
+        <tr class="edit-rows">
+            <th>
+                @Html.DisplayNameFor(model => model.Document_ID)
+                <br />
+                @Html.DisplayNameFor(model => model.CategoryName)
+                <br />
+                @Html.DisplayNameFor(model => model.DocumentTypeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Document_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DocumentTypeName)
+            </th>
+            <th>
+                <!--EDITABLE-->
+                @Html.DisplayNameFor(model => model.IssueDate)
+            </th>
+            <th>
+                <!--EDITABLE-->
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.EffectiveDate)
+            </th>*@
+            @*<th>
+                @Html.DisplayNameFor(model => model.RefNumber)
+            </th>*@
+            @*<th>
+                @Html.DisplayNameFor(model => model.FileType)
+            </th>*@
+            <th>
+                <!--EDITABLE-->
+                @Html.DisplayNameFor(model => model.Method)
+            </th>
+            <th>
+                <!--EDITABLE-->
+                @Html.DisplayNameFor(model => model.Originator)
+            </th>
+            <th>
+                <!--EDITABLE-->
+                @Html.DisplayNameFor(model => model.Reason)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Supplier)
+            </th>*@
+            @*<th>Direction</th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Recipient)
+            </th>
+            @*<th>Recieved On</th>*@
+            <th>Hide</th>
+        </tr>
+    </thead>
+    <tbody>
 @foreach (var item in Model)
 {
-    <tr>
+    <tr class="edit-rows">
         <!--Old DocSearch has option for editing Direction.  After thorough thought and discussion with support, I believe this is not needed to be changed.
                 1) Commons users has no option in seeing the Direction column
                 2) Support recalls no past issues from common users to edit this column
             ***Same reasoning for Recived_On-->
+        <td>
+            @Html.DisplayFor(modelItem => item.Document_ID)
+            <br />
+            @Html.DisplayFor(modelItem => item.CategoryName)
+            <br />
+            @Html.DisplayFor(modelItem => item.DocumentTypeName)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Document_ID)
         </td>
@@ -80,13 +100,13 @@
                 @Html.DisplayFor(modelItem => item.FileType)
             </td>*@
         <td>
-            @Html.DisplayFor(modelItem => item.Method)
+            @*@Html.DisplayFor(modelItem => item.Method)*@
             @Html.DropDownListFor(modelItem => item.Method, new List<SelectListItem> {
 
                 new SelectListItem { Value = "0", Text = "Email" },
                 new SelectListItem { Value = "1", Text = "Fax" },
                 new SelectListItem { Value = "2", Text = "Mail" }
-            }, item.Reason, null)
+            }, item.Method, null)
         </td>
         <td>
             @*@Html.DisplayFor(modelItem => item.Originator)*@
@@ -120,5 +140,8 @@
         </td>
     </tr>
 }
+    </tbody>
+
+
 </table>
 <button>Submit</button>
