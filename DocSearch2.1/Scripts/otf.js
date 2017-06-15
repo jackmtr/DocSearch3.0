@@ -279,8 +279,12 @@
     });
 
     $('#editList').on("click", function () {
-        
 
+        if (editList.length < 1) {
+            alert('No documents have been selected.');
+
+            return false;
+        }
 
         //jQuery.ajaxSettings.traditional = true
         //localStorage.setItem("editList", JSON.stringify(editList));
@@ -295,14 +299,29 @@
                 //EditList: editList.toString()
                 EditList: editList
             }
+            //,
+            //success: function () {
+            //    alert('success');
+            //    $('.edit-issue').datepicker();
+            //},
+            //ajaxComplete: function () {
+            //    alert('ajaxComplete');
+            //    $('.edit-issue').datepicker();
+            //}
         };
 
 
         $.ajax(options).done(function (data) {
-
+            //alert('ajax done');
             $('#main-row').replaceWith($(data));
+            //$('.edit-issue').datepicker();
+            $(".edit-issue").each(function () {
+                var displayedDate = $(this).val();
+                var date = new Date(displayedDate);
+                $(this).datepicker({ dateFormat: 'dd M yy'});
+                //$(this).datepicker().datepicker("setDate", date);
 
-            
+            });
         });
 
         return false;
@@ -333,4 +352,33 @@
     //});
 
     $('#text-fill').textfill({ widthOnly: true, minFontPixels: 4, innerTag: "span" }); //trying to ensure the status line will shrink if needed
+
+    //$(".edit-issue").datepicker();
+
+    $(".edit-issue").datepicker();
+
+    //if (!Modernizr.inputtypes.date) {
+
+    //    $(".edit-issue").each(function () {
+    //        var displayedDate = $(this).val();
+    //        var date = new Date(displayedDate);
+    //        $(this).datepicker().datepicker("setDate", date);
+    //    });
+    //}
+
+    //$("body").on("change", ".edit-issue", function () {
+    //    alert('hi');
+    //            var displayedDate = $(this).val();
+    //            var date = new Date(displayedDate);
+    //            $(this).datepicker().datepicker("setDate", date);
+    //});
+
+    //$("#main-row").on("change", function () {
+    //    $(this).datepicker();
+    //        $(".edit-issue").each(function () {
+    //            var displayedDate = $(this).val();
+    //            var date = new Date(displayedDate);
+    //            $(this).datepicker().datepicker("setDate", date);
+    //        });
+    //});
 });

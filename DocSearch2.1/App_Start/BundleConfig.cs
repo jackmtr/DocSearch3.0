@@ -14,7 +14,7 @@ namespace DocSearch2._1
                         "~/Scripts/jquery-ui.js", 
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.textfill.min.js",//may not use in the end, mainly used to shrink status bar
-                        "~/Scripts/jquery.validate*", //might not be using
+                        "~/Scripts/jquery.validate*", //might not be using, dont think the file is even in folder
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/otf.js")); //my custom js script
 

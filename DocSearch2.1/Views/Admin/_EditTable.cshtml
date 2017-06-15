@@ -64,7 +64,7 @@
             @Html.DisplayFor(modelItem => item.DocumentTypeName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IssueDate)
+            @Html.TextBoxFor(modelItem => item.IssueDate, "{0:dd MMM yyyy}", new { @class = "edit-issue" })
         </td>
         <td>
             @*@Html.DisplayFor(modelItem => item.Description)*@
