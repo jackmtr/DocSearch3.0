@@ -65,6 +65,9 @@ namespace DocSearch2._1.Controllers
 
             TempData.Keep("Folder_Id");
 
+            /*INSTEAD OF PULLING FROM PublicVM, It should be faster and easier to just pull and change the tbl_document entity*/
+            /*To Persist the category and doctype, maybe bring over with the EditList in a 2d array*/
+
             IEnumerable<PublicVM> publicModel = null;
 
             publicModel = publicRepository.SelectAll(TempData["Folder_Id"].ToString(), "admin").Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null).Where(doc => EditList.Contains(doc.Document_ID.ToString())); ;
