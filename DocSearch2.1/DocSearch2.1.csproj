@@ -294,13 +294,8 @@
     <Content Include="Views\PublicVM\_FileDisplay.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\_Form.cshtml" />
-    <Content Include="Views\Admin\Edit.cshtml" />
     <Content Include="Views\Admin\_EditTable.cshtml" />
-    <Content Include="Views\Admin\Edit1old.cshtml" />
-    <Content Include="Views\Admin\Edit1.cshtml" />
-    <Content Include="Views\Admin\EditorTemplates\PublicVMWorking.cshtml" />
     <Content Include="Views\Admin\EditorTemplates\PublicVM.cshtml" />
-    <Content Include="Views\Admin\EditorTemplates\PublicVM6.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

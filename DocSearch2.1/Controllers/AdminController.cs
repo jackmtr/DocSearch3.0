@@ -66,39 +66,15 @@ namespace DocSearch2._1.Controllers
 
             TempData.Keep("Folder_Id");
 
-            /*INSTEAD OF PULLING FROM PublicVM, It should be faster and easier to just pull and change the tbl_document entity*/
-            /*To Persist the category and doctype, maybe bring over with the EditList in a 2d array*/
-
             List<PublicVM> publicModel = null;
 
             publicModel = publicRepository.SelectAll(TempData["Folder_Id"].ToString(), "admin").Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null).Where(doc => EditList.Contains(doc.Document_ID.ToString())).ToList();
 
             return PartialView("_EditTable", publicModel);
-            //return RedirectToAction("Edit1");
         }
 
         [HttpPost]
         public ActionResult Edit(List<PublicVM> updatedEditList) {
-
-            return View();
-        }
-
-        [HttpGet]
-        public ActionResult Edit1(string id) {
-
-            int intId = Int32.Parse(id);
-
-            int secondIntId = 209730072;
-
-            //PublicVM pub = publicRepository.SelectAll("34", "admin").Where(r => r.Document_ID == intId).FirstOrDefault();
-
-            List<PublicVM> pubs = publicRepository.SelectAll("34", "admin").Where(r => r.Document_ID == intId).ToList();
-
-            return View(pubs);
-        }
-
-        [HttpPost]
-        public ActionResult Edit1(List<PublicVM> pubs) {
 
             return View();
         }

@@ -5,34 +5,26 @@
             2) Support recalls no past issues from common users to edit this column
         ***Same reasoning for Recived_On-->
     <td>
-        @*@Html.DisplayFor(modelItem => item.Document_ID)*@
         @Html.DisplayFor(model => model.Document_ID, new { htmlAttributes = new { @class = "form-control" } })
         <br />
-        @*@Html.DisplayFor(modelItem => item.CategoryName)*@
         @Html.DisplayFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
         <br />
-        @*@Html.DisplayFor(modelItem => item.DocumentTypeName)*@
         @Html.DisplayFor(model => model.DocumentType_ID, new { htmlAttributes = new { @class = "form-control" } })
     </td>
     <td>
-        @*@Html.DisplayFor(modelItem => item.Document_ID)*@
         @Html.DisplayFor(model => model.Document_ID, new { htmlAttributes = new { @class = "form-control" } })
     </td>
     <td>
-        @*@Html.DisplayFor(modelItem => item.CategoryName)*@
         @Html.DisplayFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
     </td>
     <td>
-        @*@Html.DisplayFor(modelItem => item.DocumentTypeName)*@
         @Html.DisplayFor(model => model.DocumentTypeName, new { htmlAttributes = new { @class = "form-control" } })
     </td>
     <td>
         @Html.TextBoxFor(model => model.IssueDate, "{0:dd MMM yyyy}", new { @class = "edit-issue form-control", size = 10 })
-        @*@Html.TextBoxFor(model => model.IssueDate, "{0:dd MMM yyyy}", new { htmlAttributes = new { @class = "edit-issue form-control", size = 10 } })*@
         @Html.ValidationMessageFor(model => model.IssueDate, "", new { @class = "text-danger" })
     </td>
     <td>
-        @*@Html.TextAreaFor(modelItem => item.Description, new { @class = "form-control", rows = "3" })*@
         @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
     </td>
@@ -46,44 +38,19 @@
             @Html.DisplayFor(modelItem => item.FileType)
         </td>*@
     <td>
-        @*@Html.DisplayFor(modelItem => item.Method)*@
-        @*@Html.DropDownListFor(modelItem => item.Method, new List<SelectListItem> {
-
-            new SelectListItem { Value = "0", Text = "Email" },
-            new SelectListItem { Value = "1", Text = "Fax" },
-            new SelectListItem { Value = "2", Text = "Mail" }
-        }, item.Method, null)*@
         @Html.DropDownListFor(model => model.Method, new List<SelectListItem> {
 
             new SelectListItem { Value = "0", Text = "Email" },
             new SelectListItem { Value = "1", Text = "Fax" },
             new SelectListItem { Value = "2", Text = "Mail" }
         }, Model.Method, new { @class = "form-control" })
-
-        @*@Html.EditorFor(model => model.Method, new { htmlAttributes = new { @class = "form-control" } })*@
         @Html.ValidationMessageFor(model => model.Method, "", new { @class = "text-danger" })
     </td>
     <td>
-
-        @*@Html.TextBoxFor(modelItem => item.Originator)*@
-
         @Html.EditorFor(model => model.Originator, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.Originator, "", new { @class = "text-danger" })
     </td>
     <td>
-        @*@Html.DropDownListFor(modelItem => item.Reason, new List<SelectListItem> {
-
-            new SelectListItem { Value = "0", Text = "Cancel/Lapse" },
-            new SelectListItem { Value = "1", Text = "Endorse" },
-            new SelectListItem { Value = "2", Text = "Renew" },
-            new SelectListItem { Value = "3", Text = "Quote" },
-            new SelectListItem { Value = "4", Text = "New" },
-            new SelectListItem { Value = "5", Text = "Statement" },
-            new SelectListItem { Value = "6", Text = "Reissue" },
-            new SelectListItem { Value = "7", Text = "Other" }
-
-        }, item.Reason, null)*@
-
         @Html.DropDownListFor(model => model.Reason, new List<SelectListItem> {
 
             new SelectListItem { Value = "0", Text = "Cancel/Lapse" },
@@ -96,16 +63,12 @@
             new SelectListItem { Value = "7", Text = "Other" }
 
         }, Model.Reason, new { @class = "form-control" })
-
-        @*@Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "form-control" } })*@
         @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
     </td>
     @*<td>
             @Html.DisplayFor(modelItem => item.Supplier)
         </td>*@
     <td>
-        @*@Html.TextBoxFor(modelItem => item.Recipient)*@
-
         @Html.TextBoxFor(model => model.Recipient, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.Recipient, "", new { @class = "text-danger" })
     </td>
@@ -121,8 +84,6 @@
         }
     </td>*@
     <td>
-        @*@Html.CheckBoxFor(modelItem => item.Hidden)*@
-
         @Html.CheckBoxFor(model => model.Hidden)
         @Html.ValidationMessageFor(model => model.Hidden, "", new { @class = "text-danger" })
     </td>
