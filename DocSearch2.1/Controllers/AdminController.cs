@@ -61,6 +61,7 @@ namespace DocSearch2._1.Controllers
             return View(publicModel);
         }
 
+        [HttpGet]
         public ActionResult Edit(string[] EditList) {
 
             TempData.Keep("Folder_Id");
@@ -68,16 +69,33 @@ namespace DocSearch2._1.Controllers
             /*INSTEAD OF PULLING FROM PublicVM, It should be faster and easier to just pull and change the tbl_document entity*/
             /*To Persist the category and doctype, maybe bring over with the EditList in a 2d array*/
 
-            IEnumerable<PublicVM> publicModel = null;
+            List<PublicVM> publicModel = null;
 
-            publicModel = publicRepository.SelectAll(TempData["Folder_Id"].ToString(), "admin").Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null).Where(doc => EditList.Contains(doc.Document_ID.ToString())); ;
+            publicModel = publicRepository.SelectAll(TempData["Folder_Id"].ToString(), "admin").Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null).Where(doc => EditList.Contains(doc.Document_ID.ToString())).ToList();
 
             return PartialView("_EditTable", publicModel);
             //return RedirectToAction("Edit1");
         }
 
-        public ActionResult Edit1(string[] EditList)
-        {
+        [HttpPost]
+        public ActionResult Edit(List<PublicVM> updatedEditList) {
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Edit1(string id) {
+
+            int intId = Int32.Parse(id);
+
+            PublicVM pub = publicRepository.SelectAll("34", "admin").Where(r => r.Document_ID == intId).FirstOrDefault();
+
+            return View(pub);
+        }
+
+        [HttpPost]
+        public ActionResult Edit1(PublicVM pub) {
+
             return View();
         }
 

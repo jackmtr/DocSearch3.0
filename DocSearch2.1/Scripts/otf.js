@@ -80,7 +80,7 @@
 
             var img = $('<img id="dynamic" class="previewImg">');
 
-            var positionLeft = e.clientX;
+            var positionLeft = e.clientX - 30;
             var positionTop = e.clientY;
 
             img.attr('src', options.url);

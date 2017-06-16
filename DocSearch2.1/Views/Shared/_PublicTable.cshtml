@@ -219,6 +219,7 @@
                         {
                             <td>
                                 <input type="checkbox" name="edit" value=@item.Document_ID id="@(item.Document_ID + "edit")" />
+                                @Html.ActionLink("EditSingleTest", "Edit1", "Admin", new { id = item.Document_ID} , null)
                             </td>
                         }
                     </tr>
