@@ -1,8 +1,9 @@
-﻿@model List<DocSearch2._1.ViewModels.PublicVM>
+﻿@model IEnumerable<PublicVM>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Admin", FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
+    @*@Html.AntiForgeryToken()*@
+
     <table class="edit-table table">
         <thead>
             <tr class="edit-rows">
@@ -58,105 +59,15 @@
                 <th>
                     @Html.DisplayNameFor(model => model.First().Recipient)
                 </th>
-                <th>
+                @*<th>
                     @Html.DisplayNameFor(model => model.First().FileType)
-                </th>
+                </th>*@
                 @*<th>Recieved On</th>*@
                 <th>Active</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr class="edit-rows">
-                    <!--Old DocSearch has option for editing Direction.  After thorough thought and discussion with support, I believe this is not needed to be changed.
-                            1) Commons users has no option in seeing the Direction column
-                            2) Support recalls no past issues from common users to edit this column
-                        ***Same reasoning for Recived_On-->
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Document_ID)
-                        <br />
-                        @Html.DisplayFor(modelItem => item.CategoryName)
-                        <br />
-                        @Html.DisplayFor(modelItem => item.DocumentTypeName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Document_ID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CategoryName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DocumentTypeName)
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(modelItem => item.IssueDate, "{0:dd MMM yyyy}", new { @class = "edit-issue", size = 10 })
-                    </td>
-                    <td>
-                        @*@Html.DisplayFor(modelItem => item.Description)*@
-                        @Html.TextAreaFor(modelItem => item.Description, new { @class = "form-control", rows = "3" })
-                    </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.EffectiveDate)
-                        </td>*@
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.RefNumber)
-                        </td>*@
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.FileType)
-                        </td>*@
-                    <td>
-                        @*@Html.DisplayFor(modelItem => item.Method)*@
-                        @Html.DropDownListFor(modelItem => item.Method, new List<SelectListItem> {
-
-                new SelectListItem { Value = "0", Text = "Email" },
-                new SelectListItem { Value = "1", Text = "Fax" },
-                new SelectListItem { Value = "2", Text = "Mail" }
-            }, item.Method, null)
-                    </td>
-                    <td>
-                        @*@Html.DisplayFor(modelItem => item.Originator)*@
-                        @Html.TextBoxFor(modelItem => item.Originator)
-                    </td>
-                    <td>
-                        @*@Html.DisplayFor(modelItem => item.Reason)*@
-                        @Html.DropDownListFor(modelItem => item.Reason, new List<SelectListItem> {
-
-                new SelectListItem { Value = "0", Text = "Cancel/Lapse" },
-                new SelectListItem { Value = "1", Text = "Endorse" },
-                new SelectListItem { Value = "2", Text = "Renew" },
-                new SelectListItem { Value = "3", Text = "Quote" },
-                new SelectListItem { Value = "4", Text = "New" },
-                new SelectListItem { Value = "5", Text = "Statement" },
-                new SelectListItem { Value = "6", Text = "Reissue" },
-                new SelectListItem { Value = "7", Text = "Other" }
-
-            }, item.Reason, null)
-                    </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.Supplier)
-                        </td>*@
-                    <td>
-                        @Html.TextBoxFor(modelItem => item.Recipient)
-                    </td>
-                    @*<td></td>*@
-                    <td>
-                        @Html.ActionLink(item.FileType, "FileDisplay", "PublicVM", new { documentId = item.Document_ID }, new { target = "_blank" })
-                        @if (item.FileType == "Picture JPEG")
-                        {
-                            <br />
-                            <div class="preview_image">
-                                @Html.ActionLink("[Preview]", "FileDisplay", "PublicVM", new { documentId = item.Document_ID }, new { @class = "preview", id = item.Document_ID + 'a' })
-                            </div>
-                        }
-                    </td>
-                    <td>
-                        @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-                        @*Html.CheckBoxFor()*@
-                        @Html.CheckBoxFor(modelItem => item.Hidden)
-                    </td>
-                </tr>
-            }
+            @Html.EditorFor(model=>Model)
         </tbody>
     </table>
 

@@ -88,13 +88,17 @@ namespace DocSearch2._1.Controllers
 
             int intId = Int32.Parse(id);
 
-            PublicVM pub = publicRepository.SelectAll("34", "admin").Where(r => r.Document_ID == intId).FirstOrDefault();
+            int secondIntId = 209730072;
 
-            return View(pub);
+            //PublicVM pub = publicRepository.SelectAll("34", "admin").Where(r => r.Document_ID == intId).FirstOrDefault();
+
+            List<PublicVM> pubs = publicRepository.SelectAll("34", "admin").Where(r => r.Document_ID == intId).ToList();
+
+            return View(pubs);
         }
 
         [HttpPost]
-        public ActionResult Edit1(PublicVM pub) {
+        public ActionResult Edit1(List<PublicVM> pubs) {
 
             return View();
         }

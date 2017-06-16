@@ -1,0 +1,22 @@
+﻿@model PublicVM
+<tr>
+    <td>
+        @Html.DisplayFor(model => model.Document_ID, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+        @Html.DisplayFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+        @Html.DisplayFor(model => model.DocumentType_ID, new { htmlAttributes = new { @class = "form-control" } })
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.Document_ID, new { htmlAttributes = new { @class = "form-control" } })
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.DocumentTypeName, new { htmlAttributes = new { @class = "form-control" } })
+    </td>
+    <td>
+        @Html.TextBoxFor(model => model.IssueDate, "{0:dd MMM yyyy}", new { @class = "edit-issue", size = 10 })
+    </td>
+</tr>
