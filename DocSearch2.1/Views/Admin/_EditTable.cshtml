@@ -55,6 +55,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Recipient)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileType)
+            </th>
             @*<th>Recieved On</th>*@
             <th>Hide</th>
         </tr>
@@ -134,6 +137,16 @@
             @Html.TextBoxFor(modelItem => item.Recipient)
         </td>
         @*<td></td>*@
+        <td>
+            @Html.ActionLink(item.FileType, "FileDisplay", "PublicVM", new { documentId = item.Document_ID }, new { target = "_blank" })
+            @if (item.FileType == "Picture JPEG")
+            {
+                <br />
+                                <div class="preview_image">
+                                    @Html.ActionLink("[Preview]", "FileDisplay", "PublicVM", new { documentId = item.Document_ID }, new { @class = "preview", id = item.Document_ID + 'a' })
+                                </div>
+            }
+        </td>
         <td>
             @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
             @*Html.CheckBoxFor()*@
