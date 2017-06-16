@@ -73,16 +73,16 @@
         @Html.ValidationMessageFor(model => model.Recipient, "", new { @class = "text-danger" })
     </td>
     @*<td></td>*@
-    @*<td>
-        @Html.ActionLink(item.FileType, "FileDisplay", "PublicVM", new { documentId = item.Document_ID }, new { target = "_blank" })
-        @if (item.FileType == "Picture JPEG")
+    <td>
+        @Html.ActionLink(Model.FileType, "FileDisplay", "PublicVM", new { documentId = Model.Document_ID }, new { target = "_blank" })
+        @if (Model.FileType == "Picture JPEG")
         {
             <br />
                         <div class="preview_image">
-                            @Html.ActionLink("[Preview]", "FileDisplay", "PublicVM", new { documentId = item.Document_ID }, new { @class = "preview", id = item.Document_ID + 'a' })
+                            @Html.ActionLink("[Preview]", "FileDisplay", "PublicVM", new { documentId = Model.Document_ID }, new { @class = "preview", id = Model.Document_ID + 'a' })
                         </div>
         }
-    </td>*@
+    </td>
     <td>
         @Html.CheckBoxFor(model => model.Hidden)
         @Html.ValidationMessageFor(model => model.Hidden, "", new { @class = "text-danger" })
