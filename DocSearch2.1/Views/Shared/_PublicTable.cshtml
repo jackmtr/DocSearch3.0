@@ -139,7 +139,7 @@
                    }), "#public_table", "replace-with", "GET", "File", "fa-sort", "filterLink", "postNavbar"))
                     </th><!--10-->
                     <th>More</th><!--11-->
-                    @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+                    @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
                     {
                         <th>
                             @*DocumentId*@
@@ -153,7 +153,11 @@
                    }), "#public_table", "replace-with", "GET", "Document Id", "fa-sort", "filterLink", "postNavbar"))
                         </th>
                     }
-                    @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+                    @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
+                    {
+                        <th>Visibility</th>
+                    }
+                    @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
                     {
                         <th>Select</th>
                     }
@@ -182,7 +186,7 @@
                             @Html.DisplayFor(modelItem => item.Originator)
                         </td>
                         <td>
-                            @if (item.Reason.Length < 1)
+                            @if (item.Reason == null || item.Reason.Length < 1)
                             {
                                 @Html.Raw("N/A");
                             }
@@ -197,25 +201,38 @@
                             @Html.DisplayFor(modelItem => item.Description)
                         </td>
                         <td>
-                            @Html.ActionLink(item.FileType, "FileDisplay", new { documentId = item.Document_ID }, new { target = "_blank" })
-                            @if (item.FileType == "Picture JPEG")
+                            @if (item.FileType == null || item.FileType.Length < 1)
                             {
-                                <br/>
-                                <div class="preview_image">
-                                    @Html.ActionLink("[Preview]", "FileDisplay", new { documentId = item.Document_ID }, new { @class = "preview", id = item.Document_ID+'a' })
-                                </div>
+                                @Html.Raw("N/A");
+                            }
+                            else
+                            {
+                                @Html.ActionLink(item.FileType, "FileDisplay", new { documentId = item.Document_ID }, new { target = "_blank" })
+                                if (item.FileType == "Picture JPEG")
+                                {
+                                    <br />
+                                    <div class="preview_image">
+                                        @Html.ActionLink("[Preview]", "FileDisplay", new { documentId = item.Document_ID }, new { @class = "preview", id = item.Document_ID + 'a' })
+                                    </div>
+                                }
                             }
                         </td>
                         <td>
                             <a href="#" class="miscTableLink" method="get" action="@Url.Action("MiscData", new { documentId = item.Document_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"], })" data-otf-ajax="true" data-otf-target="#@item.Document_ID.ToString()"><i class="fa fa-expand"></i></a>
                         </td>
-                        @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+                        @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
                         {
                             <td>
                                 @Html.DisplayFor(modelItem=> item.Document_ID)
                             </td>
                         }
-                        @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+                        @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Hidden)
+                            </td>
+                        }
+                        @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
                         {
                             <td>
                                 <input type="checkbox" name="edit" value=@item.Document_ID id="@(item.Document_ID + "edit")" />

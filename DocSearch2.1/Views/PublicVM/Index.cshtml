@@ -50,19 +50,21 @@
                     }
 
                     //function to clear table/navbar/form to look like original content
-                    function clearFields() {
+                    function clearFields(tagName) {
 
                         $form = $('form');
                         $form.find("input[type=search]").val("");
 
-                        $form.find("select option").removeAttr('selected');
+                        $form.find(".form-inputs select option").removeAttr('selected');
                         $form.find("#IssueYearMinRange option:eq(0)").prop("selected", true);
                         $form.find("#IssueYearMaxRange option:eq(0)").prop("selected", true);
 
-                        //may want to be more specific with check
-                        if ($(this).prop('tagName') == "A") {
+                        //may want to be more specific with check //having issues with this since updating the reset button
+                        if (tagName == "A") {
                             $(".active").removeClass('active');
                         }
+                        
+
 
                         $('#searchInputBox').focus();
 
@@ -73,6 +75,7 @@
                     function updateCurrentCount() {
 
                         var currentCount = $('#public_table').data('currentrecord');
+
                         var currentLowYear = $('#IssueYearMinRange option:selected').val();
                         var currentHighYear = $('#IssueYearMaxRange option:selected').val();
 

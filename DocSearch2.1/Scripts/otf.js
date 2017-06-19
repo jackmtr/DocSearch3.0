@@ -1,13 +1,15 @@
 ﻿$(function () {
     //**GLOBAL VARIABLES
     var editList = [];
+    var pageSize1 = 20;
 
     //**FUNCTIONS
 
     //submits the search and date filter form asynchronously
     var ajaxFormSubmit = function () {
 
-        var $pageSize = $('#pageSize option:selected').val();
+        //var $pageSize = $('#pageSize option:selected').val();
+        //pageSize1 = $('#pageSize option:selected').val();
         var $form = $('form');
 
         $category = $(".active a").data('subclass');
@@ -17,13 +19,14 @@
             var options = {
                 url: $form.attr("action"),//maybe add to this to check for attributes somehow
                 type: $form.attr("method"),
-                data: $form.serialize() + "&subNav=" + $category + "&prevNav=" + $docType + "&pageSize=" + $pageSize //or add to the data somehow
+                data: $form.serialize() + "&subNav=" + $category + "&prevNav=" + $docType + "&pageSize=" + pageSize1 //or add to the data somehow
             };
         } else {
             var options = {
                 url: $form.attr("action"),//maybe add to this to check for attributes somehow
                 type: $form.attr("method"),
-                data: $form.serialize() + "&pageSize=" + $pageSize//or add to the data somehow
+                data: $form.serialize() + "&pageSize=" + pageSize1//or add to the data somehow
+                //data: $form.serialize() + "&pageSize=" + $pageSize
             };
         }
 
@@ -44,7 +47,9 @@
     //pagination function
     var getPage = function () {
 
-        var $pageSize = $('#pageSize option:selected').val(); 
+        //var $pageSize = $('#pageSize option:selected').val();
+        //pageSize1 = $('#pageSize option:selected').val();
+
         var $a = $(this); //this is the anchor
 
         if ($a.parent('li').hasClass('disabled') == true) {
@@ -53,7 +58,8 @@
 
         var options = {
             url: $a.attr("href"),
-            data: $("form").serialize() + "&pageSize=" + $pageSize,
+            //data: $("form").serialize() + "&pageSize=" + $pageSize,
+            data: $("form").serialize() + "&pageSize=" + pageSize1,
             type: "get"
         };
 
@@ -249,6 +255,9 @@
 
         $('select[name^="pageSize"] option').removeAttr('selected');
         $('select[name^="pageSize"] option[value="' + value + '"]').attr("selected", "selected");
+
+        pageSize1 = $('#pageSize option:selected').val();
+
         ajaxFormSubmit();
     });
 
@@ -383,4 +392,32 @@
     //            $(this).datepicker().datepicker("setDate", date);
     //        });
     //});
+
+    $('#clearButton').on("click", function () {
+
+        $this = $(this);
+        
+        //alert($(this).prop('tagName'));
+
+        var options = {
+            url: $this.attr('href'),// + "&pageSize=" + pageSize1,
+            data: "pageSize=" + pageSize1,
+            type: "GET",
+        };
+
+
+        $.ajax(options).done(function (data) {
+
+            var $target = $('#public_table');
+            var $newHtml = $(data);
+
+
+            $target.replaceWith($newHtml);
+
+            complete: updateCurrentCount();
+            success: clearFields($this.prop('tagName'));      
+        });
+
+        return false;
+    });
 });

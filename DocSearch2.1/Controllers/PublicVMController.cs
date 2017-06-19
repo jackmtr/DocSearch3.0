@@ -38,11 +38,15 @@ namespace DocSearch2._1.Controllers
         [HttpGet]
         public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1, int pageSize = 20, bool Admin = false)
         {
-            if (System.Web.HttpContext.Current.Session["Role"] as String == "Admin") {
+            if (System.Web.HttpContext.Current.Session["Role"] as String == "Admin")
+            {
                 Admin = true;
                 //TempData.Keep("Role");
-                TempData["Role"] = "Admin";
-            } //checking for admin, this is temporary until a better auth check
+                TempData["Role"] = "admin";
+            } //checking for admin, this is temporary until a better auth checkelse
+            else {
+                TempData["Role"] = "client";
+            }
 
             //**GLOBAL VARIABLES
             //TempData can be used to send data between controllers and views through one request, .keep() is used to continue keeping after one request
@@ -64,10 +68,11 @@ namespace DocSearch2._1.Controllers
 
             //**POPULATING MAIN MODEL, second conditional is for no doc reference documents, a unique westland condition
             publicModel = publicRepository
-                            .SelectAll(Folder_ID, "client");
+                            .SelectAll(Folder_ID, TempData["Role"].ToString());
             
             publicModel = publicModel.Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null); //need better queries|| n.DocumentType_ID == 13 was removed bc looks to be redundant now with fixes
             //should combine the above LINQ statements when done testing and development
+            //should admin neglect this line?
 
             publicModel = publicModel.GroupBy(x => x.Document_ID).Select(x => x.First());
 
@@ -116,18 +121,41 @@ namespace DocSearch2._1.Controllers
                 }
 
                 //*filtering by date and search conditions
-                //checks if the date filter and search term will return any results
-                if (!publicModel.Any(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && (searchTerm == null || r.Description.ToLower().Contains(searchTerm.ToLower())))){
+                if (TempData["Role"].ToString() == "admin")
+                {
+                    //checks if the date filter and search term will return any results
+                    if (!publicModel.Any(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && (searchTerm == null || r.Description.ToLower().Contains(searchTerm.ToLower()))))
+                    {
 
-                    //ViewData["goodSearch"] = false means no records is found
-                    ViewData["goodSearch"] = false;
-                } else {
-                    publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && 
-                        (searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.ToLower().Contains(searchTerm.ToLower()) == true : true)));
+                        //ViewData["goodSearch"] = false means no records is found
+                        ViewData["goodSearch"] = false;
+                    }
+                    else
+                    {
+                        publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) &&
+                            (searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.ToLower().Contains(searchTerm.ToLower()) == true : true)));
 
-                    TempData["SearchTerm"] = searchTerm;
+                        TempData["SearchTerm"] = searchTerm;
+                    }
+                    //may want to widen results if goodSearch is false
                 }
-                //may want to widen results if goodSearch is false
+                else {
+                    //checks if the date filter and search term will return any results
+                    if (!publicModel.Any(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && (searchTerm == null || r.Description.ToLower().Contains(searchTerm.ToLower()))))
+                    {
+
+                        //ViewData["goodSearch"] = false means no records is found
+                        ViewData["goodSearch"] = false;
+                    }
+                    else
+                    {
+                        publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) &&
+                            (searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.ToLower().Contains(searchTerm.ToLower()) == true : true)));
+
+                        TempData["SearchTerm"] = searchTerm;
+                    }
+                }
+
 
                 //record count after category/doctype/policy/search/date filter
                 ViewData["currentRecordsCount"] = publicModel.Count();
@@ -547,12 +575,14 @@ namespace DocSearch2._1.Controllers
             if (ascending)
             {
                 year = model
+                            .Where(y => y.IssueDate != null) //does this make business sense?
                             .OrderBy(r => r.IssueDate)
                                     .First()
                                         .IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
             }
             else {
                 year = model
+                            .Where(y => y.IssueDate != null) //does this make business sense?
                             .OrderByDescending(r => r.IssueDate)
                                     .First()
                                         .IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
