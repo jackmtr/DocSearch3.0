@@ -36,10 +36,11 @@ namespace DocSearch2._1.Repositories
                                     join cat in _db.tbl_Category on dt.Category_ID equals cat.Category_ID
                                     where d.Folder_ID == publicNumberInt
                                     //where d.Active_IND == true //should only show active records, hide soft deleted ones
+                                    where d.DocumentNumber != null
                                     from dr in ps.DefaultIfEmpty()
                                     select new {
                                         f.Folder_ID, d.Document_ID, dt.DocumentType_ID, DtName = dt.Name, d.Issue_DT, d.Description, cat.Category_ID, CatName = cat.Name, dr.Date1_DT, dr.RefNumber, d.FileType, d.Method, d.Originator, d.Reason, dr.Number1
-                                        ,d.Recipient, d.Active_IND //only want recipient and active_ind for admin, wonder if better way to do this
+                                        , d.Recipient, d.Active_IND //only want recipient and active_ind for admin, wonder if better way to do this
                                     }).ToList();
 
                 foreach (var item in documentList) {

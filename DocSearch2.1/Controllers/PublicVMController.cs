@@ -156,9 +156,14 @@ namespace DocSearch2._1.Controllers
                     }
                 }
 
-
-                //record count after category/doctype/policy/search/date filter
                 ViewData["currentRecordsCount"] = publicModel.Count();
+
+                //Bug in system when trying to retrieve a ranked doc in the model (i.e. 11th-20th docs due to pagination).
+                //Current pagination reads the search and filters, so possibility it reads a rank thats not available anymore.
+                //Current solution: reset the page value when needed
+                if ((int)ViewData["currentRecordsCount"] < ((pageSize * page) - (pageSize - 1 ))) {
+                    page = 1;
+                }
 
                 //*sorting data
                 if (filter == "document")

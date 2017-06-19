@@ -78,7 +78,7 @@
         </div>
     </form>
 
-    @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+    @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
     {
         using (Html.BeginForm("Edit", "Admin"))
         {
