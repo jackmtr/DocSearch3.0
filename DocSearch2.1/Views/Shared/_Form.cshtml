@@ -18,9 +18,6 @@
             </div>
 
             <div id="text-fill" class="col-md-6"><span id="status-message">Returning <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents, <span id="currentLowYear">@(((List<SelectListItem>)TempData["YearRange"]).First().Text)</span> to <span id="currentHighYear">@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)</span></span></div>
-
-            @*<div class="col-md-7"><h4>Returning <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents between <span id="currentLowYear">@(((List<SelectListItem>)TempData["YearRange"]).First().Text)</span> and <span id="currentHighYear">@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)</span></h4></div>*@
-            @*<div class="col-md-6"></div>*@
             <div class="col-md-3">
                 @Ajax.ActionLink("<< Reset Search", "Index", new
                {
@@ -38,18 +35,7 @@
         <div class="form-inputs col-md-12 row">
             <div class="filter col-md-3">
                 <label for="search">Search Description:</label>
-                @*<input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />*@
-
                 <input id="searchInputBox" type="search" name="searchTerm" />
-                @*<fieldset>
-                        Records per page:
-                        <select id="pageSize" name="pageSize">
-                            <option value=10>10</option>
-                            <option value=20 selected>20</option>
-                            <option value=50>50</option>
-                            <option value=1000>All</option>
-                        </select>
-                    </fieldset>*@
             </div>
             <div class="filter col-md-3">
                 <label for="IssueDateMinRange">Issue Date Starting year:</label>
@@ -62,17 +48,6 @@
                 <br />
             </div>
             <div class="filter col-md-3 buttondiv">
-                @*@Ajax.ActionLink("Reset Search", "Index", new
-                    {
-                        publicId = Model.First().Folder_ID
-                    }, new AjaxOptions
-                    {
-                        HttpMethod = "GET",
-                        InsertionMode = InsertionMode.ReplaceWith,
-                        UpdateTargetId = "public_table",
-                        OnComplete = "updateCurrentCount",
-                        OnSuccess = "clearFields"
-                    }, new { @class = "button", id = "clearButton" })*@
                 <input id="formSubmitId" type="submit" value="Search and Filter" />
             </div>
         </div>
@@ -82,7 +57,9 @@
     {
         using (Html.BeginForm("Edit", "Admin"))
         {
-            @*<button id="editList">Edit These Files</button>*@
+            @*<input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />*@
+            @*<input type="hidden" name="abcd" value="@Model.First().Folder_ID" />*@
+
             <input id="editList" type="submit" value="Edit These Files" />
         }
     }

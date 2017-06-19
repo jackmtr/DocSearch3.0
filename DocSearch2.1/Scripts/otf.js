@@ -308,7 +308,8 @@
             data: {
                 //EditList : JSON.stringify(editList)
                 //EditList: editList.toString()
-                EditList: editList
+                EditList: editList,
+                publicId: $('#search').val()
             }
             //,
             //success: function () {

@@ -38,11 +38,13 @@ namespace DocSearch2._1.Controllers
         [HttpGet]
         public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1, int pageSize = 20, bool Admin = false)
         {
+
             if (System.Web.HttpContext.Current.Session["Role"] as String == "Admin")
             {
                 Admin = true;
-                //TempData.Keep("Role");
+
                 TempData["Role"] = "admin";
+                //ViewData["Folder_Id"] = Folder_ID;
             } //checking for admin, this is temporary until a better auth checkelse
             else {
                 TempData["Role"] = "client";

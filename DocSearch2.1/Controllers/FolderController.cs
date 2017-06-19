@@ -12,8 +12,8 @@ using System.Web.Mvc;
 
 namespace DocSearch2._1.Controllers
 {
-    //this controller is the inbetween for this API taking the selected WAS' db tbl_Folder.Name and give the main PublicVMController's index method the tbl_Folder.Folder_ID and some static folder info (name and id)
-    //this controller may not honestly be needed in the end, and the PublicVM can do the functionality here too.
+    //This controller is mainly used to take in the initial request info and role, and sending the user the appropriate view through the main controller (PublicVMController)
+    //***this controller may not honestly be needed in the end, and the PublicVM can do the functionality here too.
     public class FolderController : Controller
     {
         private IFolderRepository repository = null;
@@ -36,19 +36,18 @@ namespace DocSearch2._1.Controllers
         }
         */
 
+        //currently the role is coming as a query value, needs to be a role check through better security
         // GET: Folder
         public ActionResult Index([Bind(Prefix = "ClientId")] string Number, string Role)
         {
             tbl_Folder folder = repository.SelectByNumber(Number);
 
-            //ViewData["Role"] = System.Web.HttpContext.Current.Session["Role"] as String;
+            System.Web.HttpContext.Current.Session["Role"] = Role; //tempory until I set up a real role checker
 
-            System.Web.HttpContext.Current.Session["Role"] = Role;
-
-            if (System.Web.HttpContext.Current.Session["Role"] as String == "Admin")
-            {
-                TempData["Folder_Id"] = folder.Folder_ID;
-            }
+            //if (System.Web.HttpContext.Current.Session["Role"] as String == "Admin")
+            //{
+            //    //TempData["Folder_Id"] = folder.Folder_ID; //used in the selectAll() for admin
+            //}
 
             try
             {
@@ -59,10 +58,6 @@ namespace DocSearch2._1.Controllers
                 return HttpNotFound();
             }
 
-            //if (System.Web.HttpContext.Current.Session["Role"] as String == "Admin") {
-
-            //    return RedirectToAction("Index", "Admin", new { publicId = folder.Folder_ID });
-            //}
             return RedirectToAction("Index", "PublicVM", new { publicId = folder.Folder_ID });
         }
 

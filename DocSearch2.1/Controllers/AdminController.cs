@@ -62,14 +62,13 @@ namespace DocSearch2._1.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(string[] EditList) {
+        public ActionResult Edit([Bind(Prefix = "publicId")] string Folder_ID, string[] EditList) {
 
-            TempData.Keep("Folder_Id");
+            //TempData.Keep("Folder_Id");
 
             List<PublicVM> publicModel = null;
 
-            //publicModel = publicRepository.SelectAll(TempData["Folder_Id"].ToString(), "admin").Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null).Where(doc => EditList.Contains(doc.Document_ID.ToString())).ToList();
-            publicModel = publicRepository.SelectAll(TempData["Folder_Id"].ToString(), "admin").Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null).Where(doc => EditList.Contains(doc.Document_ID.ToString())).ToList();
+            publicModel = publicRepository.SelectAll(Folder_ID, "admin").Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null).Where(doc => EditList.Contains(doc.Document_ID.ToString())).ToList();
 
 
             return PartialView("_EditTable", publicModel);
