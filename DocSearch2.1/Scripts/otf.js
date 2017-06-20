@@ -8,8 +8,6 @@
     //submits the search and date filter form asynchronously
     var ajaxFormSubmit = function () {
 
-        //var $pageSize = $('#pageSize option:selected').val();
-        //pageSize1 = $('#pageSize option:selected').val();
         var $form = $('form');
 
         $category = $(".active a").data('subclass');
@@ -26,7 +24,6 @@
                 url: $form.attr("action"),//maybe add to this to check for attributes somehow
                 type: $form.attr("method"),
                 data: $form.serialize() + "&pageSize=" + pageSize1//or add to the data somehow
-                //data: $form.serialize() + "&pageSize=" + $pageSize
             };
         }
 
@@ -47,9 +44,6 @@
     //pagination function
     var getPage = function () {
 
-        //var $pageSize = $('#pageSize option:selected').val();
-        //pageSize1 = $('#pageSize option:selected').val();
-
         var $a = $(this); //this is the anchor
 
         if ($a.parent('li').hasClass('disabled') == true) {
@@ -58,7 +52,6 @@
 
         var options = {
             url: $a.attr("href"),
-            //data: $("form").serialize() + "&pageSize=" + $pageSize,
             data: $("form").serialize() + "&pageSize=" + pageSize1,
             type: "get"
         };
@@ -135,7 +128,6 @@
 
     function adjustSideBanner() {
 
-        //var newHeight = $('#public_table').height() + $('#form-div').height() + $('#status-bar').height() + $('.public_name_id').height();
         var newHeight = $('#form-div').height() + $('#public_table').height();
         var screenHeight = $(window).height() * 0.90;
 
@@ -160,6 +152,38 @@
                 $("#" + documentId + "edit").prop('checked', true);
             }
         });
+    }
+
+    var modifyEditList = function () {
+
+        if (editList.length < 1) {
+            alert('No documents have been selected.');
+
+            return false;
+        }
+
+        var options = {
+            url: "/Admin/Edit",
+            type: "get",
+            traditional: true,
+            data: {
+                EditList: editList,
+                publicId: $('#search').val()
+            }
+        };
+
+        $.ajax(options).done(function (data) {
+
+            $('#main-row').replaceWith($(data));
+
+            $(".edit-issue").each(function () {
+                var displayedDate = $(this).val();
+                var date = new Date(displayedDate);
+                $(this).datepicker({ dateFormat: 'dd M yy' });
+            });
+        });
+
+        return false;
     }
 
 
@@ -190,11 +214,6 @@
         losePreview();
     });
 
-    //$("#body").on("mouseleave", ".preview", function () {
-    //    losePreview();
-    //});
-
-
     //functionality of category/policy slider
     $('#category_policy_toggle').click(function () {
         $("#category_section, #policy_section").toggleClass("hidden");
@@ -205,12 +224,6 @@
         $(".nav_lists").find(".active").removeClass("active");
         $(this).parent().addClass("active");
     });
-
-    //doesnt seem to be needed
-    //allows category list item hover to highlight every doctype in it
-    //$(".category_nav > div > a").hover( function () {
-    //    $(this).parent().toggleClass("nav_cate_hover");
-    //});
 
     //event for click on 'MORE', which brings up a misc table
     $("#body").on("click", ".miscTableLink", function () {
@@ -289,55 +302,38 @@
         persistEditCheckList();
     });
 
-    $('#editList').on("click", function () {
+    //$('#editList').on("click", function () {
 
-        if (editList.length < 1) {
-            alert('No documents have been selected.');
+    //    if (editList.length < 1) {
+    //        alert('No documents have been selected.');
 
-            return false;
-        }
+    //        return false;
+    //    }
 
-        //jQuery.ajaxSettings.traditional = true
-        //localStorage.setItem("editList", JSON.stringify(editList));
-
-        //$.get('/Admin/Edit', { vals: editList }, function (data) { })
-        var options = {
-            url: "/Admin/Edit",
-            type: "get",
-            traditional: true,
-            data: {
-                //EditList : JSON.stringify(editList)
-                //EditList: editList.toString()
-                EditList: editList,
-                publicId: $('#search').val()
-            }
-            //,
-            //success: function () {
-            //    alert('success');
-            //    $('.edit-issue').datepicker();
-            //},
-            //ajaxComplete: function () {
-            //    alert('ajaxComplete');
-            //    $('.edit-issue').datepicker();
-            //}
-        };
+    //    var options = {
+    //        url: "/Admin/Edit",
+    //        type: "get",
+    //        traditional: true,
+    //        data: {
+    //            EditList: editList,
+    //            publicId: $('#search').val()
+    //        }
+    //    };
 
 
-        $.ajax(options).done(function (data) {
-            //alert('ajax done');
-            $('#main-row').replaceWith($(data));
-            //$('.edit-issue').datepicker();
-            $(".edit-issue").each(function () {
-                var displayedDate = $(this).val();
-                var date = new Date(displayedDate);
-                $(this).datepicker({ dateFormat: 'dd M yy'});
-                //$(this).datepicker().datepicker("setDate", date);
+    //    $.ajax(options).done(function (data) {
 
-            });
-        });
+    //        $('#main-row').replaceWith($(data));
 
-        return false;
-    });
+    //        $(".edit-issue").each(function () {
+    //            var displayedDate = $(this).val();
+    //            var date = new Date(displayedDate);
+    //            $(this).datepicker({ dateFormat: 'dd M yy'});
+    //        });
+    //    });
+
+    //    return false;
+    //});
 
 
     $("#body").on("change", "#public_table input[type=checkbox]", function () {
@@ -350,58 +346,16 @@
         }
     });
 
-    //$('#public_table input[type=checkbox]').on("change", function () {
-
-    //    //var found = $.inArray()
-
-    //    if ($(this).prop('checked')) {
-
-    //        editList.push($(this).val());
-    //    } else {
-    //        var removeItem = $(this).val();
-    //        editList.splice($.inArray(removeItem, editList), 1);
-    //    }
-    //});
-
     $('#text-fill').textfill({ widthOnly: true, minFontPixels: 4, innerTag: "span" }); //trying to ensure the status line will shrink if needed
 
-    //$(".edit-issue").datepicker();
-
     $(".edit-issue").datepicker();
-
-    //if (!Modernizr.inputtypes.date) {
-
-    //    $(".edit-issue").each(function () {
-    //        var displayedDate = $(this).val();
-    //        var date = new Date(displayedDate);
-    //        $(this).datepicker().datepicker("setDate", date);
-    //    });
-    //}
-
-    //$("body").on("change", ".edit-issue", function () {
-    //    alert('hi');
-    //            var displayedDate = $(this).val();
-    //            var date = new Date(displayedDate);
-    //            $(this).datepicker().datepicker("setDate", date);
-    //});
-
-    //$("#main-row").on("change", function () {
-    //    $(this).datepicker();
-    //        $(".edit-issue").each(function () {
-    //            var displayedDate = $(this).val();
-    //            var date = new Date(displayedDate);
-    //            $(this).datepicker().datepicker("setDate", date);
-    //        });
-    //});
 
     $('#clearButton').on("click", function () {
 
         $this = $(this);
-        
-        //alert($(this).prop('tagName'));
 
         var options = {
-            url: $this.attr('href'),// + "&pageSize=" + pageSize1,
+            url: $this.attr('href'),
             data: "pageSize=" + pageSize1,
             type: "GET",
         };
@@ -418,6 +372,44 @@
             complete: updateCurrentCount();
             success: clearFields($this.prop('tagName'));      
         });
+
+        return false;
+    });
+
+    var downloadAllDocuments = function () {
+
+        var clientId = $(".public_name_id").html().match(/\d+/);
+        //not sure if this match will take numbers from the client name too
+
+        //var options = {
+        //    url: "/Folder/DownloadAllDocuments",
+        //    type: "get",
+        //    traditional: true,
+        //    data: {
+        //        ClientId: clientId
+        //    }
+        //}
+
+        //$.ajax(options);
+        $('#ClientId').val(clientId);
+
+        $("#downloadForm").submit();
+
+        return false;
+    };
+
+    $('#editOptionsSubmit').on("click", function () {
+
+        $choice = $('#editOptions option:selected').text();
+
+        if ($choice == "Edit These Files") {
+            modifyEditList();
+        } else if ($choice == "Download all Public Documents") {
+            downloadAllDocuments();
+            //$('#downloadAllDocumentSubmit').click();
+        } else {
+            alert("No option was selected");
+        }
 
         return false;
     });

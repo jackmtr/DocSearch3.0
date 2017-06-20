@@ -20,16 +20,16 @@
             <div id="text-fill" class="col-md-6"><span id="status-message">Returning <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents, <span id="currentLowYear">@(((List<SelectListItem>)TempData["YearRange"]).First().Text)</span> to <span id="currentHighYear">@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)</span></span></div>
             <div class="col-md-3">
                 @Ajax.ActionLink("<< Reset Search", "Index", new
-               {
-                   publicId = Model.First().Folder_ID
-               }, new AjaxOptions
-               {
-                   HttpMethod = "GET",
-                   InsertionMode = InsertionMode.ReplaceWith,
-                   UpdateTargetId = "public_table",
-                   OnComplete = "updateCurrentCount",
-                   OnSuccess = "clearFields"
-               }, new { @class = "button", id = "clearButton" })
+           {
+               publicId = Model.First().Folder_ID
+           }, new AjaxOptions
+           {
+               HttpMethod = "GET",
+               InsertionMode = InsertionMode.ReplaceWith,
+               UpdateTargetId = "public_table",
+               OnComplete = "updateCurrentCount",
+               OnSuccess = "clearFields"
+           }, new { @class = "button", id = "clearButton" })
             </div>
         </div>
         <div class="form-inputs col-md-12 row">
@@ -55,12 +55,28 @@
 
     @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
     {
-        using (Html.BeginForm("Edit", "Admin"))
-        {
-            @*<input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />*@
-            @*<input type="hidden" name="abcd" value="@Model.First().Folder_ID" />*@
+        <div>
+            @*@using (Html.BeginForm("Edit", "Admin"))
+            {
+                <input id="editList" type="submit" value="Edit These Files" />
+            }*@
+            @using (Html.BeginForm("AdminOptions", "Admin", "Get"))
+            {
+                @Html.DropDownList("Options", new List<SelectListItem>
+                    {
+                        new SelectListItem { Value = "0", Text = "Edit These Files"},
+                        new SelectListItem { Value = "1", Text = "Download all Public Documents"}
+                    }, new { id = "editOptions"}
+                )
+                <input id="editOptionsSubmit" type="submit" value="Go" />
+            }
 
-            <input id="editList" type="submit" value="Edit These Files" />
-        }
+            @using (Html.BeginForm("DownloadAllDocuments", "Folder", FormMethod.Get, new { id = "downloadForm"}))
+            {
+                @Html.TextBox("ClientId", null);
+                <input type="submit" value="Submit" id="downloadAllDocumentSubmit"/>
+            }
+        </div>
+
     }
 </div>

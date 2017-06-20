@@ -44,11 +44,6 @@ namespace DocSearch2._1.Controllers
 
             System.Web.HttpContext.Current.Session["Role"] = Role; //tempory until I set up a real role checker
 
-            //if (System.Web.HttpContext.Current.Session["Role"] as String == "Admin")
-            //{
-            //    //TempData["Folder_Id"] = folder.Folder_ID; //used in the selectAll() for admin
-            //}
-
             try
             {
                 TempData["Client_Name"] = folder.Name;
@@ -61,6 +56,7 @@ namespace DocSearch2._1.Controllers
             return RedirectToAction("Index", "PublicVM", new { publicId = folder.Folder_ID });
         }
 
+        [HttpGet]
         //action should eventually be moved into PublicVMController for a role specific button to address
         //Downloads all documents pertaining to a specific client ID
         public ActionResult DownloadAllDocuments([Bind(Prefix = "ClientId")] string Number) {
@@ -98,17 +94,6 @@ namespace DocSearch2._1.Controllers
             }
 
             return new FileContentResult(result, "application/zip") { FileDownloadName = "AllArchivedFilesFor_" + Number + ".zip" };
-            
-            ////tempory just to create table for ASAP reasons
-            /*
-            IEnumerable<PublicVM> publicModel = publicRepository
-                            .SelectAll(folder.Folder_ID.ToString());
-
-            publicModel = publicModel.Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null).GroupBy(x => x.Document_ID).Select(x => x.First()).OrderBy(x => x.Document_ID);
-
-            return View(publicModel);
-            */
-            ////
         }
 
         //Dispose any open connection when finished (db in this regard)

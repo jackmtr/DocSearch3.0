@@ -31,10 +31,6 @@ namespace DocSearch2._1.Repositories
 
         public IEnumerable<tbl_Document> SelectAll(string id) {
 
-            //IEnumerable<tbl_Document> documents = (from d in _db.tbl_Document
-            //                 where d.Folder_ID == Int32.Parse(id)
-            //                 select d);
-
             int intId = Int32.Parse(id);
 
             return _db.tbl_Document.AsNoTracking().Where(d => d.Folder_ID == intId);

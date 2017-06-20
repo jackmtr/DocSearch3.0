@@ -44,7 +44,7 @@ namespace DocSearch2._1.Controllers
                 Admin = true;
 
                 TempData["Role"] = "admin";
-                //ViewData["Folder_Id"] = Folder_ID;
+
             } //checking for admin, this is temporary until a better auth checkelse
             else {
                 TempData["Role"] = "client";
@@ -545,7 +545,6 @@ namespace DocSearch2._1.Controllers
 
 
                 return PartialView("_FileDisplay");
-                //return new EmptyResult();
             }
 
             return File(file.ArchivedFile, MimeType); 

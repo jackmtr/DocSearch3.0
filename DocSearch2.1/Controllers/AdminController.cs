@@ -21,6 +21,12 @@ namespace DocSearch2._1.Controllers
             this.publicRepository = new PublicRepository();
         }
 
+        [HttpGet]
+        public ActionResult AdminOptions(FormCollection form) {
+            //do i need this action?
+            return View();
+        }
+
         // GET: Admin
         public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1)
         {
@@ -63,8 +69,6 @@ namespace DocSearch2._1.Controllers
 
         [HttpGet]
         public ActionResult Edit([Bind(Prefix = "publicId")] string Folder_ID, string[] EditList) {
-
-            //TempData.Keep("Folder_Id");
 
             List<PublicVM> publicModel = null;
 

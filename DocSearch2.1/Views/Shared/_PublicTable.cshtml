@@ -51,7 +51,6 @@
                    }), "#public_table", "replace-with", "GET", "Issue Date", "fa-sort", "filterLink", "postNavbar"))
                     </th>
                     <th>
-                        @*Method*@
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
                        publicId = Model.First().Folder_ID,
@@ -95,7 +94,6 @@
                    }), "#public_table", "replace-with", "GET", "Originator", "fa-sort", "filterLink", "postNavbar"))
                     </th>
                     <th>
-                    @*Reason*@
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
                        publicId = Model.First().Folder_ID,
@@ -117,7 +115,6 @@
                     </th><!--8-->
                     <th>
                         <!--9-->
-                        @*@Html.DisplayNameFor(model => model.ToList().First().Description)*@
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
                        publicId = Model.First().Folder_ID,
@@ -128,7 +125,6 @@
                    }), "#public_table", "replace-with", "GET", "Description", "fa-sort", "filterLink", "postNavbar"))
                     </th>
                     <th>
-                    @*File*@
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
                        publicId = Model.First().Folder_ID,
@@ -142,7 +138,6 @@
                     @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
                     {
                         <th>
-                            @*DocumentId*@
                             @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
                        publicId = Model.First().Folder_ID,

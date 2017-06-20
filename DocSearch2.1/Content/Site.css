@@ -515,3 +515,7 @@ form > div{
 textarea {
 
 }
+
+#downloadForm {
+    display: none;
+}

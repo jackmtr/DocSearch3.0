@@ -63,8 +63,6 @@
                         if (tagName == "A") {
                             $(".active").removeClass('active');
                         }
-                        
-
 
                         $('#searchInputBox').focus();
 
@@ -103,7 +101,6 @@
                 @Html.Partial("~/Views/Shared/_CategoryNavBar.cshtml", Model)
 
                 <div id="policy_section" class="hidden">
-                    @*<h2>Policies</h2>*@
                     <ul id="policy_list">
                         <!--need to check for no reference number documents with the policy !- null-->
                         @foreach (var policy in ViewBag.PolicyNavBar)

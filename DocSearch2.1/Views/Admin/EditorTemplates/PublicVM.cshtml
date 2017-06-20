@@ -28,15 +28,6 @@
         @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
     </td>
-    @*<td>
-            @Html.DisplayFor(modelItem => item.EffectiveDate)
-        </td>*@
-    @*<td>
-            @Html.DisplayFor(modelItem => item.RefNumber)
-        </td>*@
-    @*<td>
-            @Html.DisplayFor(modelItem => item.FileType)
-        </td>*@
     <td>
         @Html.DropDownListFor(model => model.Method, new List<SelectListItem> {
 
@@ -65,14 +56,10 @@
         }, Model.Reason, new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
     </td>
-    @*<td>
-            @Html.DisplayFor(modelItem => item.Supplier)
-        </td>*@
     <td>
         @Html.TextBoxFor(model => model.Recipient, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.Recipient, "", new { @class = "text-danger" })
     </td>
-    @*<td></td>*@
     <td>
         @Html.ActionLink(Model.FileType, "FileDisplay", "PublicVM", new { documentId = Model.Document_ID }, new { target = "_blank" })
         @if (Model.FileType == "Picture JPEG")
