@@ -71,7 +71,7 @@
                 <input id="editOptionsSubmit" type="submit" value="Go" />
             }
 
-            @using (Html.BeginForm("DownloadAllDocuments", "Folder", FormMethod.Get, new { id = "downloadForm"}))
+            @using (Html.BeginForm("DownloadAllDocuments", "Admin", FormMethod.Get, new { id = "downloadForm"}))
             {
                 @Html.TextBox("ClientId", null);
                 <input type="submit" value="Submit" id="downloadAllDocumentSubmit"/>
