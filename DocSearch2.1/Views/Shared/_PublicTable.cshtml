@@ -224,7 +224,15 @@
                         @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
                         {
                             <td>
-                                @Html.DisplayFor(modelItem => item.Hidden)
+                                @*@Html.DisplayFor(modelItem => item.Hidden)*@
+                                @if (item.Hidden == true)
+                                {
+                                    @Html.Raw("Visible")
+                                }
+                                else
+                                {
+                                    @Html.Raw("Hidden")
+                                }
                             </td>
                         }
                         @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
