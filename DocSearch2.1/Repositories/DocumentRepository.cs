@@ -24,6 +24,8 @@ namespace DocSearch2._1.Repositories
             if (document.ArchivedFile == null) {
                 this._db = new WASEntities("name=WASArchiveEntities");
                 document = _db.tbl_Document.Find(Int32.Parse(id));
+
+                //Because this is a rare occurance, I would rather blindly search through other db's than change my model to bring in the repo value
             }
 
             return document;

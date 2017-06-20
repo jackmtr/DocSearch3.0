@@ -500,6 +500,11 @@ namespace DocSearch2._1.Controllers
 
             var file = documentRepository.SelectById(id);
 
+            if (file.ArchivedFile.Length < 100)
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('Unable to open, File Size: 0 mb');window.open('','_self').close();</script>");
+            }
+
             string MimeType = null;
 
             switch (file.FileExtension.ToLower().Trim()) {
