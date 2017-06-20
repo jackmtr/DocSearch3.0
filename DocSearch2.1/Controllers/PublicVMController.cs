@@ -17,6 +17,7 @@ namespace DocSearch2._1.Controllers
         private IDocumentRepository documentRepository = null;
         private static bool sortAscending = true;
         private static string prevFilter;
+        private static int prevPageAmount;
 
         public PublicVMController() {
             //public repo for publicVM actions
@@ -38,7 +39,6 @@ namespace DocSearch2._1.Controllers
         [HttpGet]
         public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1, int pageSize = 20, bool Admin = false)
         {
-
             if (System.Web.HttpContext.Current.Session["Role"] as String == "Admin")
             {
                 Admin = true;
@@ -166,6 +166,13 @@ namespace DocSearch2._1.Controllers
                 if ((int)ViewData["currentRecordsCount"] < ((pageSize * page) - (pageSize - 1 ))) {
                     page = 1;
                 }
+
+                //give the page amount change some state saving for filters
+                if (prevPageAmount != 0 && prevPageAmount != pageSize) {
+                    filter = prevFilter;
+                    prevFilter = "";
+                };
+                prevPageAmount = pageSize;
 
                 //*sorting data
                 if (filter == "document")
