@@ -41,6 +41,7 @@ table {
         text-align: center;
         font-size: 16px;
         border: 1px solid black !important; /*needs important to overrule grey table look*/
+        padding: 4px !important; /*maybe adjust to get a default table of 20 records to fit typical screen length*/
     }
 
     /*makes th not wrap*/

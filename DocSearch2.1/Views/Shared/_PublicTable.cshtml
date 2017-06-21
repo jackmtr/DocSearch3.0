@@ -220,11 +220,7 @@
                             <td>
                                 @Html.DisplayFor(modelItem=> item.Document_ID)
                             </td>
-                        }
-                        @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
-                        {
                             <td>
-                                @*@Html.DisplayFor(modelItem => item.Hidden)*@
                                 @if (item.Hidden == true)
                                 {
                                     @Html.Raw("Visible")
@@ -234,9 +230,6 @@
                                     @Html.Raw("Hidden")
                                 }
                             </td>
-                        }
-                        @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
-                        {
                             <td>
                                 <input type="checkbox" name="edit" value=@item.Document_ID id="@(item.Document_ID + "edit")" />
                             </td>
