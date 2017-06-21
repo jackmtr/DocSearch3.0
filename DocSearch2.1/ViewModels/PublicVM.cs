@@ -35,6 +35,7 @@ namespace DocSearch2._1.ViewModels
         public string RefNumber { get; set; } //tbl_DocReference.RefNumber
 
         //public string FileType { get; set; } //tbl_Document.FileType
+        [Display(Name = "File Type")]
         public string FileExtension { get; set; } //tbl_Document.FileType
 
         public string Method { get; set; } //tbl_Document.Method
