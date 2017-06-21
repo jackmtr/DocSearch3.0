@@ -466,6 +466,9 @@ namespace DocSearch2._1.Controllers
 
                 if (publicModel != null)
                 {
+                    //
+                    ViewData["SortOrder"] = sortAscending;
+                    //
                     return PartialView("_PublicTable", publicModel);
                 }
                 else {
@@ -477,6 +480,7 @@ namespace DocSearch2._1.Controllers
                 if (publicModel != null)
                 {
                     ViewData["currentRecordsCount"] = publicModel.Count();
+                    ViewData["SortOrder"] = sortAscending;
                     publicModel = publicModel
                                     .OrderByDescending(r => r.IssueDate)
                                     .ToPagedList(page, pageSize);
