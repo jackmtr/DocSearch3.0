@@ -6,9 +6,10 @@
         var ascending = '@ViewData["SortOrder"]';
 
         if (ascending == "True") {
-            $("#" + $$this.children('i').attr('id')).removeClass("fa-sort").addClass("fa-sort-asc");
+            //not sure why $(this) had issues and couldnt replicate the effect I wanted
+            $("#" + $$this.children('i').attr('id')).removeClass("fa-sort").addClass("fa-sort-asc").parent('A').css('text-decoration', 'underline');
         } else {
-            $("#" + $$this.children('i').attr('id')).removeClass("fa-sort").addClass("fa-sort-desc");
+            $("#" + $$this.children('i').attr('id')).removeClass("fa-sort").addClass("fa-sort-desc").parent('A').css('text-decoration', 'underline');
         }
     }
 </script>

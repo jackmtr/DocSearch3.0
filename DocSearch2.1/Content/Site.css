@@ -491,6 +491,9 @@ header {
 th {
     background-color: #c2c1c1 !important;
 }
+    th a:hover {
+        text-decoration: none;
+    }
 
 #dynamic {
     border: solid black 4px;
