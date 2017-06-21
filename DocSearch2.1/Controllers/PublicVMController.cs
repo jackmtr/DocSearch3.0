@@ -17,6 +17,7 @@ namespace DocSearch2._1.Controllers
         private IDocumentRepository documentRepository = null;
         private static bool sortAscending = true;
         private static string prevFilter;
+            private static int prevPage = 1;
         private static int prevPageAmount;
 
         public PublicVMController() {
@@ -179,7 +180,11 @@ namespace DocSearch2._1.Controllers
                 {
                     if (prevFilter == filter)
                     {
-                        sortAscending = !sortAscending;
+                        //do check if pagenumber is same, if so, escape and not touch 
+                        if (prevPage != page) { } else {
+                            sortAscending = !sortAscending;
+                        }
+                        
                     }
                     else {
                         sortAscending = true;
@@ -440,7 +445,7 @@ namespace DocSearch2._1.Controllers
                     prevFilter = filter;
                 }
                 else {
-                    if (filter == null)
+                    if (filter == null || filter == "")
                     {
                         sortAscending = true;
                     }
@@ -463,6 +468,8 @@ namespace DocSearch2._1.Controllers
                     prevFilter = filter;
                 }
                 //**ENDING FILTERING OF MODEL**
+
+                prevPage = page;
 
                 if (publicModel != null)
                 {

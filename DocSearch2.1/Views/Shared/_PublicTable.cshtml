@@ -1,15 +1,15 @@
 ﻿@model IPagedList<PublicVM>
 
 <script>
-    function abc($$this) {
-
+    function rememeberSort($this) {
+        //alert($this.prop('tagName'));
         var ascending = '@ViewData["SortOrder"]';
 
         if (ascending == "True") {
             //not sure why $(this) had issues and couldnt replicate the effect I wanted
-            $("#" + $$this.children('i').attr('id')).removeClass("fa-sort").addClass("fa-sort-asc").parent('A').css('text-decoration', 'underline');
+            $("#" + $this.children('i').attr('id')).removeClass("fa-sort").addClass("fa-sort-asc").parent('A').css('text-decoration', 'underline');
         } else {
-            $("#" + $$this.children('i').attr('id')).removeClass("fa-sort").addClass("fa-sort-desc").parent('A').css('text-decoration', 'underline');
+            $("#" + $this.children('i').attr('id')).removeClass("fa-sort").addClass("fa-sort-desc").parent('A').css('text-decoration', 'underline');
         }
     }
 </script>
@@ -51,7 +51,7 @@
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
                        searchTerm = TempData["SearchTerm"]
-                       }), "#public_table", "replace-with", "GET", "Type of Document", "fa-sort", "filterLink", "postNavbar", "abc1"))
+                       }), "#public_table", "replace-with", "GET", "Type of Document", "fa-sort", "filterLink", "postNavbar", "document"))
                     </th>
                     <th>
                         <!--2-->
@@ -62,7 +62,7 @@
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
                        searchTerm = TempData["SearchTerm"]
-                   }), "#public_table", "replace-with", "GET", "Issue Date", "fa-sort", "filterLink", "postNavbar", "abc2"))
+                   }), "#public_table", "replace-with", "GET", "Issue Date", "fa-sort", "filterLink", "postNavbar", "issue"))
                     </th>
                     <th>
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
@@ -72,7 +72,7 @@
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
                        searchTerm = TempData["SearchTerm"]
-                   }), "#public_table", "replace-with", "GET", "Method", "fa-sort", "filterLink", "postNavbar", "abc3"))
+                   }), "#public_table", "replace-with", "GET", "Method", "fa-sort", "filterLink", "postNavbar", "method"))
                     </th> <!--3-->
                     <th>
                         <!--4-->
@@ -83,7 +83,7 @@
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
                        searchTerm = TempData["SearchTerm"]
-                   }), "#public_table", "replace-with", "GET", "Policy #", "fa-sort", "filterLink", "postNavbar", "abc4"))
+                   }), "#public_table", "replace-with", "GET", "Policy #", "fa-sort", "filterLink", "postNavbar", "policy"))
                     </th>
                     <th>
                         <!--5-->
@@ -94,7 +94,7 @@
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
                        searchTerm = TempData["SearchTerm"]
-                   }), "#public_table", "replace-with", "GET", "Effective Date", "fa-sort", "filterLink", "postNavbar", "abc5"))
+                   }), "#public_table", "replace-with", "GET", "Effective Date", "fa-sort", "filterLink", "postNavbar", "effective"))
                     </th>
                     <th>
                         <!--6-->
@@ -105,7 +105,7 @@
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
                        searchTerm = TempData["SearchTerm"]
-                   }), "#public_table", "replace-with", "GET", "Originator", "fa-sort", "filterLink", "postNavbar", "abc6"))
+                   }), "#public_table", "replace-with", "GET", "Originator", "fa-sort", "filterLink", "postNavbar", "originator"))
                     </th>
                     <th>
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
@@ -115,7 +115,7 @@
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
                        searchTerm = TempData["SearchTerm"]
-                   }), "#public_table", "replace-with", "GET", "Reason", "fa-sort", "filterLink", "postNavbar", "abc7"))
+                   }), "#public_table", "replace-with", "GET", "Reason", "fa-sort", "filterLink", "postNavbar", "reason"))
                     </th><!--7-->
                     <th>
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
@@ -125,7 +125,7 @@
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
                        searchTerm = TempData["SearchTerm"]
-                   }), "#public_table", "replace-with", "GET", "Supplier #", "fa-sort", "filterLink", "postNavbar", "abc8"))
+                   }), "#public_table", "replace-with", "GET", "Supplier #", "fa-sort", "filterLink", "postNavbar", "supplier"))
                     </th><!--8-->
                     <th>
                         <!--9-->
@@ -136,7 +136,7 @@
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
                        searchTerm = TempData["SearchTerm"]
-                   }), "#public_table", "replace-with", "GET", "Description", "fa-sort", "filterLink", "postNavbar", "abc9"))
+                   }), "#public_table", "replace-with", "GET", "Description", "fa-sort", "filterLink", "postNavbar", "description"))
                     </th>
                     <th>
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
@@ -146,7 +146,7 @@
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
                        searchTerm = TempData["SearchTerm"]
-                   }), "#public_table", "replace-with", "GET", "File", "fa-sort", "filterLink", "postNavbar", "abc10"))
+                   }), "#public_table", "replace-with", "GET", "File", "fa-sort", "filterLink", "postNavbar", "file"))
                     </th><!--10-->
                     <th>More</th><!--11-->
                     @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
@@ -159,7 +159,7 @@
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
                        searchTerm = TempData["SearchTerm"]
-                   }), "#public_table", "replace-with", "GET", "Document Id", "fa-sort", "filterLink", "postNavbar", "abc11"))
+                   }), "#public_table", "replace-with", "GET", "Document Id", "fa-sort", "filterLink", "postNavbar", "documentId"))
                         </th>
                     }
                     @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")

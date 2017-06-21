@@ -45,20 +45,34 @@
     var getPage = function () {
 
         var $a = $(this); //this is the anchor
+        var filter = "";
 
         if ($a.parent('li').hasClass('disabled') == true) {
             return false;
         }
 
+        if ($('.fa-sort-asc')[0]){
+
+            var thisA = $('.fa-sort-asc').parent('A');
+            filter = $('.fa-sort-asc').attr('id');
+        } else if ($('.fa-sort-desc')[0]) {
+
+            var thisA = $('.fa-sort-desc').parent('A');
+            filter = $('.fa-sort-desc').attr('id');
+        }
+
         var options = {
             url: $a.attr("href"),
-            data: $("form").serialize() + "&pageSize=" + pageSize1,
+            data: $("form").serialize() + "&pageSize=" + pageSize1 + "&filter=" + filter,
             type: "get"
         };
+
+        //***CURRENTLY ONLY WORKING RIGHT WITH DOC+
 
         $.ajax(options).done(function (data) {
             var target = $a.parents("div.pagedList").attr("data-otf-target");
             $(target).replaceWith(data);
+            rememeberSort(thisA);
         });
 
         return false;
