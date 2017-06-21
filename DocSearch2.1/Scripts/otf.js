@@ -1,7 +1,7 @@
 ﻿$(function () {
     //**GLOBAL VARIABLES
     var editList = [];
-    var pageSize1 = 20;
+    var pageSize1 = 15;
 
     //**FUNCTIONS
 

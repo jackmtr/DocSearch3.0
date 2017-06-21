@@ -39,7 +39,7 @@ namespace DocSearch2._1.Repositories
                                     where d.DocumentNumber != null
                                     from dr in ps.DefaultIfEmpty()
                                     select new {
-                                        f.Folder_ID, d.Document_ID, dt.DocumentType_ID, DtName = dt.Name, d.Issue_DT, d.Description, cat.Category_ID, CatName = cat.Name, dr.Date1_DT, dr.RefNumber, d.FileType, d.Method, d.Originator, d.Reason, dr.Number1
+                                        f.Folder_ID, d.Document_ID, dt.DocumentType_ID, DtName = dt.Name, d.Issue_DT, d.Description, cat.Category_ID, CatName = cat.Name, dr.Date1_DT, dr.RefNumber, /*d.FileType,*/ d.FileExtension, d.Method, d.Originator, d.Reason, dr.Number1
                                         , d.Recipient, d.Active_IND //only want recipient and active_ind for admin, wonder if better way to do this
                                     }).ToList();
 
@@ -56,7 +56,8 @@ namespace DocSearch2._1.Repositories
                     objpvm.CategoryName = item.CatName;
                     objpvm.EffectiveDate = item.Date1_DT;
                     objpvm.RefNumber = item.RefNumber;
-                    objpvm.FileType = item.FileType;
+                    objpvm.FileExtension = item.FileExtension;
+                    //objpvm.FileType = item.FileType;
                     objpvm.Method = item.Method;
                     objpvm.Originator = item.Originator;
                     objpvm.Reason = item.Reason;
@@ -89,7 +90,8 @@ namespace DocSearch2._1.Repositories
                                         CatName = cat.Name,
                                         dr.Date1_DT,
                                         dr.RefNumber,
-                                        d.FileType,
+                                        //d.FileType,
+                                        d.FileExtension,
                                         d.Method,
                                         d.Originator,
                                         d.Reason,
@@ -110,7 +112,8 @@ namespace DocSearch2._1.Repositories
                     objpvm.CategoryName = item.CatName;
                     objpvm.EffectiveDate = item.Date1_DT;
                     objpvm.RefNumber = item.RefNumber;
-                    objpvm.FileType = item.FileType;
+                    //objpvm.FileType = item.FileType;
+                    objpvm.FileExtension = item.FileExtension;
                     objpvm.Method = item.Method;
                     objpvm.Originator = item.Originator;
                     objpvm.Reason = item.Reason;

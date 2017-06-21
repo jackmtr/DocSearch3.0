@@ -37,7 +37,7 @@ namespace DocSearch2._1.Controllers
 
         // GET: PublicVM
         [HttpGet]
-        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1, int pageSize = 20, bool Admin = false)
+        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1, int pageSize = 15, bool Admin = false)
         {
             if (System.Web.HttpContext.Current.Session["Role"] as String == "Admin")
             {
@@ -385,16 +385,29 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
+                    //if (sortAscending)
+                    //{
+                    //    publicModel = publicModel
+                    //                   .OrderBy(r => r.FileType)
+                    //                   .ToPagedList(page, pageSize);
+                    //}
+                    //else
+                    //{
+                    //    publicModel = publicModel
+                    //                     .OrderByDescending(r => r.FileType)
+                    //                     .ToPagedList(page, pageSize);
+                    //}
+
                     if (sortAscending)
                     {
                         publicModel = publicModel
-                                       .OrderBy(r => r.FileType)
+                                       .OrderBy(r => r.FileExtension)
                                        .ToPagedList(page, pageSize);
                     }
                     else
                     {
                         publicModel = publicModel
-                                         .OrderByDescending(r => r.FileType)
+                                         .OrderByDescending(r => r.FileExtension)
                                          .ToPagedList(page, pageSize);
                     }
 

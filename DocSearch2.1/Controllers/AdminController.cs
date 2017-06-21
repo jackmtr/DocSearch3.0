@@ -19,7 +19,7 @@ namespace DocSearch2._1.Controllers
         private IDocumentRepository documentRepository = null;
         private IPublicRepository publicRepository = null;
 
-        private static string directoryPath = @"C:\Users\jcheng\Downloads";
+        //private static string directoryPath = @"C:\Users\jcheng\Downloads";
 
         public AdminController()
         {
