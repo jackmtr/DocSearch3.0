@@ -239,6 +239,9 @@ header {
         position: absolute;
         bottom: 0;
         left: 10px;
+        color: white;
+        font-size: 22px;
+        font-weight: 600;
         }
 
     /*Gives the input boxes a better look*/
