@@ -231,8 +231,9 @@
     //event for pagination buttons
     $("#body").on("click", ".pagination a", getPage);
 
+
     //image previewer on event
-    $("#body").on("mouseenter", ".preview_image", function (e) {
+    $("#body").on("mousedown", ".preview_image", function (e) { //mouseenter before
 
         $this = $(this).children("a");
         showPreview($this, e);
@@ -240,9 +241,13 @@
 
 
     //image previewer off event, seems to work better with more opputunities to destroy itself
-    $("#body").on("mouseleave", ".preview_image", function () {
+    $("#body").on("mouseup", ".preview_image", function (e) { //mouseleave before
         losePreview();
     });
+
+    $("#body").on("click", ".preview", function () {
+        return false;
+    })
 
     //functionality of category/policy slider
     $('#category_policy_toggle').click(function () {
