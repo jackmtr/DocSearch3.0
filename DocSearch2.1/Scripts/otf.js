@@ -331,10 +331,10 @@
         adjustSideBanner();
         persistEditCheckList();
 
-        if (!($('.fa-sort-asc')[0] && $('.fa-sort-desc')[0])) { //will only run if sort wasnt run right before this request
-            var thisA = $('#issue').parent('A');
-            rememeberSort(thisA);
-        }
+        //if (!($('.fa-sort-asc')[0] && $('.fa-sort-desc')[0])) { //will only run if sort wasnt run right before this request
+        //    var thisA = $('#issue').parent('A');
+        //    rememeberSort(thisA);
+        //}
 
         /*
         var thisA = $('#issue').parent('A');
