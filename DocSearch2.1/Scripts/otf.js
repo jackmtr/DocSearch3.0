@@ -331,15 +331,11 @@
         adjustSideBanner();
         persistEditCheckList();
 
-        //if (!($('.fa-sort-asc')[0] && $('.fa-sort-desc')[0])) { //will only run if sort wasnt run right before this request
-        //    var thisA = $('#issue').parent('A');
-        //    rememeberSort(thisA);
-        //}
-
-        /*
-        var thisA = $('#issue').parent('A');
-        rememeberSort(thisA); // this is pseudo working, need to differentiate between which button clicked (primarily sort buttons vs all else)
-        */
+        if (!$('.fa-sort-asc')[0] && !$('.fa-sort-desc')[0]) { //will only run if sort wasnt run right before this request
+            var thisA = $('#issue').parent('A');
+            rememeberSort(thisA);
+        }
+        //might honestly be i need to add a parameter to ajaxComplete to know who called it.
     });
 
     //$('#editList').on("click", function () {
