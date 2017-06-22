@@ -209,7 +209,11 @@ namespace DocSearch2._1.Controllers
                 {
                     if (prevFilter == filter)
                     {
-                        sortAscending = !sortAscending;
+                        if (prevPage != page) { }
+                        else
+                        {
+                            sortAscending = !sortAscending;
+                        }
                     }
                     else
                     {
@@ -236,7 +240,11 @@ namespace DocSearch2._1.Controllers
                 {
                     if (prevFilter == filter)
                     {
-                        sortAscending = !sortAscending;
+                        if (prevPage != page) { }
+                        else
+                        {
+                            sortAscending = !sortAscending;
+                        }
                     }
                     else {
                         sortAscending = true;
@@ -260,7 +268,11 @@ namespace DocSearch2._1.Controllers
                 {
                     if (prevFilter == filter)
                     {
-                        sortAscending = !sortAscending;
+                        if (prevPage != page) { }
+                        else
+                        {
+                            sortAscending = !sortAscending;
+                        }
                     }
                     else {
                         sortAscending = true;
@@ -283,7 +295,11 @@ namespace DocSearch2._1.Controllers
                 {
                     if (prevFilter == filter)
                     {
-                        sortAscending = !sortAscending;
+                        if (prevPage != page) { }
+                        else
+                        {
+                            sortAscending = !sortAscending;
+                        }
                     }
                     else {
                         sortAscending = true;
@@ -307,7 +323,11 @@ namespace DocSearch2._1.Controllers
                 {
                     if (prevFilter == filter)
                     {
-                        sortAscending = !sortAscending;
+                        if (prevPage != page) { }
+                        else
+                        {
+                            sortAscending = !sortAscending;
+                        }
                     }
                     else
                     {
@@ -333,7 +353,11 @@ namespace DocSearch2._1.Controllers
                 {
                     if (prevFilter == filter)
                     {
-                        sortAscending = !sortAscending;
+                        if (prevPage != page) { }
+                        else
+                        {
+                            sortAscending = !sortAscending;
+                        }
                     }
                     else {
                         sortAscending = true;
@@ -357,7 +381,11 @@ namespace DocSearch2._1.Controllers
                 {
                     if (prevFilter == filter)
                     {
-                        sortAscending = !sortAscending;
+                        if (prevPage != page) { }
+                        else
+                        {
+                            sortAscending = !sortAscending;
+                        }
                     }
                     else
                     {
@@ -383,7 +411,11 @@ namespace DocSearch2._1.Controllers
                 {
                     if (prevFilter == filter)
                     {
-                        sortAscending = !sortAscending;
+                        if (prevPage != page) { }
+                        else
+                        {
+                            sortAscending = !sortAscending;
+                        }
                     }
                     else
                     {
@@ -422,7 +454,11 @@ namespace DocSearch2._1.Controllers
                 {
                     if (prevFilter == filter)
                     {
-                        sortAscending = !sortAscending;
+                        if (prevPage != page) { }
+                        else
+                        {
+                            sortAscending = !sortAscending;
+                        }
                     }
                     else
                     {
@@ -450,7 +486,11 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
                     else {
-                        sortAscending = !sortAscending;
+                        if (prevPage != page) { }
+                        else
+                        {
+                            sortAscending = !sortAscending;
+                        }
                     }
 
                     if (sortAscending)

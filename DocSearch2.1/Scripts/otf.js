@@ -59,6 +59,8 @@
 
             var thisA = $('.fa-sort-desc').parent('A');
             filter = $('.fa-sort-desc').attr('id');
+        } else {
+            var thisA = $('#issue').parent('A');
         }
 
         var options = {
