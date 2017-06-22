@@ -144,8 +144,19 @@
 
     function adjustSideBanner() {
 
-        var newHeight = $('#form-div').height() + $('#public_table').height();
+
+        var formTableHeight = $('#form-div').height() + $('#public_table').height();
+        var policyBarHeight = $('.div-table').height() + $('#policy_section').height();
         var screenHeight = $(window).height() * 0.90;
+        var newHeight;
+
+        alert(formTableHeight);
+        alert(policyBarHeight);
+        alert(screenHeight);
+
+        (formTableHeight > policyBarHeight) ? newHeight = formTableHeight : newHeight = policyBarHeight;
+
+        alert(newHeight);
 
         if (newHeight < screenHeight) {
             $('#public_navigation').css('height', screenHeight);
