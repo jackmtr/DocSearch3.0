@@ -526,3 +526,7 @@ textarea {
 #downloadForm {
     display: none;
 }
+
+.pagination {
+    margin: 0 0 5px 0;
+}

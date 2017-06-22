@@ -39,6 +39,10 @@
 
 <div id="public_table" class="row default-table" data-currentRecord="@ViewData["currentRecordsCount"]" data-currentLowYear="@(((List<SelectListItem>)TempData["YearRange"]).First().Text)" data-currentHighYear ="@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)">
     <div id ="public_table_inner" class="col-md-12">
+        <div class="pagedList col-md-6 col-md-offset-3" data-otf-target="#public_table">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"] }),
+            PagedListRenderOptions.ClassicPlusFirstAndLast) <!--The PagedListRenderOptions is an enum of display configs for the pagedList item-->
+        </div>
         <table class="table table-bordered table-hover">
             <thead class="thead-default">
                 <tr class="main-rows">
@@ -269,10 +273,7 @@
                 }
             </tbody>
         </table>
-        <div class="pagedList col-md-6 col-md-offset-3" data-otf-target="#public_table">
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"] }),
-            PagedListRenderOptions.ClassicPlusFirstAndLast) <!--The PagedListRenderOptions is an enum of display configs for the pagedList item-->
-        </div>
+
     </div>
 
 </div>

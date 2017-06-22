@@ -1,4 +1,5 @@
 ﻿$(function () {
+
     //**GLOBAL VARIABLES
     var editList = [];
     var pageSize1 = 15;
@@ -144,19 +145,12 @@
 
     function adjustSideBanner() {
 
-
         var formTableHeight = $('#form-div').height() + $('#public_table').height();
         var policyBarHeight = $('.div-table').height() + $('#policy_section').height();
         var screenHeight = $(window).height() * 0.90;
         var newHeight;
 
-        alert(formTableHeight);
-        alert(policyBarHeight);
-        alert(screenHeight);
-
         (formTableHeight > policyBarHeight) ? newHeight = formTableHeight : newHeight = policyBarHeight;
-
-        alert(newHeight);
 
         if (newHeight < screenHeight) {
             $('#public_navigation').css('height', screenHeight);
@@ -218,6 +212,15 @@
 
     //will adjust left banner bar on load to dynamically match table size
     adjustSideBanner();
+
+    if ($('#issue')[0]) {
+        var thisA = $('#issue').parent('A');
+        rememeberSort(thisA);
+    }
+
+
+
+
 
     //will load the user to have focus inside search bar
     $('#searchInputBox').focus();
@@ -327,6 +330,10 @@
 
         adjustSideBanner();
         persistEditCheckList();
+
+
+        var thisA = $('#issue').parent('A');
+        //rememeberSort(thisA);  this is pseudo working, need to differentiate between which button clicked (primarily sort buttons vs all else)
     });
 
     //$('#editList').on("click", function () {
@@ -444,7 +451,5 @@
     //$("#body").on("click", ".filterLink", function () {
     //    alert('hi');
     //});
-
-
 
 });
