@@ -16,6 +16,8 @@ namespace DocSearch2._1.Repositories
 
         MiscPublicData GetMiscPublicData(string publicNumber);
 
+        bool SaveChanges(tbl_Document doc);
+
         void Dispose();
     }
 }

@@ -19,6 +19,8 @@ namespace DocSearch2._1.Controllers
         private IDocumentRepository documentRepository = null;
         private IPublicRepository publicRepository = null;
 
+        private WASEntities _db = new WASEntities();
+
         //private static string directoryPath = @"C:\Users\jcheng\Downloads";
 
         public AdminController()
@@ -80,14 +82,49 @@ namespace DocSearch2._1.Controllers
 
             List<PublicVM> publicModel = null;
 
-            publicModel = publicRepository.SelectAll(Folder_ID, "admin").Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null).Where(doc => EditList.Contains(doc.Document_ID.ToString())).ToList();
-
+            publicModel = publicRepository.SelectAll(Folder_ID, "admin").Where(doc => EditList.Contains(doc.Document_ID.ToString())).GroupBy(x => x.Document_ID).Select( x => x.First()).ToList();
 
             return PartialView("_EditTable", publicModel);
         }
 
         [HttpPost]
         public ActionResult Edit(List<PublicVM> updatedEditList) {
+
+            //updatedEditList.ForEach( x=> x.)
+            //updatedEditList.ForEach(
+
+            //        //tbl_Document doc = documentRepository.SelectById(i => i.
+            //    );
+
+            if (ModelState.IsValid) {
+
+                foreach (PublicVM doc in updatedEditList) {
+
+                    //var issueDate = doc.IssueDate;
+
+                    //_db.Entry(doc).State = System.Data.Entity.EntityState.Modified;
+
+                    //tbl_Document modDoc = documentRepository.SelectById(doc.Document_ID.ToString());
+
+                    tbl_Document modDoc = documentRepository.SelectById(doc.Document_ID.ToString());
+                    modDoc.Issue_DT = doc.IssueDate;
+                    modDoc.Description = doc.Description;
+                    modDoc.Method = doc.Method;
+                    modDoc.Originator = doc.Originator;
+                    modDoc.Reason = doc.Reason;
+                    modDoc.Recipient = doc.Recipient;
+                    modDoc.Active_IND = doc.Hidden;
+
+                    if (!documentRepository.SaveChanges(modDoc)) {
+
+
+                    }
+
+
+                }
+
+            }
+
 
             return View();
         }

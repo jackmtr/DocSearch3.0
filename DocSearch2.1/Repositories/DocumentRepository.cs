@@ -78,6 +78,13 @@ namespace DocSearch2._1.Repositories
             return mpd;
         }
 
+        public bool SaveChanges(tbl_Document doc) {
+
+            //Now, i'm using AutoMapper. So i thought i could map from the ViewModel to the Post, then save the post.
+
+            return true;
+        }
+
         public void Dispose()
         {
             _db.Dispose();

@@ -31,9 +31,9 @@
     <td>
         @Html.DropDownListFor(model => model.Method, new List<SelectListItem> {
 
-            new SelectListItem { Value = "0", Text = "Email" },
-            new SelectListItem { Value = "1", Text = "Fax" },
-            new SelectListItem { Value = "2", Text = "Mail" }
+            new SelectListItem { Value = "email", Text = "Email" },
+            new SelectListItem { Value = "fax", Text = "Fax" },
+            new SelectListItem { Value = "mail", Text = "Mail" }
         }, Model.Method, new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.Method, "", new { @class = "text-danger" })
     </td>
