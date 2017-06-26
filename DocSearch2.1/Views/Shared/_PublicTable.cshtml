@@ -39,10 +39,36 @@
 
 <div id="public_table" class="row default-table" data-currentRecord="@ViewData["currentRecordsCount"]" data-currentLowYear="@(((List<SelectListItem>)TempData["YearRange"]).First().Text)" data-currentHighYear ="@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)">
     <div id ="public_table_inner" class="col-md-12">
-        <div class="pagedList col-md-6 col-md-offset-3" data-otf-target="#public_table">
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"] }),
+
+        <div class="row">
+            @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
+            {
+                <div class="adminOptions col-md-6">
+                    @using (Html.BeginForm("AdminOptions", "Admin", "Get"))
+                {
+                        @Html.DropDownList("Options", new List<SelectListItem>
+                    {
+                        new SelectListItem { Value = "0", Text = "Edit These Files"},
+                        new SelectListItem { Value = "1", Text = "Download all Public Documents"}
+                    }, new { id = "editOptions" }
+                )
+                        <input id="editOptionsSubmit" type="submit" value="Go" />
+                    }
+
+                    @using (Html.BeginForm("DownloadAllDocuments", "Admin", FormMethod.Get, new { id = "downloadForm" }))
+                {
+                        @Html.TextBox("ClientId", null);
+                        <input type="submit" value="Submit" id="downloadAllDocumentSubmit" />
+                    }
+                </div>
+            }
+
+            <div class="pagedList col-md-6" data-otf-target="#public_table">
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"] }),
             PagedListRenderOptions.ClassicPlusFirstAndLast) <!--The PagedListRenderOptions is an enum of display configs for the pagedList item-->
+            </div>
         </div>
+
         <table class="table table-bordered table-hover">
             <thead class="thead-default">
                 <tr class="main-rows">

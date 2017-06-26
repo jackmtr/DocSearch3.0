@@ -53,30 +53,5 @@
         </div>
     </form>
 
-    @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
-    {
-        <div>
-            @*@using (Html.BeginForm("Edit", "Admin"))
-            {
-                <input id="editList" type="submit" value="Edit These Files" />
-            }*@
-            @using (Html.BeginForm("AdminOptions", "Admin", "Get"))
-            {
-                @Html.DropDownList("Options", new List<SelectListItem>
-                    {
-                        new SelectListItem { Value = "0", Text = "Edit These Files"},
-                        new SelectListItem { Value = "1", Text = "Download all Public Documents"}
-                    }, new { id = "editOptions"}
-                )
-                <input id="editOptionsSubmit" type="submit" value="Go" />
-            }
 
-            @using (Html.BeginForm("DownloadAllDocuments", "Admin", FormMethod.Get, new { id = "downloadForm"}))
-            {
-                @Html.TextBox("ClientId", null);
-                <input type="submit" value="Submit" id="downloadAllDocumentSubmit"/>
-            }
-        </div>
-
-    }
 </div>
