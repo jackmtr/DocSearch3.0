@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using DocSearch2._1.Models;
 using DocSearch2._1.ViewModels;
+using AutoMapper;
 
 namespace DocSearch2._1.Repositories
 {
@@ -82,7 +83,23 @@ namespace DocSearch2._1.Repositories
 
             //Now, i'm using AutoMapper. So i thought i could map from the ViewModel to the Post, then save the post.
 
+
             return true;
+        }
+
+        //public void Update(PublicVM publicVm) {
+
+        //    var document = Mapper.Map<tbl_Document>(publicVm);
+        //    _db.Entry(document).State = System.Data.Entity.EntityState.Modified;
+        //}
+
+        public void Update(tbl_Document doc)
+        {
+            _db.Entry(doc).State = System.Data.Entity.EntityState.Modified;
+        }
+
+        public void Save() {
+            _db.SaveChanges();
         }
 
         public void Dispose()

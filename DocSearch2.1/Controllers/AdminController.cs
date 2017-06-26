@@ -90,6 +90,7 @@ namespace DocSearch2._1.Controllers
         [HttpPost]
         public ActionResult Edit(List<PublicVM> updatedEditList) {
 
+            
             //updatedEditList.ForEach( x=> x.)
             //updatedEditList.ForEach(
 
@@ -98,29 +99,28 @@ namespace DocSearch2._1.Controllers
 
             if (ModelState.IsValid) {
 
-                foreach (PublicVM doc in updatedEditList) {
+                foreach (PublicVM pvm in updatedEditList) {
 
-                    //var issueDate = doc.IssueDate;
-
-                    //_db.Entry(doc).State = System.Data.Entity.EntityState.Modified;
-
+                    tbl_Document doc = AutoMapper.Mapper.Map<tbl_Document>(pvm);
+                    //var pubvm = AutoMapper.Mapper.Map<PublicVM>(doc);
+                    //var docc = AutoMapper.Mapper.Map<PublicVM>(doc);
                     //tbl_Document modDoc = documentRepository.SelectById(doc.Document_ID.ToString());
+                    //modDoc.Issue_DT = doc.IssueDate;
+                    //modDoc.Description = doc.Description;
+                    //modDoc.Method = doc.Method;
+                    //modDoc.Originator = doc.Originator;
+                    //modDoc.Reason = doc.Reason;
+                    //modDoc.Recipient = doc.Recipient;
+                    //modDoc.Active_IND = doc.Hidden;
 
-                    tbl_Document modDoc = documentRepository.SelectById(doc.Document_ID.ToString());
-                    modDoc.Issue_DT = doc.IssueDate;
-                    modDoc.Description = doc.Description;
-                    modDoc.Method = doc.Method;
-                    modDoc.Originator = doc.Originator;
-                    modDoc.Reason = doc.Reason;
-                    modDoc.Recipient = doc.Recipient;
-                    modDoc.Active_IND = doc.Hidden;
-
-                    if (!documentRepository.SaveChanges(modDoc)) {
+                    //if (!documentRepository.SaveChanges(modDoc)) {
 
 
-                    }
+                    //}
 
+                    documentRepository.Update(doc);
 
+                    documentRepository.Save();
                 }
 
             }
