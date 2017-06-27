@@ -534,3 +534,12 @@ textarea {
 #public_table_inner {
     
 }
+
+.admin-and-pagination>div {
+    text-align: center;
+    
+}
+
+.form-inputs>div {
+    margin-bottom: 5px;
+}
