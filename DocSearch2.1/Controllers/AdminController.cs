@@ -38,6 +38,7 @@ namespace DocSearch2._1.Controllers
         }
 
         // GET: Admin
+        [OutputCache(NoStore = true, Duration = 0)] //prevents caching
         public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1)
         {
             IEnumerable<PublicVM> publicModel = null;

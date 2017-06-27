@@ -379,7 +379,6 @@
 
     $("#body").on("change", "#public_table input[type=checkbox]", function () {
         if ($(this).prop('checked')) {
-
             editList.push($(this).val().trim());
         } else {
             var removeItem = $(this).val();
@@ -387,7 +386,7 @@
         }
     });
 
-    $('#text-fill').textfill({ widthOnly: true, minFontPixels: 4, innerTag: "span" }); //trying to ensure the status line will shrink if needed, dont think its being used
+    //$('#text-fill').textfill({ widthOnly: true, minFontPixels: 4, innerTag: "span" }); //trying to ensure the status line will shrink if needed, dont think its being used
 
     $(".edit-issue").datepicker();
 
@@ -439,7 +438,23 @@
         return false;
     };
 
-    $('#editOptionsSubmit').on("click", function () {
+    //$('#editOptionsSubmit').on("click", function () {
+    //    alert('editOptionsSubmit');
+    //    $choice = $('#editOptions option:selected').text();
+
+    //    if ($choice == "Edit These Files") {
+    //        modifyEditList();
+    //    } else if ($choice == "Download all Public Documents") {
+    //        downloadAllDocuments();
+    //        //$('#downloadAllDocumentSubmit').click();
+    //    } else {
+    //        alert("No option was selected");
+    //    }
+
+    //    return false;
+    //});
+
+    $("#body").on("click", "#editOptionsSubmit", function () {
 
         $choice = $('#editOptions option:selected').text();
 
@@ -447,13 +462,14 @@
             modifyEditList();
         } else if ($choice == "Download all Public Documents") {
             downloadAllDocuments();
-            //$('#downloadAllDocumentSubmit').click();
         } else {
             alert("No option was selected");
         }
 
         return false;
     });
+
+
 
     //$("#body").on("click", ".filterLink", function () {
     //    alert('hi');
