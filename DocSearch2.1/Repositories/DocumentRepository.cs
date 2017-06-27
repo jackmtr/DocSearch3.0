@@ -19,7 +19,12 @@ namespace DocSearch2._1.Repositories
 
         public tbl_Document SelectById(string id)
         {
-            tbl_Document document = _db.tbl_Document.Find(Int32.Parse(id));
+            //tbl_Document document = _db.tbl_Document.Find(Int32.Parse(id));
+
+            int docId = Int32.Parse(id);
+
+            tbl_Document document = _db.tbl_Document.AsNoTracking().SingleOrDefault(p => p.Document_ID == docId);
+            //.AsNoTracking()
 
             //if document exists and ArchiveFile is null, it will look into the purged WAS db instead.
             if (document.ArchivedFile == null) {

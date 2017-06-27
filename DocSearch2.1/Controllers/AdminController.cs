@@ -88,9 +88,8 @@ namespace DocSearch2._1.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(List<PublicVM> updatedEditList) {
+        public ActionResult Edit([Bind(Prefix = "publicId")] string Folder_ID, List<PublicVM> updatedEditList) {
 
-            
             //updatedEditList.ForEach( x=> x.)
             //updatedEditList.ForEach(
 
@@ -101,32 +100,31 @@ namespace DocSearch2._1.Controllers
 
                 foreach (PublicVM pvm in updatedEditList) {
 
-                    tbl_Document doc = AutoMapper.Mapper.Map<tbl_Document>(pvm);
-                    //var pubvm = AutoMapper.Mapper.Map<PublicVM>(doc);
-                    //var docc = AutoMapper.Mapper.Map<PublicVM>(doc);
-                    //tbl_Document modDoc = documentRepository.SelectById(doc.Document_ID.ToString());
-                    //modDoc.Issue_DT = doc.IssueDate;
-                    //modDoc.Description = doc.Description;
-                    //modDoc.Method = doc.Method;
-                    //modDoc.Originator = doc.Originator;
-                    //modDoc.Reason = doc.Reason;
-                    //modDoc.Recipient = doc.Recipient;
-                    //modDoc.Active_IND = doc.Hidden;
+                    tbl_Document modDoc = documentRepository.SelectById(pvm.Document_ID.ToString());
+                    modDoc.Issue_DT = pvm.IssueDate;
+                    modDoc.Description = pvm.Description;
+                    modDoc.Method = pvm.Method;
+                    modDoc.Originator = pvm.Originator;
+                    modDoc.Reason = pvm.Reason;
+                    modDoc.Recipient = pvm.Recipient;
+                    modDoc.Active_IND = pvm.Hidden;
 
+                    _db.Entry(modDoc).State = System.Data.Entity.EntityState.Modified;
+                    
                     //if (!documentRepository.SaveChanges(modDoc)) {
 
 
                     //}
 
-                    documentRepository.Update(doc);
-
-                    documentRepository.Save();
+                    //tbl_Document doc = AutoMapper.Mapper.Map<tbl_Document>(pvm);
+                    //documentRepository.Update(doc);
+                    //documentRepository.Save();
                 }
-
+                _db.SaveChanges();
             }
 
-
-            return View();
+            return RedirectToAction("Index", "Admin", new { publicId = Folder_ID });
+            //return View();
         }
 
         [HttpGet]

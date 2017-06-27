@@ -4,6 +4,8 @@
 {
     @Html.AntiForgeryToken()
 
+    <input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />
+
     <table class="edit-table table">
         <thead>
             <tr class="edit-rows">

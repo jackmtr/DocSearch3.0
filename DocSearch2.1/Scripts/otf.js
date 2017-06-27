@@ -182,7 +182,6 @@
 
             return false;
         }
-        alert('hi');
         var options = {
             url: "/Admin/Edit",
             type: "get",
