@@ -189,7 +189,8 @@
             data: {
                 EditList: editList,
                 publicId: $('#search').val()
-            }
+            },
+            cache: false
         };
 
         $.ajax(options).done(function (data) {

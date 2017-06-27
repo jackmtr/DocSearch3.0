@@ -123,7 +123,7 @@ namespace DocSearch2._1.Controllers
                 _db.SaveChanges();
             }
 
-            return RedirectToAction("Index", "Admin", new { publicId = Folder_ID });
+            return RedirectToAction("Index", "PublicVM", new { publicId = Folder_ID });
             //return View();
         }
 
