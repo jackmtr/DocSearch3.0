@@ -19,8 +19,10 @@ namespace DocSearch2._1.ViewModels
 
         [Display(Name = "Issue Date")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd MMM yyyy}")]
+        [Required(ErrorMessage = "Issue Date is Required")]
         public Nullable<DateTime> IssueDate { get; set; } //tbl_Document.Issue_DT
 
+        [Required(ErrorMessage = "A Description is Required")]
         public string Description { get; set; } //tbl_Document.Description
 
         public int Category_ID { get; set; } //tbl_Category.Category_ID
