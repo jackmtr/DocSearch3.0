@@ -198,15 +198,29 @@
             $('#main-row').replaceWith($(data));
 
             $(".edit-issue").each(function () {
+
                 var displayedDate = $(this).val();
                 var date = new Date(displayedDate);
                 $(this).datepicker({ dateFormat: 'dd M yy' });
+            });
+
+            $(".Correspondence").each(function () {
+
+                $(this).prop('disabled',false);
             });
         });
 
         return false;
     }
 
+    //$('#body').on("click", '.edit-rows Policy', function () {
+
+
+
+    //    if ($('.edit-rows Policy')[0]) {
+    //        alert('hi');
+    //    }
+    //});
 
     //**EVENTS
 

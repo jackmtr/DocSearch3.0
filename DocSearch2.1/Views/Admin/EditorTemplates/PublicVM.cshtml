@@ -15,7 +15,7 @@
         @Html.DisplayFor(model => model.Document_ID, new { htmlAttributes = new { @class = "form-control" } })
         @Html.HiddenFor(model => model.Document_ID)
     </td>
-    <td>
+    <td class="input_@(Model.CategoryName)">
         @Html.DisplayFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
     </td>
     <td>
@@ -32,14 +32,16 @@
     <td>
         @Html.DropDownListFor(model => model.Method, new List<SelectListItem> {
 
+            new SelectListItem { Value = "", Text = "N/A"},
+
             new SelectListItem { Value = "email", Text = "Email" },
             new SelectListItem { Value = "fax", Text = "Fax" },
             new SelectListItem { Value = "mail", Text = "Mail" }
-        }, Model.Method, new { @class = "form-control" })
+        }, Model.Method, new { @class = "form-control " + @Model.CategoryName, @disabled = "disabled" })
         @Html.ValidationMessageFor(model => model.Method, "", new { @class = "text-danger" })
     </td>
     <td>
-        @Html.EditorFor(model => model.Originator, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.EditorFor(model => model.Originator, new { htmlAttributes = new { @class = "form-control " + @Model.CategoryName, @disabled = "disabled" } })
         @Html.ValidationMessageFor(model => model.Originator, "", new { @class = "text-danger" })
     </td>
     <td>
@@ -58,7 +60,7 @@
         @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
     </td>
     <td>
-        @Html.TextBoxFor(model => model.Recipient, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.EditorFor(model => model.Recipient, new { htmlAttributes = new { @class = "form-control " + @Model.CategoryName, @disabled = "disabled" } })
         @Html.ValidationMessageFor(model => model.Recipient, "", new { @class = "text-danger" })
     </td>
     @*<td>
