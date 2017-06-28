@@ -13,6 +13,25 @@
         "Please check your input."
     );
 
+    $.validator.addMethod('daterange', function (value, element, arg) {
+        if (this.optional(element) && !value) {
+            return true;
+        }
+
+        var startDate = Date.parse(arg[0]),
+            endDate = Date.parse(arg[1]),
+            enteredDate = Date.parse(value);
+
+        if (isNaN(enteredDate)) {
+            return false;
+        }
+
+        return ((isNaN(startDate) || (startDate <= enteredDate)) &&
+                 (isNaN(endDate) || (enteredDate <= endDate)));
+
+
+    }, $.validator.format("Please specify a date between 01 Jan 1990 and Today."));
+
     //**FUNCTIONS
 
     //submits the search and date filter form asynchronously
@@ -502,7 +521,25 @@
             });
 
             $(".edit-issue").each(function () {
-                $(this).rules("add", { regex: "^[0-3][0-9]\\s[A-Z][a-z]{2}\\s[1-2][0-9]{3}$" })
+
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
+                var yyyy = today.getFullYear();
+
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+
+                var today = dd + '/' + mm + '/' + yyyy;
+
+                $(this).rules("add", { regex: "^[0-3][0-9]\\s[A-Z][a-z]{2}\\s[1-2][0-9]{3}$" }),
+                $(this).rules("add", { 
+                    daterange: ['01/01/1990', String(today)] //Kinda working regex, today isnt today but a day is the near future
+                });
             });
 
             //if ($(".Correspondence")[0]) {
