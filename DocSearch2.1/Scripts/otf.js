@@ -469,10 +469,28 @@
         return false;
     });
 
+    //$('form#updateListSubmit').validate();
 
+    $("#body").on("submit", "form#updateListSubmit", function (event) {
 
-    //$("#body").on("click", ".filterLink", function () {
-    //    alert('hi');
-    //});
+        $('form#updateListSubmit').validate();
 
+        $('.edit-rows input').each(function () {
+
+            $(this).rules("add", {
+                required: true,
+                //minlength: 2
+            })
+        });
+
+        event.preventDefault();
+
+        if ($("form#updateListSubmit").validate().form()) {
+            console.log("validates");
+        } else {
+            console.log("does not validate");
+        }
+    })
+
+    //$('form#updateListSubmit').validate(); //do i need this?
 });

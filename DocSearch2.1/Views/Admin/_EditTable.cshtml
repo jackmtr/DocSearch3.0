@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<PublicVM>
 
-@using (Html.BeginForm("Edit", "Admin", FormMethod.Post))
+@using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { id = "updateListSubmit"}))
 {
     @Html.AntiForgeryToken()
 
