@@ -213,15 +213,6 @@
         return false;
     }
 
-    //$('#body').on("click", '.edit-rows Policy', function () {
-
-
-
-    //    if ($('.edit-rows Policy')[0]) {
-    //        alert('hi');
-    //    }
-    //});
-
     //**EVENTS
 
     //will adjust left banner bar on load to dynamically match table size
@@ -231,9 +222,6 @@
         var thisA = $('#issue').parent('A');
         rememeberSort(thisA);
     }
-
-
-
 
 
     //will load the user to have focus inside search bar
@@ -489,22 +477,48 @@
 
         $('form#updateListSubmit').validate();
 
+        //$('.edit-rows input').each(function () {
+
+        //    $(this).rules("add", {
+        //        required: true,
+        //    })
+        //});
+
         $('.edit-rows input').each(function () {
+
+            $(this).prop("tagName");
 
             $(this).rules("add", {
                 required: true,
-                //minlength: 2
-            })
+            });
+
+            //if ($(".Correspondence")[0]) {
+            //    $(this).prop("tagName");
+            //}
+
+            //$(".Correspondence").each(function () {
+
+            //    $(this).rules("add", {
+            //        required: false,
+            //    });
+            //});
+
+
         });
 
-        event.preventDefault();
+
+        //$(".Correspondence").each(function () {
+
+        //    $(this).prop('disabled', false);
+        //});
+
 
         if ($("form#updateListSubmit").validate().form()) {
             console.log("validates");
         } else {
             console.log("does not validate");
+            event.preventDefault();
         }
     })
 
-    //$('form#updateListSubmit').validate(); //do i need this?
 });
