@@ -4,6 +4,15 @@
     var editList = [];
     var pageSize1 = 15;
 
+    $.validator.addMethod(
+        "regex",
+        function (value, element, regexp) {
+            var re = new RegExp(regexp);
+            return this.optional(element) || re.test(value);
+        },
+        "Please check your input."
+    );
+
     //**FUNCTIONS
 
     //submits the search and date filter form asynchronously
@@ -490,6 +499,10 @@
 
             $(this).rules("add", {
                 required: true,
+            });
+
+            $(".edit-issue").each(function () {
+                $(this).rules("add", { regex: "^[0-3][0-9]\\s[A-Z][a-z]{2}\\s[1-2][0-9]{3}$" })
             });
 
             //if ($(".Correspondence")[0]) {
