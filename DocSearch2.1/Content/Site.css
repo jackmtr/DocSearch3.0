@@ -72,7 +72,7 @@ header {
 /*Makes the nav height to match remaining screen height, breaks for mobile*/
 #public_navigation {
     background-color: lightgrey;
-    width: 25%;
+    width: 25%; /*bootstrap overriding i think*/
     padding: 0;
 }
 
@@ -543,3 +543,29 @@ textarea {
 .form-inputs>div {
     margin-bottom: 5px;
 }
+
+/*Testing navbar styles*/
+    .test-style ul{
+        background-color: grey !important;
+    }
+
+    .test-style #docType_list li a {
+        padding-left: 30px;
+    }
+
+    .test-style li:hover {
+        background-color: inherit !important;
+    }
+
+    /*.test-width {
+        background-color: green !important;
+        width: 500px !important;
+    }*/
+
+    .temp-navbar {
+        width: 18% !important;
+    }
+
+    .temp-public {
+        width: 82% !important;
+    }

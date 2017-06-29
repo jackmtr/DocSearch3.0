@@ -194,7 +194,17 @@
                     }
                     @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
                     {
-                        <th>Visibility</th>
+                        @*<th>Visibility</th>*@
+                        <th>
+                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                       {
+                           publicId = Model.First().Folder_ID,
+                           filter = "hidden",
+                           subNav = ViewData["currentNav"],
+                           prevNav = ViewData["currentNavTitle"],
+                           searchTerm = TempData["SearchTerm"]
+                       }), "#public_table", "replace-with", "GET", "Visibility", "fa-sort", "filterLink", "postNavbar", "hidden"))
+                        </th>
                     }
                     @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
                     {
@@ -255,23 +265,6 @@
                                 }
                             }
                         </td>
-                        @*<td>
-                            @if (item.FileType == null || item.FileType.Length < 1)
-                            {
-                                @Html.Raw("N/A");
-                            }
-                            else
-                            {
-                                @Html.ActionLink(item.FileType, "FileDisplay", new { documentId = item.Document_ID }, new { target = "_blank" })
-                                if (item.FileType == "Picture JPEG")
-                                {
-                                    <br />
-                                    <div class="preview_image">
-                                        @Html.ActionLink("[Preview]", "FileDisplay", new { documentId = item.Document_ID }, new { @class = "preview", id = item.Document_ID + 'a' })
-                                    </div>
-                                }
-                            }
-                        </td>*@
                         <td>
                             <a href="#" class="miscTableLink" method="get" action="@Url.Action("MiscData", new { documentId = item.Document_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"], })" data-otf-ajax="true" data-otf-target="#@item.Document_ID.ToString()"><i class="fa fa-expand"></i></a>
                         </td>

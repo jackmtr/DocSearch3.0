@@ -181,12 +181,15 @@ namespace DocSearch2._1.Controllers
                     if (prevFilter == filter)
                     {
                         //do check if pagenumber is same, if so, escape and not touch 
-                        if (prevPage != page) { } else {
+                        if (prevPage != page) { }
+                        else
+                        {
                             sortAscending = !sortAscending;
                         }
-                        
+
                     }
-                    else {
+                    else
+                    {
                         sortAscending = true;
                     }
 
@@ -196,7 +199,8 @@ namespace DocSearch2._1.Controllers
                                         .OrderBy(r => r.DocumentTypeName)
                                             .ToPagedList(page, pageSize);
                     }
-                    else {
+                    else
+                    {
                         publicModel = publicModel
                                         .OrderByDescending(r => r.DocumentTypeName)
                                             .ToPagedList(page, pageSize);
@@ -246,7 +250,8 @@ namespace DocSearch2._1.Controllers
                             sortAscending = !sortAscending;
                         }
                     }
-                    else {
+                    else
+                    {
                         sortAscending = true;
                     }
 
@@ -256,7 +261,8 @@ namespace DocSearch2._1.Controllers
                                        .OrderBy(r => r.RefNumber)
                                        .ToPagedList(page, pageSize);
                     }
-                    else {
+                    else
+                    {
                         publicModel = publicModel
                                          .OrderByDescending(r => r.RefNumber)
                                          .ToPagedList(page, pageSize);
@@ -274,7 +280,8 @@ namespace DocSearch2._1.Controllers
                             sortAscending = !sortAscending;
                         }
                     }
-                    else {
+                    else
+                    {
                         sortAscending = true;
                     }
 
@@ -284,7 +291,8 @@ namespace DocSearch2._1.Controllers
                                        .OrderBy(r => r.EffectiveDate)
                                        .ToPagedList(page, pageSize);
                     }
-                    else {
+                    else
+                    {
                         publicModel = publicModel
                                          .OrderByDescending(r => r.EffectiveDate)
                                          .ToPagedList(page, pageSize);
@@ -301,7 +309,8 @@ namespace DocSearch2._1.Controllers
                             sortAscending = !sortAscending;
                         }
                     }
-                    else {
+                    else
+                    {
                         sortAscending = true;
                     }
 
@@ -311,7 +320,8 @@ namespace DocSearch2._1.Controllers
                                        .OrderBy(r => r.Originator)
                                        .ToPagedList(page, pageSize);
                     }
-                    else {
+                    else
+                    {
                         publicModel = publicModel
                                          .OrderByDescending(r => r.Originator)
                                          .ToPagedList(page, pageSize);
@@ -359,7 +369,8 @@ namespace DocSearch2._1.Controllers
                             sortAscending = !sortAscending;
                         }
                     }
-                    else {
+                    else
+                    {
                         sortAscending = true;
                     }
 
@@ -369,7 +380,8 @@ namespace DocSearch2._1.Controllers
                                        .OrderBy(r => r.Supplier)
                                        .ToPagedList(page, pageSize);
                     }
-                    else {
+                    else
+                    {
                         publicModel = publicModel
                                          .OrderByDescending(r => r.Supplier)
                                          .ToPagedList(page, pageSize);
@@ -480,12 +492,41 @@ namespace DocSearch2._1.Controllers
 
                     prevFilter = filter;
                 }
-                else {
+                else if (filter == "hidden") {
+                    if (prevFilter == filter)
+                    {
+                        if (prevPage != page) { }
+                        else
+                        {
+                            sortAscending = !sortAscending;
+                        }
+                    }
+                    else {
+                        sortAscending = true;
+                    }
+
+                    if (sortAscending)
+                    {
+                        publicModel = publicModel
+                                        .OrderBy(r => r.Hidden)
+                                        .ToPagedList(page, pageSize);
+                    }
+                    else {
+                        publicModel = publicModel
+                                        .OrderByDescending(r => r.Hidden)
+                                        .ToPagedList(page, pageSize);
+                    }
+
+                    prevFilter = filter;
+                }
+                else
+                {
                     if (filter == null || filter == "")
                     {
                         sortAscending = true;
                     }
-                    else {
+                    else
+                    {
                         if (prevPage != page) { }
                         else
                         {
@@ -499,7 +540,8 @@ namespace DocSearch2._1.Controllers
                                        .OrderByDescending(r => r.IssueDate)
                                        .ToPagedList(page, pageSize);
                     }
-                    else {
+                    else
+                    {
                         publicModel = publicModel
                                          .OrderBy(r => r.IssueDate)
                                          .ToPagedList(page, pageSize);

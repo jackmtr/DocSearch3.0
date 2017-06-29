@@ -358,6 +358,10 @@
                 $('#formSubmitId').click();
                 e.preventDefault();
             }
+        } else if (e.which == '192') { // `
+            $('.nav_lists').toggleClass("test-style");
+            $('.navbar').toggleClass("col-md-2 temp-navbar");
+            $('#public_info').toggleClass("col-md-10 temp-public");
         }
     });
 
@@ -446,7 +450,7 @@
 
         $('form#updateListSubmit').validate();
 
-        $('.edit-rows input').each(function () {
+        $('.edit-rows :not(.input_class) input').each(function () {
 
             $(this).prop("tagName");
 

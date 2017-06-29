@@ -83,7 +83,7 @@
             </div>
         }
     </td>
-    <td>
+    <td class="input_@(Model.Hidden)">
         @Html.CheckBoxFor(model => model.Hidden)
         @Html.ValidationMessageFor(model => model.Hidden, "", new { @class = "text-danger" })
     </td>
