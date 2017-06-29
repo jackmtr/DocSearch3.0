@@ -63,16 +63,6 @@
         @Html.EditorFor(model => model.Recipient, new { htmlAttributes = new { @class = "form-control " + @Model.CategoryName, @disabled = "disabled" } })
         @Html.ValidationMessageFor(model => model.Recipient, "", new { @class = "text-danger" })
     </td>
-    @*<td>
-        @Html.ActionLink(Model.FileType, "FileDisplay", "PublicVM", new { documentId = Model.Document_ID }, new { target = "_blank" })
-        @if (Model.FileType == "Picture JPEG")
-        {
-            <br />
-                        <div class="preview_image">
-                            @Html.ActionLink("[Preview]", "FileDisplay", "PublicVM", new { documentId = Model.Document_ID }, new { @class = "preview", id = Model.Document_ID + 'a' })
-                        </div>
-        }
-    </td>*@
     <td>
         @Html.ActionLink(Model.FileExtension, "FileDisplay", "PublicVM", new { documentId = Model.Document_ID }, new { target = "_blank" })
         @if (Model.FileExtension.Trim() == "jpg" || Model.FileExtension.Trim() == "png")

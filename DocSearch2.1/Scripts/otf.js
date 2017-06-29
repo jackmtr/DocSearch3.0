@@ -205,6 +205,7 @@
 
     var modifyEditList = function () {
 
+
         if (editList.length < 1) {
             alert('No documents have been selected.');
 
@@ -377,14 +378,37 @@
         //might honestly be i need to add a parameter to ajaxComplete to know who called it.
     });
 
-
+    //JACKIE//
     $("#body").on("change", "#public_table input[type=checkbox]", function () {
-        if ($(this).prop('checked')) {
-            editList.push($(this).val().trim());
+
+        $this = $(this);
+
+        if ($this.parent().prop('tagName') == 'TH') {
+            var lastIndex = alert($this.closest('TH').index());
+            var rows = $("table tr");
+
+            rows.each(function () {
+
+                $thisbox = $("td:eq(" + lastIndex + ")");
+
+                if ($(this).prop('checked')) {
+                    editList.push($thisbox.val().trim());
+                } else {
+                    var removeItem = $thisbox.val();
+                    editList.splice($.inArray(removeItem, editList), 1);
+                }
+            });
+
         } else {
-            var removeItem = $(this).val();
-            editList.splice($.inArray(removeItem, editList), 1);
+            if ($(this).prop('checked')) {
+                editList.push($(this).val().trim());
+            } else {
+                var removeItem = $(this).val();
+                editList.splice($.inArray(removeItem, editList), 1);
+            }
         }
+
+
     });
 
     //$('#text-fill').textfill({ widthOnly: true, minFontPixels: 4, innerTag: "span" }); //trying to ensure the status line will shrink if needed, dont think its being used
@@ -475,7 +499,7 @@
                 var today = dd + '/' + mm + '/' + yyyy;
 
                 $(this).rules("add", { regex: "^[0-3][0-9]\\s[A-Z][a-z]{2}\\s[1-2][0-9]{3}$" }),
-                $(this).rules("add", { 
+                $(this).rules("add", {
                     daterange: ['01/01/1990', today], //Kinda working regex, today isnt today but a day is the near future
                 });
             });
@@ -487,6 +511,12 @@
             console.log("does not validate");
             event.preventDefault();
         }
-    })
+    });
+
+    $("#body").on("click", ".selectAll", function () {
+
+        $("table.table tbody td:last-child() input:checkbox").prop('checked', this.checked);
+        //$("table.table tbody td:last-child() input:checkbox").click();
+    });
 
 });
