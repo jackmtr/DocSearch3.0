@@ -30,7 +30,7 @@
                  (isNaN(endDate) || (enteredDate <= endDate)));
 
 
-    }, $.validator.format("Please specify a date between 01 Jan 1990 and Today."));
+    }, $.validator.format("Please specify a date between 01 Jan 1990 and today.")); //the daterange validator isnt working properly, but enough
 
     //**FUNCTIONS
 
@@ -373,39 +373,6 @@
         //might honestly be i need to add a parameter to ajaxComplete to know who called it.
     });
 
-    //$('#editList').on("click", function () {
-
-    //    if (editList.length < 1) {
-    //        alert('No documents have been selected.');
-
-    //        return false;
-    //    }
-
-    //    var options = {
-    //        url: "/Admin/Edit",
-    //        type: "get",
-    //        traditional: true,
-    //        data: {
-    //            EditList: editList,
-    //            publicId: $('#search').val()
-    //        }
-    //    };
-
-
-    //    $.ajax(options).done(function (data) {
-
-    //        $('#main-row').replaceWith($(data));
-
-    //        $(".edit-issue").each(function () {
-    //            var displayedDate = $(this).val();
-    //            var date = new Date(displayedDate);
-    //            $(this).datepicker({ dateFormat: 'dd M yy'});
-    //        });
-    //    });
-
-    //    return false;
-    //});
-
 
     $("#body").on("change", "#public_table input[type=checkbox]", function () {
         if ($(this).prop('checked')) {
@@ -418,7 +385,8 @@
 
     //$('#text-fill').textfill({ widthOnly: true, minFontPixels: 4, innerTag: "span" }); //trying to ensure the status line will shrink if needed, dont think its being used
 
-    $(".edit-issue").datepicker();
+    $(".edit-issue").datepicker({ dateFormat: 'dd M yy' });
+    //$(this).datepicker({ dateFormat: 'dd M yy' });
 
     $('#clearButton').on("click", function () {
 
@@ -449,40 +417,13 @@
     var downloadAllDocuments = function () {
 
         var clientId = $(".public_name_id").html().match(/\d+/);
-        //not sure if this match will take numbers from the client name too
 
-        //var options = {
-        //    url: "/Folder/DownloadAllDocuments",
-        //    type: "get",
-        //    traditional: true,
-        //    data: {
-        //        ClientId: clientId
-        //    }
-        //}
-
-        //$.ajax(options);
         $('#ClientId').val(clientId);
 
         $("#downloadForm").submit();
 
         return false;
     };
-
-    //$('#editOptionsSubmit').on("click", function () {
-    //    alert('editOptionsSubmit');
-    //    $choice = $('#editOptions option:selected').text();
-
-    //    if ($choice == "Edit These Files") {
-    //        modifyEditList();
-    //    } else if ($choice == "Download all Public Documents") {
-    //        downloadAllDocuments();
-    //        //$('#downloadAllDocumentSubmit').click();
-    //    } else {
-    //        alert("No option was selected");
-    //    }
-
-    //    return false;
-    //});
 
     $("#body").on("click", "#editOptionsSubmit", function () {
 
@@ -504,13 +445,6 @@
     $("#body").on("submit", "form#updateListSubmit", function (event) {
 
         $('form#updateListSubmit').validate();
-
-        //$('.edit-rows input').each(function () {
-
-        //    $(this).rules("add", {
-        //        required: true,
-        //    })
-        //});
 
         $('.edit-rows input').each(function () {
 
@@ -538,30 +472,10 @@
 
                 $(this).rules("add", { regex: "^[0-3][0-9]\\s[A-Z][a-z]{2}\\s[1-2][0-9]{3}$" }),
                 $(this).rules("add", { 
-                    daterange: ['01/01/1990', String(today)] //Kinda working regex, today isnt today but a day is the near future
+                    daterange: ['01/01/1990', today], //Kinda working regex, today isnt today but a day is the near future
                 });
             });
-
-            //if ($(".Correspondence")[0]) {
-            //    $(this).prop("tagName");
-            //}
-
-            //$(".Correspondence").each(function () {
-
-            //    $(this).rules("add", {
-            //        required: false,
-            //    });
-            //});
-
-
         });
-
-
-        //$(".Correspondence").each(function () {
-
-        //    $(this).prop('disabled', false);
-        //});
-
 
         if ($("form#updateListSubmit").validate().form()) {
             console.log("validates");
