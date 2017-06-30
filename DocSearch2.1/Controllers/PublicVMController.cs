@@ -167,381 +167,17 @@ namespace DocSearch2._1.Controllers
                 prevPageAmount = pageSize;
 
                 //*sorting data
-
                 publicModel = FilterModel(publicModel, filter, prevFilter, page, pageSize);
 
-                prevFilter = filter;
-
-                //if (filter == "document")
-                //{
-                //    if (prevFilter == filter)
-                //    {
-                //        //do check if pagenumber is same, if so, escape and not touch 
-                //        if (prevPage != page) { }
-                //        else
-                //        {
-                //            sortAscending = !sortAscending;
-                //        }
-
-                //    }
-                //    else
-                //    {
-                //        sortAscending = true;
-                //    }
-
-                //    if (sortAscending)
-                //    {
-                //        publicModel = publicModel
-                //                        .OrderBy(r => r.DocumentTypeName)
-                //                            .ToPagedList(page, pageSize);
-                //    }
-                //    else
-                //    {
-                //        publicModel = publicModel
-                //                        .OrderByDescending(r => r.DocumentTypeName)
-                //                            .ToPagedList(page, pageSize);
-                //    }
-
-                //    prevFilter = filter;
-                //}
-
-                //else if (filter == "method")
-                //{
-                //    if (prevFilter == filter)
-                //    {
-                //        if (prevPage != page) { }
-                //        else
-                //        {
-                //            sortAscending = !sortAscending;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        sortAscending = true;
-                //    }
-
-                //    if (sortAscending)
-                //    {
-                //        publicModel = publicModel
-                //                       .OrderBy(r => r.Method)
-                //                       .ToPagedList(page, pageSize);
-                //    }
-                //    else
-                //    {
-                //        publicModel = publicModel
-                //                         .OrderByDescending(r => r.Method)
-                //                         .ToPagedList(page, pageSize);
-                //    }
-
-                //    prevFilter = filter;
-
-                //}
-
-                //else if (filter == "policy")
-                //{
-                //    if (prevFilter == filter)
-                //    {
-                //        if (prevPage != page) { }
-                //        else
-                //        {
-                //            sortAscending = !sortAscending;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        sortAscending = true;
-                //    }
-
-                //    if (sortAscending)
-                //    {
-                //        publicModel = publicModel
-                //                       .OrderBy(r => r.RefNumber)
-                //                       .ToPagedList(page, pageSize);
-                //    }
-                //    else
-                //    {
-                //        publicModel = publicModel
-                //                         .OrderByDescending(r => r.RefNumber)
-                //                         .ToPagedList(page, pageSize);
-                //    }
-
-                //    prevFilter = filter;
-                //}
-                //else if (filter == "effective")
-                //{
-                //    if (prevFilter == filter)
-                //    {
-                //        if (prevPage != page) { }
-                //        else
-                //        {
-                //            sortAscending = !sortAscending;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        sortAscending = true;
-                //    }
-
-                //    if (sortAscending)
-                //    {
-                //        publicModel = publicModel
-                //                       .OrderBy(r => r.EffectiveDate)
-                //                       .ToPagedList(page, pageSize);
-                //    }
-                //    else
-                //    {
-                //        publicModel = publicModel
-                //                         .OrderByDescending(r => r.EffectiveDate)
-                //                         .ToPagedList(page, pageSize);
-                //    }
-                //    prevFilter = filter;
-                //}
-                //else if (filter == "originator")
-                //{
-                //    if (prevFilter == filter)
-                //    {
-                //        if (prevPage != page) { }
-                //        else
-                //        {
-                //            sortAscending = !sortAscending;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        sortAscending = true;
-                //    }
-
-                //    if (sortAscending)
-                //    {
-                //        publicModel = publicModel
-                //                       .OrderBy(r => r.Originator)
-                //                       .ToPagedList(page, pageSize);
-                //    }
-                //    else
-                //    {
-                //        publicModel = publicModel
-                //                         .OrderByDescending(r => r.Originator)
-                //                         .ToPagedList(page, pageSize);
-                //    }
-
-                //    prevFilter = filter;
-                //}
-                //else if (filter == "reason")
-                //{
-                //    if (prevFilter == filter)
-                //    {
-                //        if (prevPage != page) { }
-                //        else
-                //        {
-                //            sortAscending = !sortAscending;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        sortAscending = true;
-                //    }
-
-                //    if (sortAscending)
-                //    {
-                //        publicModel = publicModel
-                //                       .OrderBy(r => r.Reason)
-                //                       .ToPagedList(page, pageSize);
-                //    }
-                //    else
-                //    {
-                //        publicModel = publicModel
-                //                         .OrderByDescending(r => r.Reason)
-                //                         .ToPagedList(page, pageSize);
-                //    }
-
-                //    prevFilter = filter;
-                //}
-                //else if (filter == "supplier")
-                //{
-                //    if (prevFilter == filter)
-                //    {
-                //        if (prevPage != page) { }
-                //        else
-                //        {
-                //            sortAscending = !sortAscending;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        sortAscending = true;
-                //    }
-
-                //    if (sortAscending)
-                //    {
-                //        publicModel = publicModel
-                //                       .OrderBy(r => r.Supplier)
-                //                       .ToPagedList(page, pageSize);
-                //    }
-                //    else
-                //    {
-                //        publicModel = publicModel
-                //                         .OrderByDescending(r => r.Supplier)
-                //                         .ToPagedList(page, pageSize);
-                //    }
-
-                //    prevFilter = filter;
-                //}
-                //else if (filter == "description")
-                //{
-                //    if (prevFilter == filter)
-                //    {
-                //        if (prevPage != page) { }
-                //        else
-                //        {
-                //            sortAscending = !sortAscending;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        sortAscending = true;
-                //    }
-
-                //    if (sortAscending)
-                //    {
-                //        publicModel = publicModel
-                //                       .OrderBy(r => r.Description)
-                //                       .ToPagedList(page, pageSize);
-                //    }
-                //    else
-                //    {
-                //        publicModel = publicModel
-                //                         .OrderByDescending(r => r.Description)
-                //                         .ToPagedList(page, pageSize);
-                //    }
-
-                //    prevFilter = filter;
-                //}
-                //else if (filter == "file")
-                //{
-                //    if (prevFilter == filter)
-                //    {
-                //        if (prevPage != page) { }
-                //        else
-                //        {
-                //            sortAscending = !sortAscending;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        sortAscending = true;
-                //    }
-
-                //    if (sortAscending)
-                //    {
-                //        publicModel = publicModel
-                //                       .OrderBy(r => r.FileExtension)
-                //                       .ToPagedList(page, pageSize);
-                //    }
-                //    else
-                //    {
-                //        publicModel = publicModel
-                //                         .OrderByDescending(r => r.FileExtension)
-                //                         .ToPagedList(page, pageSize);
-                //    }
-
-                //    prevFilter = filter;
-                //}
-                //else if (filter == "documentId")
-                //{
-                //    if (prevFilter == filter)
-                //    {
-                //        if (prevPage != page) { }
-                //        else
-                //        {
-                //            sortAscending = !sortAscending;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        sortAscending = true;
-                //    }
-
-                //    if (sortAscending)
-                //    {
-                //        publicModel = publicModel
-                //                       .OrderBy(r => r.Document_ID)
-                //                       .ToPagedList(page, pageSize);
-                //    }
-                //    else
-                //    {
-                //        publicModel = publicModel
-                //                         .OrderByDescending(r => r.Document_ID)
-                //                         .ToPagedList(page, pageSize);
-                //    }
-
-                //    prevFilter = filter;
-                //}
-                //else if (filter == "hidden") {
-                //    if (prevFilter == filter)
-                //    {
-                //        if (prevPage != page) { }
-                //        else
-                //        {
-                //            sortAscending = !sortAscending;
-                //        }
-                //    }
-                //    else {
-                //        sortAscending = true;
-                //    }
-
-                //    if (sortAscending)
-                //    {
-                //        publicModel = publicModel
-                //                        .OrderBy(r => r.Hidden)
-                //                        .ToPagedList(page, pageSize);
-                //    }
-                //    else {
-                //        publicModel = publicModel
-                //                        .OrderByDescending(r => r.Hidden)
-                //                        .ToPagedList(page, pageSize);
-                //    }
-
-                //    prevFilter = filter;
-                //}
-                //else
-                //{
-                //    if (filter == null || filter == "")
-                //    {
-                //        sortAscending = true;
-                //    }
-                //    else
-                //    {
-                //        if (prevPage != page) { }
-                //        else
-                //        {
-                //            sortAscending = !sortAscending;
-                //        }
-                //    }
-
-                //    if (sortAscending)
-                //    {
-                //        publicModel = publicModel
-                //                       .OrderByDescending(r => r.IssueDate)
-                //                       .ToPagedList(page, pageSize);
-                //    }
-                //    else
-                //    {
-                //        publicModel = publicModel
-                //                         .OrderBy(r => r.IssueDate)
-                //                         .ToPagedList(page, pageSize);
-                //    }
-
-                //    prevFilter = filter;
-                //}
                 //**ENDING FILTERING OF MODEL**
 
                 prevPage = page;
 
                 if (publicModel != null)
                 {
-                    //
+
                     ViewData["SortOrder"] = sortAscending;
-                    //
+
                     return PartialView("_PublicTable", publicModel);
                 }
                 else {
@@ -556,7 +192,7 @@ namespace DocSearch2._1.Controllers
                     ViewData["SortOrder"] = sortAscending;
                     publicModel = publicModel
                                     .OrderByDescending(r => r.IssueDate)
-                                    .ToPagedList(page, pageSize);
+                                        .ToPagedList(page, pageSize);
 
                     return View(publicModel);
                 }
@@ -687,14 +323,14 @@ namespace DocSearch2._1.Controllers
             if (ascending)
             {
                 year = model
-                            .Where(y => y.IssueDate != null) //does this make business sense?
+                            .Where(y => y.IssueDate != null)
                             .OrderBy(r => r.IssueDate)
                                     .First()
                                         .IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
             }
             else {
                 year = model
-                            .Where(y => y.IssueDate != null) //does this make business sense?
+                            .Where(y => y.IssueDate != null)
                             .OrderByDescending(r => r.IssueDate)
                                     .First()
                                         .IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
@@ -707,8 +343,8 @@ namespace DocSearch2._1.Controllers
         {
             IEnumerable<PublicVM> nb = model
                                         .OrderBy(e => e.CategoryName)
-                                        .GroupBy(e => e.CategoryName)
-                                        .Select(g => g.First());
+                                            .GroupBy(e => e.CategoryName)
+                                                .Select(g => g.First());
 
             List<NavBar> nbl = new List<NavBar>();
 
@@ -721,7 +357,7 @@ namespace DocSearch2._1.Controllers
 
                 foreach (PublicVM pp in model
                                         .GroupBy(g => g.DocumentTypeName)
-                                        .Select(g => g.First()))
+                                            .Select(g => g.First()))
                 {
                     if (pp.CategoryName == nbitem.CategoryName && !nbl.Any(s => s.DocumentTypeName.Contains(pp.DocumentTypeName)))
                     {
@@ -734,9 +370,9 @@ namespace DocSearch2._1.Controllers
             ViewBag.CategoryNavBar = nbl;
             ViewBag.PolicyNavBar = model
                                     .Where(e => e.EffectiveDate != null) //needs to be removed because (T) ref# and (F) EffDate needs to be brought through model, but this criteria should not be used to populate the navbar policies
-                                    .OrderBy(e => e.RefNumber)
-                                    .GroupBy(e => e.RefNumber)
-                                    .Select(g => g.First().RefNumber);
+                                        .OrderBy(e => e.RefNumber)
+                                            .GroupBy(e => e.RefNumber)
+                                                .Select(g => g.First().RefNumber);
         }
 
         private IEnumerable<PublicVM> subNavFilter(IEnumerable<PublicVM> model, string subNav, string prevNav)
@@ -762,7 +398,6 @@ namespace DocSearch2._1.Controllers
 
         private IEnumerable<PublicVM> FilterModel(IEnumerable<PublicVM> model, string filter, string prevFilter, int page, int pageSize)
         {
-
             if (filter == null || filter == "")
             {
                 sortAscending = true;
@@ -782,41 +417,10 @@ namespace DocSearch2._1.Controllers
                 }
             }
 
-
-            //if (prevFilter == filter)
-            //{
-            //    //do check if pagenumber is same, if so, escape and not touch 
-            //    if (prevPage == page)
-            //    {
-            //        sortAscending = !sortAscending;
-            //    }
-            //}
-            //else
-            //{
-            //    sortAscending = true;
-            //}
-
             switch (filter)
             {
 
                 case "document":
-
-                    //if (prevFilter == filter)
-                    //{
-                    //    //do check if pagenumber is same, if so, escape and not touch 
-                    //    if (prevPage != page) { }
-                    //    else
-                    //    {
-                    //        sortAscending = !sortAscending;
-                    //    }
-
-                    //}
-                    //else
-                    //{
-                    //    sortAscending = true;
-                    //}
-
-
 
                     if (sortAscending)
                     {
@@ -835,20 +439,6 @@ namespace DocSearch2._1.Controllers
 
                 case "method":
 
-                    //if (prevFilter == filter)
-                    //{
-                    //    if (prevPage != page) { }
-                    //    else
-                    //    {
-                    //        sortAscending = !sortAscending;
-                    //    }
-
-                    //}
-                    //else
-                    //{
-                    //    sortAscending = true;
-                    //}
-
                     if (sortAscending)
                     {
                         model = model
@@ -865,19 +455,6 @@ namespace DocSearch2._1.Controllers
                     break;
 
                 case "policy":
-                    //if (prevFilter == filter)
-                    //{
-                    //    if (prevPage != page) { }
-                    //    else
-                    //    {
-                    //        sortAscending = !sortAscending;
-                    //    }
-
-                    //}
-                    //else
-                    //{
-                    //    sortAscending = true;
-                    //}
 
                     if (sortAscending)
                     {
@@ -895,19 +472,6 @@ namespace DocSearch2._1.Controllers
                     break;
 
                 case "effective":
-                    //if (prevFilter == filter)
-                    //{
-                    //    if (prevPage != page) { }
-                    //    else
-                    //    {
-                    //        sortAscending = !sortAscending;
-                    //    }
-
-                    //}
-                    //else
-                    //{
-                    //    sortAscending = true;
-                    //}
 
                     if (sortAscending)
                     {
@@ -925,19 +489,6 @@ namespace DocSearch2._1.Controllers
                     break;
 
                 case "originator":
-                    //if (prevFilter == filter)
-                    //{
-                    //    if (prevPage != page) { }
-                    //    else
-                    //    {
-                    //        sortAscending = !sortAscending;
-                    //    }
-
-                    //}
-                    //else
-                    //{
-                    //    sortAscending = true;
-                    //}
 
                     if (sortAscending)
                     {
@@ -955,19 +506,6 @@ namespace DocSearch2._1.Controllers
                     break;
 
                 case "reason":
-                    //if (prevFilter == filter)
-                    //{
-                    //    if (prevPage != page) { }
-                    //    else
-                    //    {
-                    //        sortAscending = !sortAscending;
-                    //    }
-
-                    //}
-                    //else
-                    //{
-                    //    sortAscending = true;
-                    //}
 
                     if (sortAscending)
                     {
@@ -985,19 +523,6 @@ namespace DocSearch2._1.Controllers
                     break;
 
                 case "supplier":
-                    //if (prevFilter == filter)
-                    //{
-                    //    if (prevPage != page) { }
-                    //    else
-                    //    {
-                    //        sortAscending = !sortAscending;
-                    //    }
-
-                    //}
-                    //else
-                    //{
-                    //    sortAscending = true;
-                    //}
 
                     if (sortAscending)
                     {
@@ -1015,19 +540,6 @@ namespace DocSearch2._1.Controllers
                     break;
 
                 case "description":
-                    //if (prevFilter == filter)
-                    //{
-                    //    if (prevPage != page) { }
-                    //    else
-                    //    {
-                    //        sortAscending = !sortAscending;
-                    //    }
-
-                    //}
-                    //else
-                    //{
-                    //    sortAscending = true;
-                    //}
 
                     if (sortAscending)
                     {
@@ -1045,19 +557,6 @@ namespace DocSearch2._1.Controllers
                     break;
 
                 case "file":
-                    //if (prevFilter == filter)
-                    //{
-                    //    if (prevPage != page) { }
-                    //    else
-                    //    {
-                    //        sortAscending = !sortAscending;
-                    //    }
-
-                    //}
-                    //else
-                    //{
-                    //    sortAscending = true;
-                    //}
 
                     if (sortAscending)
                     {
@@ -1075,19 +574,6 @@ namespace DocSearch2._1.Controllers
                     break;
 
                 case "documentId":
-                    //if (prevFilter == filter)
-                    //{
-                    //    if (prevPage != page) { }
-                    //    else
-                    //    {
-                    //        sortAscending = !sortAscending;
-                    //    }
-
-                    //}
-                    //else
-                    //{
-                    //    sortAscending = true;
-                    //}
 
                     if (sortAscending)
                     {
@@ -1105,19 +591,6 @@ namespace DocSearch2._1.Controllers
                     break;
 
                 case "hidden":
-                    //if (prevFilter == filter)
-                    //{
-                    //    if (prevPage != page) { }
-                    //    else
-                    //    {
-                    //        sortAscending = !sortAscending;
-                    //    }
-
-                    //}
-                    //else
-                    //{
-                    //    sortAscending = true;
-                    //}
 
                     if (sortAscending)
                     {
@@ -1136,19 +609,6 @@ namespace DocSearch2._1.Controllers
 
                 default:
 
-                    //if (filter == null || filter == "")
-                    //{
-                    //    sortAscending = true;
-                    //}
-                    //else
-                    //{
-                    //    if (prevPage != page) { }
-                    //    else
-                    //    {
-                    //        sortAscending = !sortAscending;
-                    //    }
-                    //}
-
                     if (sortAscending)
                     {
                         model = model
@@ -1165,7 +625,7 @@ namespace DocSearch2._1.Controllers
                     break;
             }
 
-            //prevFilter = filter;
+            prevFilter = filter;
 
             return model;
         }
