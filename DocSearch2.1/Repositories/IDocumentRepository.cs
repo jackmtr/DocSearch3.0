@@ -18,7 +18,6 @@ namespace DocSearch2._1.Repositories
 
         bool SaveChanges(tbl_Document doc);
 
-        //void Update(PublicVM publicVm);
         void Update(tbl_Document doc);
 
         void Save();

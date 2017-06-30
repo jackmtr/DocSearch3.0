@@ -359,7 +359,7 @@
                 $('#formSubmitId').click();
                 e.preventDefault();
             }
-        } else if (e.which == '192') { // `
+        } else if (e.which == '192') { // `, this is used to toggle styling for navbar TEMP
             $('.nav_lists').toggleClass("test-style");
             $('.navbar').toggleClass("col-md-2 temp-navbar");
             $('#public_info').toggleClass("col-md-10 temp-public");
@@ -473,8 +473,6 @@
         return false;
     });
 
-    //$('form#updateListSubmit').validate();
-
     $("#body").on("submit", "form#updateListSubmit", function (event) {
 
         $('form#updateListSubmit').validate();
@@ -527,7 +525,5 @@
         } else {
             $("table.table tbody td:last-child() input:checkbox:not(:checked)").click();
         }
-        //$("table.table tbody td:last-child() input:checkbox").click();
     });
-
 });

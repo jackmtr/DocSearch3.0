@@ -19,12 +19,9 @@ namespace DocSearch2._1.Repositories
 
         public tbl_Document SelectById(string id)
         {
-            //tbl_Document document = _db.tbl_Document.Find(Int32.Parse(id));
-
             int docId = Int32.Parse(id);
 
             tbl_Document document = _db.tbl_Document.AsNoTracking().SingleOrDefault(p => p.Document_ID == docId);
-            //.AsNoTracking()
 
             //if document exists and ArchiveFile is null, it will look into the purged WAS db instead.
             if (document.ArchivedFile == null) {
@@ -42,8 +39,6 @@ namespace DocSearch2._1.Repositories
             int intId = Int32.Parse(id);
 
             return _db.tbl_Document.AsNoTracking().Where(d => d.Folder_ID == intId);
-
-            //return documents;
         }
 
         public MiscPublicData GetMiscPublicData(string id)
@@ -85,18 +80,9 @@ namespace DocSearch2._1.Repositories
         }
 
         public bool SaveChanges(tbl_Document doc) {
-
-            //Now, i'm using AutoMapper. So i thought i could map from the ViewModel to the Post, then save the post.
-
-
+            //dont think im using this method, maybe others below too
             return true;
         }
-
-        //public void Update(PublicVM publicVm) {
-
-        //    var document = Mapper.Map<tbl_Document>(publicVm);
-        //    _db.Entry(document).State = System.Data.Entity.EntityState.Modified;
-        //}
 
         public void Update(tbl_Document doc)
         {

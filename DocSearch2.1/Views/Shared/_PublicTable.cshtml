@@ -2,7 +2,6 @@
 
 <script>
     function rememeberSort($this) {
-        //alert($this.prop('tagName'));
         var ascending = '@ViewData["SortOrder"]';
 
         if (ascending == "True") {
@@ -194,7 +193,6 @@
                     }
                     @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
                     {
-                        @*<th>Visibility</th>*@
                         <th>
                             @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                        {
@@ -292,7 +290,5 @@
                 }
             </tbody>
         </table>
-
     </div>
-
 </div>

@@ -91,12 +91,6 @@ namespace DocSearch2._1.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Prefix = "publicId")] string Folder_ID, List<PublicVM> updatedEditList) {
 
-            //updatedEditList.ForEach( x=> x.)
-            //updatedEditList.ForEach(
-
-            //        //tbl_Document doc = documentRepository.SelectById(i => i.
-            //    );
-
             if (ModelState.IsValid) {
 
                 foreach (PublicVM pvm in updatedEditList) {
@@ -111,21 +105,12 @@ namespace DocSearch2._1.Controllers
                     modDoc.Active_IND = pvm.Hidden;
 
                     _db.Entry(modDoc).State = System.Data.Entity.EntityState.Modified;
-                    
-                    //if (!documentRepository.SaveChanges(modDoc)) {
-
-
-                    //}
-
-                    //tbl_Document doc = AutoMapper.Mapper.Map<tbl_Document>(pvm);
-                    //documentRepository.Update(doc);
-                    //documentRepository.Save();
+                    //rememeber to remove the Automapper stuff, since not used
                 }
                 _db.SaveChanges();
             }
 
             return RedirectToAction("Index", "PublicVM", new { publicId = Folder_ID });
-            //return View();
         }
 
         [HttpGet]

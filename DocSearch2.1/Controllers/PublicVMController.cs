@@ -434,19 +434,6 @@ namespace DocSearch2._1.Controllers
                         sortAscending = true;
                     }
 
-                    //if (sortAscending)
-                    //{
-                    //    publicModel = publicModel
-                    //                   .OrderBy(r => r.FileType)
-                    //                   .ToPagedList(page, pageSize);
-                    //}
-                    //else
-                    //{
-                    //    publicModel = publicModel
-                    //                     .OrderByDescending(r => r.FileType)
-                    //                     .ToPagedList(page, pageSize);
-                    //}
-
                     if (sortAscending)
                     {
                         publicModel = publicModel

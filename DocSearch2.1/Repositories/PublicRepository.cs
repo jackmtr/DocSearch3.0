@@ -57,7 +57,6 @@ namespace DocSearch2._1.Repositories
                     objpvm.EffectiveDate = item.Date1_DT;
                     objpvm.RefNumber = item.RefNumber;
                     objpvm.FileExtension = item.FileExtension;
-                    //objpvm.FileType = item.FileType;
                     objpvm.Method = item.Method;
                     objpvm.Originator = item.Originator;
                     objpvm.Reason = item.Reason;
@@ -90,7 +89,6 @@ namespace DocSearch2._1.Repositories
                                         CatName = cat.Name,
                                         dr.Date1_DT,
                                         dr.RefNumber,
-                                        //d.FileType,
                                         d.FileExtension,
                                         d.Method,
                                         d.Originator,
@@ -112,7 +110,6 @@ namespace DocSearch2._1.Repositories
                     objpvm.CategoryName = item.CatName;
                     objpvm.EffectiveDate = item.Date1_DT;
                     objpvm.RefNumber = item.RefNumber;
-                    //objpvm.FileType = item.FileType;
                     objpvm.FileExtension = item.FileExtension;
                     objpvm.Method = item.Method;
                     objpvm.Originator = item.Originator;

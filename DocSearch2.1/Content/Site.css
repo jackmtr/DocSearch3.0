@@ -11,7 +11,7 @@ h4 {
 
 /*affects the policies list entries (cate/doctype are overruled)*/
 li {
-    font-size: 16px;
+    font-size: 15px;
 }
 
     /*Affects the individual list items*/
@@ -39,7 +39,7 @@ table {
 
     th, td {
         text-align: center;
-        font-size: 16px;
+        font-size: 15px;
         border: 1px solid black !important; /*needs important to overrule grey table look*/
         padding: 6px !important; /*maybe adjust to get a default table of 20 records to fit typical screen length*/
     }
@@ -86,7 +86,7 @@ header {
     }
         /*affects the categories/policies span texts */
         .nav-button * {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: bold;
             padding: 0;
             margin: 0;
@@ -175,17 +175,17 @@ header {
                 /* Colours and borders for illustration purposes */
                 width: inherit;
                 list-style-type: none;
-                font-size: 14px;
+                /*font-size: 14px;*/
                 padding-left: 0px;
                 background-color: rgba(65, 103, 118, 0.40);
             }
 
             /*affects the cate/policy title*/
-            .nav_lists h2 {
-                font-size: 25px;
+            /*.nav_lists h2 {
+                font-size: 250px;
                 text-align: center;
                 margin: 10px;
-            }
+            }*/
 
             /*affects the entire category background on hover of inside doctype*/
             #category_list > li:hover,  #category_list > li li:hover{
@@ -195,13 +195,13 @@ header {
 
             /*affects the category names*/
             .category_nav > div > a {
-                font-size: 20px;
+                font-size: 19px;
                 font-weight: bold;
             }
 
             /*DocType sublist item font adjustments*/
             #docType_list li a{
-                font-size: 16px;
+                font-size: 15px;
                 padding-left: 20px;
             }
 
@@ -240,7 +240,7 @@ header {
         bottom: 0;
         left: 10px;
         color: white;
-        font-size: 22px;
+        font-size: 20px;
         font-weight: 600;
         }
 
@@ -274,7 +274,7 @@ header {
 
         font-weight: 500;
         font-family: sans-serif;
-        font-size: 17px;
+        font-size: 16px;
         text-decoration: none;
         background-color: #EEEEEE;
         color: #333333;
@@ -397,10 +397,6 @@ header {
     .edit-rows > th:nth-child(2), .edit-rows > th:nth-child(3), .edit-rows > th:nth-child(4), .edit-rows > td:nth-child(2), .edit-rows > td:nth-child(3), .edit-rows > td:nth-child(4) {
         display: none;
     }
-
-    /*.edit-rows > th:nth-child(1), .edit-rows > td:nth-child(1) {
-        display: table-column;
-    }*/
 }
 
 @media(min-width: 1366px) {
@@ -459,14 +455,14 @@ header {
             }
 
     /*affects the category names*/
-    .category_nav > div > a {
+    /*.category_nav > div > a {
         font-size: 15px;
-    }
+    }*/
 
     /*DocType sublist item font adjustments*/
-    #docType_list li a, #policy_list li a{
-        font-size: 12px;
-    }
+    /*#docType_list li a, #policy_list li a{
+        font-size: 102px;
+    }*/
 }
 
 
@@ -500,7 +496,7 @@ th {
 }
 
 #status-bar-form {
-    padding: 15px;
+    padding: 15px 15px 10px 15px;
 }
 
 /*may remove if not using textfill*/
@@ -529,6 +525,9 @@ textarea {
 
 .pagination {
     margin: 0 0 5px 0;
+    /*border: solid;*/
+    display:inline-block;
+    padding:0px 10px;
 }
 
 #public_table_inner {
@@ -556,11 +555,6 @@ textarea {
     .test-style li:hover {
         background-color: inherit !important;
     }
-
-    /*.test-width {
-        background-color: green !important;
-        width: 500px !important;
-    }*/
 
     .temp-navbar {
         width: 18% !important;

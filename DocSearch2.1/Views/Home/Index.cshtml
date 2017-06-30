@@ -10,7 +10,6 @@
     <h1>Enter the Client Id then Submit</h1>
     <h2>Ramin: 568801</h2> <!--34 folder id on local-->
     <h2>Mary: 1186367</h2>
-    <h2>Jackie Tester account with training2 server: 1435693</h2>
     <h2>Client Id with a picture: 1403635</h2>
     <h2>Browns Client Id = 1012504</h2>
     @Html.Label("ClientId", "Client Id")
@@ -21,13 +20,3 @@
 }
 
 <br/><br />
-
-@*Should eventually move this functionality into a role specific button/dropdown inside the main page*@
-@*@using (Html.BeginForm("DownloadAllDocuments", "Folder", FormMethod.Get)) {
-    <h1>Download all files from this Folder</h1>
-
-    @Html.Label("ClientId", "Client Id ")
-    @Html.TextBox("ClientId", 568801);
-
-    <input type="submit" value="Submit" />
-}*@
