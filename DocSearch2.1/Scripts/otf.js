@@ -381,31 +381,37 @@
     //JACKIE//
     $("#body").on("change", "#public_table input[type=checkbox]", function () {
 
-        $this = $(this);
+        //$this = $(this);
 
-        if ($this.parent().prop('tagName') == 'TH') {
-            var lastIndex = alert($this.closest('TH').index());
-            var rows = $("table tr");
+        //if ($this.parent().prop('tagName') == 'TH') {
+        //    var lastIndex = $this.closest('TH').index();
+        //    var rows = $("table tr");
 
-            rows.each(function () {
+        //    rows.each(function () {
 
-                $thisbox = $("td:eq(" + lastIndex + ")");
+        //        $thisbox = $("td:eq(" + lastIndex + ")");
 
-                if ($(this).prop('checked')) {
-                    editList.push($thisbox.val().trim());
-                } else {
-                    var removeItem = $thisbox.val();
-                    editList.splice($.inArray(removeItem, editList), 1);
-                }
-            });
+        //        if ($(this).prop('checked')) {
+        //            editList.push($thisbox.val().trim());
+        //        } else {
+        //            var removeItem = $thisbox.val();
+        //            editList.splice($.inArray(removeItem, editList), 1);
+        //        }
+        //    });
 
+        //} else {
+        //    if ($(this).prop('checked')) {
+        //        editList.push($(this).val().trim());
+        //    } else {
+        //        var removeItem = $(this).val();
+        //        editList.splice($.inArray(removeItem, editList), 1);
+        //    }
+        //}
+        if ($(this).prop('checked')) {
+            editList.push($(this).val().trim());
         } else {
-            if ($(this).prop('checked')) {
-                editList.push($(this).val().trim());
-            } else {
-                var removeItem = $(this).val();
-                editList.splice($.inArray(removeItem, editList), 1);
-            }
+            var removeItem = $(this).val();
+            editList.splice($.inArray(removeItem, editList), 1);
         }
 
 
@@ -413,8 +419,7 @@
 
     //$('#text-fill').textfill({ widthOnly: true, minFontPixels: 4, innerTag: "span" }); //trying to ensure the status line will shrink if needed, dont think its being used
 
-    $(".edit-issue").datepicker({ dateFormat: 'dd M yy' });
-    //$(this).datepicker({ dateFormat: 'dd M yy' });
+    $(".edit-issue").datepicker({ dateFormat: 'dd M yy' }); //not sure if needed
 
     $('#clearButton').on("click", function () {
 
@@ -515,7 +520,13 @@
 
     $("#body").on("click", ".selectAll", function () {
 
-        $("table.table tbody td:last-child() input:checkbox").prop('checked', this.checked);
+        //$("table.table tbody td:last-child() input:checkbox").prop('checked', this.checked); //this works to check boxes, but doesnt trigger event to add the docid into the array to send
+
+        if (!$(this).is(':checked')) {
+            $("table.table tbody td:last-child() input:checkbox:checked").click();
+        } else {
+            $("table.table tbody td:last-child() input:checkbox:not(:checked)").click();
+        }
         //$("table.table tbody td:last-child() input:checkbox").click();
     });
 
