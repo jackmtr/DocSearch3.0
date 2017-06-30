@@ -26,7 +26,7 @@ namespace DocSearch2._1.Repositories
 
             int publicNumberInt = Int32.Parse(publicNumber); //should be able to be done in LINQ
 
-            if (role == "admin")
+            if (role == "Admin")
             {
                 var documentList = (from d in _db.tbl_Document.AsNoTracking() //.AsNoTracking reduces resources by making this read only                        
                                     join f in _db.tbl_Folder.AsNoTracking() on d.Folder_ID equals f.Folder_ID

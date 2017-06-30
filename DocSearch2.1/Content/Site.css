@@ -5,9 +5,9 @@
 
 
 /*the results status line*/
-h4 {
+/*h4 {
     text-align: center;
-}
+}*/
 
 /*affects the policies list entries (cate/doctype are overruled)*/
 li {
@@ -31,11 +31,11 @@ li {
 /*Table design*/
 
 /*this is affecting the inner misc table*/
-table {
+/*table {
     width: 100%;
     table-layout: auto;
     border-collapse:collapse;
-}
+}*/
 
     th, td {
         text-align: center;
@@ -66,6 +66,7 @@ header {
     background: url(../Images/logo.png) no-repeat bottom;
     background-color: #26728a;
     height: 10vh;
+    position: relative;
 }
 
 /*****Tags from the PublicVM.Index page******/
@@ -231,9 +232,6 @@ header {
     background-color: white;
 }
 
-header {
-    position: relative;
-}
     /*Constant 'public' info display*/
     .public_name_id {
         position: absolute;
@@ -242,6 +240,8 @@ header {
         color: white;
         font-size: 20px;
         font-weight: 600;
+        display: inline-block;
+        width: 100%;
         }
 
     /*Gives the input boxes a better look*/
@@ -562,4 +562,12 @@ textarea {
 
     .temp-public {
         width: 82% !important;
+    }
+
+    .admin-status {
+        font-weight: bold;
+        position: absolute;
+        right: 100px;
+        color: red;
+        text-decoration: underline;
     }

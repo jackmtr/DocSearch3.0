@@ -49,7 +49,7 @@ namespace DocSearch2._1.Controllers
             ViewData["goodSearch"] = true;
 
             publicModel = publicRepository
-                .SelectAll(Folder_ID, "admin");
+                .SelectAll(Folder_ID, "Admin");
 
             //**Populating the navbar, put into function
             populateNavBar(publicModel);
@@ -83,7 +83,7 @@ namespace DocSearch2._1.Controllers
 
             List<PublicVM> publicModel = null;
 
-            publicModel = publicRepository.SelectAll(Folder_ID, "admin").Where(doc => EditList.Contains(doc.Document_ID.ToString())).GroupBy(x => x.Document_ID).Select( x => x.First()).ToList();
+            publicModel = publicRepository.SelectAll(Folder_ID, "Admin").Where(doc => EditList.Contains(doc.Document_ID.ToString())).GroupBy(x => x.Document_ID).Select( x => x.First()).ToList();
 
             return PartialView("_EditTable", publicModel);
         }

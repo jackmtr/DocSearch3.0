@@ -44,11 +44,11 @@ namespace DocSearch2._1.Controllers
             {
                 Admin = true;
 
-                TempData["Role"] = "admin";
+                TempData["Role"] = "Admin";
 
             } //checking for admin, this is temporary until a better auth checkelse
             else {
-                TempData["Role"] = "client";
+                TempData["Role"] = "Client";
             }
 
             //**GLOBAL VARIABLES
@@ -124,7 +124,7 @@ namespace DocSearch2._1.Controllers
                 }
 
                 //*filtering by date and search conditions
-                if (TempData["Role"].ToString() == "admin")
+                if (TempData["Role"].ToString() == "Admin")
                 {
                     //checks if the date filter and search term will return any results
                     if (!publicModel.Any(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && (searchTerm == null || r.Description.ToLower().Contains(searchTerm.ToLower()))))

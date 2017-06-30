@@ -18,7 +18,11 @@
         <h3 class="public_name_id">
             @if (TempData["Client_Id"] != null)
             {
-                @Html.Raw(TempData["Client_Id"] + " - " + TempData["Client_Name"]);
+                <span>@Html.Raw(TempData["Client_Id"] + " - " + TempData["Client_Name"])</span>
+                if (TempData["Role"] != null && TempData["Role"] == "Admin")
+                {
+                    <span class="admin-status">@TempData["Role"]</span>
+                }
             }
         </h3>
     </header>

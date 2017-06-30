@@ -40,7 +40,7 @@
     <div id ="public_table_inner" class="col-md-12">
 
         <div class="admin-and-pagination row">
-            @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
+            @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
             {
                 <div class="adminOptions col-md-6">
                     @using (Html.BeginForm("AdminOptions", "Admin", "Get"))
@@ -178,7 +178,7 @@
                    }), "#public_table", "replace-with", "GET", "File", "fa-sort", "filterLink", "postNavbar", "file"))
                     </th><!--10-->
                     <th>More</th><!--11-->
-                    @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
+                    @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                     {
                         <th>
                             @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
@@ -191,7 +191,7 @@
                    }), "#public_table", "replace-with", "GET", "Document Id", "fa-sort", "filterLink", "postNavbar", "documentId"))
                         </th>
                     }
-                    @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
+                    @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                     {
                         <th>
                             @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
@@ -204,7 +204,7 @@
                        }), "#public_table", "replace-with", "GET", "Visibility", "fa-sort", "filterLink", "postNavbar", "hidden"))
                         </th>
                     }
-                    @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
+                    @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                     {
                         <th>Select <input type="checkbox" class="selectAll" /></th>
                     }
@@ -266,13 +266,13 @@
                         <td>
                             <a href="#" class="miscTableLink" method="get" action="@Url.Action("MiscData", new { documentId = item.Document_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"], })" data-otf-ajax="true" data-otf-target="#@item.Document_ID.ToString()"><i class="fa fa-expand"></i></a>
                         </td>
-                        @if (TempData["Role"] != null && TempData["Role"].ToString() == "admin")
+                        @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                         {
                             <td>
                                 @Html.DisplayFor(modelItem=> item.Document_ID)
                             </td>
                             <td>
-                                @if (item.Hidden == true)
+                                @if (item.Hidden.ToString() == "True")
                                 {
                                     @Html.Raw("Visible")
                                 }
