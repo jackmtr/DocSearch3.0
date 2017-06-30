@@ -33,9 +33,9 @@ namespace DocSearch2._1.Controllers
         // GET: Folder
         public ActionResult Index([Bind(Prefix = "ClientId")] string Number, string Role)
         {
-            tbl_Folder folder = repository.SelectByNumber(Number); //should put a check incase no folder is retured
+            tbl_Folder folder = repository.SelectByNumber(Number);
 
-            System.Web.HttpContext.Current.Session["Role"] = Role; //tempory until I set up a real role checker
+            System.Web.HttpContext.Current.Session["Role"] = Role; //TEMPORARY until I set up a real role checker
 
             try
             {
