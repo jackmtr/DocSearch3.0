@@ -19,18 +19,25 @@ namespace DocSearch2._1.Repositories
 
         public tbl_Document SelectById(string id)
         {
-            int docId = Int32.Parse(id);
+            int docId = 0;
+            tbl_Document document = null;
 
-            tbl_Document document = _db.tbl_Document.AsNoTracking().SingleOrDefault(p => p.Document_ID == docId);
+            try {
+                docId = Int32.Parse(id);
+                document = _db.tbl_Document.AsNoTracking().SingleOrDefault(p => p.Document_ID == docId);
 
-            //if document exists and ArchiveFile is null, it will look into the purged WAS db instead.
-            if (document.ArchivedFile == null) {
-                this._db = new WASEntities("name=WASArchiveEntities");
-                document = _db.tbl_Document.Find(Int32.Parse(id));
+                //if document exists and ArchiveFile is null, it will look into the purged WAS db instead.
+                if (document.ArchivedFile == null) {
+                    this._db = new WASEntities("name=WASArchiveEntities");
+                    document = _db.tbl_Document.Find(Int32.Parse(id));
 
-                //Because this is a rare occurance, I would rather blindly search through other db's than change my model to bring in the repo value
+                    //Because this is a rare occurance, I would rather blindly search through other db's than change my model to bring in the repo value
+                }
+
+            } catch {
+
             }
-
+            
             return document;
         }
 

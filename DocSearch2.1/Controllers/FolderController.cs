@@ -33,7 +33,7 @@ namespace DocSearch2._1.Controllers
         // GET: Folder
         public ActionResult Index([Bind(Prefix = "ClientId")] string Number, string Role)
         {
-            tbl_Folder folder = repository.SelectByNumber(Number);
+            tbl_Folder folder = repository.SelectByNumber(Number); //should put a check incase no folder is retured
 
             System.Web.HttpContext.Current.Session["Role"] = Role; //tempory until I set up a real role checker
 
@@ -43,7 +43,8 @@ namespace DocSearch2._1.Controllers
                 TempData["Client_Id"] = folder.Number;
             }
             catch {
-                return HttpNotFound();
+                //return HttpNotFound();
+                return View("Errors");
             }
 
             return RedirectToAction("Index", "PublicVM", new { publicId = folder.Folder_ID });

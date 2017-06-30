@@ -571,3 +571,9 @@ textarea {
         color: red;
         text-decoration: underline;
     }
+
+.error-page {
+    width: 50%;
+    margin: 10% auto;
+    text-align: center;
+}

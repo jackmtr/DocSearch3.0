@@ -23,7 +23,13 @@ namespace DocSearch2._1.Repositories
 
         public tbl_Folder SelectByNumber(string number) {
 
-            int clientId = Int32.Parse(number);
+            int clientId;
+
+            try {
+                clientId = Int32.Parse(number);
+            } catch {
+                clientId = 0;
+            }
 
             //.AsNoTracking reduces resources by making this read only      
             return _db.tbl_Folder.AsNoTracking().SingleOrDefault(folder => folder.Number == clientId);
