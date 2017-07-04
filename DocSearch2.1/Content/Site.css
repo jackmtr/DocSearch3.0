@@ -588,3 +588,6 @@ select {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
+.edit-table {
+    margin: 15px 0;
+}
