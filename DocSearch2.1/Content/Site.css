@@ -63,7 +63,7 @@ li {
 /*****Tags from the master page******/
 /*Sets the top Westland Banner, at fixed height*/
 header {  
-    background: url(../Images/logo.png) no-repeat bottom;
+    background: url(../Images/logo.png) no-repeat center;
     background-color: #26728a;
     height: 10vh;
     position: relative;
@@ -236,12 +236,12 @@ header {
     .public_name_id {
         position: absolute;
         bottom: 0;
-        left: 10px;
+        left: 2%;
         color: white;
         font-size: 20px;
         font-weight: 600;
         display: inline-block;
-        width: 100%;
+        width: 98%;
         }
 
     /*Gives the input boxes a better look*/
@@ -403,6 +403,7 @@ header {
     .edit-rows > th:nth-child(1), .edit-rows > td:nth-child(1) {
         display: none;
     }
+
 }
 
 /*removes tables columns on shrinking size*/
@@ -425,6 +426,10 @@ header {
     .cat_pol_switcher {
         margin-top: 20px;
     }
+
+    #category_section a, #policy_section a{
+    font-size: 10px !important;
+}
 
     .nav-button {
         padding: 10px;
@@ -582,3 +587,4 @@ textarea {
 select {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
+
