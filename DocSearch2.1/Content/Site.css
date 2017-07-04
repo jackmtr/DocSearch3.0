@@ -580,10 +580,4 @@ textarea {
 
 select {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        height:30px;
-        line-height:30px;
 }
-
-    select option {
-
-    }
