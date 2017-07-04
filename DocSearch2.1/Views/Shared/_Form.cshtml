@@ -19,7 +19,7 @@
 
             <div id="text-fill" class="col-md-6"><span id="status-message">Returning <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents, <span id="currentLowYear">@(((List<SelectListItem>)TempData["YearRange"]).First().Text)</span> to <span id="currentHighYear">@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)</span></span></div>
             <div class="col-md-3">
-                @Ajax.ActionLink("<< Reset Search", "Index", new
+                @Ajax.ActionLink("Reset Search", "Index", new
            {
                publicId = Model.First().Folder_ID
            }, new AjaxOptions
@@ -36,6 +36,7 @@
             <div class="filter col-md-3">
                 <label for="search">Search Description:</label>
                 <input id="searchInputBox" type="search" name="searchTerm" />
+                <br />
             </div>
             <div class="filter col-md-3">
                 <label for="IssueDateMinRange">Issue Date Starting year:</label>
@@ -48,7 +49,9 @@
                 <br />
             </div>
             <div class="filter col-md-3 buttondiv">
+                <br />
                 <input id="formSubmitId" type="submit" value="Search and Filter" />
+                <br />
             </div>
         </div>
     </form>

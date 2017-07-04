@@ -259,7 +259,7 @@ header {
     }
 
     #formSubmitId {
-        margin: auto 0;
+        margin: 5px 0;
     }
 
     #clearButton {
@@ -541,6 +541,7 @@ textarea {
 
 .form-inputs>div {
     margin-bottom: 5px;
+    text-align: left;
 }
 
 /*Testing navbar styles*/
