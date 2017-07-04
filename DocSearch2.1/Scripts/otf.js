@@ -361,8 +361,8 @@
             }
         } else if (e.which == '192') { // `, this is used to toggle styling for navbar TEMP
             $('.nav_lists').toggleClass("test-style");
-            $('.navbar').toggleClass("col-md-2 temp-navbar");
-            $('#public_info').toggleClass("col-md-10 temp-public");
+            //$('.navbar').toggleClass("col-md-2 temp-navbar");
+            //$('#public_info').toggleClass("col-md-10 temp-public");
         }
     });
 

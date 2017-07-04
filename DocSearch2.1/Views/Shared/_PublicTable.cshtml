@@ -42,7 +42,7 @@
         <div class="admin-and-pagination row">
             @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
             {
-                <div class="adminOptions col-md-6">
+                <div class="adminOptions col-md-4">
                     @using (Html.BeginForm("AdminOptions", "Admin", "Get"))
                 {
                         @Html.DropDownList("Options", new List<SelectListItem>
@@ -62,7 +62,7 @@
                 </div>
             }
 
-            <div class="pagedList col-md-6" data-otf-target="#public_table">
+            <div class="pagedList col-md-8" data-otf-target="#public_table">
                 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"] }),
             PagedListRenderOptions.ClassicPlusFirstAndLast) <!--The PagedListRenderOptions is an enum of display configs for the pagedList item-->
             </div>

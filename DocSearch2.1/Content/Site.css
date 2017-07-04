@@ -545,7 +545,7 @@ textarea {
 
 /*Testing navbar styles*/
     .test-style ul{
-        background-color: grey !important;
+        background-color: #c2c1c1 !important;
     }
 
     .test-style #docType_list li a {
@@ -577,3 +577,13 @@ textarea {
     margin: 10% auto;
     text-align: center;
 }
+
+select {
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        height:30px;
+        line-height:30px;
+}
+
+    select option {
+
+    }
