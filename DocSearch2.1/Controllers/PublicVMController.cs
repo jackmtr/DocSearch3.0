@@ -227,6 +227,8 @@ namespace DocSearch2._1.Controllers
             var file = documentRepository.SelectById(id);
 
             if (file == null) {
+                ViewData["repositoryRequestDocId"] = id;
+
                 return View("Errors");
             }
 
@@ -284,7 +286,6 @@ namespace DocSearch2._1.Controllers
 
             if (file.ArchivedFile == null) {
                 ViewData["repositoryRequestDocId"] = id;
-
 
                 return PartialView("_FileDisplay");
             }
