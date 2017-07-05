@@ -43,7 +43,7 @@ namespace DocSearch2._1.Controllers
                 TempData["Client_Id"] = folder.Number;
             }
             catch {
-                //return HttpNotFound();
+                TempData["Client_Id"] = Number;
                 return View("Errors");
             }
 
