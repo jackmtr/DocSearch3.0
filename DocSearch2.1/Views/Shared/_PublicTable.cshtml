@@ -23,7 +23,7 @@
 }
 
 
-@if (ViewData["repositoryRequestDocId"] != null )
+@if (ViewData["repositoryRequestDocId"] != null)
 {
     <script type="text/javascript">
         var txt;
@@ -44,18 +44,18 @@
             {
                 <div class="adminOptions col-md-4">
                     @using (Html.BeginForm("AdminOptions", "Admin", "Get"))
-                {
+                    {
                         @Html.DropDownList("Options", new List<SelectListItem>
                     {
                         new SelectListItem { Value = "0", Text = "Edit These Files"},
                         new SelectListItem { Value = "1", Text = "Download all Public Documents"}
                     }, new { id = "editOptions" }
-                )
+     )
                         <input id="editOptionsSubmit" type="submit" value="Go" />
                     }
 
                     @using (Html.BeginForm("DownloadAllDocuments", "Admin", FormMethod.Get, new { id = "downloadForm" }))
-                {
+                    {
                         @Html.TextBox("ClientId", null);
                         <input type="submit" value="Submit" id="downloadAllDocumentSubmit" />
                     }
@@ -64,7 +64,7 @@
 
             <div class="pagedList col-md-8" data-otf-target="#public_table">
                 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"] }),
-            PagedListRenderOptions.ClassicPlusFirstAndLast) <!--The PagedListRenderOptions is an enum of display configs for the pagedList item-->
+ PagedListRenderOptions.ClassicPlusFirstAndLast) <!--The PagedListRenderOptions is an enum of display configs for the pagedList item-->
             </div>
         </div>
 
@@ -79,8 +79,10 @@
                        filter = "document",
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"]
-                       }), "#public_table", "replace-with", "GET", "Type of Document", "fa-sort", "filterLink", "postNavbar", "document"))
+                       searchTerm = TempData["SearchTerm"],
+                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
+                   }), "#public_table", "replace-with", "GET", "Type of Document", "fa-sort", "filterLink", "postNavbar", "document"))
                     </th>
                     <th>
                         <!--2-->
@@ -90,7 +92,9 @@
                        filter = "issue",
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"]
+                       searchTerm = TempData["SearchTerm"],
+                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
                    }), "#public_table", "replace-with", "GET", "Issue Date", "fa-sort", "filterLink", "postNavbar", "issue"))
                     </th>
                     <th>
@@ -100,7 +104,9 @@
                        filter = "method",
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"]
+                       searchTerm = TempData["SearchTerm"],
+                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
                    }), "#public_table", "replace-with", "GET", "Method", "fa-sort", "filterLink", "postNavbar", "method"))
                     </th> <!--3-->
                     <th>
@@ -111,7 +117,9 @@
                        filter = "policy",
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"]
+                       searchTerm = TempData["SearchTerm"],
+                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
                    }), "#public_table", "replace-with", "GET", "Policy #", "fa-sort", "filterLink", "postNavbar", "policy"))
                     </th>
                     <th>
@@ -122,7 +130,9 @@
                        filter = "effective",
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"]
+                       searchTerm = TempData["SearchTerm"],
+                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
                    }), "#public_table", "replace-with", "GET", "Effective Date", "fa-sort", "filterLink", "postNavbar", "effective"))
                     </th>
                     <th>
@@ -133,7 +143,9 @@
                        filter = "originator",
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"]
+                       searchTerm = TempData["SearchTerm"],
+                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
                    }), "#public_table", "replace-with", "GET", "Originator", "fa-sort", "filterLink", "postNavbar", "originator"))
                     </th>
                     <th>
@@ -143,7 +155,9 @@
                        filter = "reason",
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"]
+                       searchTerm = TempData["SearchTerm"],
+                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
                    }), "#public_table", "replace-with", "GET", "Reason", "fa-sort", "filterLink", "postNavbar", "reason"))
                     </th><!--7-->
                     <th>
@@ -153,7 +167,9 @@
                        filter = "supplier",
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"]
+                       searchTerm = TempData["SearchTerm"],
+                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
                    }), "#public_table", "replace-with", "GET", "Supplier #", "fa-sort", "filterLink", "postNavbar", "supplier"))
                     </th><!--8-->
                     <th>
@@ -164,9 +180,14 @@
                        filter = "description",
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"]
+                       searchTerm = TempData["SearchTerm"],
+                       IssueYearMinRange = Model.OrderBy( r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
                    }), "#public_table", "replace-with", "GET", "Description", "fa-sort", "filterLink", "postNavbar", "description"))
                     </th>
+
+
+
                     <th>
                         @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
                    {
@@ -174,7 +195,9 @@
                        filter = "file",
                        subNav = ViewData["currentNav"],
                        prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"]
+                       searchTerm = TempData["SearchTerm"],
+                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
                    }), "#public_table", "replace-with", "GET", "File", "fa-sort", "filterLink", "postNavbar", "file"))
                     </th><!--10-->
                     <th>More</th><!--11-->
@@ -182,13 +205,15 @@
                     {
                         <th>
                             @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                   {
-                       publicId = Model.First().Folder_ID,
-                       filter = "documentId",
-                       subNav = ViewData["currentNav"],
-                       prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"]
-                   }), "#public_table", "replace-with", "GET", "Document Id", "fa-sort", "filterLink", "postNavbar", "documentId"))
+                       {
+                           publicId = Model.First().Folder_ID,
+                           filter = "documentId",
+                           subNav = ViewData["currentNav"],
+                           prevNav = ViewData["currentNavTitle"],
+                           searchTerm = TempData["SearchTerm"],
+                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
+                       }), "#public_table", "replace-with", "GET", "Document Id", "fa-sort", "filterLink", "postNavbar", "documentId"))
                         </th>
                     }
                     @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
@@ -200,7 +225,9 @@
                            filter = "hidden",
                            subNav = ViewData["currentNav"],
                            prevNav = ViewData["currentNavTitle"],
-                           searchTerm = TempData["SearchTerm"]
+                           searchTerm = TempData["SearchTerm"],
+                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
                        }), "#public_table", "replace-with", "GET", "Visibility", "fa-sort", "filterLink", "postNavbar", "hidden"))
                         </th>
                     }
