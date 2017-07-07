@@ -62,7 +62,7 @@
                 </div>
             }
 
-            <div class="pagedList col-md-8" data-otf-target="#public_table">
+            <div class="pagedList col-md-8" data-otf-target="#public_table" style="display: none">
                 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"] }),
  PagedListRenderOptions.ClassicPlusFirstAndLast) <!--The PagedListRenderOptions is an enum of display configs for the pagedList item-->
             </div>

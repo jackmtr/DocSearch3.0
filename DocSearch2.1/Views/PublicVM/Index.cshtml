@@ -110,7 +110,8 @@
                                 <li>
                                     <a href="@Url.Action("Index", "PublicVM", new
                                         {
-                                            publicId = Model.First().Folder_ID,
+                                            //publicId = Model.First().Folder_ID,
+                                            publicId = TempData["Folder_Id"],
                                             policyNumber = policy,
                                             subNav = subNavOptions.policy,
                                             prevNav = @policy
@@ -136,6 +137,7 @@
     </nav>
 
     <div id="public_info" class="col-md-10">
+
         @Html.Partial("_Form", Model)
         @Html.Partial("_PublicTable", Model)
     </div>

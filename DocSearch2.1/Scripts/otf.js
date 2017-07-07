@@ -2,7 +2,9 @@
 
     //**GLOBAL VARIABLES
     var editList = [];
-    var pageSize1 = 15;
+    //var pageSize1 = 15;
+    var IssueYearMinRange = 1;
+
 
     $.validator.addMethod(
         "regex",
@@ -46,13 +48,13 @@
             var options = {
                 url: $form.attr("action"),//maybe add to this to check for attributes somehow
                 type: $form.attr("method"),
-                data: $form.serialize() + "&subNav=" + $category + "&prevNav=" + $docType + "&pageSize=" + pageSize1 //or add to the data somehow
+                data: $form.serialize() + "&subNav=" + $category + "&prevNav=" + $docType //+ "&pageSize=" + pageSize1 //or add to the data somehow
             };
         } else {
             var options = {
                 url: $form.attr("action"),//maybe add to this to check for attributes somehow
                 type: $form.attr("method"),
-                data: $form.serialize() + "&pageSize=" + pageSize1//or add to the data somehow
+                data: $form.serialize() //+ "&pageSize=" + pageSize1//or add to the data somehow
             };
         }
 
@@ -94,7 +96,7 @@
 
         var options = {
             url: $a.attr("href"),
-            data: $("form").serialize() + "&pageSize=" + pageSize1 + "&filter=" + filter,
+            data: $("form").serialize() + /*"&pageSize=" + pageSize1 +*/ "&filter=" + filter,
             type: "get"
         };
 
@@ -328,6 +330,7 @@
         $('select[name^="IssueYearMaxRange"] option[value="' + value + '"]').attr("selected", "selected");
     });
 
+    //may end up dropping pagination
     //event for selecting a 'records per page' from dropdown
     $('#pageSize').change(function () {
         var value = this.value;
@@ -335,7 +338,7 @@
         $('select[name^="pageSize"] option').removeAttr('selected');
         $('select[name^="pageSize"] option[value="' + value + '"]').attr("selected", "selected");
 
-        pageSize1 = $('#pageSize option:selected').val();
+        //pageSize1 = $('#pageSize option:selected').val();
 
         ajaxFormSubmit();
     });
@@ -361,8 +364,6 @@
             }
         } else if (e.which == '192') { // `, this is used to toggle styling for navbar TEMP
             $('.nav_lists').toggleClass("test-style");
-            //$('.navbar').toggleClass("col-md-2 temp-navbar");
-            //$('#public_info').toggleClass("col-md-10 temp-public");
         }
     });
 
@@ -381,32 +382,6 @@
     //JACKIE//
     $("#body").on("change", "#public_table input[type=checkbox]", function () {
 
-        //$this = $(this);
-
-        //if ($this.parent().prop('tagName') == 'TH') {
-        //    var lastIndex = $this.closest('TH').index();
-        //    var rows = $("table tr");
-
-        //    rows.each(function () {
-
-        //        $thisbox = $("td:eq(" + lastIndex + ")");
-
-        //        if ($(this).prop('checked')) {
-        //            editList.push($thisbox.val().trim());
-        //        } else {
-        //            var removeItem = $thisbox.val();
-        //            editList.splice($.inArray(removeItem, editList), 1);
-        //        }
-        //    });
-
-        //} else {
-        //    if ($(this).prop('checked')) {
-        //        editList.push($(this).val().trim());
-        //    } else {
-        //        var removeItem = $(this).val();
-        //        editList.splice($.inArray(removeItem, editList), 1);
-        //    }
-        //}
         if ($(this).prop('checked')) {
             editList.push($(this).val().trim());
         } else {
@@ -427,7 +402,7 @@
 
         var options = {
             url: $this.attr('href'),
-            data: "pageSize=" + pageSize1,
+            //data: "pageSize=" + pageSize1,
             type: "GET",
         };
 
@@ -526,4 +501,32 @@
             $("table.table tbody td:last-child() input:checkbox:not(:checked)").click();
         }
     });
+
+    ////
+    //event for selecting a 'records per page' from dropdown
+    $('#fromYear').change(function () {
+        var value = this.value;
+
+        $('select[name^="IssueYearMinRange"] option').removeAttr('selected');
+        $('select[name^="IssueYearMinRange"] option[value="' + value + '"]').attr("selected", "selected");
+
+        IssueYearMinRange = $('#fromYear option:selected').val();
+
+        ajaxFormSubmit();
+    });
+
+    $('#customDates').on("click", function () {
+
+        if ($('#customDates').is(':checked')) {
+            $('#fromYear').prop("disabled", true);
+            //$('.customDates').children().css("display", "block").parent().children("select").prop("disabled", false);
+            $('.customDates').children("select").prop("disabled", false).siblings().addBack().css("display", "block");
+        } else {
+            $('#fromYear').prop("disabled", false);
+            //$('.customDates').children().css("display", "none").parent().children("select").prop("disabled", true);
+            $('.customDates').children("select").prop("disabled", true).siblings().addBack().css("display", "none");
+        }
+    });
+    ////
+
 });

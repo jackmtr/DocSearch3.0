@@ -591,3 +591,7 @@ select {
 .edit-table {
     margin: 15px 0;
 }
+
+.customDates *{
+    display: none;
+}

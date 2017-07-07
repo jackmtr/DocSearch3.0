@@ -19,6 +19,10 @@ namespace DocSearch2._1.Controllers
         private static string prevFilter;
         private static int prevPage = 1;
         private static int prevPageAmount;
+        private static DateTime today = DateTime.Today;
+        //private static DateTime lastYear = today.AddYears(-1);
+        //public DateTime IssueYearMinRange = today.AddYears(-1);
+        //public DateTime IssueYearMaxRange = today;
 
         public PublicVMController() {
             //public repo for publicVM actions
@@ -38,7 +42,7 @@ namespace DocSearch2._1.Controllers
 
         // GET: PublicVM
         [HttpGet]
-        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1, int pageSize = 15, bool Admin = false)
+        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1, int pageSize = 300, bool Admin = false)
         {
 
             //**GLOBAL VARIABLES
@@ -55,6 +59,7 @@ namespace DocSearch2._1.Controllers
             //persist client name, id, search term, inputted dates
             TempData.Keep("Client_Name");
             TempData.Keep("Client_Id");
+            TempData.Keep("Folder_Id");
             //***Pseudo save state immitation
             TempData.Keep("SearchTerm");
             TempData.Keep("YearRange");
@@ -75,32 +80,91 @@ namespace DocSearch2._1.Controllers
                                     .GroupBy(x => x.Document_ID)
                                         .Select(x => x.First());
 
+
             //instantiating the overall min and max YEAR ranges for this client if date inputs were null, maybe combine into one conditional
-            if (IssueYearMinRange == null || IssueYearMinRange == "")
+            if (IssueYearMinRange == null /*|| IssueYearMinRange == ""*/)
             {
-                IssueYearMinRange = RetrieveYear(publicModel, true);
+                //IssueYearMinRange = RetrieveYear(publicModel, true);
             }
 
-            if (IssueYearMaxRange == null || IssueYearMaxRange == "")
+            if (IssueYearMaxRange == null /*|| IssueYearMaxRange == ""*/)
             {
-                IssueYearMaxRange = RetrieveYear(publicModel, false);
+                //IssueYearMaxRange = RetrieveYear(publicModel, false);
             }
 
             //should only be run on initial load of page
             if (!Request.IsAjaxRequest()) {
                 //creating the options for the dropdown list
-                TempData["YearRange"] = YearRangePopulate(IssueYearMinRange, IssueYearMaxRange);
+                TempData["YearRange"] = YearRangePopulate(RetrieveYear(publicModel, true), RetrieveYear(publicModel, false));
             }
 
             //Formatting the display date into SQL date type
+            /*
             if (Int32.Parse(IssueYearMaxRange) < Int32.Parse(IssueYearMinRange)) {
                 string temp = IssueYearMinRange;
                 IssueYearMinRange = IssueYearMaxRange;
                 IssueYearMaxRange = temp;
+            }*/
+
+            DateTime issueDateMin = today.AddYears(-1);
+            DateTime issueDateMax = today;
+
+            if ((IssueYearMinRange == null || IssueYearMinRange == "") && (IssueYearMaxRange == null || IssueYearMaxRange == ""))
+            {
+                issueDateMin = today.AddYears(-1);
+                issueDateMax = today;
+            }
+            else if ((IssueYearMinRange != null && IssueYearMinRange != "") && (IssueYearMaxRange == null || IssueYearMaxRange == "")) {
+                // using regular input
+
+                switch (IssueYearMinRange)
+                {
+                    case "2016":
+                        issueDateMin = today.AddYears(-1);
+                        break;
+                    case "2015":
+                        issueDateMin = today.AddYears(-2);
+                        break;
+                    case "2014":
+                        issueDateMin = today.AddYears(-3);
+                        break;
+                    default:
+                        int subtractYears = 50;
+                        try {
+                            subtractYears = DateTime.Now.Year - Int32.Parse(IssueYearMaxRange);
+                        } catch {
+
+                        }
+                        
+                        issueDateMin = today.AddYears(subtractYears);
+                        break;
+                }
+
+                //issueDateMax = today; but redundant to write
+            }
+            else if ((IssueYearMinRange != null && IssueYearMinRange != "") && (IssueYearMaxRange != null && IssueYearMaxRange != ""))
+            {
+                //custom dates
+                issueDateMin = DateTime.ParseExact(String.Format("01/01/{0}", IssueYearMinRange), "d", CultureInfo.InvariantCulture);
+                issueDateMax = DateTime.ParseExact(String.Format("12/31/{0}", IssueYearMaxRange), "d", CultureInfo.InvariantCulture);
+            }
+            else if ((IssueYearMinRange == null || IssueYearMinRange == "") && (IssueYearMaxRange != null && IssueYearMaxRange != ""))
+            {
+                //no input for min date under CUSTOM inputs
+                //min would be oldest value
+                issueDateMin = today.AddYears(-40);
+                issueDateMax = DateTime.ParseExact(String.Format("12/31/{0}", IssueYearMaxRange), "d", CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                issueDateMin = today.AddYears(-1);
+                issueDateMax = today;
+                //dont think this should ever get hit
             }
 
-            DateTime issueDateMin = DateTime.ParseExact(String.Format("01/01/{0}", IssueYearMinRange), "d", CultureInfo.InvariantCulture);
-            DateTime issueDateMax = DateTime.ParseExact(String.Format("12/31/{0}", IssueYearMaxRange), "d", CultureInfo.InvariantCulture);
+
+            //DateTime issueDateMin = IssueYearMinRange; //DateTime.ParseExact(String.Format("01/01/{0}", IssueYearMinRange), "d", CultureInfo.InvariantCulture);
+            //DateTime issueDateMax = IssueYearMaxRange; //DateTime.ParseExact(String.Format("12/31/{0}", IssueYearMaxRange), "d", CultureInfo.InvariantCulture);
 
             //count of total records unfiltered of this client
             ViewData["allRecordsCount"] = publicModel.Count();
@@ -192,7 +256,10 @@ namespace DocSearch2._1.Controllers
                     ViewData["SortOrder"] = sortAscending;
                     publicModel = publicModel
                                     .OrderByDescending(r => r.IssueDate)
-                                        .ToPagedList(page, pageSize);
+                                        .Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax))
+                                            .ToPagedList(page, pageSize);
+                    //if filtered model is already empty at start, i still need the client id
+
 
                     return View(publicModel);
                 }
@@ -301,13 +368,27 @@ namespace DocSearch2._1.Controllers
             base.Dispose(disposing);
         }
 
-        private IList<SelectListItem> YearRangePopulate(string IssueYearMinRange, string IssueYearMaxRange)
-        {
+        //private IList<SelectListItem> YearRangePopulate(string IssueYearMinRange, string IssueYearMaxRange)
+        //{
+
+        //    IList<SelectListItem> years = new List<SelectListItem>();
+
+        //    for (int i = Int32.Parse(IssueYearMinRange); i <= Int32.Parse(IssueYearMaxRange); i++)
+        //    {
+        //        SelectListItem year = new SelectListItem();
+        //        year.Selected = false;
+        //        year.Text = year.Value = i.ToString();
+        //        years.Add(year);
+        //    }
+
+        //    return years;
+        //}
+        private IList<SelectListItem> YearRangePopulate(DateTime IssueYearMinRange, DateTime IssueYearMaxRange) {
 
             IList<SelectListItem> years = new List<SelectListItem>();
 
-            for (int i = Int32.Parse(IssueYearMinRange); i <= Int32.Parse(IssueYearMaxRange); i++)
-            {
+
+            for (int i = IssueYearMinRange.Year; i <= IssueYearMaxRange.Year; i++) {
                 SelectListItem year = new SelectListItem();
                 year.Selected = false;
                 year.Text = year.Value = i.ToString();
@@ -317,27 +398,52 @@ namespace DocSearch2._1.Controllers
             return years;
         }
 
-        private string RetrieveYear(IEnumerable<PublicVM> model, bool ascending)
-        {
-            string year;
 
-            if (ascending)
-            {
-                year = model
+        //private string RetrieveYear(IEnumerable<PublicVM> model, bool ascending)
+        //{
+        //    string year;
+
+        //    if (ascending)
+        //    {
+        //        year = model
+        //                    .Where(y => y.IssueDate != null)
+        //                    .OrderBy(r => r.IssueDate)
+        //                            .First()
+        //                                .IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+        //    }
+        //    else {
+        //        year = model
+        //                    .Where(y => y.IssueDate != null)
+        //                    .OrderByDescending(r => r.IssueDate)
+        //                            .First()
+        //                                .IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+        //    }
+
+        //    return year;
+        //}
+
+        private DateTime RetrieveYear(IEnumerable<PublicVM> model, bool ascending) {
+
+
+            DateTime date;
+
+            if (ascending) {
+                date = model
                             .Where(y => y.IssueDate != null)
-                            .OrderBy(r => r.IssueDate)
+                                .OrderBy(r => r.IssueDate)
                                     .First()
-                                        .IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+                                        .IssueDate.Value;
             }
-            else {
-                year = model
+            else
+            {
+                date = model
                             .Where(y => y.IssueDate != null)
                             .OrderByDescending(r => r.IssueDate)
                                     .First()
-                                        .IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+                                        .IssueDate.Value;
             }
 
-            return year;
+            return date;
         }
 
         private void populateNavBar(IEnumerable<PublicVM> model)

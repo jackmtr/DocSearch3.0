@@ -5,7 +5,7 @@
         <input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />
         <div id="status-bar-form" class="col-md-12 row">
 
-            <div class="col-md-3">
+            @*<div class="col-md-3">
                 <fieldset>
                     Records per page:
                     <select id="pageSize" name="pageSize">
@@ -15,7 +15,23 @@
                         <option value=100000>All</option>
                     </select>
                 </fieldset>
+            </div>*@
+
+            <div class="col-md-3">
+                <fieldset>
+                    Customize Date Range:
+                    <input type="checkbox" name="customDates" id="customDates" value="customDates" />
+                    <br/>
+                    Records from:
+                    <select id="fromYear" name="IssueYearMinRange">
+                        <option value=@DateTime.Now.AddYears(-1).Year selected>a year ago from today</option>
+                        <option value=@DateTime.Now.AddYears(-2).Year>two years ago from today</option>
+                        <option value=@DateTime.Now.AddYears(-3).Year>three years ago from today</option>
+                        <option value="all">All</option>
+                    </select>
+                </fieldset>
             </div>
+
 
             <div id="text-fill" class="col-md-6"><span id="status-message">Returning <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents, <span id="currentLowYear">@(((List<SelectListItem>)TempData["YearRange"]).First().Text)</span> to <span id="currentHighYear">@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)</span></span></div>
             <div class="col-md-3">
@@ -38,14 +54,14 @@
                 <input id="searchInputBox" type="search" name="searchTerm" />
                 <br />
             </div>
-            <div class="filter col-md-3">
+            <div class="filter customDates col-md-3">
                 <label for="IssueDateMinRange">Issue Date Starting year:</label>
-                @Html.DropDownList("IssueYearMinRange", TempData["YearRange"] as List<SelectListItem>, "Select a Year", new { @class = "datefield", type = "date" })
+                @Html.DropDownList("IssueYearMinRange", TempData["YearRange"] as List<SelectListItem>, "Select a Year", new { @class = "datefield", type = "date", disabled = "disabled" })
                 <br />
             </div>
-            <div class="filter col-md-3">
+            <div class="filter customDates col-md-3">
                 <label for="IssueDateMaxRange">Issue Date Ending year:</label>
-                @Html.DropDownList("IssueYearMaxRange", TempData["YearRange"] as List<SelectListItem>, "Select a Year", new { @class = "datefield", type = "date" })
+                @Html.DropDownList("IssueYearMaxRange", TempData["YearRange"] as List<SelectListItem>, "Select a Year", new { @class = "datefield", type = "date", disabled = "disabled" })
                 <br />
             </div>
             <div class="filter col-md-3 buttondiv">

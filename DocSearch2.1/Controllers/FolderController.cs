@@ -41,6 +41,7 @@ namespace DocSearch2._1.Controllers
             {
                 TempData["Client_Name"] = folder.Name;
                 TempData["Client_Id"] = folder.Number;
+                TempData["Folder_Id"] = folder.Folder_ID; //should be a better way than carrying this variable around
             }
             catch {
                 TempData["Client_Id"] = Number;
