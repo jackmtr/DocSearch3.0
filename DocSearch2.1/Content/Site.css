@@ -595,3 +595,12 @@ select {
 .customDates *{
     display: none;
 }
+
+#public_table {
+    width: 100%;
+}
+
+.noData {
+    background: green;
+    width: 100%;
+}

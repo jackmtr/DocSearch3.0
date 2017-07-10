@@ -2,20 +2,8 @@
 <!--Search Box, Date Filters, clear, and submit button-->
 <div id="form-div">
     <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#public_table" class="row">
-        <input id="search" type="hidden" name="publicId" value="@Model.First().Folder_ID" />
+        <input id="search" type="hidden" name="publicId" value="@TempData["Folder_Id"]" />
         <div id="status-bar-form" class="col-md-12 row">
-
-            @*<div class="col-md-3">
-                <fieldset>
-                    Records per page:
-                    <select id="pageSize" name="pageSize">
-                        <option value=15 selected>15</option>
-                        <option value=30>30</option>
-                        <option value=60>60</option>
-                        <option value=100000>All</option>
-                    </select>
-                </fieldset>
-            </div>*@
 
             <div class="col-md-3">
                 <fieldset>
@@ -24,10 +12,6 @@
                     <br/>
                     Records from:
                     <select id="fromYear" name="IssueYearMinRange">
-                        @*<option value=@DateTime.Now.AddYears(-1).Year selected>a year ago from today</option>
-                        <option value=@DateTime.Now.AddYears(-2).Year>two years ago from today</option>
-                        <option value=@DateTime.Now.AddYears(-3).Year>three years ago from today</option>
-                        <option value="all">All</option>*@
                         <option value="-1" selected>one year ago from today</option>
                         <option value="-2">two years ago from today</option>
                         <option value="-3">three years ago from today</option>
@@ -41,7 +25,7 @@
             <div class="col-md-3">
                 @Ajax.ActionLink("Reset Search", "Index", new
            {
-               publicId = Model.First().Folder_ID
+               publicId = TempData["Folder_Id"]
            }, new AjaxOptions
            {
                HttpMethod = "GET",

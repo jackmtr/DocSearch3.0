@@ -199,11 +199,16 @@ namespace DocSearch2._1.Controllers
                     //checks if the date filter and search term will return any results
                     if (!publicModel.Any(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && (searchTerm == null || r.Description.ToLower().Contains(searchTerm.ToLower()))))
                     {
+                        //
+                        publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && (searchTerm == null || r.Description.ToLower().Contains(searchTerm.ToLower())));
+                        //
+
                         //ViewData["goodSearch"] = false means no records is found
                         ViewData["goodSearch"] = false;
                     }
                     else
                     {
+                        //*******
                         publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) &&
                             (searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.ToLower().Contains(searchTerm.ToLower()) == true : true)));
 

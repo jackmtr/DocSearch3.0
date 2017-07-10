@@ -13,14 +13,14 @@
     }
 </script>
 
-@if ((bool)ViewData["goodSearch"] == false)
-{
-    <script type="text/javascript">
-        //these functions should be synchronous, atm not
-        clearFields();
-        alert('Sorry, your search came up empty.  Clearing Search.');
-    </script>
-}
+@*@if ((bool)ViewData["goodSearch"] == false)
+    {
+        <script type="text/javascript">
+            //these functions should be synchronous, atm not
+            clearFields();
+            alert('Sorry, your search came up empty.  Clearing Search.');
+        </script>
+    }*@
 
 
 @if (ViewData["repositoryRequestDocId"] != null)
@@ -35,287 +35,298 @@
         }
     </script>
 }
+@if (Model.Count > 0 && (bool)ViewData["goodSearch"] == true)
+{
+    <div id="public_table" class="row default-table" data-currentRecord="@ViewData["currentRecordsCount"]" data-currentLowYear="@(((List<SelectListItem>)TempData["YearRange"]).First().Text)" data-currentHighYear="@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)">
+        <div id="public_table_inner" class="col-md-12">
 
-<div id="public_table" class="row default-table" data-currentRecord="@ViewData["currentRecordsCount"]" data-currentLowYear="@(((List<SelectListItem>)TempData["YearRange"]).First().Text)" data-currentHighYear ="@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)">
-    <div id ="public_table_inner" class="col-md-12">
-
-        <div class="admin-and-pagination row">
-            @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
-            {
-                <div class="adminOptions col-md-4">
-                    @using (Html.BeginForm("AdminOptions", "Admin", "Get"))
-                    {
-                        @Html.DropDownList("Options", new List<SelectListItem>
+            <div class="admin-and-pagination row">
+                @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+                {
+                    <div class="adminOptions col-md-4">
+                        @using (Html.BeginForm("AdminOptions", "Admin", "Get"))
+                        {
+                            @Html.DropDownList("Options", new List<SelectListItem>
                     {
                         new SelectListItem { Value = "0", Text = "Edit These Files"},
                         new SelectListItem { Value = "1", Text = "Download all Public Documents"}
                     }, new { id = "editOptions" }
-     )
-                        <input id="editOptionsSubmit" type="submit" value="Go" />
-                    }
+)
+                            <input id="editOptionsSubmit" type="submit" value="Go" />
+                        }
 
-                    @using (Html.BeginForm("DownloadAllDocuments", "Admin", FormMethod.Get, new { id = "downloadForm" }))
-                    {
-                        @Html.TextBox("ClientId", null);
-                        <input type="submit" value="Submit" id="downloadAllDocumentSubmit" />
-                    }
+                        @using (Html.BeginForm("DownloadAllDocuments", "Admin", FormMethod.Get, new { id = "downloadForm" }))
+                        {
+                            @Html.TextBox("ClientId", null);
+                            <input type="submit" value="Submit" id="downloadAllDocumentSubmit" />
+                        }
+                    </div>
+                }
+
+                <div class="pagedList col-md-8" data-otf-target="#public_table" style="display: none">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"] }),
+PagedListRenderOptions.ClassicPlusFirstAndLast) <!--The PagedListRenderOptions is an enum of display configs for the pagedList item-->
                 </div>
-            }
-
-            <div class="pagedList col-md-8" data-otf-target="#public_table" style="display: none">
-                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"] }),
- PagedListRenderOptions.ClassicPlusFirstAndLast) <!--The PagedListRenderOptions is an enum of display configs for the pagedList item-->
             </div>
-        </div>
 
-        <table class="table table-bordered table-hover">
-            <thead class="thead-default">
-                <tr class="main-rows">
-                    <th>
-                        <!--1-->
-                        @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                   {
-                       publicId = Model.First().Folder_ID,
-                       filter = "document",
-                       subNav = ViewData["currentNav"],
-                       prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"],
-                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                   }), "#public_table", "replace-with", "GET", "Type of Document", "fa-sort", "filterLink", "postNavbar", "document"))
-                    </th>
-                    <th>
-                        <!--2-->
-                        @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                   {
-                       publicId = Model.First().Folder_ID,
-                       filter = "issue",
-                       subNav = ViewData["currentNav"],
-                       prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"],
-                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                   }), "#public_table", "replace-with", "GET", "Issue Date", "fa-sort", "filterLink", "postNavbar", "issue"))
-                    </th>
-                    <th>
-                        @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                   {
-                       publicId = Model.First().Folder_ID,
-                       filter = "method",
-                       subNav = ViewData["currentNav"],
-                       prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"],
-                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                   }), "#public_table", "replace-with", "GET", "Method", "fa-sort", "filterLink", "postNavbar", "method"))
-                    </th> <!--3-->
-                    <th>
-                        <!--4-->
-                        @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                   {
-                       publicId = Model.First().Folder_ID,
-                       filter = "policy",
-                       subNav = ViewData["currentNav"],
-                       prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"],
-                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                   }), "#public_table", "replace-with", "GET", "Policy #", "fa-sort", "filterLink", "postNavbar", "policy"))
-                    </th>
-                    <th>
-                        <!--5-->
-                        @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                   {
-                       publicId = Model.First().Folder_ID,
-                       filter = "effective",
-                       subNav = ViewData["currentNav"],
-                       prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"],
-                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                   }), "#public_table", "replace-with", "GET", "Effective Date", "fa-sort", "filterLink", "postNavbar", "effective"))
-                    </th>
-                    <th>
-                        <!--6-->
-                        @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                   {
-                       publicId = Model.First().Folder_ID,
-                       filter = "originator",
-                       subNav = ViewData["currentNav"],
-                       prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"],
-                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                   }), "#public_table", "replace-with", "GET", "Originator", "fa-sort", "filterLink", "postNavbar", "originator"))
-                    </th>
-                    <th>
-                        @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                   {
-                       publicId = Model.First().Folder_ID,
-                       filter = "reason",
-                       subNav = ViewData["currentNav"],
-                       prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"],
-                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                   }), "#public_table", "replace-with", "GET", "Reason", "fa-sort", "filterLink", "postNavbar", "reason"))
-                    </th><!--7-->
-                    <th>
-                        @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                   {
-                       publicId = Model.First().Folder_ID,
-                       filter = "supplier",
-                       subNav = ViewData["currentNav"],
-                       prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"],
-                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                   }), "#public_table", "replace-with", "GET", "Supplier #", "fa-sort", "filterLink", "postNavbar", "supplier"))
-                    </th><!--8-->
-                    <th>
-                        <!--9-->
-                        @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                   {
-                       publicId = Model.First().Folder_ID,
-                       filter = "description",
-                       subNav = ViewData["currentNav"],
-                       prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"],
-                       IssueYearMinRange = Model.OrderBy( r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                   }), "#public_table", "replace-with", "GET", "Description", "fa-sort", "filterLink", "postNavbar", "description"))
-                    </th>
-
-
-
-                    <th>
-                        @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                   {
-                       publicId = Model.First().Folder_ID,
-                       filter = "file",
-                       subNav = ViewData["currentNav"],
-                       prevNav = ViewData["currentNavTitle"],
-                       searchTerm = TempData["SearchTerm"],
-                       IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                       IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                   }), "#public_table", "replace-with", "GET", "File", "fa-sort", "filterLink", "postNavbar", "file"))
-                    </th><!--10-->
-                    <th>More</th><!--11-->
-                    @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
-                    {
-                        <th>
-                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                       {
-                           publicId = Model.First().Folder_ID,
-                           filter = "documentId",
-                           subNav = ViewData["currentNav"],
-                           prevNav = ViewData["currentNavTitle"],
-                           searchTerm = TempData["SearchTerm"],
-                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                       }), "#public_table", "replace-with", "GET", "Document Id", "fa-sort", "filterLink", "postNavbar", "documentId"))
-                        </th>
-                    }
-                    @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
-                    {
-                        <th>
-                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                       {
-                           publicId = Model.First().Folder_ID,
-                           filter = "hidden",
-                           subNav = ViewData["currentNav"],
-                           prevNav = ViewData["currentNavTitle"],
-                           searchTerm = TempData["SearchTerm"],
-                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                       }), "#public_table", "replace-with", "GET", "Visibility", "fa-sort", "filterLink", "postNavbar", "hidden"))
-                        </th>
-                    }
-                    @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
-                    {
-                        <th>Select <input type="checkbox" class="selectAll" /></th>
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+            <table class="table table-bordered table-hover">
+                <thead class="thead-default">
                     <tr class="main-rows">
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DocumentTypeName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IssueDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Method)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RefNumber)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EffectiveDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Originator)
-                        </td>
-                        <td>
-                            @if (item.Reason == null || item.Reason.Length < 1)
-                            {
-                                @Html.Raw("N/A");
-                            }
-                            else {
-                                @Html.DisplayFor(modelItem => item.Reason)
-                            }
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Supplier)
-                        </td>
-                        <td class="description">
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @if (item.FileExtension == null || item.FileExtension.Length < 1)
-                            {
-                                @Html.Raw("N/A");
-                            }
-                            else
-                            {
-                                @Html.ActionLink(item.FileExtension.Trim(), "FileDisplay", new { documentId = item.Document_ID }, new { target = "_blank" })
-                                if (item.FileExtension.Trim() == "jpg" || item.FileExtension.Trim() == "png")
-                                {
-                                    <div class="preview_image">
-                                        @Html.ActionLink("[Preview]", "FileDisplay", new { documentId = item.Document_ID }, new { @class = "preview", id = item.Document_ID + 'a' })
-                                    </div>
-                                }
-                            }
-                        </td>
-                        <td>
-                            <a href="#" class="miscTableLink" method="get" action="@Url.Action("MiscData", new { documentId = item.Document_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"], })" data-otf-ajax="true" data-otf-target="#@item.Document_ID.ToString()"><i class="fa fa-expand"></i></a>
-                        </td>
+                        <th>
+                            <!--1-->
+                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                       {
+                           publicId = Model.First().Folder_ID,
+                           filter = "document",
+                           subNav = ViewData["currentNav"],
+                           prevNav = ViewData["currentNavTitle"],
+                           searchTerm = TempData["SearchTerm"],
+                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
+                       }), "#public_table", "replace-with", "GET", "Type of Document", "fa-sort", "filterLink", "postNavbar", "document"))
+                        </th>
+                        <th>
+                            <!--2-->
+                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                       {
+                           publicId = Model.First().Folder_ID,
+                           filter = "issue",
+                           subNav = ViewData["currentNav"],
+                           prevNav = ViewData["currentNavTitle"],
+                           searchTerm = TempData["SearchTerm"],
+                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
+                       }), "#public_table", "replace-with", "GET", "Issue Date", "fa-sort", "filterLink", "postNavbar", "issue"))
+                        </th>
+                        <th>
+                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                       {
+                           publicId = Model.First().Folder_ID,
+                           filter = "method",
+                           subNav = ViewData["currentNav"],
+                           prevNav = ViewData["currentNavTitle"],
+                           searchTerm = TempData["SearchTerm"],
+                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
+                       }), "#public_table", "replace-with", "GET", "Method", "fa-sort", "filterLink", "postNavbar", "method"))
+                        </th> <!--3-->
+                        <th>
+                            <!--4-->
+                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                       {
+                           publicId = Model.First().Folder_ID,
+                           filter = "policy",
+                           subNav = ViewData["currentNav"],
+                           prevNav = ViewData["currentNavTitle"],
+                           searchTerm = TempData["SearchTerm"],
+                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
+                       }), "#public_table", "replace-with", "GET", "Policy #", "fa-sort", "filterLink", "postNavbar", "policy"))
+                        </th>
+                        <th>
+                            <!--5-->
+                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                       {
+                           publicId = Model.First().Folder_ID,
+                           filter = "effective",
+                           subNav = ViewData["currentNav"],
+                           prevNav = ViewData["currentNavTitle"],
+                           searchTerm = TempData["SearchTerm"],
+                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
+                       }), "#public_table", "replace-with", "GET", "Effective Date", "fa-sort", "filterLink", "postNavbar", "effective"))
+                        </th>
+                        <th>
+                            <!--6-->
+                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                       {
+                           publicId = Model.First().Folder_ID,
+                           filter = "originator",
+                           subNav = ViewData["currentNav"],
+                           prevNav = ViewData["currentNavTitle"],
+                           searchTerm = TempData["SearchTerm"],
+                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
+                       }), "#public_table", "replace-with", "GET", "Originator", "fa-sort", "filterLink", "postNavbar", "originator"))
+                        </th>
+                        <th>
+                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                       {
+                           publicId = Model.First().Folder_ID,
+                           filter = "reason",
+                           subNav = ViewData["currentNav"],
+                           prevNav = ViewData["currentNavTitle"],
+                           searchTerm = TempData["SearchTerm"],
+                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
+                       }), "#public_table", "replace-with", "GET", "Reason", "fa-sort", "filterLink", "postNavbar", "reason"))
+                        </th><!--7-->
+                        <th>
+                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                       {
+                           publicId = Model.First().Folder_ID,
+                           filter = "supplier",
+                           subNav = ViewData["currentNav"],
+                           prevNav = ViewData["currentNavTitle"],
+                           searchTerm = TempData["SearchTerm"],
+                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
+                       }), "#public_table", "replace-with", "GET", "Supplier #", "fa-sort", "filterLink", "postNavbar", "supplier"))
+                        </th><!--8-->
+                        <th>
+                            <!--9-->
+                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                       {
+                           publicId = Model.First().Folder_ID,
+                           filter = "description",
+                           subNav = ViewData["currentNav"],
+                           prevNav = ViewData["currentNavTitle"],
+                           searchTerm = TempData["SearchTerm"],
+                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
+                       }), "#public_table", "replace-with", "GET", "Description", "fa-sort", "filterLink", "postNavbar", "description"))
+                        </th>
+
+
+
+                        <th>
+                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                       {
+                           publicId = Model.First().Folder_ID,
+                           filter = "file",
+                           subNav = ViewData["currentNav"],
+                           prevNav = ViewData["currentNavTitle"],
+                           searchTerm = TempData["SearchTerm"],
+                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
+                       }), "#public_table", "replace-with", "GET", "File", "fa-sort", "filterLink", "postNavbar", "file"))
+                        </th><!--10-->
+                        <th>More</th><!--11-->
                         @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                         {
+                            <th>
+                                @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                           {
+                               publicId = Model.First().Folder_ID,
+                               filter = "documentId",
+                               subNav = ViewData["currentNav"],
+                               prevNav = ViewData["currentNavTitle"],
+                               searchTerm = TempData["SearchTerm"],
+                               IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                               IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
+                           }), "#public_table", "replace-with", "GET", "Document Id", "fa-sort", "filterLink", "postNavbar", "documentId"))
+                            </th>
+                        }
+                        @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+                        {
+                            <th>
+                                @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
+                           {
+                               publicId = Model.First().Folder_ID,
+                               filter = "hidden",
+                               subNav = ViewData["currentNav"],
+                               prevNav = ViewData["currentNavTitle"],
+                               searchTerm = TempData["SearchTerm"],
+                               IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
+                               IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
+                           }), "#public_table", "replace-with", "GET", "Visibility", "fa-sort", "filterLink", "postNavbar", "hidden"))
+                            </th>
+                        }
+                        @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+                        {
+                            <th>Select <input type="checkbox" class="selectAll" /></th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="main-rows">
                             <td>
-                                @Html.DisplayFor(modelItem=> item.Document_ID)
+                                @Html.DisplayFor(modelItem => item.DocumentTypeName)
                             </td>
                             <td>
-                                @if (item.Hidden.ToString() == "True")
+                                @Html.DisplayFor(modelItem => item.IssueDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Method)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RefNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EffectiveDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Originator)
+                            </td>
+                            <td>
+                                @if (item.Reason == null || item.Reason.Length < 1)
                                 {
-                                    @Html.Raw("Visible")
+                                    @Html.Raw("N/A");
                                 }
                                 else
                                 {
-                                    @Html.Raw("Hidden")
+                                    @Html.DisplayFor(modelItem => item.Reason)
                                 }
                             </td>
                             <td>
-                                <input type="checkbox" name="edit" value=@item.Document_ID id="@(item.Document_ID + "edit")" />
+                                @Html.DisplayFor(modelItem => item.Supplier)
                             </td>
-                        }
-                    </tr>
-                    <tr class="misc_table" id="@item.Document_ID"></tr>
-                }
-            </tbody>
-        </table>
+                            <td class="description">
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @if (item.FileExtension == null || item.FileExtension.Length < 1)
+                                {
+                                    @Html.Raw("N/A");
+                                }
+                                else
+                                {
+                                    @Html.ActionLink(item.FileExtension.Trim(), "FileDisplay", new { documentId = item.Document_ID }, new { target = "_blank" })
+                                    if (item.FileExtension.Trim() == "jpg" || item.FileExtension.Trim() == "png")
+                                    {
+                                        <div class="preview_image">
+                                            @Html.ActionLink("[Preview]", "FileDisplay", new { documentId = item.Document_ID }, new { @class = "preview", id = item.Document_ID + 'a' })
+                                        </div>
+                                    }
+                                }
+                            </td>
+                            <td>
+                                <a href="#" class="miscTableLink" method="get" action="@Url.Action("MiscData", new { documentId = item.Document_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"], })" data-otf-ajax="true" data-otf-target="#@item.Document_ID.ToString()"><i class="fa fa-expand"></i></a>
+                            </td>
+                            @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Document_ID)
+                                </td>
+                                <td>
+                                    @if (item.Hidden.ToString() == "True")
+                                    {
+                                        @Html.Raw("Visible")
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("Hidden")
+                                    }
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="edit" value=@item.Document_ID id="@(item.Document_ID + "edit")" />
+                                </td>
+                            }
+                        </tr>
+                        <tr class="misc_table" id="@item.Document_ID"></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
+}
+else
+{
+    <div id="public_table" class="row default-table" data-currentRecord="@ViewData["currentRecordsCount"]" data-currentLowYear="@(((List<SelectListItem>)TempData["YearRange"]).First().Text)" data-currentHighYear="@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)">
+        <div id="public_table_inner" class="col-md-12 noData">
+            <h3>Sorry, no data is returned within this Issue Date Range.  Please widen the date range.</h3>
+        </div>
+    </div>
+}
