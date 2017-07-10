@@ -99,12 +99,6 @@ namespace DocSearch2._1.Controllers
             }
 
             //Formatting the display date into SQL date type
-            /*
-            if (Int32.Parse(IssueYearMaxRange) < Int32.Parse(IssueYearMinRange)) {
-                string temp = IssueYearMinRange;
-                IssueYearMinRange = IssueYearMaxRange;
-                IssueYearMaxRange = temp;
-            }*/
 
             DateTime issueDateMin = today.AddYears(-1);
             DateTime issueDateMax = today;
@@ -117,30 +111,14 @@ namespace DocSearch2._1.Controllers
             else if ((IssueYearMinRange != null && IssueYearMinRange != "") && (IssueYearMaxRange == null || IssueYearMaxRange == "")) {
                 // using regular input
 
-                switch (IssueYearMinRange)
-                {
-                    case "2016":
-                        issueDateMin = today.AddYears(-1);
-                        break;
-                    case "2015":
-                        issueDateMin = today.AddYears(-2);
-                        break;
-                    case "2014":
-                        issueDateMin = today.AddYears(-3);
-                        break;
-                    default:
-                        int subtractYears = 50;
-                        try {
-                            subtractYears = DateTime.Now.Year - Int32.Parse(IssueYearMaxRange);
-                        } catch {
+                int yearInput = Int32.Parse(IssueYearMinRange);
 
-                        }
-                        
-                        issueDateMin = today.AddYears(subtractYears);
-                        break;
+                if (yearInput > 1950) {
+                    yearInput = yearInput - DateTime.Now.Year;
                 }
 
-                //issueDateMax = today; but redundant to write
+                issueDateMin = today.AddYears(yearInput);
+
             }
             else if ((IssueYearMinRange != null && IssueYearMinRange != "") && (IssueYearMaxRange != null && IssueYearMaxRange != ""))
             {
@@ -161,10 +139,6 @@ namespace DocSearch2._1.Controllers
                 issueDateMax = today;
                 //dont think this should ever get hit
             }
-
-
-            //DateTime issueDateMin = IssueYearMinRange; //DateTime.ParseExact(String.Format("01/01/{0}", IssueYearMinRange), "d", CultureInfo.InvariantCulture);
-            //DateTime issueDateMax = IssueYearMaxRange; //DateTime.ParseExact(String.Format("12/31/{0}", IssueYearMaxRange), "d", CultureInfo.InvariantCulture);
 
             //count of total records unfiltered of this client
             ViewData["allRecordsCount"] = publicModel.Count();

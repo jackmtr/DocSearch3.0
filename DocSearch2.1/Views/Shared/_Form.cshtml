@@ -24,10 +24,14 @@
                     <br/>
                     Records from:
                     <select id="fromYear" name="IssueYearMinRange">
-                        <option value=@DateTime.Now.AddYears(-1).Year selected>a year ago from today</option>
+                        @*<option value=@DateTime.Now.AddYears(-1).Year selected>a year ago from today</option>
                         <option value=@DateTime.Now.AddYears(-2).Year>two years ago from today</option>
                         <option value=@DateTime.Now.AddYears(-3).Year>three years ago from today</option>
-                        <option value="all">All</option>
+                        <option value="all">All</option>*@
+                        <option value="-1" selected>a year ago from today</option>
+                        <option value="-2">two years ago from today</option>
+                        <option value="-3">three years ago from today</option>
+                        <option value="-100">All</option>
                     </select>
                 </fieldset>
             </div>
