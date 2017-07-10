@@ -24,7 +24,13 @@ namespace DocSearch2._1.Repositories
 
             List<PublicVM> PublicVMList = new List<PublicVM>();
 
-            int publicNumberInt = Int32.Parse(publicNumber); //should be able to be done in LINQ
+            int publicNumberInt;
+
+            try {
+                publicNumberInt = Int32.Parse(publicNumber); //should be able to be done in LINQ
+            } catch {
+                return null;
+            }
 
             if (role == "Admin")
             {

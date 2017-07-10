@@ -287,7 +287,7 @@
         $("#category_section, #policy_section").toggleClass("hidden");
     })
 
-    //active navbar class addition
+    //active navbar class addition ***MAYBE COMBINE WITH ANOTHER
     $(".nav_lists a").on("click", function () {
         $(".nav_lists").find(".active").removeClass("active");
         $(this).parent().addClass("active");
@@ -403,6 +403,7 @@
         var options = {
             url: $this.attr('href'),
             //data: "pageSize=" + pageSize1,
+            data: "IssueYearMinRange =" + "2016", //not being sent to controller, but I need a data attribute it seems
             type: "GET",
         };
 
@@ -416,7 +417,7 @@
             $target.replaceWith($newHtml);
 
             complete: updateCurrentCount();
-            success: clearFields($this.prop('tagName'));      
+            success: clearFields($this.prop('id'));      
         });
 
         return false;
@@ -526,6 +527,53 @@
             //$('.customDates').children().css("display", "none").parent().children("select").prop("disabled", true);
             $('.customDates').children("select").prop("disabled", true).siblings().addBack().css("display", "none");
         }
+    });
+
+    $('.navLink').on("click", function () {
+        $this = $(this);
+
+        //check if min exists, if so use it
+        //check if max exists, if so use it
+
+        //$(".nav_lists a").on("click", function () {
+        //    $(".nav_lists").find(".active").removeClass("active");
+        //    $(this).parent().addClass("active");
+        //});
+
+        /*
+         *     //active navbar class addition
+                $(".nav_lists a").on("click", function () {
+                    $(".nav_lists").find(".active").removeClass("active");
+                    $(this).parent().addClass("active");
+                });
+         * 
+         */
+
+        var $selectName = $("select[name = 'IssueYearMinRange']");
+
+        $selectName.val()
+
+        var options = {
+            url: $this.attr('href'),
+            //data: "pageSize=" + pageSize1,
+            data: "&IssueYearMinRange=" + $selectName.val(),
+            type: "GET",
+        };
+
+        $.ajax(options).done(function (data) {
+
+            var $target = $('#public_table');
+            var $newHtml = $(data);
+
+
+            $target.replaceWith($newHtml);
+
+            //complete: updateCurrentCount();
+            complete: postNavbar();
+            success: clearFields($this.prop('id'));
+        });
+
+        return false;
     });
     ////
 

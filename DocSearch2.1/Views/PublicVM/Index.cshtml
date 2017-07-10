@@ -29,6 +29,7 @@
                 <script type="text/javascript">
                     //adjust table for subnav column, also clears input fields
                     function postNavbar() {
+
                         $className = $('.active').children("a").data("subclass");
                         $classNameTitle = $('.active').children("a").data("subclass-title");
 
@@ -45,22 +46,27 @@
 
                         //need to check for form submit, then not do clearFields
                         if ($(this).hasClass('navLink') || $(this).hasClass('button')) {
+
                             clearFields();
                         }
+
+                        updateCurrentCount();
                     }
 
                     //function to clear table/navbar/form to look like original content
-                    function clearFields(tagName) {
+                    function clearFields(id) {
 
                         $form = $('form');
                         $form.find("input[type=search]").val("");
 
                         $form.find(".form-inputs select option").removeAttr('selected');
+                        
                         $form.find("#IssueYearMinRange option:eq(0)").prop("selected", true);
                         $form.find("#IssueYearMaxRange option:eq(0)").prop("selected", true);
 
                         //may want to be more specific with check //having issues with this since updating the reset button
-                        if (tagName == "A") {
+                        if (id == "clearButton") {
+                            $form.find("#fromYear option:eq(0)").prop("selected", true);
                             $(".active").removeClass('active');
                         }
 

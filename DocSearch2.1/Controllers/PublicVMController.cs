@@ -69,28 +69,36 @@ namespace DocSearch2._1.Controllers
             //ViewData["currentNav"] used to populate view's link route value for subNav, which in turn populates subNav variable.  Used to save subnav state
             ViewData["currentNav"] = null;
 
+            DateTime issueDateMin = today.AddYears(-1);
+            DateTime issueDateMax = today;
+
             //declare and instantiate the original full PublicVM data for the client
             IEnumerable<PublicVM> publicModel = null;
 
 
             //**POPULATING MAIN MODEL, second conditional is for no doc reference documents, a unique westland condition
-            publicModel = publicRepository
-                            .SelectAll(Folder_ID, TempData["Role"].ToString())
-                                .Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null)
-                                    .GroupBy(x => x.Document_ID)
-                                        .Select(x => x.First());
+            try {
+                publicModel = publicRepository
+                                .SelectAll(Folder_ID, TempData["Role"].ToString())
+                                    .Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null)
+                                        .GroupBy(x => x.Document_ID)
+                                            .Select(x => x.First());
+            } catch {
+                return View("Errors");
+            }
+
 
 
             //instantiating the overall min and max YEAR ranges for this client if date inputs were null, maybe combine into one conditional
-            if (IssueYearMinRange == null /*|| IssueYearMinRange == ""*/)
-            {
-                //IssueYearMinRange = RetrieveYear(publicModel, true);
-            }
+            //if (IssueYearMinRange == null /*|| IssueYearMinRange == ""*/)
+            //{
+            //    //IssueYearMinRange = RetrieveYear(publicModel, true);
+            //}
 
-            if (IssueYearMaxRange == null /*|| IssueYearMaxRange == ""*/)
-            {
-                //IssueYearMaxRange = RetrieveYear(publicModel, false);
-            }
+            //if (IssueYearMaxRange == null /*|| IssueYearMaxRange == ""*/)
+            //{
+            //    //IssueYearMaxRange = RetrieveYear(publicModel, false);
+            //}
 
             //should only be run on initial load of page
             if (!Request.IsAjaxRequest()) {
@@ -100,25 +108,38 @@ namespace DocSearch2._1.Controllers
 
             //Formatting the display date into SQL date type
 
-            DateTime issueDateMin = today.AddYears(-1);
-            DateTime issueDateMax = today;
+            //if ((IssueYearMinRange == null || IssueYearMinRange == "") && (IssueYearMaxRange == null || IssueYearMaxRange == ""))
+            //{
+            //    issueDateMin = today.AddYears(-1);
+            //    issueDateMax = today;
+            //}
+            //else if ((IssueYearMinRange != null && IssueYearMinRange != "") && (IssueYearMaxRange == null || IssueYearMaxRange == "")) {
+            //    // using regular input
 
-            if ((IssueYearMinRange == null || IssueYearMinRange == "") && (IssueYearMaxRange == null || IssueYearMaxRange == ""))
-            {
-                issueDateMin = today.AddYears(-1);
-                issueDateMax = today;
-            }
-            else if ((IssueYearMinRange != null && IssueYearMinRange != "") && (IssueYearMaxRange == null || IssueYearMaxRange == "")) {
-                // using regular input
+            //    int yearInput = Int32.Parse(IssueYearMinRange);
+
+            //    if (yearInput > 1950) {
+            //        yearInput = yearInput - DateTime.Now.Year;
+            //    }
+
+            //    issueDateMin = today.AddYears(yearInput);
+
+            //}
+            if (IssueYearMaxRange == null || IssueYearMaxRange == "") {
+                //(IssueYearMinRange != null) ? IssueYearMinRange = "2015" : IssueYearMinRange = "2016";
+
+                if (IssueYearMinRange == null) {
+                    IssueYearMinRange = today.AddYears(-1).Year.ToString();
+                }
 
                 int yearInput = Int32.Parse(IssueYearMinRange);
 
-                if (yearInput > 1950) {
+                if (yearInput > 1950)
+                {
                     yearInput = yearInput - DateTime.Now.Year;
                 }
 
                 issueDateMin = today.AddYears(yearInput);
-
             }
             else if ((IssueYearMinRange != null && IssueYearMinRange != "") && (IssueYearMaxRange != null && IssueYearMaxRange != ""))
             {
@@ -226,7 +247,7 @@ namespace DocSearch2._1.Controllers
                 //pretty much should only be the initial synchronous load to come in here
                 if (publicModel != null)
                 {
-                    ViewData["currentRecordsCount"] = publicModel.Count();
+                    
                     ViewData["SortOrder"] = sortAscending;
                     publicModel = publicModel
                                     .OrderByDescending(r => r.IssueDate)
@@ -234,6 +255,7 @@ namespace DocSearch2._1.Controllers
                                             .ToPagedList(page, pageSize);
                     //if filtered model is already empty at start, i still need the client id
 
+                    ViewData["currentRecordsCount"] = publicModel.Count();
 
                     return View(publicModel);
                 }
