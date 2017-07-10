@@ -39,6 +39,13 @@
     //submits the search and date filter form asynchronously
     var ajaxFormSubmit = function () {
 
+        var $selectName = $("select[name = 'IssueYearMinRange']:not(:disabled)");
+
+        if (!$selectName.val()) {
+            alert("Please input a Starting and Ending Year.");
+            return false;
+        } 
+
         var $form = $('form');
 
         $category = $(".active a").data('subclass');
@@ -549,9 +556,16 @@
          * 
          */
 
-        var $selectName = $("select[name = 'IssueYearMinRange']");
+        var $selectName = $("select[name = 'IssueYearMinRange']:not(:disabled)");
 
-        $selectName.val()
+        if (!$selectName.val()) {
+            alert("Please input a Starting and Ending Year.");
+            return false;
+        }
+
+        //$selectName.val()
+
+        //alert($selectName.val());
 
         var options = {
             url: $this.attr('href'),
