@@ -42,7 +42,7 @@ namespace DocSearch2._1.Controllers
 
         // GET: PublicVM
         [HttpGet]
-        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1, int pageSize = 300, bool Admin = false)
+        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueYearMinRange = null, string IssueYearMaxRange = null, int page = 1, int pageSize = 300, bool Admin = false, string IssueMonthMinRange = null, string IssueMonthMaxRange = null)
         {
 
             //**GLOBAL VARIABLES
@@ -143,16 +143,22 @@ namespace DocSearch2._1.Controllers
             }
             else if ((IssueYearMinRange != null && IssueYearMinRange != "") && (IssueYearMaxRange != null && IssueYearMaxRange != ""))
             {
+                issueDateMin = FormatDate(IssueYearMinRange, IssueMonthMinRange, true);
+                issueDateMax = FormatDate(IssueYearMaxRange, IssueMonthMaxRange, false);
+
                 //custom dates
-                issueDateMin = DateTime.ParseExact(String.Format("01/01/{0}", IssueYearMinRange), "d", CultureInfo.InvariantCulture);
-                issueDateMax = DateTime.ParseExact(String.Format("12/31/{0}", IssueYearMaxRange), "d", CultureInfo.InvariantCulture);
+                //DateTime issueDateMin1 = DateTime.ParseExact(String.Format("{1}/01/{0}", IssueYearMinRange, IssueMonthMinRange), "d", CultureInfo.InvariantCulture);
+                //DateTime issueDateMax1 = DateTime.ParseExact(String.Format("{1}/01/{0}", IssueYearMaxRange, IssueMonthMaxRange), "d", CultureInfo.InvariantCulture);
+                //need to check for months too
             }
             else if ((IssueYearMinRange == null || IssueYearMinRange == "") && (IssueYearMaxRange != null && IssueYearMaxRange != ""))
             {
                 //no input for min date under CUSTOM inputs
                 //min would be oldest value
-                issueDateMin = today.AddYears(-40);
-                issueDateMax = DateTime.ParseExact(String.Format("12/31/{0}", IssueYearMaxRange), "d", CultureInfo.InvariantCulture);
+                //issueDateMin = today.AddYears(-40);
+                issueDateMin = DateTime.ParseExact(String.Format("1/01/1985"), "d", CultureInfo.InvariantCulture);
+                issueDateMax = DateTime.ParseExact(String.Format("{1}/31/{0}", IssueYearMaxRange, IssueMonthMaxRange), "d", CultureInfo.InvariantCulture);
+                //check for month for max, default jan for min
             }
             else
             {
@@ -736,6 +742,36 @@ namespace DocSearch2._1.Controllers
             prevFilter = filter;
 
             return model;
+        }
+
+        private DateTime FormatDate(string inputYear, string inputMonth, bool isStartingDate) {
+
+            int year = Int32.Parse(inputYear);
+            int month = Int32.Parse(inputMonth) + 1;
+
+            if (month == 13 /* && isEnd == true?*/) //and want last day
+            {
+                year = Int32.Parse(inputYear) + 1;
+                month = 1;
+            }
+
+            //string formatedDate = String.Format("{1}/01/{0}", year, month);
+
+            //DateTime date = DateTime.ParseExact(formatedDate, "d", CultureInfo.InvariantCulture);
+
+            if (isStartingDate)
+            {
+                return new DateTime(year, month, 1).AddMonths(-1);
+            }
+            else {
+                DateTime endingDate = new DateTime(year, month, 1).AddDays(-1);
+
+                return endingDate;
+            }
+
+            //DateTime date = new DateTime(year, month, 1).AddDays(-1);
+
+            //return date;
         }
     }
 }

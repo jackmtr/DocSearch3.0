@@ -608,3 +608,13 @@ select {
 .noData {
     text-align: center;
 }
+
+.datefield { /*The dropdown list styles*/
+    width: 46%;
+    float: left;
+    margin: 2%;
+}
+
+.customDates {
+    display: inline-block;
+}
