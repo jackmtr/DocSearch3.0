@@ -326,7 +326,8 @@ else
 {
     <div id="public_table" class="row default-table" data-currentRecord="@ViewData["currentRecordsCount"]" data-currentLowYear="@(((List<SelectListItem>)TempData["YearRange"]).First().Text)" data-currentHighYear="@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)">
         <div id="public_table_inner" class="col-md-12 noData">
-            <h3>Sorry, no data is returned within this Issue Date Range.  Please widen the date range.</h3>
+            <h3>Sorry, no documents were found within the last year.  Would you like to see all documents?  Click @Ajax.ActionLink("here", "Index", new { publicId= TempData["Folder_Id"], IssueYearMinRange = -100}, new AjaxOptions { UpdateTargetId= "public_table", InsertionMode = InsertionMode.ReplaceWith, HttpMethod = "GET" }, new { id = "allDocs"}).</h3>
+            @*http://localhost:57188/PublicVM?publicId=187&IssueYearMinRange=-100&searchTerm=  *@
         </div>
     </div>
 }

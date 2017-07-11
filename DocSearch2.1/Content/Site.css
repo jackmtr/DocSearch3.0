@@ -601,7 +601,7 @@ select {
 #public_table {
     /*box-sizing: border-box;*/
     width: 100%;
-    padding: 50px;
+    padding: 0px;
     margin-left: auto; 
     margin-right: auto;
 }
