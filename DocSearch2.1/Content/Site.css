@@ -227,9 +227,10 @@ header {
 /*The main part of the content, which involves 'public' info, search bar, and date filters*/
 #public_info {
     height: 90vh;
-    width: 75%;
+    width: 100%;
+    /*width: 75%;
     flex: auto;
-    background-color: white;
+    background-color: white;*/
 }
 
     /*Constant 'public' info display*/
@@ -596,11 +597,15 @@ select {
     display: none;
 }
 
+/*Needed margin-left/right to overrwrite bootstrap default media changes*/
 #public_table {
+    /*box-sizing: border-box;*/
     width: 100%;
+    padding: 50px;
+    margin-left: auto; 
+    margin-right: auto;
 }
 
 .noData {
-    background: green;
-    width: 100%;
+    text-align: center;
 }
