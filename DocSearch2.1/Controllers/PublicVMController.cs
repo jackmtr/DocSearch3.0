@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using PagedList;
 using System.Globalization;
 using DocSearch2._1.Models;
 
@@ -18,7 +17,6 @@ namespace DocSearch2._1.Controllers
         private static bool sortAscending = true; //static var for rememebering previous sort order
         private static string prevFilter; //static var for remembering previous navbar item
         private static DateTime today = DateTime.Today; //should this be static?
-
 
         public PublicVMController() {
             //public repo for publicVM actions
@@ -38,17 +36,18 @@ namespace DocSearch2._1.Controllers
 
         // GET: PublicVM
         [HttpGet]
-        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string subNav = null, string prevNav = null, string filter = null, string searchTerm = null, string IssueYearMinRange = null, string IssueYearMaxRange = null, /*int page = 1, int pageSize = 300,*/ bool Admin = false, string IssueMonthMinRange = null, string IssueMonthMaxRange = null)
+        public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string navBarGroup = null, string navBarItem = null, string filter = null, string searchTerm = null, string IssueYearMinRange = "", string IssueYearMaxRange = "", /*int page = 1, int pageSize = 300,*/ bool Admin = false, string IssueMonthMinRange = "", string IssueMonthMaxRange = "")
         {
             //**GLOBAL VARIABLES
-            if (System.Web.HttpContext.Current.Session["Role"] as String == "Admin") //checking for admin, this is temporary until a better auth check
-            {
-                Admin = true;
-                TempData["Role"] = "Admin"; //Will be used in view to access more controls
-            }
-            else {
-                TempData["Role"] = "Client"; //not really used, might be able to be removed
-            }
+            //if (System.Web.HttpContext.Current.Session["Role"] as String == "Admin") //checking for admin, this is temporary until a better auth check
+            //{
+            //    TempData["Role"] = "Admin"; //Will be used in view to access more controls
+            //}
+            //else {
+            //    TempData["Role"] = "Client"; //not really used, might be able to be removed
+            //}
+
+            TempData["Role"] = (System.Web.HttpContext.Current.Session["Role"] as String == "Admin") ? "Admin" : "Client";
 
             //TempData can be used to send data between controllers and views through one request, .keep() is used to continue keeping after one request
             //persist client name, id, search term, inputted dates
@@ -60,8 +59,8 @@ namespace DocSearch2._1.Controllers
             TempData.Keep("YearRange"); //will carry an array with allowable issue date years for custom dropdown list
 
             //ViewData["goodSearch"] = false means seachterm will return an empty result
-            ViewData["goodSearch"] = true;
-            //ViewData["currentNav"] used to populate view's link route value for subNav, which in turn populates subNav variable.  Used to save subnav state
+            ViewData["goodSearch"] = true; //do i still need this var?
+            //ViewData["currentNav"] used to populate view's link route value for navBarGroup, which in turn populates navBarGroup variable.  Used to save navBarGroup state
             ViewData["currentNav"] = null;
 
             DateTime issueDateMin = today.AddYears(-1); //appropriate place?
@@ -85,49 +84,37 @@ namespace DocSearch2._1.Controllers
 
             //should only be run on initial load of page
             if (!Request.IsAjaxRequest()) {
+
+                //count of total records unfiltered of this client
+                ViewData["allRecordsCount"] = publicModel.Count();
+
                 //creating the options for the dropdown list
-                //****
                 TempData["YearRange"] = YearRangePopulate(RetrieveYear(publicModel, true), RetrieveYear(publicModel, false));
             }
 
+            //If user inputs only one custom year and maybe one/two months, what should happen?
+            if (IssueYearMaxRange == "") {
+                //entered in two scenarios: 1) regular minIssueDate input and custom date where only minIssueDate is filled
 
-            if (IssueYearMaxRange == null || IssueYearMaxRange == "") {
+                int yearInput = (string.IsNullOrEmpty(IssueYearMinRange)) ? Int32.Parse(today.AddYears(-1).Year.ToString()) : Int32.Parse(IssueYearMinRange);
 
-                if (IssueYearMinRange == null) {
-                    IssueYearMinRange = today.AddYears(-1).Year.ToString();
-                }
-
-                int yearInput = Int32.Parse(IssueYearMinRange);
-
-                if (yearInput > 1950)
-                {
-                    yearInput = yearInput - DateTime.Now.Year;
-                }
+                yearInput = (yearInput > 1950) ? yearInput - DateTime.Now.Year : yearInput;
 
                 issueDateMin = today.AddYears(yearInput);
             }
-            else if ((IssueYearMinRange != null && IssueYearMinRange != "") && (IssueYearMaxRange != null && IssueYearMaxRange != ""))
+            else if ((IssueYearMinRange != "") && (IssueYearMaxRange != ""))
             {
                 //custom dates
                 issueDateMin = FormatDate(IssueYearMinRange, IssueMonthMinRange, true);
                 issueDateMax = FormatDate(IssueYearMaxRange, IssueMonthMaxRange, false);
             }
-            else if ((IssueYearMinRange == null || IssueYearMinRange == "") && (IssueYearMaxRange != null && IssueYearMaxRange != ""))
+            else
             {
                 //no input for min date under CUSTOM inputs
-                //min would be oldest value
+                //min would be oldest issue date available
                 issueDateMin = DateTime.ParseExact(String.Format("1/01/1985"), "d", CultureInfo.InvariantCulture);
                 issueDateMax = DateTime.ParseExact(String.Format("{1}/31/{0}", IssueYearMaxRange, IssueMonthMaxRange), "d", CultureInfo.InvariantCulture);
             }
-            else
-            {
-                issueDateMin = today.AddYears(-1);
-                issueDateMax = today;
-                //dont think this should ever get hit
-            }
-
-            //count of total records unfiltered of this client
-            ViewData["allRecordsCount"] = publicModel.Count();
 
             //**Populating the navbar, put into function
             populateNavBar(publicModel);
@@ -137,9 +124,9 @@ namespace DocSearch2._1.Controllers
                 //**STARTING ACTUAL FILTERING/SORTING OF MODEL**
 
                 //*filtering by category/doctype/policy
-                if (subNav != null)
+                if (navBarGroup != null)
                 {
-                    publicModel = subNavFilter(publicModel, subNav, prevNav);
+                    publicModel = navBarGroupFilter(publicModel, navBarGroup, navBarItem);
                 }
 
                 //*filtering by date and search conditions
@@ -158,13 +145,13 @@ namespace DocSearch2._1.Controllers
 
                         TempData["SearchTerm"] = searchTerm;
                     }
-                    //may want to widen results if goodSearch is false
                 }
                 else {
                     //checks if the date filter and search term will return any results
                     if (!publicModel.Any(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && (searchTerm == null || r.Description.ToLower().Contains(searchTerm.ToLower()))))
                     {
-                        publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && (searchTerm == null || r.Description.ToLower().Contains(searchTerm.ToLower())));
+                        publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && 
+                            (searchTerm == null || r.Description.ToLower().Contains(searchTerm.ToLower())));
 
                         //ViewData["goodSearch"] = false means no records is found
                         ViewData["goodSearch"] = false;
@@ -180,10 +167,6 @@ namespace DocSearch2._1.Controllers
 
                 ViewData["currentRecordsCount"] = publicModel.Count();
 
-                //if ((int)ViewData["currentRecordsCount"] < ((pageSize * page) - (pageSize - 1))) {
-                //    page = 1;
-                //}
-
                 //*sorting data
                 publicModel = FilterModel(publicModel, filter, prevFilter/*, page, pageSize*/);
 
@@ -191,7 +174,6 @@ namespace DocSearch2._1.Controllers
 
                 if (publicModel != null)
                 {
-
                     ViewData["SortOrder"] = sortAscending;
 
                     return PartialView("_PublicTable", publicModel);
@@ -204,14 +186,11 @@ namespace DocSearch2._1.Controllers
                 //pretty much should only be the initial synchronous load to come in here
                 if (publicModel != null)
                 {
-                    
                     ViewData["SortOrder"] = sortAscending;
                     publicModel = publicModel
                                     .OrderByDescending(r => r.IssueDate)
                                         .Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax))
                                             .ToList();
-                                            //.ToPagedList(page, pageSize);
-                    //if filtered model is already empty at start, i still need the client id
 
                     ViewData["currentRecordsCount"] = publicModel.Count();
 
@@ -223,7 +202,7 @@ namespace DocSearch2._1.Controllers
             }
         }
 
-        public ActionResult MiscData([Bind(Prefix = "documentId")] string Document_ID, string subNav, string prevNav) {
+        public ActionResult MiscData([Bind(Prefix = "documentId")] string Document_ID, string navBarGroup, string navBarItem) {
             //declare and instantiate the original full MiscPublicData data for the client
             MiscPublicData documentData = null;
 
@@ -232,8 +211,8 @@ namespace DocSearch2._1.Controllers
 
             if (documentData != null)
             {
-                ViewData["currentNav"] = subNav;
-                ViewData["currentNavTitle"] = prevNav;
+                ViewData["currentNav"] = navBarGroup;
+                ViewData["currentNavTitle"] = navBarItem;
 
                 return PartialView(documentData);
             }
@@ -246,6 +225,8 @@ namespace DocSearch2._1.Controllers
         public ActionResult FileDisplay([Bind(Prefix = "documentId")] string id) {
 
             var file = documentRepository.SelectById(id);
+            string MimeType = null;
+
 
             if (file == null) {
                 ViewData["repositoryRequestDocId"] = id;
@@ -257,8 +238,6 @@ namespace DocSearch2._1.Controllers
             {
                 return Content("<script language='javascript' type='text/javascript'>alert('Unable to open, File Size: 0 mb');window.open('','_self').close();</script>");
             }
-
-            string MimeType = null;
 
             switch (file.FileExtension.ToLower().Trim()) {
 
@@ -333,6 +312,7 @@ namespace DocSearch2._1.Controllers
             IList<SelectListItem> years = new List<SelectListItem>();
 
             for (int i = IssueYearMinRange.Year; i <= IssueYearMaxRange.Year; i++) {
+
                 SelectListItem year = new SelectListItem();
                 year.Text = year.Value = i.ToString();
                 years.Add(year);
@@ -370,6 +350,10 @@ namespace DocSearch2._1.Controllers
             return date;
         }
 
+        /// <summary>
+        /// Method that generates the list items to bring to view for NavBar
+        /// </summary>
+        /// <param name="model">The publicVM Model used</param>
         private void populateNavBar(IEnumerable<PublicVM> model)
         {
             IEnumerable<PublicVM> nb = model
@@ -386,9 +370,7 @@ namespace DocSearch2._1.Controllers
 
                 nbitem.CategoryName = pvm.CategoryName;
 
-                foreach (PublicVM pp in model
-                                        .GroupBy(g => g.DocumentTypeName)
-                                            .Select(g => g.First()))
+                foreach (PublicVM pp in model.GroupBy(g => g.DocumentTypeName).Select(g => g.First()))
                 {
                     if (pp.CategoryName == nbitem.CategoryName && !nbl.Any(s => s.DocumentTypeName.Contains(pp.DocumentTypeName)))
                     {
@@ -400,29 +382,36 @@ namespace DocSearch2._1.Controllers
 
             ViewBag.CategoryNavBar = nbl;
             ViewBag.PolicyNavBar = model
-                                    .Where(e => e.EffectiveDate != null) //needs to be removed because (T) ref# and (F) EffDate needs to be brought through model, but this criteria should not be used to populate the navbar policies
+                                    .Where(e => e.EffectiveDate != null)
                                         .OrderBy(e => e.RefNumber)
                                             .GroupBy(e => e.RefNumber)
                                                 .Select(g => g.First().RefNumber);
         }
 
-        private IEnumerable<PublicVM> subNavFilter(IEnumerable<PublicVM> model, string subNav, string prevNav)
+        /// <summary>
+        /// Method to filter the current publicVM model with navbar criteria
+        /// </summary>
+        /// <param name="model">The current PublicVM Model</param>
+        /// <param name="navBarGroup"></param>
+        /// <param name="navBarItem"></param>
+        /// <returns></returns>
+        private IEnumerable<PublicVM> navBarGroupFilter(IEnumerable<PublicVM> model, string navBarGroup, string navBarItem)
         {
-            switch (subNav)
+            switch (navBarGroup)
             {
                 case "category":
-                    model = model.Where(r => r.CategoryName == prevNav);
+                    model = model.Where(r => r.CategoryName == navBarItem);
                     break;
                 case "doctype":
-                    model = model.Where(r => r.DocumentTypeName == prevNav);
+                    model = model.Where(r => r.DocumentTypeName == navBarItem);
                     break;
                 case "policy":
-                    model = model.Where(r => r.RefNumber == prevNav);
+                    model = model.Where(r => r.RefNumber == navBarItem);
                     break;
             }
 
-            ViewData["currentNav"] = subNav;
-            ViewData["currentNavTitle"] = prevNav;
+            ViewData["currentNav"] = navBarGroup;
+            ViewData["currentNavTitle"] = navBarItem;
 
             return model;
         }
@@ -686,7 +675,7 @@ namespace DocSearch2._1.Controllers
             int year = Int32.Parse(inputYear);
             int month = 0;
 
-            if (inputMonth != null)
+            if (inputMonth != "")
             {
                 month = Int32.Parse(inputMonth) + 1;
             }

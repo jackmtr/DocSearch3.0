@@ -20,7 +20,7 @@ namespace DocSearch2._1
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<PublicVM, tbl_Document>());
+            //AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<PublicVM, tbl_Document>());
         }
     }
 }

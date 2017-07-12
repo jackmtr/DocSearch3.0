@@ -63,11 +63,6 @@
                         }
                     </div>
                 }
-
-                <div class="pagedList col-md-8" data-otf-target="#public_table" style="display: none">
-                    @*@Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"] }),
-PagedListRenderOptions.ClassicPlusFirstAndLast)*@ <!--The PagedListRenderOptions is an enum of display configs for the pagedList item-->
-                </div>
             </div>
 
             <table class="table table-bordered table-hover">
@@ -79,8 +74,8 @@ PagedListRenderOptions.ClassicPlusFirstAndLast)*@ <!--The PagedListRenderOptions
                        {
                            publicId = Model.First().Folder_ID,
                            filter = "document",
-                           subNav = ViewData["currentNav"],
-                           prevNav = ViewData["currentNavTitle"],
+                           navBarGroup = ViewData["currentNav"],
+                           navBarItem = ViewData["currentNavTitle"],
                            searchTerm = TempData["SearchTerm"],
                            IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
                            IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
@@ -92,8 +87,8 @@ PagedListRenderOptions.ClassicPlusFirstAndLast)*@ <!--The PagedListRenderOptions
                        {
                            publicId = Model.First().Folder_ID,
                            filter = "issue",
-                           subNav = ViewData["currentNav"],
-                           prevNav = ViewData["currentNavTitle"],
+                           navBarGroup = ViewData["currentNav"],
+                           navBarItem = ViewData["currentNavTitle"],
                            searchTerm = TempData["SearchTerm"],
                            IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
                            IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
@@ -104,8 +99,8 @@ PagedListRenderOptions.ClassicPlusFirstAndLast)*@ <!--The PagedListRenderOptions
                        {
                            publicId = Model.First().Folder_ID,
                            filter = "method",
-                           subNav = ViewData["currentNav"],
-                           prevNav = ViewData["currentNavTitle"],
+                           navBarGroup = ViewData["currentNav"],
+                           navBarItem = ViewData["currentNavTitle"],
                            searchTerm = TempData["SearchTerm"],
                            IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
                            IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
@@ -117,8 +112,8 @@ PagedListRenderOptions.ClassicPlusFirstAndLast)*@ <!--The PagedListRenderOptions
                        {
                            publicId = Model.First().Folder_ID,
                            filter = "policy",
-                           subNav = ViewData["currentNav"],
-                           prevNav = ViewData["currentNavTitle"],
+                           navBarGroup = ViewData["currentNav"],
+                           navBarItem = ViewData["currentNavTitle"],
                            searchTerm = TempData["SearchTerm"],
                            IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
                            IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
@@ -130,8 +125,8 @@ PagedListRenderOptions.ClassicPlusFirstAndLast)*@ <!--The PagedListRenderOptions
                        {
                            publicId = Model.First().Folder_ID,
                            filter = "effective",
-                           subNav = ViewData["currentNav"],
-                           prevNav = ViewData["currentNavTitle"],
+                           navBarGroup = ViewData["currentNav"],
+                           navBarItem = ViewData["currentNavTitle"],
                            searchTerm = TempData["SearchTerm"],
                            IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
                            IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
@@ -143,8 +138,8 @@ PagedListRenderOptions.ClassicPlusFirstAndLast)*@ <!--The PagedListRenderOptions
                        {
                            publicId = Model.First().Folder_ID,
                            filter = "originator",
-                           subNav = ViewData["currentNav"],
-                           prevNav = ViewData["currentNavTitle"],
+                           navBarGroup = ViewData["currentNav"],
+                           navBarItem = ViewData["currentNavTitle"],
                            searchTerm = TempData["SearchTerm"],
                            IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
                            IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
@@ -155,8 +150,8 @@ PagedListRenderOptions.ClassicPlusFirstAndLast)*@ <!--The PagedListRenderOptions
                        {
                            publicId = Model.First().Folder_ID,
                            filter = "reason",
-                           subNav = ViewData["currentNav"],
-                           prevNav = ViewData["currentNavTitle"],
+                           navBarGroup = ViewData["currentNav"],
+                           navBarItem = ViewData["currentNavTitle"],
                            searchTerm = TempData["SearchTerm"],
                            IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
                            IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
@@ -167,8 +162,8 @@ PagedListRenderOptions.ClassicPlusFirstAndLast)*@ <!--The PagedListRenderOptions
                        {
                            publicId = Model.First().Folder_ID,
                            filter = "supplier",
-                           subNav = ViewData["currentNav"],
-                           prevNav = ViewData["currentNavTitle"],
+                           navBarGroup = ViewData["currentNav"],
+                           navBarItem = ViewData["currentNavTitle"],
                            searchTerm = TempData["SearchTerm"],
                            IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
                            IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
@@ -180,8 +175,8 @@ PagedListRenderOptions.ClassicPlusFirstAndLast)*@ <!--The PagedListRenderOptions
                        {
                            publicId = Model.First().Folder_ID,
                            filter = "description",
-                           subNav = ViewData["currentNav"],
-                           prevNav = ViewData["currentNavTitle"],
+                           navBarGroup = ViewData["currentNav"],
+                           navBarItem = ViewData["currentNavTitle"],
                            searchTerm = TempData["SearchTerm"],
                            IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
                            IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
@@ -195,8 +190,8 @@ PagedListRenderOptions.ClassicPlusFirstAndLast)*@ <!--The PagedListRenderOptions
                        {
                            publicId = Model.First().Folder_ID,
                            filter = "file",
-                           subNav = ViewData["currentNav"],
-                           prevNav = ViewData["currentNavTitle"],
+                           navBarGroup = ViewData["currentNav"],
+                           navBarItem = ViewData["currentNavTitle"],
                            searchTerm = TempData["SearchTerm"],
                            IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
                            IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
@@ -210,8 +205,8 @@ PagedListRenderOptions.ClassicPlusFirstAndLast)*@ <!--The PagedListRenderOptions
                            {
                                publicId = Model.First().Folder_ID,
                                filter = "documentId",
-                               subNav = ViewData["currentNav"],
-                               prevNav = ViewData["currentNavTitle"],
+                               navBarGroup = ViewData["currentNav"],
+                               navBarItem = ViewData["currentNavTitle"],
                                searchTerm = TempData["SearchTerm"],
                                IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
                                IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
@@ -225,8 +220,8 @@ PagedListRenderOptions.ClassicPlusFirstAndLast)*@ <!--The PagedListRenderOptions
                            {
                                publicId = Model.First().Folder_ID,
                                filter = "hidden",
-                               subNav = ViewData["currentNav"],
-                               prevNav = ViewData["currentNavTitle"],
+                               navBarGroup = ViewData["currentNav"],
+                               navBarItem = ViewData["currentNavTitle"],
                                searchTerm = TempData["SearchTerm"],
                                IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
                                IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
@@ -294,7 +289,7 @@ PagedListRenderOptions.ClassicPlusFirstAndLast)*@ <!--The PagedListRenderOptions
                                 }
                             </td>
                             <td>
-                                <a href="#" class="miscTableLink" method="get" action="@Url.Action("MiscData", new { documentId = item.Document_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"], })" data-otf-ajax="true" data-otf-target="#@item.Document_ID.ToString()"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="miscTableLink" method="get" action="@Url.Action("MiscData", new { documentId = item.Document_ID, navBarGroup = ViewData["currentNav"], navBarItem = ViewData["currentNavTitle"], })" data-otf-ajax="true" data-otf-target="#@item.Document_ID.ToString()"><i class="fa fa-expand"></i></a>
                             </td>
                             @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                             {

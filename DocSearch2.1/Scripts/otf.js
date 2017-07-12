@@ -55,7 +55,7 @@
             var options = {
                 url: $form.attr("action"),//maybe add to this to check for attributes somehow
                 type: $form.attr("method"),
-                data: $form.serialize() + "&subNav=" + $category + "&prevNav=" + $docType //+ "&pageSize=" + pageSize1 //or add to the data somehow
+                data: $form.serialize() + "&navBarGroup=" + $category + "&navBarItem=" + $docType //+ "&pageSize=" + pageSize1 //or add to the data somehow
             };
         } else {
             var options = {
@@ -220,6 +220,9 @@
 
             return false;
         }
+
+        alert(editList);
+
         var options = {
             url: "/Admin/Edit",
             type: "get",

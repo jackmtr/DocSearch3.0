@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using DocSearch2._1.Models;
 using DocSearch2._1.ViewModels;
-using AutoMapper;
 
 namespace DocSearch2._1.Repositories
 {

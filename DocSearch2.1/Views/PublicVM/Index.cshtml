@@ -28,7 +28,7 @@
 
                 @* Need a better way to place this JS *@
                 <script type="text/javascript">
-                    //adjust table for subnav column, also clears input fields
+                    //adjust table for navBarGroup column, also clears input fields
                     function postNavbar() {
 
                         $className = $('.active').children("a").data("subclass");
@@ -120,8 +120,8 @@
                                             //publicId = Model.First().Folder_ID,
                                             publicId = TempData["Folder_Id"],
                                             policyNumber = policy,
-                                            subNav = subNavOptions.policy,
-                                            prevNav = @policy
+                                            navBarGroup = NavBarGroupOptions.policy,
+                                            navBarItem = @policy
                                         })"
                                        class="navLink"
                                        data-ajax-update="#public_table"

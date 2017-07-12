@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using PagedList;
 using System.Web.Mvc;
 using System.Globalization;
 using DocSearch2._1.Models;
@@ -73,13 +72,13 @@ namespace DocSearch2._1.Controllers
                 TempData["YearRange"] = YearRangePopulate(IssueYearMinRange, IssueYearMaxRange);
             }
 
-            publicModel = publicModel.ToPagedList(page, 50);
-
             return View(publicModel);
         }
 
         [HttpGet]
         public ActionResult Edit([Bind(Prefix = "publicId")] string Folder_ID, string[] EditList) {
+
+            //THERE IS A BUG IF THE EditList CARRIES TOO MANY OBJECTS
 
             List<PublicVM> publicModel = null;
 

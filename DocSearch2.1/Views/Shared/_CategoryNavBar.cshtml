@@ -10,8 +10,8 @@
                     <a href="@Url.Action("Index", "PublicVM", new {
                                             //publicId = Model.First().Folder_ID,
                                             publicId = TempData["Folder_Id"],
-                                            subNav = subNavOptions.category,
-                                            prevNav = @item.CategoryName
+                                            navBarGroup = NavBarGroupOptions.category,
+                                            navBarItem = @item.CategoryName
                                         })"
                        class="navLink"
                        data-ajax-update="#public_table"
@@ -31,8 +31,8 @@
                                 <a href="@Url.Action("Index", "PublicVM", new {
                                                         //publicId = Model.First().Folder_ID,
                                                         publicId = TempData["Folder_Id"],
-                                                        subNav = subNavOptions.doctype,
-                                                        prevNav = @dt
+                                                        navBarGroup = NavBarGroupOptions.doctype,
+                                                        navBarItem = @dt
                                                     })"
                                    class="navLink"
                                    data-ajax-update="#public_table"
