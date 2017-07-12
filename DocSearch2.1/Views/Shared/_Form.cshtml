@@ -1,4 +1,6 @@
-﻿@model IPagedList<PublicVM>
+﻿@*@model IPagedList<PublicVM>*@
+@model IEnumerable<PublicVM>
+
 <!--Search Box, Date Filters, clear, and submit button-->
 <div id="form-div">
     <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#public_table" class="row">

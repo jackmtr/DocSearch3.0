@@ -1,4 +1,6 @@
-﻿@model IPagedList<PublicVM>
+﻿@*@model IPagedList<PublicVM>*@
+@model IEnumerable<PublicVM>
+
 <div id="category_section">
     <ul id="category_list">
         @foreach (var item in ViewBag.CategoryNavBar)

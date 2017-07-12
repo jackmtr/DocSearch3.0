@@ -1,4 +1,5 @@
-﻿@model IPagedList<PublicVM>
+﻿@*@model IPagedList<PublicVM>*@
+@model IEnumerable<DocSearch2._1.ViewModels.PublicVM>
 
 <script>
     function rememeberSort($this) {
@@ -35,7 +36,7 @@
         }
     </script>
 }
-@if (Model.Count > 0 && (bool)ViewData["goodSearch"] == true)
+@if (Model.Count() > 0 && (bool)ViewData["goodSearch"] == true)
 {
     <div id="public_table" class="row default-table" data-currentRecord="@ViewData["currentRecordsCount"]" data-currentLowYear="@(((List<SelectListItem>)TempData["YearRange"]).First().Text)" data-currentHighYear="@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)">
         <div id="public_table_inner" class="col-md-12">
@@ -64,8 +65,8 @@
                 }
 
                 <div class="pagedList col-md-8" data-otf-target="#public_table" style="display: none">
-                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"] }),
-PagedListRenderOptions.ClassicPlusFirstAndLast) <!--The PagedListRenderOptions is an enum of display configs for the pagedList item-->
+                    @*@Html.PagedListPager(Model, page => Url.Action("Index", new { page, publicId = Model.First().Folder_ID, subNav = ViewData["currentNav"], prevNav = ViewData["currentNavTitle"] }),
+PagedListRenderOptions.ClassicPlusFirstAndLast)*@ <!--The PagedListRenderOptions is an enum of display configs for the pagedList item-->
                 </div>
             </div>
 
