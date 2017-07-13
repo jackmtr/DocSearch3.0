@@ -630,10 +630,10 @@ $(function () {
 
         if ($('#customDates').is(':checked')) {
             $('#fromYear').prop("disabled", true);
-            $('.customDates').children("select").prop("disabled", false).children().addBack().css("display", "block");
+            $('.customDates').children().prop("disabled", false).children().addBack().css("display", "block");
         } else {
             $('#fromYear').prop("disabled", false);
-            $('.customDates').children("select").prop("disabled", true).children().addBack().css("display", "none");
+            $('.customDates').children().prop("disabled", true).children().addBack().css("display", "none");
         }
     });
 
