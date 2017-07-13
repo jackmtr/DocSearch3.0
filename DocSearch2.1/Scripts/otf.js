@@ -151,7 +151,7 @@ $(function () {
 
         var $selectName = $("select[name = 'IssueYearMinRange']:not(:disabled)");
 
-        if (!$selectName.val()) {
+        if (!$selectName.val() && !$selectName.parent().next().find("select[name = 'IssueYearMaxRange']:not(:disabled)").val()) { //checks for inputs for both custom year dropdowns
             alert("Please input a Starting and Ending Year.");
             return false;
         } 
