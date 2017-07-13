@@ -15,7 +15,7 @@ namespace DocSearch2._1.Controllers
         private IPublicRepository publicRepository = null; //public function repository
         private IDocumentRepository documentRepository = null; //document function repository
         private static bool sortAscending = true; //static var for rememebering previous sort order
-        private static string prevFilter; //static var for remembering previous navbar item
+        //private static string prevFilter; //static var for remembering previous navbar item
         private static DateTime today = DateTime.Today; //should this be static?
 
         public PublicVMController() {
@@ -168,7 +168,7 @@ namespace DocSearch2._1.Controllers
                 ViewData["currentRecordsCount"] = publicModel.Count();
 
                 //*sorting data
-                publicModel = FilterModel(publicModel, filter, prevFilter/*, page, pageSize*/);
+                publicModel = FilterModel(publicModel, filter/*, prevFilter*//*, page, pageSize*/);
 
                 //**ENDING FILTERING OF MODEL**
 
@@ -416,21 +416,22 @@ namespace DocSearch2._1.Controllers
             return model;
         }
 
-        private IEnumerable<PublicVM> FilterModel(IEnumerable<PublicVM> model, string filter, string prevFilter/*, int page, int pageSize*/)
+        private IEnumerable<PublicVM> FilterModel(IEnumerable<PublicVM> model, string filter/*, string prevFilter*//*, int page, int pageSize*/)
         {
             if (filter == null || filter == "")
             {
                 sortAscending = true;
             }
             else {
-                if (prevFilter == filter || prevFilter == null)
-                {
-                    sortAscending = !sortAscending;
-                }
-                else
-                {
-                    sortAscending = true;
-                }
+                sortAscending = !sortAscending;
+                //if (prevFilter == filter || prevFilter == null)
+                //{
+                //    sortAscending = !sortAscending;
+                //}
+                //else
+                //{
+                //    sortAscending = true;
+                //}
             }
 
             switch (filter)
@@ -665,7 +666,7 @@ namespace DocSearch2._1.Controllers
                     break;
             }
 
-            prevFilter = filter;
+            //prevFilter = filter;
 
             return model;
         }

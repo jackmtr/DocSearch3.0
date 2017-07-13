@@ -13,7 +13,7 @@ namespace DocSearch2._1
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery-ui.js", 
                         "~/Scripts/jquery.unobtrusive*",
-                        "~/Scripts/jquery.textfill.min.js",//may not use in the end, mainly used to shrink status bar
+                        //"~/Scripts/jquery.textfill.min.js",//may not use in the end, mainly used to shrink status bar
                         "~/Scripts/jquery.validate*",
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/otf.js")); //my custom js script
@@ -30,7 +30,7 @@ namespace DocSearch2._1
                       "~/Content/bootstrap-grid.css", //extra table options
                       "~/Content/bootstrap-theme.css", //used mainly for table appearance, could be removed for a more basic look
                       "~/Content/font-awesome.css", //for icons
-                      "~/Content/PagedList.css", //pagination
+                      //"~/Content/PagedList.css", //pagination
                       "~/Content/jquery-ui*",
                       "~/Content/Site.css"
                       ));

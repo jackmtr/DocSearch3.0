@@ -1,21 +1,8 @@
-﻿@*@model IPagedList<PublicVM>*@
-@model IEnumerable<DocSearch2._1.ViewModels.PublicVM>
-
-<script>
-    function rememeberSort($this) {
-        var ascending = '@ViewData["SortOrder"]';
-
-        if (ascending == "True") {
-            //not sure why $(this) had issues and couldnt replicate the effect I wanted
-            $("#" + $this.children('i').attr('id')).removeClass("fa-sort").addClass("fa-sort-desc").parent('A').css('text-decoration', 'underline');
-        } else {
-            $("#" + $this.children('i').attr('id')).removeClass("fa-sort").addClass("fa-sort-asc").parent('A').css('text-decoration', 'underline');
-        }
-    }
-</script>
+﻿@model IEnumerable<PublicVM>
 
 @if (ViewData["repositoryRequestDocId"] != null)
 {
+    <!--Am I still using this?-->
     <script type="text/javascript">
         var txt;
 

@@ -1,4 +1,89 @@
-﻿$(function () {
+﻿var postNavbar = function () {
+
+    $className = $('.active').children("a").data("subclass");
+    $classNameTitle = $('.active').children("a").data("subclass-title");
+
+    //first if statement checks if $className has a value or is undefined
+    if ($className) {
+        if ($classNameTitle == "Correspondence") {
+            $('#public_table').removeClass().addClass("correspondence");
+        } else if ($classNameTitle == "Declaration/Endorsement") {
+            $('#public_table').removeClass().addClass("declaration");
+        } else {
+            $('#public_table').removeClass().addClass($className);
+        }
+    }
+
+    //need to check for form submit, then not do clearFields
+    if ($(this).hasClass('navLink') || $(this).hasClass('button')) {
+
+        clearFields();
+    }
+
+    updateCurrentCount();
+}
+
+//function to clear table/navbar/form to look like original content
+function clearFields(id) {
+
+    $form = $('form');
+    $form.find("input[type=search]").val("");
+
+    $form.find(".form-inputs select option").removeAttr('selected');
+
+    $form.find("#IssueYearMinRange option:eq(0)").prop("selected", true);
+    $form.find("#IssueYearMaxRange option:eq(0)").prop("selected", true);
+
+    //may want to be more specific with check //having issues with this since updating the reset button
+    if (id == "clearButton") {
+        $form.find("#fromYear option:eq(0)").prop("selected", true);
+        $(".active").removeClass('active');
+    }
+
+    $('#searchInputBox').focus();
+
+    //need to figure out how to update status bar years
+    //maybe change jquery connection for year status bar to look for selected option instead of current style
+}
+
+function updateCurrentCount() {
+
+    var currentCount = $('#public_table').data('currentrecord');
+
+    var currentLowYear = $('#IssueYearMinRange option:selected').val();
+    var currentHighYear = $('#IssueYearMaxRange option:selected').val();
+
+    if (currentLowYear.length > 0) {
+        //takes user input
+        $('#currentLowYear').text(currentLowYear);
+    } else {
+        //defaults back to original low
+        currentLowYear = $('#IssueYearMinRange option:eq(1)').val();
+        $('#currentLowYear').text(currentLowYear);
+    }
+
+    if (currentHighYear.length > 0) {
+        $('#currentHighYear').text(currentHighYear);
+    } else {
+        currentHighYear = $('#IssueYearMaxRange option:last').val();
+        $('#currentHighYear').text(currentHighYear);
+    }
+
+    $('#currentCount').text(currentCount);
+}
+
+function rememeberSort($this) {
+    var ascending = '@ViewData["SortOrder"]';
+
+    if (ascending == "True") {
+        //not sure why $(this) had issues and couldnt replicate the effect I wanted
+        $("#" + $this.children('i').attr('id')).removeClass("fa-sort").addClass("fa-sort-desc").parent('A').css('text-decoration', 'underline');
+    } else {
+        $("#" + $this.children('i').attr('id')).removeClass("fa-sort").addClass("fa-sort-asc").parent('A').css('text-decoration', 'underline');
+    }
+}
+
+$(function () {
 
     //**GLOBAL VARIABLES
     var editList = [];
@@ -33,6 +118,33 @@
     }, $.validator.format("Please specify a date between 01 Jan 1990 and today.")); //the daterange validator isnt working properly, but enough
 
     //**FUNCTIONS
+
+    function postNavbar1() {
+
+        $className = $('.active').children("a").data("subclass");
+        $classNameTitle = $('.active').children("a").data("subclass-title");
+
+        //first if statement checks if $className has a value or is undefined
+        if ($className) {
+            if ($classNameTitle == "Correspondence") {
+                $('#public_table').removeClass().addClass("correspondence");
+            } else if ($classNameTitle == "Declaration/Endorsement") {
+                $('#public_table').removeClass().addClass("declaration");
+            } else {
+                $('#public_table').removeClass().addClass($className);
+            }
+        }
+
+        //need to check for form submit, then not do clearFields
+        if ($(this).hasClass('navLink') || $(this).hasClass('button')) {
+
+            clearFields();
+        }
+
+        updateCurrentCount();
+    }
+
+
 
     //submits the search and date filter form asynchronously
     var ajaxFormSubmit = function () {
@@ -212,15 +324,13 @@
 
     var modifyEditList = function () {
 
-
         if (editList.length < 1) {
             alert('No documents have been selected.');
 
             return false;
         }
 
-        alert(editList);
-
+        //JACKIE
         var options = {
             url: "/Admin/Edit",
             type: "get",
@@ -520,10 +630,10 @@
 
         if ($('#customDates').is(':checked')) {
             $('#fromYear').prop("disabled", true);
-            $('.customDates').children("select").prop("disabled", false).siblings().addBack().css("display", "block");
+            $('.customDates').children("select").prop("disabled", false).children().addBack().css("display", "block");
         } else {
             $('#fromYear').prop("disabled", false);
-            $('.customDates').children("select").prop("disabled", true).siblings().addBack().css("display", "none");
+            $('.customDates').children("select").prop("disabled", true).children().addBack().css("display", "none");
         }
     });
 
