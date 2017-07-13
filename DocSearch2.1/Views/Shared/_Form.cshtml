@@ -1,5 +1,4 @@
-﻿@*@model IPagedList<PublicVM>*@
-@model IEnumerable<PublicVM>
+﻿@model IEnumerable<PublicVM>
 
 <!--Search Box, Date Filters, clear, and submit button-->
 <div id="form-div">
@@ -47,7 +46,6 @@
             <div class="filter customDates col-md-3">
                 <label for="IssueDateMinRange">Starting Issue Date:</label>
                 @Html.DropDownList("IssueYearMinRange", TempData["YearRange"] as List<SelectListItem>, "Year", new { @class = "datefield", type = "date", disabled = "disabled" })
-                @*@Html.DropDownList("IssueYearMinRange", TempData["YearRange"] as List<SelectListItem>, (TempData["YearRange"] as List<SelectListItem>).First().Text, new { @class = "datefield", type = "date", disabled = "disabled" })*@
                 <select id="startingMonth" name="IssueMonthMinRange" class="datefield"> @* should i do in html.dropdownlist style? *@
                     <option value="" selected>Month</option>
                     <option value="01">January</option>
@@ -68,7 +66,6 @@
             <div class="filter customDates col-md-3">
                 <label for="IssueDateMaxRange">Ending Issue Date:</label>
                 @Html.DropDownList("IssueYearMaxRange", TempData["YearRange"] as List<SelectListItem>, "Year", new { @class = "datefield", type = "date", disabled = "disabled" })
-                @*@Html.DropDownList("IssueYearMaxRange", TempData["YearRange"] as List<SelectListItem>, (TempData["YearRange"] as List<SelectListItem>).Last().Text, new { @class = "datefield", type = "date", disabled = "disabled" })*@
                 <select id="endingMonth" name="IssueMonthMaxRange" class="datefield">
                     <option value="" selected>Month</option>
                     <option value="01">January</option>

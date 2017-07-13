@@ -1,5 +1,4 @@
-﻿@*@model IPagedList<PublicVM>*@
-@model IEnumerable<PublicVM>
+﻿@model IEnumerable<PublicVM>
 
 @{
     ViewBag.Title = "Westland Archive System";
@@ -117,7 +116,6 @@
                                 <li>
                                     <a href="@Url.Action("Index", "PublicVM", new
                                         {
-                                            //publicId = Model.First().Folder_ID,
                                             publicId = TempData["Folder_Id"],
                                             policyNumber = policy,
                                             navBarGroup = NavBarGroupOptions.policy,

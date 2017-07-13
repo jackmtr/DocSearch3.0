@@ -14,16 +14,6 @@
     }
 </script>
 
-@*@if ((bool)ViewData["goodSearch"] == false)
-    {
-        <script type="text/javascript">
-            //these functions should be synchronous, atm not
-            clearFields();
-            alert('Sorry, your search came up empty.  Clearing Search.');
-        </script>
-    }*@
-
-
 @if (ViewData["repositoryRequestDocId"] != null)
 {
     <script type="text/javascript">
@@ -70,162 +60,56 @@
                     <tr class="main-rows">
                         <th>
                             <!--1-->
-                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                       {
-                           publicId = Model.First().Folder_ID,
-                           filter = "document",
-                           navBarGroup = ViewData["currentNav"],
-                           navBarItem = ViewData["currentNavTitle"],
-                           searchTerm = TempData["SearchTerm"],
-                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                       }), "#public_table", "replace-with", "GET", "Type of Document", "fa-sort", "filterLink", "postNavbar", "document"))
+                            @Url.AjaxActionLinkWithFontAwesome((Int32)TempData["Folder_Id"], "document", (string)ViewData["currentNav"], (string)ViewData["currentNavTitle"], (string)TempData["SearchTerm"], Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), "#public_table", "replace-with", "GET", "Type of Document", "fa-sort", "filterLink", "postNavbar", "document")
                         </th>
                         <th>
                             <!--2-->
-                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                       {
-                           publicId = Model.First().Folder_ID,
-                           filter = "issue",
-                           navBarGroup = ViewData["currentNav"],
-                           navBarItem = ViewData["currentNavTitle"],
-                           searchTerm = TempData["SearchTerm"],
-                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                       }), "#public_table", "replace-with", "GET", "Issue Date", "fa-sort", "filterLink", "postNavbar", "issue"))
+                            @Url.AjaxActionLinkWithFontAwesome((Int32)TempData["Folder_Id"], "issue", (string)ViewData["currentNav"], (string)ViewData["currentNavTitle"], (string)TempData["SearchTerm"], Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), "#public_table", "replace-with", "GET", "Issue Date", "fa-sort", "filterLink", "postNavbar", "issue")
                         </th>
                         <th>
-                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                       {
-                           publicId = Model.First().Folder_ID,
-                           filter = "method",
-                           navBarGroup = ViewData["currentNav"],
-                           navBarItem = ViewData["currentNavTitle"],
-                           searchTerm = TempData["SearchTerm"],
-                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                       }), "#public_table", "replace-with", "GET", "Method", "fa-sort", "filterLink", "postNavbar", "method"))
-                        </th> <!--3-->
+                            <!--3-->
+                            @Url.AjaxActionLinkWithFontAwesome((Int32)TempData["Folder_Id"], "method", (string)ViewData["currentNav"], (string)ViewData["currentNavTitle"], (string)TempData["SearchTerm"], Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), "#public_table", "replace-with", "GET", "Method", "fa-sort", "filterLink", "postNavbar", "method")
+                        </th> 
                         <th>
                             <!--4-->
-                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                       {
-                           publicId = Model.First().Folder_ID,
-                           filter = "policy",
-                           navBarGroup = ViewData["currentNav"],
-                           navBarItem = ViewData["currentNavTitle"],
-                           searchTerm = TempData["SearchTerm"],
-                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                       }), "#public_table", "replace-with", "GET", "Policy #", "fa-sort", "filterLink", "postNavbar", "policy"))
+                            @Url.AjaxActionLinkWithFontAwesome((Int32)TempData["Folder_Id"], "policy", (string)ViewData["currentNav"], (string)ViewData["currentNavTitle"], (string)TempData["SearchTerm"], Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), "#public_table", "replace-with", "GET", "Policy #", "fa-sort", "filterLink", "postNavbar", "policy")
                         </th>
                         <th>
                             <!--5-->
-                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                       {
-                           publicId = Model.First().Folder_ID,
-                           filter = "effective",
-                           navBarGroup = ViewData["currentNav"],
-                           navBarItem = ViewData["currentNavTitle"],
-                           searchTerm = TempData["SearchTerm"],
-                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                       }), "#public_table", "replace-with", "GET", "Effective Date", "fa-sort", "filterLink", "postNavbar", "effective"))
+                            @Url.AjaxActionLinkWithFontAwesome((Int32)TempData["Folder_Id"], "effective", (string)ViewData["currentNav"], (string)ViewData["currentNavTitle"], (string)TempData["SearchTerm"], Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), "#public_table", "replace-with", "GET", "Effective Date", "fa-sort", "filterLink", "postNavbar", "effective")
                         </th>
                         <th>
                             <!--6-->
-                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                       {
-                           publicId = Model.First().Folder_ID,
-                           filter = "originator",
-                           navBarGroup = ViewData["currentNav"],
-                           navBarItem = ViewData["currentNavTitle"],
-                           searchTerm = TempData["SearchTerm"],
-                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                       }), "#public_table", "replace-with", "GET", "Originator", "fa-sort", "filterLink", "postNavbar", "originator"))
+                            @Url.AjaxActionLinkWithFontAwesome((Int32)TempData["Folder_Id"], "originator", (string)ViewData["currentNav"], (string)ViewData["currentNavTitle"], (string)TempData["SearchTerm"], Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), "#public_table", "replace-with", "GET", "Originator", "fa-sort", "filterLink", "postNavbar", "originator")
                         </th>
                         <th>
-                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                       {
-                           publicId = Model.First().Folder_ID,
-                           filter = "reason",
-                           navBarGroup = ViewData["currentNav"],
-                           navBarItem = ViewData["currentNavTitle"],
-                           searchTerm = TempData["SearchTerm"],
-                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                       }), "#public_table", "replace-with", "GET", "Reason", "fa-sort", "filterLink", "postNavbar", "reason"))
-                        </th><!--7-->
+                            <!--7-->
+                            @Url.AjaxActionLinkWithFontAwesome((Int32)TempData["Folder_Id"], "reason", (string)ViewData["currentNav"], (string)ViewData["currentNavTitle"], (string)TempData["SearchTerm"], Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), "#public_table", "replace-with", "GET", "Reason", "fa-sort", "filterLink", "postNavbar", "reason")
+                        </th>
                         <th>
-                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                       {
-                           publicId = Model.First().Folder_ID,
-                           filter = "supplier",
-                           navBarGroup = ViewData["currentNav"],
-                           navBarItem = ViewData["currentNavTitle"],
-                           searchTerm = TempData["SearchTerm"],
-                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                       }), "#public_table", "replace-with", "GET", "Supplier #", "fa-sort", "filterLink", "postNavbar", "supplier"))
-                        </th><!--8-->
+                            <!--8-->
+                            @Url.AjaxActionLinkWithFontAwesome((Int32)TempData["Folder_Id"], "supplier", (string)ViewData["currentNav"], (string)ViewData["currentNavTitle"], (string)TempData["SearchTerm"], Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), "#public_table", "replace-with", "GET", "Supplier #", "fa-sort", "filterLink", "postNavbar", "supplier")
+                        </th>
                         <th>
                             <!--9-->
-                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                       {
-                           publicId = Model.First().Folder_ID,
-                           filter = "description",
-                           navBarGroup = ViewData["currentNav"],
-                           navBarItem = ViewData["currentNavTitle"],
-                           searchTerm = TempData["SearchTerm"],
-                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                       }), "#public_table", "replace-with", "GET", "Description", "fa-sort", "filterLink", "postNavbar", "description"))
+                            @Url.AjaxActionLinkWithFontAwesome((Int32)TempData["Folder_Id"], "description", (string)ViewData["currentNav"], (string)ViewData["currentNavTitle"], (string)TempData["SearchTerm"], Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), "#public_table", "replace-with", "GET", "Description", "fa-sort", "filterLink", "postNavbar", "description")
                         </th>
 
-
-
                         <th>
-                            @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                       {
-                           publicId = Model.First().Folder_ID,
-                           filter = "file",
-                           navBarGroup = ViewData["currentNav"],
-                           navBarItem = ViewData["currentNavTitle"],
-                           searchTerm = TempData["SearchTerm"],
-                           IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                           IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                       }), "#public_table", "replace-with", "GET", "File", "fa-sort", "filterLink", "postNavbar", "file"))
-                        </th><!--10-->
+                            <!--10-->
+                            @Url.AjaxActionLinkWithFontAwesome((Int32)TempData["Folder_Id"], "file", (string)ViewData["currentNav"], (string)ViewData["currentNavTitle"], (string)TempData["SearchTerm"], Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), "#public_table", "replace-with", "GET", "File", "fa-sort", "filterLink", "postNavbar", "file")
+                        </th>
                         <th>More</th><!--11-->
                         @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                         {
                             <th>
-                                @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                           {
-                               publicId = Model.First().Folder_ID,
-                               filter = "documentId",
-                               navBarGroup = ViewData["currentNav"],
-                               navBarItem = ViewData["currentNavTitle"],
-                               searchTerm = TempData["SearchTerm"],
-                               IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                               IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                           }), "#public_table", "replace-with", "GET", "Document Id", "fa-sort", "filterLink", "postNavbar", "documentId"))
+                                @Url.AjaxActionLinkWithFontAwesome((Int32)TempData["Folder_Id"], "documentId", (string)ViewData["currentNav"], (string)ViewData["currentNavTitle"], (string)TempData["SearchTerm"], Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), "#public_table", "replace-with", "GET", "Document Id", "fa-sort", "filterLink", "postNavbar", "documentId")
                             </th>
                         }
                         @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                         {
                             <th>
-                                @Html.Raw(CustomLink.AjaxActionLinkWithFontAwesome(Url.Action("Index", "PublicVM", new
-                           {
-                               publicId = Model.First().Folder_ID,
-                               filter = "hidden",
-                               navBarGroup = ViewData["currentNav"],
-                               navBarItem = ViewData["currentNavTitle"],
-                               searchTerm = TempData["SearchTerm"],
-                               IssueYearMinRange = Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture),
-                               IssueYearMaxRange = Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture)
-                           }), "#public_table", "replace-with", "GET", "Visibility", "fa-sort", "filterLink", "postNavbar", "hidden"))
+                                @Url.AjaxActionLinkWithFontAwesome((Int32)TempData["Folder_Id"], "hidden", (string)ViewData["currentNav"], (string)ViewData["currentNavTitle"], (string)TempData["SearchTerm"], Model.OrderBy(r => r.IssueDate).First().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), Model.OrderBy(r => r.IssueDate).Last().IssueDate.Value.ToString("yyyy", CultureInfo.InvariantCulture), "#public_table", "replace-with", "GET", "Visibility", "fa-sort", "filterLink", "postNavbar", "hidden")
                             </th>
                         }
                         @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")

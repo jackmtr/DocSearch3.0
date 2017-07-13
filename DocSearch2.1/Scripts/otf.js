@@ -2,9 +2,7 @@
 
     //**GLOBAL VARIABLES
     var editList = [];
-    //var pageSize1 = 15;
     var IssueYearMinRange = 1;
-
 
     $.validator.addMethod(
         "regex",
@@ -55,13 +53,13 @@
             var options = {
                 url: $form.attr("action"),//maybe add to this to check for attributes somehow
                 type: $form.attr("method"),
-                data: $form.serialize() + "&navBarGroup=" + $category + "&navBarItem=" + $docType //+ "&pageSize=" + pageSize1 //or add to the data somehow
+                data: $form.serialize() + "&navBarGroup=" + $category + "&navBarItem=" + $docType
             };
         } else {
             var options = {
                 url: $form.attr("action"),//maybe add to this to check for attributes somehow
                 type: $form.attr("method"),
-                data: $form.serialize() //+ "&pageSize=" + pageSize1//or add to the data somehow
+                data: $form.serialize()
             };
         }
 
@@ -103,7 +101,7 @@
 
         var options = {
             url: $a.attr("href"),
-            data: $("form").serialize() + /*"&pageSize=" + pageSize1 +*/ "&filter=" + filter,
+            data: $("form").serialize() + "&filter=" + filter,
             type: "get"
         };
 
@@ -348,8 +346,6 @@
         $('select[name^="pageSize"] option').removeAttr('selected');
         $('select[name^="pageSize"] option[value="' + value + '"]').attr("selected", "selected");
 
-        //pageSize1 = $('#pageSize option:selected').val();
-
         ajaxFormSubmit();
     });
 
@@ -389,7 +385,6 @@
         //might honestly be i need to add a parameter to ajaxComplete to know who called it.
     });
 
-    //JACKIE//
     $("#body").on("change", "#public_table input[type=checkbox]", function () {
 
         if ($(this).prop('checked')) {
@@ -402,7 +397,6 @@
 
     });
 
-    //$('#text-fill').textfill({ widthOnly: true, minFontPixels: 4, innerTag: "span" }); //trying to ensure the status line will shrink if needed, dont think its being used
 
     $(".edit-issue").datepicker({ dateFormat: 'dd M yy' }); //not sure if needed
 
@@ -412,7 +406,6 @@
 
         var options = {
             url: $this.attr('href'),
-            //data: "pageSize=" + pageSize1,
             data: "IssueYearMinRange =" + "2016", //not being sent to controller, but I need a data attribute it seems
             type: "GET",
         };
@@ -504,8 +497,6 @@
 
     $("#body").on("click", ".selectAll", function () {
 
-        //$("table.table tbody td:last-child() input:checkbox").prop('checked', this.checked); //this works to check boxes, but doesnt trigger event to add the docid into the array to send
-
         if (!$(this).is(':checked')) {
             $("table.table tbody td:last-child() input:checkbox:checked").click();
         } else {
@@ -513,7 +504,6 @@
         }
     });
 
-    ////
     //event for selecting a 'records per page' from dropdown
     $('#fromYear').change(function () {
         var value = this.value;
@@ -530,34 +520,15 @@
 
         if ($('#customDates').is(':checked')) {
             $('#fromYear').prop("disabled", true);
-            //$('.customDates').children().css("display", "block").parent().children("select").prop("disabled", false);
             $('.customDates').children("select").prop("disabled", false).siblings().addBack().css("display", "block");
         } else {
             $('#fromYear').prop("disabled", false);
-            //$('.customDates').children().css("display", "none").parent().children("select").prop("disabled", true);
             $('.customDates').children("select").prop("disabled", true).siblings().addBack().css("display", "none");
         }
     });
 
     $('.navLink').on("click", function () {
         $this = $(this);
-
-        //check if min exists, if so use it
-        //check if max exists, if so use it
-
-        //$(".nav_lists a").on("click", function () {
-        //    $(".nav_lists").find(".active").removeClass("active");
-        //    $(this).parent().addClass("active");
-        //});
-
-        /*
-         *     //active navbar class addition
-                $(".nav_lists a").on("click", function () {
-                    $(".nav_lists").find(".active").removeClass("active");
-                    $(this).parent().addClass("active");
-                });
-         * 
-         */
 
         var $selectName = $("select[name = 'IssueYearMinRange']:not(:disabled)");
 
@@ -566,13 +537,8 @@
             return false;
         }
 
-        //$selectName.val()
-
-        //alert($selectName.val());
-
         var options = {
             url: $this.attr('href'),
-            //data: "pageSize=" + pageSize1,
             data: "&IssueYearMinRange=" + $selectName.val(),
             type: "GET",
         };
@@ -582,10 +548,8 @@
             var $target = $('#public_table');
             var $newHtml = $(data);
 
-
             $target.replaceWith($newHtml);
 
-            //complete: updateCurrentCount();
             complete: postNavbar();
             success: clearFields($this.prop('id'));
         });
@@ -596,6 +560,4 @@
     $("#body").on("click", "#allDocs", function () {
         $('#fromYear').val('-100');
     });
-    ////
-
 });

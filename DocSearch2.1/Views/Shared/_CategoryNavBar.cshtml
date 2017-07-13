@@ -8,7 +8,6 @@
             <li class="category_nav">
                 <div>
                     <a href="@Url.Action("Index", "PublicVM", new {
-                                            //publicId = Model.First().Folder_ID,
                                             publicId = TempData["Folder_Id"],
                                             navBarGroup = NavBarGroupOptions.category,
                                             navBarItem = @item.CategoryName
@@ -29,7 +28,6 @@
                         {
                             <li>
                                 <a href="@Url.Action("Index", "PublicVM", new {
-                                                        //publicId = Model.First().Folder_ID,
                                                         publicId = TempData["Folder_Id"],
                                                         navBarGroup = NavBarGroupOptions.doctype,
                                                         navBarItem = @dt

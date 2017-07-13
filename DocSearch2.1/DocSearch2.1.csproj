@@ -172,6 +172,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PublicVMController.cs" />
     <Compile Include="CustomHelpers\CustomLink.cs" />
+    <Compile Include="CustomHelpers\CustomTableHeader.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

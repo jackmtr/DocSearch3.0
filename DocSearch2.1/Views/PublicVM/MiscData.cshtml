@@ -33,7 +33,7 @@
                 @if ((string)ViewData["currentNav"] == "policy" || (string)ViewData["currentNavTitle"] == "Correspondence" || (string)ViewData["currentNavTitle"] == "Client" || (string)ViewData["currentNavTitle"] == "External")
                 {
                     <td>
-                        @if (Model.Reason.Length < 1)
+                        @if (Model.Reason == null || Model.Reason.Length < 1)
                         {
                             @Html.Raw("N/A");
                         }
