@@ -1,21 +1,5 @@
 ﻿@model IEnumerable<PublicVM>
 
-@*@{ 
-    ViewBag.Title = "Operation List";
-    string alert = "Your custom error message";
-
-    if (ViewBag.AlertMessage != null) {
-
-        alert = (string)ViewBag.AlertMessage;
-    }
-}
-
-@section CustomScripts1{
-    <script type="text/javascript">
-        var title = '@TempData["Folder_Id"]';
-    </script>
-}*@
-
 <!--Search Box, Date Filters, clear, and submit button-->
 <div id="form-div">
     <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#public_table" class="row">
@@ -38,7 +22,20 @@
             </div>
 
 
-            <div id="text-fill" class="col-md-6"><span id="status-message">Returning <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents, <span id="currentLowYear">@(((List<SelectListItem>)TempData["YearRange"]).First().Text)</span> to <span id="currentHighYear">@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)</span></span></div>
+            <div id="text-fill" class="col-md-6">
+                <span id="status-message">Returning 
+                    <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents, 
+                    <span id="currentLowYear">
+                        @*@(((List<SelectListItem>)TempData["YearRange"]).First().Text)*@
+                        @((int)DateTime.Now.Year - 1)
+                    </span> to 
+                    <span id="currentHighYear">
+                        @*@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)*@
+                        @DateTime.Now.Year
+                    </span>
+                </span>
+            </div>
+
             <div class="col-md-3">
                 @Ajax.ActionLink("Reset Search", "Index", new
            {
@@ -48,8 +45,6 @@
                HttpMethod = "GET",
                InsertionMode = InsertionMode.ReplaceWith,
                UpdateTargetId = "public_table",
-               //OnComplete = "updateCurrentCount",
-               //OnSuccess = "clearFields"
                OnComplete = "clearFields",
                OnSuccess = "updateCurrentCount"
            }, new { @class = "button", id = "clearButton" })
