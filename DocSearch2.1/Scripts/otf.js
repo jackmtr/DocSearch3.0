@@ -36,7 +36,11 @@ function clearFields(id) {
 
     //may want to be more specific with check //having issues with this since updating the reset button
     if (id == "clearButton") {
+
         $form.find("#fromYear option:eq(0)").prop("selected", true);
+        $form.find("#fromYear").prop("disabled", false);
+        $(".customDates select").prop("disabled", true);
+        $(".customDates *").css("display", "none");
         $(".active").removeClass('active');
     }
 
@@ -47,7 +51,7 @@ function clearFields(id) {
 }
 
 function updateCurrentCount() {
-    //alert('updateCurrentCount is run');
+
     var currentCount = $('#public_table').data('currentrecord');
     var currentLowYear = $("select[name = 'IssueYearMinRange']:not(:disabled)").val();
     var currentHighYear = new Date().getFullYear();
@@ -93,10 +97,9 @@ function updateCurrentCount() {
     $('#currentCount').text(currentCount);
 }
 
-function rememeberSort($this) {
-    var ascending = '@ViewData["SortOrder"]';
+function rememeberSort($this, ascending) {
 
-    if (ascending == "True") {
+    if (ascending == true) {
         //not sure why $(this) had issues and couldnt replicate the effect I wanted
         $("#" + $this.children('i').attr('id')).removeClass("fa-sort").addClass("fa-sort-desc").parent('A').css('text-decoration', 'underline');
     } else {
@@ -140,30 +143,30 @@ $(function () {
 
     //**FUNCTIONS
 
-    function postNavbar1() {
+    //function postNavbar1() {
 
-        $className = $('.active').children("a").data("subclass");
-        $classNameTitle = $('.active').children("a").data("subclass-title");
+    //    $className = $('.active').children("a").data("subclass");
+    //    $classNameTitle = $('.active').children("a").data("subclass-title");
 
-        //first if statement checks if $className has a value or is undefined
-        if ($className) {
-            if ($classNameTitle == "Correspondence") {
-                $('#public_table').removeClass().addClass("correspondence");
-            } else if ($classNameTitle == "Declaration/Endorsement") {
-                $('#public_table').removeClass().addClass("declaration");
-            } else {
-                $('#public_table').removeClass().addClass($className);
-            }
-        }
+    //    //first if statement checks if $className has a value or is undefined
+    //    if ($className) {
+    //        if ($classNameTitle == "Correspondence") {
+    //            $('#public_table').removeClass().addClass("correspondence");
+    //        } else if ($classNameTitle == "Declaration/Endorsement") {
+    //            $('#public_table').removeClass().addClass("declaration");
+    //        } else {
+    //            $('#public_table').removeClass().addClass($className);
+    //        }
+    //    }
 
-        //need to check for form submit, then not do clearFields
-        if ($(this).hasClass('navLink') || $(this).hasClass('button')) {
+    //    //need to check for form submit, then not do clearFields
+    //    if ($(this).hasClass('navLink') || $(this).hasClass('button')) {
 
-            clearFields();
-        }
+    //        clearFields();
+    //    }
 
-        updateCurrentCount();
-    }
+    //    updateCurrentCount();
+    //}
 
 
 
@@ -210,7 +213,7 @@ $(function () {
         return false;
     };
 
-    //pagination function
+    //pagination function - DO I STILL NEED THIS
     var getPage = function () {
 
         var $a = $(this); //this is the anchor
@@ -559,8 +562,8 @@ $(function () {
         $this = $(this);
 
         var options = {
-            url: $this.attr('href'),
-            data: "IssueYearMinRange =" + "2016", //not being sent to controller, but I need a data attribute it seems
+            url: $this.attr('href') + "&IssueYearMinRange=" + "2016",
+            data: "IssueYearMinRange=" + "2016", //not being sent to controller, but I need a data attribute it seems
             type: "GET",
         };
 
@@ -573,8 +576,11 @@ $(function () {
 
             $target.replaceWith($newHtml);
 
-            complete: updateCurrentCount();
-            success: clearFields($this.prop('id'));      
+            //complete: updateCurrentCount();
+            //success: clearFields($this.prop('id'));      
+            complete: clearFields($this.prop('id'));
+            success: updateCurrentCount();
+            
         });
 
         return false;
