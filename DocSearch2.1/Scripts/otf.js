@@ -42,6 +42,9 @@ function clearFields(id) {
         $(".customDates select").prop("disabled", true);
         $(".customDates *").css("display", "none");
         $(".active").removeClass('active');
+        if ($('#customDates').is(':checked')) {
+            $('#customDates').prop('checked', false);
+        }
     }
 
     $('#searchInputBox').focus();
