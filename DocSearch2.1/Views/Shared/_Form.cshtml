@@ -1,5 +1,21 @@
 ﻿@model IEnumerable<PublicVM>
 
+@*@{ 
+    ViewBag.Title = "Operation List";
+    string alert = "Your custom error message";
+
+    if (ViewBag.AlertMessage != null) {
+
+        alert = (string)ViewBag.AlertMessage;
+    }
+}
+
+@section CustomScripts1{
+    <script type="text/javascript">
+        var title = '@TempData["Folder_Id"]';
+    </script>
+}*@
+
 <!--Search Box, Date Filters, clear, and submit button-->
 <div id="form-div">
     <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#public_table" class="row">
@@ -32,8 +48,10 @@
                HttpMethod = "GET",
                InsertionMode = InsertionMode.ReplaceWith,
                UpdateTargetId = "public_table",
-               OnComplete = "updateCurrentCount",
-               OnSuccess = "clearFields"
+               //OnComplete = "updateCurrentCount",
+               //OnSuccess = "clearFields"
+               OnComplete = "clearFields",
+               OnSuccess = "updateCurrentCount"
            }, new { @class = "button", id = "clearButton" })
             </div>
         </div>

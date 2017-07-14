@@ -47,24 +47,45 @@ function clearFields(id) {
 }
 
 function updateCurrentCount() {
-
+    //alert('updateCurrentCount is run');
     var currentCount = $('#public_table').data('currentrecord');
+    var currentLowYear = $("select[name = 'IssueYearMinRange']:not(:disabled)").val();
+    var currentHighYear = new Date().getFullYear();
 
-    var currentLowYear = $('#IssueYearMinRange option:selected').val();
-    var currentHighYear = $('#IssueYearMaxRange option:selected').val();
+    if ($("select[name = 'IssueYearMaxRange']:not(:disabled)")[0]) { //confirms in custom range
 
-    if (currentLowYear.length > 0) {
+        if (currentLowYear == "") {
+            currentLowYear = $("select[name = 'IssueYearMinRange']:not(:disabled) option:nth-child(2)").text();
+        }
+
+        if ($("select[name = 'IssueYearMaxRange']:not(:disabled)").val() != "") {
+            currentHighYear = $("select[name = 'IssueYearMaxRange']:not(:disabled)").val();
+        }
+    }
+
+    if (currentLowYear == -100) {
+        currentLowYear = $("select[name = 'IssueYearMinRange']:disabled option:nth-child(2)").text();
+    }
+    else if (currentLowYear < 0) {
+        currentLowYear = (new Date().getFullYear() + parseInt(currentLowYear)); //yearInput would be a negative value
+    }
+
+    if (currentLowYear > 0) {
         //takes user input
+
         $('#currentLowYear').text(currentLowYear);
     } else {
+
         //defaults back to original low
         currentLowYear = $('#IssueYearMinRange option:eq(1)').val();
         $('#currentLowYear').text(currentLowYear);
     }
 
-    if (currentHighYear.length > 0) {
+    if (currentHighYear > 0) {
+
         $('#currentHighYear').text(currentHighYear);
     } else {
+
         currentHighYear = $('#IssueYearMaxRange option:last').val();
         $('#currentHighYear').text(currentHighYear);
     }
@@ -183,7 +204,7 @@ $(function () {
             $target.replaceWith($newHtml);
             $newHtml.children("table").effect("highlight");
             postNavbar();
-            updateCurrentCount();
+            //updateCurrentCount(); may cause an issue removing this and relying on it within current postNavbar
         });
 
         return false;
@@ -480,6 +501,29 @@ $(function () {
             }
         } else if (e.which == '192') { // `, this is used to toggle styling for navbar TEMP
             $('.nav_lists').toggleClass("test-style");
+        }
+        else if (e.which == '220') { // '\' button
+
+            var $yearInputMin = $("select[name = 'IssueYearMinRange']:not(:disabled)").val();
+            var $yearInputMax = new Date().getFullYear();
+
+            if ($("select[name = 'IssueYearMaxRange']:not(:disabled)")[0]) { //confirms in custom range
+
+                if ($yearInputMin == "") {
+                    $yearInputMin = $("select[name = 'IssueYearMinRange']:not(:disabled) option:nth-child(2)").text();
+                }
+                
+                if ($("select[name = 'IssueYearMaxRange']:not(:disabled)").val() != "") {
+                    $yearInputMax = $("select[name = 'IssueYearMaxRange']:not(:disabled)").val();
+                }
+            }
+
+            if ($yearInputMin == -100) {
+                $yearInputMin = $("select[name = 'IssueYearMinRange']:disabled option:nth-child(2)").text();
+            }
+            else if ($yearInputMin < 0) {
+                $yearInputMin = (new Date().getFullYear() + parseInt($yearInputMin)); //yearInput would be a negative value
+            }
         }
     });
 

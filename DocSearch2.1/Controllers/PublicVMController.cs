@@ -54,6 +54,8 @@ namespace DocSearch2._1.Controllers
             //ViewData["currentNav"] used to populate view's link route value for navBarGroup, which in turn populates navBarGroup variable.  Used to save navBarGroup state
             ViewData["currentNav"] = null;
 
+            //ViewBag.AlertMessage = "abc";//////temp
+
             DateTime issueDateMin = today.AddYears(-1); //appropriate place?
             DateTime issueDateMax = today; //appropriate place?
 
@@ -96,10 +98,16 @@ namespace DocSearch2._1.Controllers
                     //entered in two scenarios: 1) regular minIssueDate input and custom date where only minIssueDate is filled
 
                     int yearInput = (string.IsNullOrEmpty(IssueYearMinRange)) ? Int32.Parse(today.AddYears(-1).Year.ToString()) : Int32.Parse(IssueYearMinRange);
+                    //int yearInput = Int32.Parse(IssueYearMinRange);
+
+                    //issueDateMin = (yearInput > 0) ? issueDateMin = new DateTime(yearInput, 1, 1) : issueDateMin;
+                    issueDateMin = (yearInput > 0) ? issueDateMin = new DateTime(yearInput, 1, 1) : issueDateMin = today.AddYears(yearInput);
 
                     yearInput = (yearInput > 0) ? yearInput - DateTime.Now.Year : yearInput;
+                    // bug, sometimes issueDateMin should be relative to full year, not to today
 
-                    issueDateMin = today.AddYears(yearInput);
+
+                    //issueDateMin = today.AddYears(yearInput);
                 }
                 else if (!String.IsNullOrEmpty(IssueYearMinRange) && !String.IsNullOrEmpty(IssueYearMaxRange))
                 {
