@@ -128,15 +128,15 @@ namespace DocSearch2._1.Controllers
                 if (TempData["Role"].ToString() == "Admin")
                 {
                     //checks if the date filter and search term will return any results
-                    if (!publicModel.Any(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && (searchTerm == null || r.Description.ToLower().Contains(searchTerm.ToLower()))))
+                    //The admin search will also search for document Id within the same input (so checks tbl_Document.Description and tbl_Document.Document_Id)
+                    if (!publicModel.Any(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && (searchTerm == null || r.Description.ToLower().Contains(searchTerm.ToLower()) || r.Document_ID.ToString().Contains(searchTerm))))
                     {
                         //ViewData["goodSearch"] = false means no records is found
                         ViewData["goodSearch"] = false;
                     }
                     else
                     {
-                        publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) &&
-                            (searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.ToLower().Contains(searchTerm.ToLower()) == true : true)));
+                        publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && (searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.ToLower().Contains(searchTerm.ToLower()) || r.Document_ID.ToString().Contains(searchTerm) == true : true)));
 
                         TempData["SearchTerm"] = searchTerm;
                     }

@@ -19,7 +19,7 @@
             @if (TempData["Client_Id"] != null)
             {
                 <span>@Html.Raw(TempData["Client_Id"] + " - " + TempData["Client_Name"])</span>
-                if (TempData["Role"] != null && TempData["Role"] == "Admin")
+                if (TempData["Role"] != null && (string)TempData["Role"] == "Admin")
                 {
                     <span class="admin-status">@TempData["Role"]</span>
                 }

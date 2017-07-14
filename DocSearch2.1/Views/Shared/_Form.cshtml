@@ -39,7 +39,7 @@
         </div>
         <div class="form-inputs col-md-12 row">
             <div class="filter col-md-3">
-                <label for="search">Search Description:</label>
+                <label for="search" style="font-size: 14px;">Search Description @if (TempData["Role"] != null && (string)TempData["Role"] == "Admin") {<span>/ Document Id</span>}:</label>
                 <input id="searchInputBox" type="search" name="searchTerm" />
                 <br />
             </div>
