@@ -6,9 +6,11 @@ using System.Web.Mvc;
 using DocSearch2._1.Models;
 using System.IO;
 using System.IO.Compression;
+using DocSearch2._1.Filters;
 
 namespace DocSearch2._1.Controllers
 {
+    [AuthorizeUser]
     public class AdminController : Controller
     {
         private IFolderRepository repository = null;

@@ -1,13 +1,5 @@
 ﻿using DocSearch2._1.Models;
 using DocSearch2._1.Repositories;
-//mb temp
-using DocSearch2._1.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DocSearch2._1.Controllers
@@ -19,6 +11,7 @@ namespace DocSearch2._1.Controllers
         private IFolderRepository repository = null;
 
         public FolderController() {
+
             this.repository = new FolderRepository();
         }
 
@@ -31,14 +24,18 @@ namespace DocSearch2._1.Controllers
 
         //currently the role is coming as a query value, needs to be a role check through better security
         // GET: Folder
-        public ActionResult Index([Bind(Prefix = "ClientId")] string Number, string Role)
+        public ActionResult Index([Bind(Prefix = "ClientId")] string Number, string Role = "")
         {
+            //
+
             tbl_Folder folder = repository.SelectByNumber(Number);
 
-            System.Web.HttpContext.Current.Session["Role"] = Role; //TEMPORARY until I set up a real role checker
+            //System.Web.HttpContext.Current.Session["Role"] = Role; //TEMPORARY until I set up a real role checker, think why am i using session
 
             try
             {
+                TempData["Role1"] = "Admin";
+                TempData["Role"] = Role;
                 TempData["Client_Name"] = folder.Name;
                 TempData["Client_Id"] = folder.Number;
                 TempData["Folder_Id"] = folder.Folder_ID; //should be a better way than carrying this variable around

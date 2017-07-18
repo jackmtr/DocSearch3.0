@@ -16,13 +16,25 @@
 <body>
     <header>
         <h3 class="public_name_id">
-            @if (TempData["Client_Id"] != null)
+            @*@TempData["UserName"]
+            @TempData["UserName1"]
+            @TempData["Role"]*@
+            @*@if (TempData["Client_Id"] != null)
             {
                 <span>@Html.Raw(TempData["Client_Id"] + " - " + TempData["Client_Name"])</span>
                 if (TempData["Role"] != null && (string)TempData["Role"] == "Admin")
                 {
                     <span class="admin-status">@TempData["Role"]</span>
                 }
+            }*@
+            @if (TempData["Role1"] != null && (string)TempData["Role1"] == "Admin")
+            {
+                using (Html.BeginForm("Index", "Folder", FormMethod.Get))
+                {
+                    @Html.Hidden("ClientId", 1186367);
+                    <input type="submit" name="Role" value="Admin" />
+                }
+                TempData.Keep("Role");
             }
         </h3>
     </header>

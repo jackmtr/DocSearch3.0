@@ -1,9 +1,11 @@
 ﻿@{
     ViewBag.Title = "Westland Archive System ";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //TempData.Keep("Role");
 }
 
 @*568801 is Ramins test public #, 34 is his folder_id*@
+
 
 @using (Html.BeginForm("Index", "Folder", FormMethod.Get))
 {
@@ -15,8 +17,7 @@
     @Html.Label("ClientId", "Client Id")
     @Html.TextBox("ClientId", 1186367); 
 
-    <input type="submit" name="Role" value="Submit" />
-    <input type="submit" name="Role" value="Admin" />
+    <input type="submit"@* name="Role"*@ value="Submit" />
 }
 
 <br/><br />

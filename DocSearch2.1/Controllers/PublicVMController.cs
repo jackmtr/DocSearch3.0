@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Globalization;
 using DocSearch2._1.Models;
+using DocSearch2._1.Filters;
 
 namespace DocSearch2._1.Controllers
 {
@@ -38,13 +39,15 @@ namespace DocSearch2._1.Controllers
         public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string navBarGroup = null, string navBarItem = null, string filter = null, string searchTerm = null, string IssueYearMinRange = "", string IssueYearMaxRange = "", /*int page = 1, int pageSize = 300,*/ bool Admin = false, string IssueMonthMinRange = "", string IssueMonthMaxRange = "")
         {
             //**GLOBAL VARIABLES
-            TempData["Role"] = (System.Web.HttpContext.Current.Session["Role"] as String == "Admin") ? "Admin" : "Client";
+            //TempData["Role"] = (System.Web.HttpContext.Current.Session["Role"] as String == "Admin") ? "Admin" : "Client"; //rethink this
+            //TempData.Keep("Role");
 
             //TempData can be used to send data between controllers and views through one request, .keep() is used to continue keeping after one request
             //persist client name, id, search term, inputted dates
             TempData.Keep("Client_Name");
             TempData.Keep("Client_Id");
             TempData.Keep("Folder_Id");
+            TempData.Keep("Role");
             //***Pseudo save state immitation
             TempData.Keep("SearchTerm");
             TempData.Keep("YearRange"); //will carry an array with allowable issue date years for custom dropdown list
