@@ -30,15 +30,6 @@ namespace DocSearch2._1.Controllers
 
             try
             {
-                //if (HttpContext.User.IsInRole("IT-ops")) {
-                //    TempData["RoleButton"] = "Admin";
-                //}
-
-                //if (Role != "") {
-                //    TempData["Role"] = Role;
-                //    TempData["RoleButton"] = "Client";
-                //}
-
                 if (HttpContext.User.IsInRole("IT-ops"))
                 {
                     TempData["RoleButton"] = "Admin";
@@ -48,9 +39,7 @@ namespace DocSearch2._1.Controllers
                         TempData["RoleButton"] = "Client";
                     } else {
                         TempData["Role"] = "Client";
-                    }
-                    
-                    
+                    }         
                 }
                 else if (HttpContext.User.IsInRole("Domain Users"))
                 {

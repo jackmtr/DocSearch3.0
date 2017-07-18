@@ -46,6 +46,7 @@ namespace DocSearch2._1.Controllers
             TempData.Keep("Client_Id");
             TempData.Keep("Folder_Id");
             TempData.Keep("Role");
+            TempData.Keep("RoleButton");
             //***Pseudo save state immitation
             TempData.Keep("SearchTerm");
             TempData.Keep("YearRange"); //will carry an array with allowable issue date years for custom dropdown list

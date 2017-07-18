@@ -183,7 +183,7 @@ $(function () {
             return false;
         } 
 
-        var $form = $('form');
+        var $form = $('#form-div form');
 
         $category = $(".active a").data('subclass');
         $docType = $(".active a").data('subclass-title');
@@ -210,46 +210,6 @@ $(function () {
             $target.replaceWith($newHtml);
             $newHtml.children("table").effect("highlight");
             postNavbar();
-            //updateCurrentCount(); may cause an issue removing this and relying on it within current postNavbar
-        });
-
-        return false;
-    };
-
-    //pagination function - DO I STILL NEED THIS
-    var getPage = function () {
-
-        var $a = $(this); //this is the anchor
-        var filter = "";
-
-        if ($a.parent('li').hasClass('disabled') == true) {
-            return false;
-        }
-
-        if ($('.fa-sort-asc')[0]){
-
-            var thisA = $('.fa-sort-asc').parent('A');
-            filter = $('.fa-sort-asc').attr('id');
-        } else if ($('.fa-sort-desc')[0]) {
-
-            var thisA = $('.fa-sort-desc').parent('A');
-            filter = $('.fa-sort-desc').attr('id');
-        } else {
-            var thisA = $('#issue').parent('A');
-        }
-
-        var options = {
-            url: $a.attr("href"),
-            data: $("form").serialize() + "&filter=" + filter,
-            type: "get"
-        };
-
-        //***CURRENTLY ONLY WORKING RIGHT WITH DOC+
-
-        $.ajax(options).done(function (data) {
-            var target = $a.parents("div.pagedList").attr("data-otf-target");
-            $(target).replaceWith(data);
-            rememeberSort(thisA);
         });
 
         return false;
@@ -405,10 +365,6 @@ $(function () {
 
     //event for form submit
     $("form[data-otf-ajax='true']").submit(ajaxFormSubmit);
-
-    //event for pagination buttons
-    $("#body").on("click", ".pagination a", getPage);
-
 
     //image previewer on event
     $("#body").on("mousedown", ".preview_image", function (e) { //mouseenter before
