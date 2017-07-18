@@ -26,16 +26,42 @@ namespace DocSearch2._1.Controllers
         // GET: Folder
         public ActionResult Index([Bind(Prefix = "ClientId")] string Number, string Role = "")
         {
-            //
-
             tbl_Folder folder = repository.SelectByNumber(Number);
-
-            //System.Web.HttpContext.Current.Session["Role"] = Role; //TEMPORARY until I set up a real role checker, think why am i using session
 
             try
             {
-                TempData["Role1"] = "Admin";
-                TempData["Role"] = Role;
+                //if (HttpContext.User.IsInRole("IT-ops")) {
+                //    TempData["RoleButton"] = "Admin";
+                //}
+
+                //if (Role != "") {
+                //    TempData["Role"] = Role;
+                //    TempData["RoleButton"] = "Client";
+                //}
+
+                if (HttpContext.User.IsInRole("IT-ops"))
+                {
+                    TempData["RoleButton"] = "Admin";
+
+                    if (Role == "Admin"){
+                        TempData["Role"] = "Admin";
+                        TempData["RoleButton"] = "Client";
+                    } else {
+                        TempData["Role"] = "Client";
+                    }
+                    
+                    
+                }
+                else if (HttpContext.User.IsInRole("Domain Users"))
+                {
+                    TempData["Role"] = "Client";
+                }
+                else
+                {
+                    TempData["Role"] = "Unautherized";
+                }
+
+
                 TempData["Client_Name"] = folder.Name;
                 TempData["Client_Id"] = folder.Number;
                 TempData["Folder_Id"] = folder.Folder_ID; //should be a better way than carrying this variable around

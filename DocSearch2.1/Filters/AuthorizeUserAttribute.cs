@@ -9,8 +9,6 @@ namespace DocSearch2._1.Filters
 {
     public class AuthorizeUserAttribute : AuthorizeAttribute
     {
-        //public string AccessLevel { get; set; }
-
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             var isAuthorized = base.AuthorizeCore(httpContext); //gets the authorization info of the person making the request
@@ -20,7 +18,7 @@ namespace DocSearch2._1.Filters
                 return false; //checks if the user is loged into windows
             }
 
-            if (MyClass.MyVar != httpContext.User.Identity.Name) {
+            if (WindowAuth.WindowLoginName != httpContext.User.Identity.Name) {
 
                 return false;  //checks if the user making the request is the same as when starting application
             }
@@ -36,7 +34,7 @@ namespace DocSearch2._1.Filters
             }
 
 
-            //if (httpContext.User.IsInRole("IT-ops1")) //this group doesnt exist
+            //if (httpContext.User.IsInRole("IT-ops1")) //this group doesnt exist, simulates being denied
             //{
             //    return true;
             //}

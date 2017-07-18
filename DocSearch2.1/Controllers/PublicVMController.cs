@@ -39,8 +39,6 @@ namespace DocSearch2._1.Controllers
         public ActionResult Index([Bind(Prefix = "publicId")] string Folder_ID, string navBarGroup = null, string navBarItem = null, string filter = null, string searchTerm = null, string IssueYearMinRange = "", string IssueYearMaxRange = "", /*int page = 1, int pageSize = 300,*/ bool Admin = false, string IssueMonthMinRange = "", string IssueMonthMaxRange = "")
         {
             //**GLOBAL VARIABLES
-            //TempData["Role"] = (System.Web.HttpContext.Current.Session["Role"] as String == "Admin") ? "Admin" : "Client"; //rethink this
-            //TempData.Keep("Role");
 
             //TempData can be used to send data between controllers and views through one request, .keep() is used to continue keeping after one request
             //persist client name, id, search term, inputted dates
@@ -56,8 +54,6 @@ namespace DocSearch2._1.Controllers
             ViewData["goodSearch"] = true; //do i still need this var?
             //ViewData["currentNav"] used to populate view's link route value for navBarGroup, which in turn populates navBarGroup variable.  Used to save navBarGroup state
             ViewData["currentNav"] = null;
-
-            //ViewBag.AlertMessage = "abc";//////temp
 
             DateTime issueDateMin = today.AddYears(-1); //appropriate place?
             DateTime issueDateMax = today; //appropriate place?
