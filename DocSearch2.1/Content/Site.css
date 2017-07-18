@@ -234,7 +234,7 @@ header {
 }
 
     /*Constant 'public' info display*/
-    .public_name_id {
+    .banner_info {
         position: absolute;
         bottom: 0;
         left: 2%;
@@ -617,4 +617,8 @@ select {
 
 .customDates {
     display: inline-block;
+}
+
+.banner_info form {
+    text-align: center;
 }

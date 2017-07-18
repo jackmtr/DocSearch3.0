@@ -40,15 +40,19 @@ namespace DocSearch2._1.Controllers
                     } else {
                         TempData["Role"] = "Client";
                     }         
-                }
-                else if (HttpContext.User.IsInRole("Domain Users"))
+                }else
                 {
                     TempData["Role"] = "Client";
                 }
-                else
-                {
-                    TempData["Role"] = "Unautherized";
-                }
+
+                //else if (HttpContext.User.IsInRole("Domain Users"))
+                //{
+                //    TempData["Role"] = "Client";
+                //}
+                //else
+                //{
+                //    TempData["Role"] = "Unautherized";
+                //}
 
 
                 TempData["Client_Name"] = folder.Name;

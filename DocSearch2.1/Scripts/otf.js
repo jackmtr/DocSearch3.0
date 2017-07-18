@@ -547,9 +547,9 @@ $(function () {
 
     var downloadAllDocuments = function () {
 
-        var clientId = $(".public_name_id").html().match(/\d+/);
+        //var clientId = $(".public_name_id").html().match(/\d+/);
 
-        $('#ClientId').val(clientId);
+        //$('#ClientId').val(clientId);
 
         $("#downloadForm").submit();
 

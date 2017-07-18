@@ -15,8 +15,16 @@
 </head>
 <body>
     <header>
-        <h3 class="public_name_id">
+        <h3 class="banner_info">
 
+            @if (TempData["Client_Id"] != null)
+            {
+                <span class="public_name_id">@Html.Raw(TempData["Client_Id"] + " - " + TempData["Client_Name"])</span>
+                if (TempData["Role"] != null && (string)TempData["Role"] == "Admin")
+                {
+                    <span class="admin-status">@TempData["Role"]</span>
+                }
+            }
             @if (TempData["RoleButton"] != null && (string)TempData["RoleButton"] == "Admin")
             {
                 using (Html.BeginForm("Index", "Folder", FormMethod.Get))

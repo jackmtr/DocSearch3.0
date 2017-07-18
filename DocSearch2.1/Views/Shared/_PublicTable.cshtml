@@ -35,7 +35,7 @@
 
                         @using (Html.BeginForm("DownloadAllDocuments", "Admin", FormMethod.Get, new { id = "downloadForm" }))
                         {
-                            @Html.TextBox("ClientId", null);
+                            @Html.TextBox("ClientId", TempData["Client_Id"]);
                             <input type="submit" value="Submit" id="downloadAllDocumentSubmit" />
                         }
                     </div>
