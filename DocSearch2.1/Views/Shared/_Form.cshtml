@@ -1,130 +1,134 @@
 ﻿@model IEnumerable<PublicVM>
 
-<div id="form-div">
-    <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#public_table" class="row main-form">
+<div id="form-div" class="row">
+
+    <div class="col-md-12 row">
+        <span id="status-message">
+            Returning
+            <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents,
+            <span id="currentLowYear">
+                @((int)DateTime.Now.Year - 1)
+            </span> to
+            <span id="currentHighYear">
+                @DateTime.Now.Year
+            </span>
+        </span>
+    </div>
+
+    <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#public_table" class="col-md-12 row main-form">
         <input id="search" type="hidden" name="publicId" value="@TempData["Folder_Id"]" />
         
-            <div class="col-md-3 row" style="background-color: green"> <!--First 3/12 of side-->
+        <div class="col-md-3 row" style="background-color: green"> <!--First 3/12 of side-->
 
-                <label class="col-md-12" for="customDates">Customize Date Range:
-                    <input type="checkbox" name="customDates" id="customDates" value="customDates" />
-                </label>
+            <label class="col-md-12" for="customDates">Customize Date Range:
+                <input type="checkbox" name="customDates" id="customDates" value="customDates" />
+            </label>
 
-                <label class="col-md-12"> Records from:
-                    <select id="fromYear" name="IssueYearMinRange">
-                        <option value="-1" selected>one year ago from today</option>
-                        <option value="-2">two years ago from today</option>
-                        <option value="-3">three years ago from today</option>
-                        <option value="-100">All</option>
-                    </select>    
-                </label>
+            <label class="col-md-12"> Records from:
+                <select id="fromYear" name="IssueYearMinRange">
+                    <option value="-1" selected>one year ago from today</option>
+                    <option value="-2">two years ago from today</option>
+                    <option value="-3">three years ago from today</option>
+                    <option value="-100">All</option>
+                </select>    
+            </label>
 
-                <div class="filter col-md-12">
-                    <!--Search box-->
-                    <label for="search" style="font-size: 14px;">Search Description @if (TempData["Role"] != null && (string)TempData["Role"] == "Admin")
-                    {<span>/ Document Id</span>}:</label>
-                    <input id="searchInputBox" type="search" name="searchTerm" />
-                </div>
-
+            <div class="filter col-md-12">
+                <!--Search box-->
+                <label for="search" style="font-size: 14px;">Search Description @if (TempData["Role"] != null && (string)TempData["Role"] == "Admin")
+                {<span>/ Document Id</span>}:</label>
+                <input id="searchInputBox" type="search" name="searchTerm" />
             </div>
 
-            <div class="col-md-6 row" style="background-color: blue">
-                <div class="col-md-12 row">
-                    <span id="status-message">
-                        Returning
-                        <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents,
-                        <span id="currentLowYear">
-                            @((int)DateTime.Now.Year - 1)
-                        </span> to
-                        <span id="currentHighYear">
-                            @DateTime.Now.Year
-                        </span>
-                    </span>
-                </div>
+        </div>
 
-                <div class="filter customDates col-md-6 row">
-                    <!--Customize Start Range Date Range DD input-->
-                    <label for="IssueDateMinRange" class="col-md-12">Starting Issue Date:</label>
-                    @Html.DropDownList("IssueYearMinRange", TempData["YearRange"] as List<SelectListItem>, "Year", new { @class = "datefield col-md-5", type = "date", disabled = "disabled" })
-                    <select id="startingMonth" name="IssueMonthMinRange" class="datefield col-md-5">
-                        @* should i do in html.dropdownlist style? *@
-                        <option value="" selected>Month</option>
-                        <option value="01">January</option>
-                        <option value="02">February</option>
-                        <option value="03">March</option>
-                        <option value="04">April</option>
-                        <option value="05">May</option>
-                        <option value="06">June</option>
-                        <option value="07">July</option>
-                        <option value="08">August</option>
-                        <option value="09">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
-                    </select>
-                </div>
-
-                <div class="filter customDates col-md-6">
-                    <!--Customize End Range Date Range DD input-->
-                    <label for="IssueDateMaxRange" class="col-md-12">Ending Issue Date:</label>
-                    @Html.DropDownList("IssueYearMaxRange", TempData["YearRange"] as List<SelectListItem>, "Year", new { @class = "datefield col-md-5", type = "date", disabled = "disabled" })
-                    <select id="endingMonth" name="IssueMonthMaxRange" class="datefield col-md-5">
-                        <option value="" selected>Month</option>
-                        <option value="01">January</option>
-                        <option value="02">February</option>
-                        <option value="03">March</option>
-                        <option value="04">April</option>
-                        <option value="05">May</option>
-                        <option value="06">June</option>
-                        <option value="07">July</option>
-                        <option value="08">August</option>
-                        <option value="09">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
-                    </select>
-                </div>
-
-
+        <div class="col-md-6 row" style="background-color: blue">
+            <div class="filter customDates col-md-6 row">
+                <!--Customize Start Range Date Range DD input-->
+                <label for="IssueDateMinRange" class="col-md-12">Starting Issue Date:</label>
+                @Html.DropDownList("IssueYearMinRange", TempData["YearRange"] as List<SelectListItem>, "Year", new { @class = "datefield col-md-5", type = "date", disabled = "disabled" })
+                <select id="startingMonth" name="IssueMonthMinRange" class="datefield col-md-5">
+                    @* should i do in html.dropdownlist style? *@
+                    <option value="" selected>Month</option>
+                    <option value="01">January</option>
+                    <option value="02">February</option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">August</option>
+                    <option value="09">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
             </div>
 
-            <div class="col-md-3 row" style="background-color: brown">
+            <div class="filter customDates col-md-6">
+                <!--Customize End Range Date Range DD input-->
+                <label for="IssueDateMaxRange" class="col-md-12">Ending Issue Date:</label>
+                @Html.DropDownList("IssueYearMaxRange", TempData["YearRange"] as List<SelectListItem>, "Year", new { @class = "datefield col-md-5", type = "date", disabled = "disabled" })
+                <select id="endingMonth" name="IssueMonthMaxRange" class="datefield col-md-5">
+                    <option value="" selected>Month</option>
+                    <option value="01">January</option>
+                    <option value="02">February</option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">August</option>
+                    <option value="09">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+            </div>
 
-                <div class="right-form-side col-md-12">
-                    <!--Reset/Clear button-->
-                    @Ajax.ActionLink("Reset Search", "Index", new
-               {
-                   publicId = TempData["Folder_Id"]
-               }, new AjaxOptions
-               {
-                   HttpMethod = "GET",
-                   InsertionMode = InsertionMode.ReplaceWith,
-                   UpdateTargetId = "public_table",
-                   OnComplete = "clearFields",
-                   OnSuccess = "updateCurrentCount"
-               }, new { @class = "button", id = "clearButton" })
+            @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+            {
+                <div class="adminOptions col-md-12">
+
+                    @Html.DropDownList("Options", new List<SelectListItem>
+                                    {
+                                        new SelectListItem { Value = "0", Text = "Edit These Files"},
+                                        new SelectListItem { Value = "1", Text = "Download all Public Documents"}
+                                    }, new { id = "editOptions" }
+                )
+                    <input id="editOptionsSubmit" type="submit" value="Go" />
                 </div>
+            }
+        </div>
 
-                <div class="filter col-md-12 buttondiv">
-                    <!--Submit Button-->
-                    <input id="formSubmitId" type="submit" value="Search and Filter" />
-                </div>
+        <div class="col-md-3 row" style="background-color: brown">
 
-                @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
-                {
-                    <div class="adminOptions col-md-12">
+            <div class="right-form-side col-md-12">
+                <!--Reset/Clear button-->
+                @Ajax.ActionLink("Reset Search", "Index", new
+            {
+                publicId = TempData["Folder_Id"]
+            }, new AjaxOptions
+            {
+                HttpMethod = "GET",
+                InsertionMode = InsertionMode.ReplaceWith,
+                UpdateTargetId = "public_table",
+                OnComplete = "clearFields",
+                OnSuccess = "updateCurrentCount"
+            }, new { @class = "button", id = "clearButton" })
+            </div>
 
-                        @Html.DropDownList("Options", new List<SelectListItem>
-                                        {
-                                            new SelectListItem { Value = "0", Text = "Edit These Files"},
-                                            new SelectListItem { Value = "1", Text = "Download all Public Documents"}
-                                        }, new { id = "editOptions" }
-                    )
-                        <input id="editOptionsSubmit" type="submit" value="Go" />
-                    </div>
-                }
-
-                </div>
-
+            <div class="filter col-md-12 buttondiv">
+                <!--Submit Button-->
+                <input id="formSubmitId" type="submit" value="Search and Filter" />
+            </div>
+        </div>
     </form>
+
+    <!--This form is hidden and only called from AdminOptions-->
+    @using (Html.BeginForm("DownloadAllDocuments", "Admin", FormMethod.Get, new { id = "downloadForm" }))
+    {
+        @Html.TextBox("ClientId", TempData["Client_Id"]);
+        <input type="submit" value="Submit" id="downloadAllDocumentSubmit" />
+    }
 </div>
