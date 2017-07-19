@@ -6,20 +6,18 @@
         
             <div class="col-md-3 row" style="background-color: green"> <!--First 3/12 of side-->
 
-                @*<fieldset class="row col-md-12" style="background-color: grey">*@
+                <label class="col-md-12" for="customDates">Customize Date Range:
+                    <input type="checkbox" name="customDates" id="customDates" value="customDates" />
+                </label>
 
-                    <label class="col-md-6" for="customDates">Customize Date Range:</label>
-                    <input type="checkbox" class="col-md-6" name="customDates" id="customDates" value="customDates" />
-
-                    <label class="col-md-4"> Records from:</label>
-                    <select id="fromYear" name="IssueYearMinRange" class="col-md-8">
+                <label class="col-md-12"> Records from:
+                    <select id="fromYear" name="IssueYearMinRange">
                         <option value="-1" selected>one year ago from today</option>
                         <option value="-2">two years ago from today</option>
                         <option value="-3">three years ago from today</option>
                         <option value="-100">All</option>
-                    </select>
-
-                @*</fieldset>*@
+                    </select>    
+                </label>
 
                 <div class="filter col-md-12">
                     <!--Search box-->
@@ -28,11 +26,10 @@
                     <input id="searchInputBox" type="search" name="searchTerm" />
                 </div>
 
-
             </div>
 
             <div class="col-md-6 row" style="background-color: blue">
-                <div class="col-md-12 row" id="text-fill">
+                <div class="col-md-12 row">
                     <span id="status-message">
                         Returning
                         <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents,
