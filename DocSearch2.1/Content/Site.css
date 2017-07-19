@@ -258,10 +258,10 @@ header {
 
     }
 
-    #formSubmitId {
+    /*#formSubmitId {
         margin: 5px 0;
         height: 50px;
-    }
+    }*/
 
     #clearButton {
     }
@@ -634,11 +634,12 @@ select {
 }
 
 .adminOptions *{
-    max-width: 200px;
+    max-width: 50%;
 }
 
 .adminOptions {
     text-align: right;
+    margin-bottom: 0;
 }
 
 .form-inputs {

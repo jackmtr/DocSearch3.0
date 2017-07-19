@@ -49,8 +49,8 @@
 
                 @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                 {
-                    <div class="adminOptions filter">
-                        <br/>
+                    <div class="adminOptions">
+
                         @Html.DropDownList("Options", new List<SelectListItem>
                                             {
                                                 new SelectListItem { Value = "0", Text = "Edit These Files"},
@@ -65,12 +65,14 @@
         </div>
 
         <div class="form-inputs col-md-12 row">
-            <div class="filter col-md-3"> <!--Search box-->
+            <!--FIRST 2-->
 
+            <div class="filter col-md-3"> <!--Search box-->
                 <label for="search" style="font-size: 14px;">Search Description @if (TempData["Role"] != null && (string)TempData["Role"] == "Admin") {<span>/ Document Id</span>}:</label>
                 <input id="searchInputBox" type="search" name="searchTerm" />
             </div>
 
+            <!--SECOND 2-->
             <div class="filter customDates col-md-3"> <!--Customize Start Range Date Range DD input-->
                 <label for="IssueDateMinRange">Starting Issue Date:</label>
                 @Html.DropDownList("IssueYearMinRange", TempData["YearRange"] as List<SelectListItem>, "Year", new { @class = "datefield", type = "date", disabled = "disabled" })
@@ -89,8 +91,9 @@
                     <option value="11">November</option>
                     <option value="12">December</option>
                 </select>
-                <br />
             </div>
+
+            <!--THIRD 2-->
             <div class="filter customDates col-md-3"> <!--Customize End Range Date Range DD input-->
                 <label for="IssueDateMaxRange">Ending Issue Date:</label>
                 @Html.DropDownList("IssueYearMaxRange", TempData["YearRange"] as List<SelectListItem>, "Year", new { @class = "datefield", type = "date", disabled = "disabled" })
@@ -109,13 +112,12 @@
                     <option value="11">November</option>
                     <option value="12">December</option>
                 </select>
-                <br />
             </div>
+
+            <!--FORTH 1-->
             <div class="filter col-md-3 buttondiv"> <!--Submit Button-->
-                <br />
                     <input id="formSubmitId" type="submit" value="Search and Filter" />
                     @*<button id="formSubmitId" type="submit" value="Search and Filter" >Search and Filter</button>*@
-                <br />
             </div>
         </div>
     </form>
