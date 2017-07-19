@@ -572,14 +572,14 @@ textarea {
 
     .temp-public {
         width: 82% !important;
-    }
+    }*/
 
     .admin-status {
         font-weight: bold;
         position: absolute;
         right: 100px;
         color: red;
-    }*/
+    }
 
 .error-page {
     width: 50%;
@@ -623,5 +623,11 @@ select {
 }
 
 .banner_info form {
-    text-align: center;
+    text-align: right;
+}
+
+.banner-form {
+    display: inline; /*need this to make form inline*/
+    float: right;
+    margin-right: 200px;
 }

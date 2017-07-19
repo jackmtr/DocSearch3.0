@@ -20,6 +20,7 @@
             @if (TempData["Client_Id"] != null)
             {
                 <span class="public_name_id">@Html.Raw(TempData["Client_Id"] + " - " + TempData["Client_Name"])</span>
+
                 if (TempData["Role"] != null && (string)TempData["Role"] == "Admin")
                 {
                     <span class="admin-status">@TempData["Role"]</span>
@@ -27,18 +28,18 @@
             }
             @if (TempData["RoleButton"] != null && (string)TempData["RoleButton"] == "Admin")
             {
-                using (Html.BeginForm("Index", "Folder", FormMethod.Get))
+                using (Html.BeginForm("Index", "Folder", FormMethod.Get, new { @class = "banner-form"}))
                 {
                     @Html.Hidden("ClientId", TempData["Client_Id"]);
-                    <input type="submit" name="Role" value="Admin" />
+                    <input class="banner_button"type="submit" name="Role" value="Admin" />
                 }
             }
             else if (TempData["RoleButton"] != null && (string)TempData["RoleButton"] == "Client")
             {
-                using (Html.BeginForm("Index", "Folder", FormMethod.Get))
+                using (Html.BeginForm("Index", "Folder", FormMethod.Get, new { @class = "banner-form" }))
                 {
                     @Html.Hidden("ClientId", TempData["Client_Id"]);
-                    <input type="submit" name="Role" value="Client" />
+                    <input class="banner_button" type="submit" name="Role" value="Client" />
                 }
             }
         </h3>
