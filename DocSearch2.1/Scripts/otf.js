@@ -461,9 +461,10 @@ $(function () {
                 $('#formSubmitId').click();
                 e.preventDefault();
             }
-        } else if (e.which == '192') { // `, this is used to toggle styling for navbar TEMP
-            $('.nav_lists').toggleClass("test-style");
         }
+        //else if (e.which == '192') { // `, this is used to toggle styling for navbar TEMP
+        //    $('.nav_lists').toggleClass("test-style");
+        //}
         else if (e.which == '220') { // '\' button
 
             var $yearInputMin = $("select[name = 'IssueYearMinRange']:not(:disabled)").val();
@@ -498,7 +499,6 @@ $(function () {
             var thisA = $('#issue').parent('A');
             rememeberSort(thisA);
         }
-        //might honestly be i need to add a parameter to ajaxComplete to know who called it.
     });
 
     $("#body").on("change", "#public_table input[type=checkbox]", function () {
@@ -546,10 +546,6 @@ $(function () {
     });
 
     var downloadAllDocuments = function () {
-
-        //var clientId = $(".public_name_id").html().match(/\d+/);
-
-        //$('#ClientId').val(clientId);
 
         $("#downloadForm").submit();
 

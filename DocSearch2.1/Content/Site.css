@@ -135,7 +135,8 @@ header {
 
                     /*Slider changed color*/
                     input:checked + .slider {
-                        background-color: #2196F3;
+                        /*background-color: #2196F3;*/
+                        background-color: gray;
                     }
 
 
@@ -176,17 +177,14 @@ header {
                 /* Colours and borders for illustration purposes */
                 width: inherit;
                 list-style-type: none;
-                /*font-size: 14px;*/
                 padding-left: 0px;
-                background-color: rgba(65, 103, 118, 0.40);
+                /*background-color: rgba(65, 103, 118, 0.40);*/
+                background-color: #c2c1c1;
             }
 
-            /*affects the cate/policy title*/
-            /*.nav_lists h2 {
-                font-size: 250px;
-                text-align: center;
-                margin: 10px;
-            }*/
+            .nav_lists li:hover {
+                background-color: inherit !important; /*Stops doctypes from highlighting categories too*/
+            }
 
             /*affects the entire category background on hover of inside doctype*/
             #category_list > li:hover,  #category_list > li li:hover{
@@ -203,7 +201,8 @@ header {
             /*DocType sublist item font adjustments*/
             #docType_list li a{
                 font-size: 15px;
-                padding-left: 20px;
+                /*padding-left: 20px;*/
+                padding-left: 30px;
             }
 
             /*Needed to allow a scrollable policy list if needed*/
@@ -372,7 +371,11 @@ header {
     clear: both;
 }
 
-    .active * {
+    /*.active * {
+        color: white;
+    }*/
+
+    .active > a {
         color: white;
     }
 
@@ -551,7 +554,7 @@ textarea {
 }
 
 /*Testing navbar styles*/
-    .test-style ul{
+    /*.test-style ul{
         background-color: #c2c1c1 !important;
     }
 
@@ -576,7 +579,7 @@ textarea {
         position: absolute;
         right: 100px;
         color: red;
-    }
+    }*/
 
 .error-page {
     width: 50%;
