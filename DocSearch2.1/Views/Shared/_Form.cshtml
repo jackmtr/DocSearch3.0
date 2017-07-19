@@ -51,38 +51,38 @@
 
         <div class="form-inputs col-md-12 row">
             <!--FIRST 2-->
-
             <div class="filter col-md-3"> <!--Search box-->
                 <label for="search" style="font-size: 14px;">Search Description @if (TempData["Role"] != null && (string)TempData["Role"] == "Admin") {<span>/ Document Id</span>}:</label>
                 <input id="searchInputBox" type="search" name="searchTerm" />
             </div>
 
             <!--SECOND 2-->
-            <div class="filter customDates col-md-3"> <!--Customize Start Range Date Range DD input-->
-                <label for="IssueDateMinRange">Starting Issue Date:</label>
-                @Html.DropDownList("IssueYearMinRange", TempData["YearRange"] as List<SelectListItem>, "Year", new { @class = "datefield", type = "date", disabled = "disabled" })
-                <select id="startingMonth" name="IssueMonthMinRange" class="datefield"> @* should i do in html.dropdownlist style? *@
-                    <option value="" selected>Month</option>
-                    <option value="01">January</option>
-                    <option value="02">February</option>
-                    <option value="03">March</option>
-                    <option value="04">April</option>
-                    <option value="05">May</option>
-                    <option value="06">June</option>
-                    <option value="07">July</option>
-                    <option value="08">August</option>
-                    <option value="09">September</option>
-                    <option value="10">October</option>
-                    <option value="11">November</option>
-                    <option value="12">December</option>
-                </select>
+            <div class="filter customDates col-md-3 row"> <!--Customize Start Range Date Range DD input-->
+                <label for="IssueDateMinRange" class="col-md-12">Starting Issue Date:</label>
+                    @Html.DropDownList("IssueYearMinRange", TempData["YearRange"] as List<SelectListItem>, "Year", new { @class = "datefield col-md-5", type = "date", disabled = "disabled" })
+                    <select id="startingMonth" name="IssueMonthMinRange" class="datefield col-md-5">
+                        @* should i do in html.dropdownlist style? *@
+                        <option value="" selected>Month</option>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
             </div>
 
             <!--THIRD 2-->
             <div class="filter customDates col-md-3"> <!--Customize End Range Date Range DD input-->
-                <label for="IssueDateMaxRange">Ending Issue Date:</label>
-                @Html.DropDownList("IssueYearMaxRange", TempData["YearRange"] as List<SelectListItem>, "Year", new { @class = "datefield", type = "date", disabled = "disabled" })
-                <select id="endingMonth" name="IssueMonthMaxRange" class="datefield">
+                <label for="IssueDateMaxRange" class="col-md-12">Ending Issue Date:</label>
+                @Html.DropDownList("IssueYearMaxRange", TempData["YearRange"] as List<SelectListItem>, "Year", new { @class = "datefield col-md-5", type = "date", disabled = "disabled" })
+                <select id="endingMonth" name="IssueMonthMaxRange" class="datefield col-md-5">
                     <option value="" selected>Month</option>
                     <option value="01">January</option>
                     <option value="02">February</option>

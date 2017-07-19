@@ -615,7 +615,7 @@ select {
 
 .datefield { /*The dropdown list styles*/
     width: 46%;
-    float: left;
+    /*float: left;*/
     margin: 2%;
 }
 
@@ -647,4 +647,12 @@ select {
 }
 
 #adminOptions {
+}
+
+.datecustomer *{
+    display: inline;
+}
+
+.customDates label {
+    margin: 0;
 }

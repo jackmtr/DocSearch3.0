@@ -635,7 +635,7 @@ $(function () {
 
         if ($('#customDates').is(':checked')) {
             $('#fromYear').prop("disabled", true);
-            $('.customDates').children().prop("disabled", false).children().addBack().css("display", "block");
+            $('.customDates').children().prop("disabled", false).children().addBack().css("display", "inline-block");
         } else {
             $('#fromYear').prop("disabled", false);
             $('.customDates').children().prop("disabled", true).children().addBack().css("display", "none");
