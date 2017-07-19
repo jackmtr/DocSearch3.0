@@ -541,7 +541,7 @@ textarea {
 }
 
 #public_table_inner {
-    
+    padding: 0;
 }
 
 /*Believe is deprecated*/
@@ -654,5 +654,9 @@ select {
 }
 
 .customDates label {
+    margin: 0;
+}
+
+.main-form {
     margin: 0;
 }
