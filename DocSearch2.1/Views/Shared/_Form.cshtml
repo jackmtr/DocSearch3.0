@@ -6,7 +6,7 @@
         <input id="search" type="hidden" name="publicId" value="@TempData["Folder_Id"]" />
         <div id="status-bar-form" class="col-md-12 row">
 
-            <div class="col-md-3">
+            <div class="col-md-3"> <!--The customize date range checkbox and records-from dropdown inputs-->
                 <fieldset>
                     Customize Date Range:
                     <input type="checkbox" name="customDates" id="customDates" value="customDates" />
@@ -22,7 +22,7 @@
             </div>
 
 
-            <div id="text-fill" class="col-md-6">
+            <div id="text-fill" class="col-md-6"> <!--The status bar-->
                 <span id="status-message">Returning 
                     <span id="currentCount">@ViewData["currentRecordsCount"]</span> of @ViewData["allRecordsCount"] documents, 
                     <span id="currentLowYear">
@@ -34,27 +34,44 @@
                 </span>
             </div>
 
-            <div class="col-md-3">
-                @Ajax.ActionLink("Reset Search", "Index", new
-           {
-               publicId = TempData["Folder_Id"]
-           }, new AjaxOptions
-           {
-               HttpMethod = "GET",
-               InsertionMode = InsertionMode.ReplaceWith,
-               UpdateTargetId = "public_table",
-               OnComplete = "clearFields",
-               OnSuccess = "updateCurrentCount"
-           }, new { @class = "button", id = "clearButton" })
+            <div class="right-form-side col-md-3"> <!--Reset/Clear button-->
+                    @Ajax.ActionLink("Reset Search", "Index", new
+               {
+                   publicId = TempData["Folder_Id"]
+               }, new AjaxOptions
+               {
+                   HttpMethod = "GET",
+                   InsertionMode = InsertionMode.ReplaceWith,
+                   UpdateTargetId = "public_table",
+                   OnComplete = "clearFields",
+                   OnSuccess = "updateCurrentCount"
+               }, new { @class = "button", id = "clearButton" })
+
+                @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+                {
+                    <div class="adminOptions filter">
+                        <br/>
+                        @Html.DropDownList("Options", new List<SelectListItem>
+                                            {
+                                                new SelectListItem { Value = "0", Text = "Edit These Files"},
+                                                new SelectListItem { Value = "1", Text = "Download all Public Documents"}
+                                            }, new { id = "editOptions" }
+                        )
+                        <input id="editOptionsSubmit" type="submit" value="Go" />
+                    </div>
+                }
+
             </div>
         </div>
+
         <div class="form-inputs col-md-12 row">
-            <div class="filter col-md-3">
+            <div class="filter col-md-3"> <!--Search box-->
+
                 <label for="search" style="font-size: 14px;">Search Description @if (TempData["Role"] != null && (string)TempData["Role"] == "Admin") {<span>/ Document Id</span>}:</label>
                 <input id="searchInputBox" type="search" name="searchTerm" />
-                <br />
             </div>
-            <div class="filter customDates col-md-3">
+
+            <div class="filter customDates col-md-3"> <!--Customize Start Range Date Range DD input-->
                 <label for="IssueDateMinRange">Starting Issue Date:</label>
                 @Html.DropDownList("IssueYearMinRange", TempData["YearRange"] as List<SelectListItem>, "Year", new { @class = "datefield", type = "date", disabled = "disabled" })
                 <select id="startingMonth" name="IssueMonthMinRange" class="datefield"> @* should i do in html.dropdownlist style? *@
@@ -74,7 +91,7 @@
                 </select>
                 <br />
             </div>
-            <div class="filter customDates col-md-3">
+            <div class="filter customDates col-md-3"> <!--Customize End Range Date Range DD input-->
                 <label for="IssueDateMaxRange">Ending Issue Date:</label>
                 @Html.DropDownList("IssueYearMaxRange", TempData["YearRange"] as List<SelectListItem>, "Year", new { @class = "datefield", type = "date", disabled = "disabled" })
                 <select id="endingMonth" name="IssueMonthMaxRange" class="datefield">
@@ -94,11 +111,20 @@
                 </select>
                 <br />
             </div>
-            <div class="filter col-md-3 buttondiv">
+            <div class="filter col-md-3 buttondiv"> <!--Submit Button-->
                 <br />
-                <input id="formSubmitId" type="submit" value="Search and Filter" />
+                    <input id="formSubmitId" type="submit" value="Search and Filter" />
+                    @*<button id="formSubmitId" type="submit" value="Search and Filter" >Search and Filter</button>*@
                 <br />
             </div>
         </div>
     </form>
+
+    <!--This form is hidden and only called from AdminOptions-->
+    @using (Html.BeginForm("DownloadAllDocuments", "Admin", FormMethod.Get, new { id = "downloadForm" })) 
+    {
+        @Html.TextBox("ClientId", TempData["Client_Id"]);
+        <input type="submit" value="Submit" id="downloadAllDocumentSubmit" />
+    }
+
 </div>

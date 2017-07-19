@@ -31,7 +31,8 @@
                 using (Html.BeginForm("Index", "Folder", FormMethod.Get, new { @class = "banner-form"}))
                 {
                     @Html.Hidden("ClientId", TempData["Client_Id"]);
-                    <input class="banner_button"type="submit" name="Role" value="Admin" />
+                    @*<input class="banner_button" type="submit" name="Role" value="Admin" />*@
+                    <button class="banner_button" name="Role" value="Admin" type="submit">Access Admin</button>
                 }
             }
             else if (TempData["RoleButton"] != null && (string)TempData["RoleButton"] == "Client")
@@ -39,7 +40,8 @@
                 using (Html.BeginForm("Index", "Folder", FormMethod.Get, new { @class = "banner-form" }))
                 {
                     @Html.Hidden("ClientId", TempData["Client_Id"]);
-                    <input class="banner_button" type="submit" name="Role" value="Client" />
+                    @*<input class="banner_button" type="submit" name="Role" value="Client" />*@
+                    <button class="banner_button" name="Role" value="Client" type="submit">Access Client</button>
                 }
             }
         </h3>

@@ -18,7 +18,7 @@
     <div id="public_table" class="row default-table" data-currentRecord="@ViewData["currentRecordsCount"]" data-currentLowYear="@(((List<SelectListItem>)TempData["YearRange"]).First().Text)" data-currentHighYear="@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)">
         <div id="public_table_inner" class="col-md-12">
 
-            <div class="admin-and-pagination row">
+            @*<div class="admin-and-pagination row">
                 @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
                 {
                     <div class="adminOptions col-md-4">
@@ -40,7 +40,7 @@
                         }
                     </div>
                 }
-            </div>
+            </div>*@
 
             <table class="table table-bordered table-hover">
                 <thead class="thead-default">

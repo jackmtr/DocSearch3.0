@@ -260,6 +260,7 @@ header {
 
     #formSubmitId {
         margin: 5px 0;
+        height: 50px;
     }
 
     #clearButton {
@@ -543,10 +544,10 @@ textarea {
     
 }
 
-.admin-and-pagination>div {
+/*Believe is deprecated*/
+/*.admin-and-pagination>div {
     text-align: center;
-    
-}
+}*/
 
 .form-inputs>div {
     margin-bottom: 5px;
@@ -630,4 +631,19 @@ select {
     display: inline; /*need this to make form inline*/
     float: right;
     margin-right: 200px;
+}
+
+.adminOptions *{
+    max-width: 200px;
+}
+
+.adminOptions {
+    text-align: right;
+}
+
+.form-inputs {
+    /*height: 75px;*/
+}
+
+#adminOptions {
 }
