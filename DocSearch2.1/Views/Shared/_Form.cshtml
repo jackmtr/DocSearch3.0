@@ -46,21 +46,6 @@
                    OnComplete = "clearFields",
                    OnSuccess = "updateCurrentCount"
                }, new { @class = "button", id = "clearButton" })
-
-                @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
-                {
-                    <div class="adminOptions">
-
-                        @Html.DropDownList("Options", new List<SelectListItem>
-                                            {
-                                                new SelectListItem { Value = "0", Text = "Edit These Files"},
-                                                new SelectListItem { Value = "1", Text = "Download all Public Documents"}
-                                            }, new { id = "editOptions" }
-                        )
-                        <input id="editOptionsSubmit" type="submit" value="Go" />
-                    </div>
-                }
-
             </div>
         </div>
 
@@ -118,6 +103,19 @@
             <div class="filter col-md-3 buttondiv"> <!--Submit Button-->
                     <input id="formSubmitId" type="submit" value="Search and Filter" />
                     @*<button id="formSubmitId" type="submit" value="Search and Filter" >Search and Filter</button>*@
+                @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+                {
+                    <div class="adminOptions">
+
+                        @Html.DropDownList("Options", new List<SelectListItem>
+                                            {
+                                                new SelectListItem { Value = "0", Text = "Edit These Files"},
+                                                new SelectListItem { Value = "1", Text = "Download all Public Documents"}
+                                            }, new { id = "editOptions" }
+                        )
+                        <input id="editOptionsSubmit" type="submit" value="Go" />
+                    </div>
+                }
             </div>
         </div>
     </form>
