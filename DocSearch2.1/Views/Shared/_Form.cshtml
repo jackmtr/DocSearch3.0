@@ -18,58 +18,16 @@
     </div>
 
     <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#public_table" class="col-md-12 main-form">
+        <input id="search" type="hidden" name="publicId" value="@TempData["Folder_Id"]" />
         <div class="inner-form row">
-
-            <input id="search" type="hidden" name="publicId" value="@TempData["Folder_Id"]" />
-
-            <div class="col-md-3" @*style="background-color: green*@">
-                <!--First 3/12 of side-->
-                <div class="row">
-                    <label class="col-md-12" for="customDates">
-                        Customize Date Range:
+            <div class="col-md-12">
+                <div class="row" style="height: 50px;">
+                    <label class="col-md-2" for="customDates">
+                        Customize Date:
                         <input type="checkbox" name="customDates" id="customDates" value="customDates" />
                     </label>
 
-                    <label class="col-md-12" for="fromYear">
-                        Records from:
-                        <select id="fromYear" name="IssueYearMinRange">
-                            <option value="-1" selected>one year ago from today</option>
-                            <option value="-2">two years ago from today</option>
-                            <option value="-3">three years ago from today</option>
-                            <option value="-100">All</option>
-                        </select>
-                    </label>
-
- 
-                    @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
-                    {<br/><br /><br />
-                        <div class="test adminOptions col-md-12">
-
-                            @Html.DropDownList("Options", new List<SelectListItem>
-                                        {
-                                            new SelectListItem { Value = "0", Text = "Edit These Files"},
-                                            new SelectListItem { Value = "1", Text = "Download all Public Documents"}
-                                        }, new { id = "editOptions", style = "width: 200px" }
-                            )
-                            <input id="editOptionsSubmit" type="submit" value="Go" />
-                        </div>
-                    }
-
-                </div>
-            </div>
-
-            <div class="col-md-6" @*style="background-color: blue"*@>
-                <div class="form-mid row">
-
-                    <div class="test col-md-12">
-                        <br />
-                        <!--Search box-->
-                        <label id="searchInputBox" for="searchInputBox">
-                            Search Description @if (TempData["Role"] != null && (string)TempData["Role"] == "Admin")
-                            {<span>/ Document Id</span>}:<input id="searchInputBox" type="search" name="searchTerm" />
-                        </label>
-                    </div>
-                    <div class="form-mid-half col-md-6">
+                    <div class="form-mid-half col-md-4 testest">
                         <div class="filter customDates row">
                             <!--Customize Start Range Date Range DD input-->
                             <label for="IssueDateMinRange" class="col-md-12">Starting Issue Date:</label>
@@ -92,7 +50,8 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-mid-half col-md-6">
+
+                    <div class="form-mid-half col-md-4">
                         <div class="filter customDates row">
                             <!--Customize End Range Date Range DD input-->
                             <label for="IssueDateMaxRange" class="col-md-12">Ending Issue Date:</label>
@@ -114,13 +73,8 @@
                             </select>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="col-md-3" @*style="background-color: brown"*@>
-
-                <div class="row form-mid">
-                    <div class="right-form-side col-md-12">
+                    <div class="right-form-side col-md-2">
                         <!--Reset/Clear button-->
                         @Ajax.ActionLink("Reset Search", "Index", new
                    {
@@ -134,22 +88,46 @@
                        OnSuccess = "updateCurrentCount"
                    }, new { @class = "button", id = "clearButton" })
                     </div>
-                    <div class="right-form-side col-md-12 buttondiv"></div>
-                    <div class="right-form-side col-md-12 buttondiv">
+
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="row">
+                    <label class="col-md-4" for="fromYear">
+                        Records from:
+                        <select id="fromYear" name="IssueYearMinRange">
+                            <option value="-1" selected>one year ago from today</option>
+                            <option value="-2">two years ago from today</option>
+                            <option value="-3">three years ago from today</option>
+                            <option value="-100">All</option>
+                        </select>
+                    </label>
+
+                    <div class="test col-md-6">
+                        <!--Search box-->
+                        <label id="searchInputBox" for="searchInputBox">
+                            Search @if (TempData["Role"] != null && (string)TempData["Role"] == "Admin")
+                            {<span>Document Id/</span>}Description: <input id="searchInputBox" type="search" name="searchTerm" />
+                        </label>
+                    </div>
+                    <div class="right-form-side col-md-2 buttondiv">
                         <!--Submit Button-->
                         <input class="button" id="formSubmitId" type="submit" value="Search and Filter" />
                     </div>
+
+
                 </div>
             </div>
         </div>
+
     </form>
 
-
-
-<!--This form is hidden and only called from AdminOptions-->
-@using (Html.BeginForm("DownloadAllDocuments", "Admin", FormMethod.Get, new { id = "downloadForm" }))
-{
-    @Html.TextBox("ClientId", TempData["Client_Id"]);
-    <input type="submit" value="Submit" id="downloadAllDocumentSubmit" />
-}
+        <!--This form is hidden and only called from AdminOptions-->
+        @using (Html.BeginForm("DownloadAllDocuments", "Admin", FormMethod.Get, new { id = "downloadForm" }))
+        {
+            @Html.TextBox("ClientId", TempData["Client_Id"]);
+            <input type="submit" value="Submit" id="downloadAllDocumentSubmit" />
+        }
 </div>

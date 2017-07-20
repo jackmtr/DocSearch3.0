@@ -561,8 +561,8 @@ textarea {
 
     .admin-status {
         font-weight: bold;
-        position: absolute;
-        right: 100px;
+        /*position: absolute;
+        right: 100px;*/
         color: red;
     }
 
@@ -612,9 +612,8 @@ select {
 }
 
 .banner-form {
-    display: inline; /*need this to make form inline*/
+    display: inline;
     float: right;
-    margin-right: 200px;
 }
 
 .adminOptions *{
@@ -683,4 +682,13 @@ select {
 
 .test {
     text-align: center;
+}
+
+.form-mid-half select{
+    margin: 0;
+    width: 30%;
+}
+
+.testest {
+    height: 100%;
 }

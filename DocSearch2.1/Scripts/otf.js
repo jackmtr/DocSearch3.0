@@ -552,9 +552,11 @@ $(function () {
         return false;
     };
 
-    $("#body").on("click", "#editOptionsSubmit", function () {
+    $("body").on("click", "#editOptionsSubmit", function () {
 
         $choice = $('#editOptions option:selected').text();
+
+        alert('hi');
 
         if ($choice == "Edit These Files") {
             modifyEditList();

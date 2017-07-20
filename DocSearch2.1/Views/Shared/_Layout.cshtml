@@ -15,34 +15,44 @@
 </head>
 <body>
     <header>
-        <h3 class="banner_info">
-
+        <h3 class="banner_info row">
             @if (TempData["Client_Id"] != null)
             {
-                <span class="public_name_id">@Html.Raw(TempData["Client_Id"] + " - " + TempData["Client_Name"])</span>
+                <span class="public_name_id col-md-4">@Html.Raw(TempData["Client_Id"] + " - " + TempData["Client_Name"])</span>
 
                 if (TempData["Role"] != null && (string)TempData["Role"] == "Admin")
                 {
-                    <span class="admin-status">@TempData["Role"]</span>
+                    <span class="admin-status col-md-1">[@TempData["Role"]]</span>
                 }
             }
+
+
             @if (TempData["RoleButton"] != null && (string)TempData["RoleButton"] == "Admin")
             {
-                using (Html.BeginForm("Index", "Folder", FormMethod.Get, new { @class = "banner-form"}))
+                using (Html.BeginForm("Index", "Folder", FormMethod.Get, new { @class = "banner-form col-md-3" }))
                 {
                     @Html.Hidden("ClientId", TempData["Client_Id"]);
-                    @*<input class="banner_button" type="submit" name="Role" value="Admin" />*@
                     <button class="banner_button" name="Role" value="Admin" type="submit">Access Admin</button>
                 }
             }
             else if (TempData["RoleButton"] != null && (string)TempData["RoleButton"] == "Client")
             {
-                using (Html.BeginForm("Index", "Folder", FormMethod.Get, new { @class = "banner-form" }))
+                using (Html.BeginForm("Index", "Folder", FormMethod.Get, new { @class = "banner-form col-md-2" }))
                 {
                     @Html.Hidden("ClientId", TempData["Client_Id"]);
-                    @*<input class="banner_button" type="submit" name="Role" value="Client" />*@
                     <button class="banner_button" name="Role" value="Client" type="submit">Access Client</button>
                 }
+            }
+
+            @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
+            {
+                <input id="editOptionsSubmit" class="banner-form" type="submit" value="Go" />
+                @Html.DropDownList("Options", new List<SelectListItem>
+                                    {
+                                        new SelectListItem { Value = "0", Text = "Edit These Files"},
+                                        new SelectListItem { Value = "1", Text = "Download all Public Documents"}
+                                    }, new { id = "editOptions", @class = "banner-form", style = "width: 200px; margin-right: 10px;" }
+                        )
             }
         </h3>
     </header>
