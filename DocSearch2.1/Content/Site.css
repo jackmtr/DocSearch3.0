@@ -250,25 +250,9 @@ header {
         margin-bottom: 15px;
         display: flex;
         flex-direction: column;
-        justify-content : flex-start;
+        justify-content: center;
 
     }
-
-    .buttondiv {
-
-    }
-
-    /*#formSubmitId {
-        margin: 5px 0;
-        height: 50px;
-    }*/
-
-    #clearButton {
-    }
-
-    /*#status-bar-form {
-        margin: 20px !important;
-    }*/
 
     /*Anchors with class 'button' changes (i.e. Clear Button)*/
     a.button, #formSubmitId {
@@ -513,17 +497,17 @@ th {
 #status-message {
     font-size: 20px;
     font-weight: bold;
+    text-align: center;
+    margin-bottom: 0;
 }
 
 #form-div {
+    margin: 0;
 }
 
-#form-div form{
-}
-
-form > div{
+/*form > div{
     margin: 0 !important;
-}
+}*/
 
 textarea {
 
@@ -634,7 +618,7 @@ select {
 }
 
 .adminOptions *{
-    max-width: 50%;
+    /*max-width: 50%;*/
 }
 
 .adminOptions {
@@ -646,9 +630,6 @@ select {
     /*height: 75px;*/
 }
 
-#adminOptions {
-}
-
 .datecustomer *{
     display: inline;
 }
@@ -658,5 +639,48 @@ select {
 }
 
 .main-form {
+    /*padding: 10px;*/
+}
+
+.inner-form > * {
+}
+
+.inner-form > div {
+    padding: 5px !important; /*used to override bootstrap*/
+    margin: 0 !important; /*used to override bootstrap*/
+}
+
+    .inner-form > div div {
+    padding: 0 !important; /*used to override bootstrap*/
+    margin: 0 !important; /*used to override bootstrap*/
+    }
+
+.form-mid {
+    height: 100%;
+}
+
+.form-mid-half {
+    height: 50%;
+}
+
+.right-form-side > *{
+    margin: 5% auto !important; /*not the best code, can do better*/
+    width: inherit;
+}
+
+#searchInputBox label {
     margin: 0;
+  
+}
+
+.inner-form label{
+    padding: 0;
+}
+
+.right-form-side >  div *{
+    vertical-align: bottom;
+}
+
+.test {
+    text-align: center;
 }
