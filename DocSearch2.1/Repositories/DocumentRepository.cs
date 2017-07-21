@@ -24,6 +24,8 @@ namespace DocSearch2._1.Repositories
             try {
                 docId = Int32.Parse(id);
                 document = _db.tbl_Document.AsNoTracking().SingleOrDefault(p => p.Document_ID == docId);
+                //right now the user will also pick up hidden docs
+
 
                 //if document exists and ArchiveFile is null, it will look into the purged WAS db instead.
                 if (document.ArchivedFile == null) {

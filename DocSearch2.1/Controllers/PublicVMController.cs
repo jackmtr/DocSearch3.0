@@ -81,6 +81,11 @@ namespace DocSearch2._1.Controllers
                 //count of total records unfiltered of this client
                 ViewData["allRecordsCount"] = publicModel.Count();
 
+                //maybe should return view here already since overall count is alreadt 0
+                if (publicModel.Count() == 0) {
+                    return View("Errors");
+                }
+
                 //creating the options for the dropdown list
                 TempData["YearRange"] = YearRangePopulate(RetrieveYear(publicModel, true), RetrieveYear(publicModel, false));
             }

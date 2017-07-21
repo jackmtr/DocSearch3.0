@@ -556,8 +556,6 @@ $(function () {
 
         $choice = $('#editOptions option:selected').text();
 
-        alert('hi');
-
         if ($choice == "Edit These Files") {
             modifyEditList();
         } else if ($choice == "Download all Public Documents") {
