@@ -44,7 +44,7 @@ namespace DocSearch2._1.Controllers
 
                 foreach (PublicVM pvm in updatedEditList) {
 
-                    tbl_Document modDoc = documentRepository.SelectById(pvm.Document_ID.ToString());
+                    tbl_Document modDoc = documentRepository.SelectById(pvm.Document_ID.ToString(), true);
                     modDoc.Issue_DT = pvm.IssueDate;
                     modDoc.Description = pvm.Description;
                     modDoc.Method = pvm.Method;

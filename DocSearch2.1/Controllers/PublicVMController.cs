@@ -71,7 +71,7 @@ namespace DocSearch2._1.Controllers
                                         .GroupBy(x => x.Document_ID)
                                             .Select(x => x.First());
             } catch {
-                return View("Errors");
+                return View("Errors"); //change
             }
 
 
@@ -83,7 +83,11 @@ namespace DocSearch2._1.Controllers
 
                 //maybe should return view here already since overall count is alreadt 0
                 if (publicModel.Count() == 0) {
-                    return View("Errors");
+                    //return View("Errors");
+                    TempData["error_info"] = "The client does not have any available records.";
+                    TempData["importance"] = true;
+
+                    return RedirectToAction("Index", "ErrorHandler", null);
                 }
 
                 //creating the options for the dropdown list
@@ -216,22 +220,44 @@ namespace DocSearch2._1.Controllers
         }
 
         // Get: File
-        public ActionResult FileDisplay([Bind(Prefix = "documentId")] string id) {
+        public ActionResult FileDisplay([Bind(Prefix = "documentId")] string id)
+        {
+            //tbl_Document file = null;
 
-            var file = documentRepository.SelectById(id);
+            //if (User.IsInRole("IT-ops"))
+            //{
+            //    file = documentRepository.SelectById(id, true);
+            //}
+            //else
+            //{
+            //    file = documentRepository.SelectById(id, false);
+            //}
+
+            tbl_Document file = (User.IsInRole("IT-ops") ? documentRepository.SelectById(id, true) : documentRepository.SelectById(id, false));
+
+
             string MimeType = null;
 
 
             if (file == null) {
                 ViewData["repositoryRequestDocId"] = id;
 
-                return View("Errors");
+                TempData["error_info"] = "The document does not exist.";
+                TempData["importance"] = false;
+
+                return RedirectToAction("Index", "ErrorHandler", null);
             }
 
             if (file.ArchivedFile.Length < 100)
             {
                 //rare occation of when there is a file, but possibly corrupted
-                return Content("<script language='javascript' type='text/javascript'>alert('Unable to open, File Size: 0 mb');window.open('','_self').close();</script>");
+
+                TempData["error_info"] = "The file was unable to be open.";
+                TempData["importance"] = true;
+
+                return RedirectToAction("Index", "ErrorHandler", null);
+
+                //return Content("<script language='javascript' type='text/javascript'>alert('Unable to open, File Size: 0 mb');window.open('','_self').close();</script>");
             }
 
             switch (file.FileExtension.ToLower().Trim()) {

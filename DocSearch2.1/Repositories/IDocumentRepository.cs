@@ -10,7 +10,7 @@ namespace DocSearch2._1.Repositories
 {
     public interface IDocumentRepository
     {
-        tbl_Document SelectById(string id);
+        tbl_Document SelectById(string id, bool authorized);
 
         IEnumerable<tbl_Document> SelectAll(string id);
 

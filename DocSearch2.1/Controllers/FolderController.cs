@@ -28,40 +28,37 @@ namespace DocSearch2._1.Controllers
         {
             tbl_Folder folder = repository.SelectByNumber(Number);
 
-            try
+            if (folder == null)
             {
+                TempData["Client_Id"] = Number;
+                TempData["error_info"] = "The client does not exist.";
+                TempData["importance"] = false;
+
+                return RedirectToAction("Index", "ErrorHandler", null);
+            }
+            else {
                 if (HttpContext.User.IsInRole("IT-ops"))
                 {
                     TempData["RoleButton"] = "Admin";
 
-                    if (Role == "Admin"){
+                    if (Role == "Admin")
+                    {
                         TempData["Role"] = "Admin";
                         TempData["RoleButton"] = "Client";
-                    } else {
+                    }
+                    else
+                    {
                         TempData["Role"] = "Client";
-                    }         
-                }else
+                    }
+                }
+                else
                 {
                     TempData["Role"] = "Client";
                 }
 
-                //else if (HttpContext.User.IsInRole("Domain Users"))
-                //{
-                //    TempData["Role"] = "Client";
-                //}
-                //else
-                //{
-                //    TempData["Role"] = "Unautherized";
-                //}
-
-
                 TempData["Client_Name"] = folder.Name;
                 TempData["Client_Id"] = folder.Number;
                 TempData["Folder_Id"] = folder.Folder_ID; //should be a better way than carrying this variable around
-            }
-            catch {
-                TempData["Client_Id"] = Number;
-                return View("Errors");
             }
 
             return RedirectToAction("Index", "PublicVM", new { publicId = folder.Folder_ID });

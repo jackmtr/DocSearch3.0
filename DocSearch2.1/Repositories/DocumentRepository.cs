@@ -16,21 +16,37 @@ namespace DocSearch2._1.Repositories
             this._db = new WASEntities();
         }
 
-        public tbl_Document SelectById(string id)
+        public tbl_Document SelectById(string id, bool authorized)
         {
             int docId = 0;
             tbl_Document document = null;
 
             try {
                 docId = Int32.Parse(id);
-                document = _db.tbl_Document.AsNoTracking().SingleOrDefault(p => p.Document_ID == docId);
+
+                if (authorized == true)
+                {
+                    document = _db.tbl_Document.AsNoTracking().SingleOrDefault(p => p.Document_ID == docId && p.Active_IND == true);
+                }
+                else {
+                    document = _db.tbl_Document.AsNoTracking().SingleOrDefault(p => p.Document_ID == docId && p.Active_IND == false);
+                }
+                
                 //right now the user will also pick up hidden docs
 
 
                 //if document exists and ArchiveFile is null, it will look into the purged WAS db instead.
                 if (document.ArchivedFile == null) {
                     this._db = new WASEntities("name=WASArchiveEntities");
-                    document = _db.tbl_Document.Find(Int32.Parse(id));
+                    //document = _db.tbl_Document.Find(Int32.Parse(id));
+                    if (authorized == true)
+                    {
+                        document = _db.tbl_Document.AsNoTracking().SingleOrDefault(p => p.Document_ID == docId && p.Active_IND == true);
+                    }
+                    else
+                    {
+                        document = _db.tbl_Document.AsNoTracking().SingleOrDefault(p => p.Document_ID == docId && p.Active_IND == false);
+                    }
 
                     //Because this is a rare occurance, I would rather blindly search through other db's than change my model to bring in the repo value
                 }
