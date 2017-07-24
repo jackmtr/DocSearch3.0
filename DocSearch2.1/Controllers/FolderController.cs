@@ -68,7 +68,7 @@ namespace DocSearch2._1.Controllers
                 TempData["Folder_Id"] = folder.Folder_ID; //should be a better way than carrying this variable around
             }
 
-            return RedirectToAction("Index", "PublicVM", new { publicId = folder.Folder_ID });
+            return RedirectToAction("Index", "PublicVM", new { folderId = folder.Folder_ID });
         }
 
         //Dispose any open connection when finished (db in this regard)

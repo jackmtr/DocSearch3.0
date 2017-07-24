@@ -324,7 +324,7 @@ $(function () {
             traditional: true,
             data: {
                 EditList: editList,
-                publicId: $('#search').val()
+                folderId: $('#search').val()
             },
             cache: false
         };

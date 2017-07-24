@@ -273,7 +273,6 @@
     <Content Include="Views\PublicVM\Index.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
-    <Content Include="Views\Shared\Errors.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_PublicTable.cshtml" />
     <Content Include="Views\PublicVM\MiscData.cshtml" />

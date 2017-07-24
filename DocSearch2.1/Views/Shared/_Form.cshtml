@@ -18,7 +18,7 @@
     </div>
 
     <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="#public_table" class="col-md-12 main-form">
-        <input id="search" type="hidden" name="publicId" value="@TempData["Folder_Id"]" />
+        <input id="search" type="hidden" name="folderId" value="@TempData["Folder_Id"]" />
         <div class="inner-form row">
             <div class="col-md-12">
                 <div class="row" style="height: 50px;">
@@ -80,7 +80,7 @@
                         <!--Reset/Clear button-->
                         @Ajax.ActionLink("Reset Search", "Index", new
                    {
-                       publicId = TempData["Folder_Id"]
+                       folderId = TempData["Folder_Id"]
                    }, new AjaxOptions
                    {
                        HttpMethod = "GET",
