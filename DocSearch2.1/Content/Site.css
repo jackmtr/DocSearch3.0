@@ -663,7 +663,7 @@ select {
 }
 
 .right-form-side > *{
-    margin: 5% auto !important; /*not the best code, can do better*/
+    /*margin: 5% auto !important;*/ /*not the best code, can do better*/
     width: inherit;
 }
 
