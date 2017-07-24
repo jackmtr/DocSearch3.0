@@ -18,7 +18,12 @@
         <h3 class="banner_info row">
             @if (TempData["Client_Id"] != null)
             {
-                <span class="public_name_id col-md-4">@Html.Raw(TempData["Client_Id"] + " - " + TempData["Client_Name"])</span>
+                <span class="public_name_id col-md-4">@Html.Raw(TempData["Client_Id"])
+                    @if (TempData["Client_Name"] != null)
+                    {
+                        @Html.Raw(TempData["Client_Name"])
+                    }           
+                </span>
 
                 if (TempData["Role"] != null && (string)TempData["Role"] == "Admin")
                 {

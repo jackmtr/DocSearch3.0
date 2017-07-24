@@ -26,7 +26,14 @@ namespace DocSearch2._1.Controllers
         // GET: Folder
         public ActionResult Index([Bind(Prefix = "ClientId")] string Number, string Role = "")
         {
-            tbl_Folder folder = repository.SelectByNumber(Number);
+            tbl_Folder folder = null;
+
+            try {
+                folder = repository.SelectByNumber(Number);
+            } catch {
+                TempData["importance"] = true;
+                return RedirectToAction("Index", "ErrorHandler", null);
+            }
 
             if (folder == null)
             {

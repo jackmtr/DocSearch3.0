@@ -18,8 +18,6 @@ namespace DocSearch2._1.Repositories
 
         public tbl_Folder SelectByID(string id)
         {
-            //error = "The client does not exist";
-
             //do this better
             return _db.tbl_Folder.Find(Int32.Parse(id));
         }

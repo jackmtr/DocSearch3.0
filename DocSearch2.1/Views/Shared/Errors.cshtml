@@ -3,10 +3,10 @@
 @{
     ViewBag.Title = "Error";
 }
-<div class="error-page">
+@*<div class="error-page">
     <h3 class="text-danger">An error occurred while processing your request.</h3>
     <br />
-    <h4>Please contact IT-Support if you need assistance.</h4>
+    <h4>Please contact IT-Support if you require further assistance.</h4>
     <br />
     @if (TempData["Client_Id"] != null)
     {
@@ -24,4 +24,7 @@
     {
         <h5>Document Id: @ViewData["repositoryRequestDocId"] </h5>
     }
+</div>*@
+<div class="error-page">
+    <p>if you see this, please reconnect to new error page</p>
 </div>

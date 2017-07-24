@@ -222,27 +222,14 @@ namespace DocSearch2._1.Controllers
         // Get: File
         public ActionResult FileDisplay([Bind(Prefix = "documentId")] string id)
         {
-            //tbl_Document file = null;
-
-            //if (User.IsInRole("IT-ops"))
-            //{
-            //    file = documentRepository.SelectById(id, true);
-            //}
-            //else
-            //{
-            //    file = documentRepository.SelectById(id, false);
-            //}
-
             tbl_Document file = (User.IsInRole("IT-ops") ? documentRepository.SelectById(id, true) : documentRepository.SelectById(id, false));
 
-
             string MimeType = null;
-
 
             if (file == null) {
                 ViewData["repositoryRequestDocId"] = id;
 
-                TempData["error_info"] = "The document does not exist.";
+                TempData["error_info"] = "The document is not available or does not exist."; //maybe seperate this later with a check for tbl_doc.Active_IND
                 TempData["importance"] = false;
 
                 return RedirectToAction("Index", "ErrorHandler", null);

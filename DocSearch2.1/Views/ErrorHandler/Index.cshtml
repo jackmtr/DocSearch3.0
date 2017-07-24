@@ -11,18 +11,10 @@
 
     <br />
 
-    @if ((bool)TempData["importance"] == true)
+    @if (TempData["importance"] != null && (bool)TempData["importance"] == true)
     {
-        <h4>Please contact IT-Support if you need further assistance.</h4>
-    }
-    else {
-        <h4>Please check over the inputed information and try again.</h4>
-    }
+        <br />
 
-    <br />
-
-    @if ((bool)TempData["importance"] == true)
-    {
         if (TempData["Client_Id"] != null)
         {
             <h4>Please provide the following information to support:</h4>
@@ -40,4 +32,16 @@
             <h5>Document Id: @ViewData["repositoryRequestDocId"] </h5>
         }
     }
+    else if (TempData["importance"] != null && (bool)TempData["importance"] == false)
+    {
+        <h4>Please check over the inputed information and try again.</h4>
+    }
+    else
+    {
+        <h4>Please contact IT-Support if you require further assistance.</h4>
+    }
+    @*@if (TempData["importance"] != null && (bool)TempData["importance"] == true)
+    {
+
+    }*@
 </div>
