@@ -30,7 +30,10 @@
                     <ul id="policy_list">
                         <!--need to check for no reference number documents with the policy !- null-->
                         @*@if (((IEnumerable<dynamic>)ViewBag.PolicyNavBar).Count() > 0)*@ <!--Not sure if I need this conditional-->
-                        @if (ViewBag.PolicyNavBar == null || ViewBag.PolicyNavBar == "")
+                        @*@if (ViewBag.PolicyNavBar != null || ViewBag.PolicyNavBar != "")*@
+
+                        @*<li>@(((IEnumerable<string>)ViewBag.PolicyNavBar).First())</li>*@
+                        @if (((IEnumerable<string>)ViewBag.PolicyNavBar).First().Trim().Length > 1)
                         {
                             foreach (var policy in ViewBag.PolicyNavBar)
                             {
@@ -38,12 +41,12 @@
                                 {
                                     <li>
                                         <a href="@Url.Action("Index", "PublicVM", new
-                                            {
-                                                folderId = TempData["Folder_Id"],
-                                                policyNumber = policy,
-                                                navBarGroup = NavBarGroupOptions.policy,
-                                                navBarItem = @policy
-                                            })"
+                                        {
+                                            folderId = TempData["Folder_Id"],
+                                            policyNumber = policy,
+                                            navBarGroup = NavBarGroupOptions.policy,
+                                            navBarItem = @policy
+                                        })"
                                            class="navLink"
                                            data-ajax-update="#public_table"
                                            data-ajax-mode="replace-with"
@@ -59,7 +62,8 @@
                                 }
                             }
                         }
-                        else {
+                        else
+                        {
                             <li>
                                 <p class="navLink" style="text-align: center; font-size: 150%">There are no policies</p> <!--May move styling into css-->
                             </li>
