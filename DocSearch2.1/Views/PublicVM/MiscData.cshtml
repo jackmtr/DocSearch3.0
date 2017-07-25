@@ -71,7 +71,18 @@
                     foreach (var item in Model.DocReferences)
                     {
                         <tr>
-                            <td>@item.RefNumber</td>
+                            <td>
+                                @if (item.RefNumber == null || item.RefNumber.Trim().Length < 1)
+                                {
+                                    @*@Html.DisplayFor(modelItem => item.RefNumber)*@
+                                    @Html.Raw("N/A");
+                                    
+                                }
+                                else
+                                {
+                                    @item.RefNumber
+                                }
+                            </td>
                             <td>@item.RefNumberType_CD</td>
                             <td>
                                 @if (item.Date1_DT.HasValue)

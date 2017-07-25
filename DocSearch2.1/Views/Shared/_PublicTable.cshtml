@@ -17,31 +17,6 @@
 {
     <div id="public_table" class="row default-table" data-currentRecord="@ViewData["currentRecordsCount"]" data-currentLowYear="@(((List<SelectListItem>)TempData["YearRange"]).First().Text)" data-currentHighYear="@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)">
         <div id="public_table_inner" class="col-md-12">
-
-            @*<div class="admin-and-pagination row">
-                @if (TempData["Role"] != null && TempData["Role"].ToString() == "Admin")
-                {
-                    <div class="adminOptions col-md-4">
-                        @using (Html.BeginForm("AdminOptions", "Admin", "Get"))
-                        {
-                            @Html.DropDownList("Options", new List<SelectListItem>
-                    {
-                        new SelectListItem { Value = "0", Text = "Edit These Files"},
-                        new SelectListItem { Value = "1", Text = "Download all Public Documents"}
-                    }, new { id = "editOptions" }
-)
-                            <input id="editOptionsSubmit" type="submit" value="Go" />
-                        }
-
-                        @using (Html.BeginForm("DownloadAllDocuments", "Admin", FormMethod.Get, new { id = "downloadForm" }))
-                        {
-                            @Html.TextBox("ClientId", TempData["Client_Id"]);
-                            <input type="submit" value="Submit" id="downloadAllDocumentSubmit" />
-                        }
-                    </div>
-                }
-            </div>*@
-
             <table class="table table-bordered table-hover">
                 <thead class="thead-default">
                     <tr class="main-rows">
@@ -116,7 +91,13 @@
                                 @Html.DisplayFor(modelItem => item.IssueDate)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Method)
+                                @if (item.Method == null || item.Method.Trim().Length < 1)
+                                {
+                                    @Html.Raw("N/A");
+                                }
+                                else {
+                                    @Html.DisplayFor(modelItem => item.Method)
+                                }
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.RefNumber)
@@ -128,7 +109,7 @@
                                 @Html.DisplayFor(modelItem => item.Originator)
                             </td>
                             <td>
-                                @if (item.Reason == null || item.Reason.Length < 1)
+                                @if (item.Reason == null || item.Reason.Trim().Length < 1)
                                 {
                                     @Html.Raw("N/A");
                                 }
