@@ -692,3 +692,14 @@ select {
 .testest {
     height: 100%;
 }
+
+#category_section>ul, #policy_section>ul {
+    border: 0 solid black;
+    border-width: 0 0 1px 1px;
+}
+
+a.navLink {
+    border: 0 solid black;
+    border-width: 1px 1px 0 0;
+    padding:.5em;
+}
