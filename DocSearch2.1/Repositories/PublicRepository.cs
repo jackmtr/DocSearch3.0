@@ -95,6 +95,7 @@ namespace DocSearch2._1.Repositories
                                         CatName = cat.Name,
                                         dr.Date1_DT,
                                         dr.RefNumber,
+                                        dr.RefNumberType_CD,
                                         d.FileExtension,
                                         d.Method,
                                         d.Originator,
@@ -116,6 +117,7 @@ namespace DocSearch2._1.Repositories
                     objpvm.CategoryName = item.CatName;
                     objpvm.EffectiveDate = item.Date1_DT;
                     objpvm.RefNumber = item.RefNumber;
+                    objpvm.ReferenceType = item.RefNumberType_CD;
                     objpvm.FileExtension = item.FileExtension;
                     objpvm.Method = item.Method;
                     objpvm.Originator = item.Originator;

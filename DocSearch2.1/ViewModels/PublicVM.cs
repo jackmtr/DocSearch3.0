@@ -50,5 +50,7 @@ namespace DocSearch2._1.ViewModels
 
         public bool Hidden { get; set; } //tbl_Document.Active_IND, adding to allow easier access for admin to hide document, testing and could end up not using
 
+        [Display(Name = "Reference Type")]
+        public string ReferenceType { get; set; } //tbl_DocReference.RefNumberType_CD
     }
 }

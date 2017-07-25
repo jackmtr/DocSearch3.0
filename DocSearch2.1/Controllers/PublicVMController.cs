@@ -402,7 +402,7 @@ namespace DocSearch2._1.Controllers
             ViewBag.PolicyNavBar = model
                                     //check this logic later
                                     //.Where(e => e.EffectiveDate != null || e.EffectiveDate == null && e.RefNumber == null || e.EffectiveDate == null && e.RefNumber != null)
-                                    .Where(e => e.EffectiveDate != null)
+                                    .Where(e => e.EffectiveDate != null && e.ReferenceType == "Policy")
                                         //.Where(n => n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null)
                                         //.Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null)
                                         .OrderBy(e => e.RefNumber)
