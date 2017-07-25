@@ -29,31 +29,40 @@
                 <div id="policy_section" class="hidden">
                     <ul id="policy_list">
                         <!--need to check for no reference number documents with the policy !- null-->
-                        @foreach (var policy in ViewBag.PolicyNavBar)
+                        @*@if (((IEnumerable<dynamic>)ViewBag.PolicyNavBar).Count() > 0)*@ <!--Not sure if I need this conditional-->
+                        @if (ViewBag.PolicyNavBar == null || ViewBag.PolicyNavBar == "")
                         {
-                            if (policy != null && policy.Length > 0)
+                            foreach (var policy in ViewBag.PolicyNavBar)
                             {
-                                <li>
-                                    <a href="@Url.Action("Index", "PublicVM", new
-                                        {
-                                            folderId = TempData["Folder_Id"],
-                                            policyNumber = policy,
-                                            navBarGroup = NavBarGroupOptions.policy,
-                                            navBarItem = @policy
-                                        })"
-                                       class="navLink"
-                                       data-ajax-update="#public_table"
-                                       data-ajax-mode="replace-with"
-                                       data-ajax-method="GET"
-                                       data-subclass="policy"
-                                       data-subclass-title="@policy"
-                                       data-ajax-complete="postNavbar"
-                                       data-ajax-success="updateCurrentCount"
-                                       data-ajax="true">
-                                        @policy
-                                    </a>
-                                </li>
+                                if (policy != null && policy.Length > 0)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("Index", "PublicVM", new
+                                            {
+                                                folderId = TempData["Folder_Id"],
+                                                policyNumber = policy,
+                                                navBarGroup = NavBarGroupOptions.policy,
+                                                navBarItem = @policy
+                                            })"
+                                           class="navLink"
+                                           data-ajax-update="#public_table"
+                                           data-ajax-mode="replace-with"
+                                           data-ajax-method="GET"
+                                           data-subclass="policy"
+                                           data-subclass-title="@policy"
+                                           data-ajax-complete="postNavbar"
+                                           data-ajax-success="updateCurrentCount"
+                                           data-ajax="true">
+                                            @policy
+                                        </a>
+                                    </li>
+                                }
                             }
+                        }
+                        else {
+                            <li>
+                                <p class="navLink" style="text-align: center; font-size: 150%">There are no policies</p> <!--May move styling into css-->
+                            </li>
                         }
                     </ul>
                 </div>
