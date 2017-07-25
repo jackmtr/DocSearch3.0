@@ -31,8 +31,16 @@ function clearFields(id) {
 
     $form.find(".form-inputs select option").removeAttr('selected');
 
-    $form.find("#IssueYearMinRange option:eq(0)").prop("selected", true);
-    $form.find("#IssueYearMaxRange option:eq(0)").prop("selected", true);
+    //$form.find("#IssueYearMinRange option:eq(0)").prop("selected", true);
+
+    if (id != "allDocs") {
+        $form.find("#IssueYearMinRange option:eq(0)").prop("selected", true);
+        $form.find("#IssueYearMaxRange option:eq(0)").prop("selected", true);
+    } else {
+        $form.find("#IssueYearMinRange option:eq(1)").prop("selected", true);
+        $form.find("#IssueYearMaxRange option:last-child").prop("selected", true);
+    }
+    
 
     //may want to be more specific with check //having issues with this since updating the reset button
     if (id == "clearButton") {
@@ -145,33 +153,6 @@ $(function () {
     }, $.validator.format("Please specify a date between 01 Jan 1990 and today.")); //the daterange validator isnt working properly, but enough
 
     //**FUNCTIONS
-
-    //function postNavbar1() {
-
-    //    $className = $('.active').children("a").data("subclass");
-    //    $classNameTitle = $('.active').children("a").data("subclass-title");
-
-    //    //first if statement checks if $className has a value or is undefined
-    //    if ($className) {
-    //        if ($classNameTitle == "Correspondence") {
-    //            $('#public_table').removeClass().addClass("correspondence");
-    //        } else if ($classNameTitle == "Declaration/Endorsement") {
-    //            $('#public_table').removeClass().addClass("declaration");
-    //        } else {
-    //            $('#public_table').removeClass().addClass($className);
-    //        }
-    //    }
-
-    //    //need to check for form submit, then not do clearFields
-    //    if ($(this).hasClass('navLink') || $(this).hasClass('button')) {
-
-    //        clearFields();
-    //    }
-
-    //    updateCurrentCount();
-    //}
-
-
 
     //submits the search and date filter form asynchronously
     var ajaxFormSubmit = function () {
