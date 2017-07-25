@@ -64,36 +64,42 @@ namespace DocSearch2._1.Controllers
 
 
             //**POPULATING MAIN MODEL, second conditional is for no doc reference documents, a unique westland condition
-            try {
+            try
+            {
                 publicModel = publicRepository
                                 .SelectAll(Folder_ID, TempData["Role"].ToString())
                                     .Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null);
-                                    //check this logic later
-                                    //.Where(n => n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null)
+                //check this logic later
+                //.Where(n => n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null)
 
-                                        //.GroupBy(x => x.Document_ID) //THE ISSUE IS WITHIN THIS AND NEXT LINE
-                                            //.Select(x => x.First()); //condesning by docId... maybe do after controller decides user wants to see by docId or Cate
+                //.GroupBy(x => x.Document_ID) //THE ISSUE IS WITHIN THIS AND NEXT LINE
+                //.Select(x => x.First()); //condesning by docId... maybe do after controller decides user wants to see by docId or Cate
 
-                                            //right now, publicModel is full of units of DocReference x DocId
-            } catch {
+                //right now, publicModel is full of units of DocReference x DocId
+            }
+            catch
+            {
                 return View("Errors"); //change
             }
 
             //needs to be checked seperately because cant select by DocId until after deciding if we are searching by documentId or policy
             //can possibly combine into navBarGroupFilter
-            if (navBarGroup != "policy") {
+            if (navBarGroup != "policy")
+            {
                 publicModel = publicModel.GroupBy(x => x.Document_ID).Select(x => x.First());
             }
 
 
             //should only be run on initial load of page
-            if (!Request.IsAjaxRequest()) {
+            if (!Request.IsAjaxRequest())
+            {
 
                 //count of total records unfiltered of this client
                 ViewData["allRecordsCount"] = publicModel.Count();
 
                 //maybe should return view here already since overall count is alreadt 0
-                if (publicModel.Count() == 0) {
+                if (publicModel.Count() == 0)
+                {
                     //return View("Errors");
                     TempData["error_info"] = "The client does not have any available records.";
                     TempData["importance"] = true;
@@ -104,12 +110,21 @@ namespace DocSearch2._1.Controllers
                 //creating the options for the dropdown list
                 TempData["YearRange"] = YearRangePopulate(RetrieveYear(publicModel, true), RetrieveYear(publicModel, false));
 
-            //**Populating the navbar, put into function
-            populateNavBar(publicModel);
-            }
+                //**Populating the navbar, put into function
+                populateNavBar(publicModel);
 
-            //turn this if into an else
-            if (Request.IsAjaxRequest())
+                //pretty much should only be the initial synchronous load to come in here
+                ViewData["SortOrder"] = sortAscending;
+                publicModel = publicModel
+                                .OrderByDescending(r => r.IssueDate)
+                                    .Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax))
+                                        .ToList();
+
+                ViewData["currentRecordsCount"] = publicModel.Count();
+
+                return View(publicModel);
+            }
+            else
             {
                 //If user inputs only one custom year and maybe one/two months, what should happen?
                 if (String.IsNullOrEmpty(IssueYearMaxRange))
@@ -168,11 +183,13 @@ namespace DocSearch2._1.Controllers
                         TempData["SearchTerm"] = searchTerm;
                     }
                 }
-                else {
+                else
+                {
                     //checks if the date filter and search term will return any results
                     publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && (searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.ToLower().Contains(searchTerm.ToLower()) == true : true)));
 
-                    if (publicModel.Count() == 0) {
+                    if (publicModel.Count() == 0)
+                    {
                         ViewData["goodSearch"] = false;
                     }
 
@@ -192,21 +209,10 @@ namespace DocSearch2._1.Controllers
 
                     return PartialView("_PublicTable", publicModel);
                 }
-                else {
+                else
+                {
                     return HttpNotFound();
                 }
-            }
-            else {
-                //pretty much should only be the initial synchronous load to come in here
-                ViewData["SortOrder"] = sortAscending;
-                publicModel = publicModel
-                                .OrderByDescending(r => r.IssueDate)
-                                    .Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax))
-                                        .ToList();
-
-                ViewData["currentRecordsCount"] = publicModel.Count();
-
-                return View(publicModel);
             }
         }
 

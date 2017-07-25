@@ -125,11 +125,14 @@
         </div>
 
     </form>
-
+    @if (TempData["Role"] != null && (string)TempData["Role"] == "Admin")
+    {
         <!--This form is hidden and only called from AdminOptions-->
-        @using (Html.BeginForm("DownloadAllDocuments", "Admin", FormMethod.Get, new { id = "downloadForm" }))
+        using (Html.BeginForm("DownloadAllDocuments", "Admin", FormMethod.Get, new { id = "downloadForm" }))
         {
             @Html.TextBox("ClientId", TempData["Client_Id"]);
             <input type="submit" value="Submit" id="downloadAllDocumentSubmit" />
         }
+    }
+
 </div>
