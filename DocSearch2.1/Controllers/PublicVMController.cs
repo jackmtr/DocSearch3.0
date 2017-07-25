@@ -67,11 +67,22 @@ namespace DocSearch2._1.Controllers
             try {
                 publicModel = publicRepository
                                 .SelectAll(Folder_ID, TempData["Role"].ToString())
-                                    .Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null)
-                                        .GroupBy(x => x.Document_ID)
-                                            .Select(x => x.First());
+                                    .Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null);
+                                    //check this logic later
+                                    //.Where(n => n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null)
+
+                                        //.GroupBy(x => x.Document_ID) //THE ISSUE IS WITHIN THIS AND NEXT LINE
+                                            //.Select(x => x.First()); //condesning by docId... maybe do after controller decides user wants to see by docId or Cate
+
+                                            //right now, publicModel is full of units of DocReference x DocId
             } catch {
                 return View("Errors"); //change
+            }
+
+            //needs to be checked seperately because cant select by DocId until after deciding if we are searching by documentId or policy
+            //can possibly combine into navBarGroupFilter
+            if (navBarGroup != "policy") {
+                publicModel = publicModel.GroupBy(x => x.Document_ID).Select(x => x.First());
             }
 
 
@@ -92,13 +103,12 @@ namespace DocSearch2._1.Controllers
 
                 //creating the options for the dropdown list
                 TempData["YearRange"] = YearRangePopulate(RetrieveYear(publicModel, true), RetrieveYear(publicModel, false));
-            }
-
-
 
             //**Populating the navbar, put into function
             populateNavBar(publicModel);
+            }
 
+            //turn this if into an else
             if (Request.IsAjaxRequest())
             {
                 //If user inputs only one custom year and maybe one/two months, what should happen?
@@ -390,7 +400,11 @@ namespace DocSearch2._1.Controllers
 
             ViewBag.CategoryNavBar = nbl;
             ViewBag.PolicyNavBar = model
+                                    //check this logic later
+                                    //.Where(e => e.EffectiveDate != null || e.EffectiveDate == null && e.RefNumber == null || e.EffectiveDate == null && e.RefNumber != null)
                                     .Where(e => e.EffectiveDate != null)
+                                        //.Where(n => n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null)
+                                        //.Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null)
                                         .OrderBy(e => e.RefNumber)
                                             .GroupBy(e => e.RefNumber)
                                                 .Select(g => g.First().RefNumber);

@@ -126,7 +126,7 @@ namespace DocSearch2._1.Repositories
                 }
             }
 
-            return PublicVMList;
+            return PublicVMList;  //the missing ref data exists here
         }
 
         public void Dispose() {
