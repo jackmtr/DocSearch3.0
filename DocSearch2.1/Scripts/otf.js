@@ -1,4 +1,6 @@
-﻿var postNavbar = function () {
+﻿//some functions need to be outside of the .ready functionality because they are accessed globally
+
+var postNavbar = function () {
 
     $className = $('.active').children("a").data("subclass");
     $classNameTitle = $('.active').children("a").data("subclass-title");
@@ -30,8 +32,6 @@ function clearFields(id) {
     $form.find("input[type=search]").val("");
 
     $form.find(".form-inputs select option").removeAttr('selected');
-
-    //$form.find("#IssueYearMinRange option:eq(0)").prop("selected", true);
 
     if (id != "allDocs") {
         $form.find("#IssueYearMinRange option:eq(0)").prop("selected", true);
@@ -298,7 +298,6 @@ $(function () {
             return false;
         }
 
-        //JACKIE
         var options = {
             url: "/Admin/Edit",
             type: "get",
@@ -339,7 +338,6 @@ $(function () {
         var thisA = $('#issue').parent('A');
         rememeberSort(thisA);
     }
-
 
     //will load the user to have focus inside search bar
     $('#searchInputBox').focus();
