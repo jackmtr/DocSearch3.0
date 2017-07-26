@@ -14,9 +14,6 @@ namespace DocSearch2._1.Controllers
             TempData.Keep("Client_Id");
             TempData.Keep("error_info");
             TempData.Keep("importance");
-            //TempData.Keep("");
-            //TempData.Keep("");
-            //TempData.Keep("");
 
             return View();
         }

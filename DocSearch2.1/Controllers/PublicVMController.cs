@@ -79,7 +79,13 @@ namespace DocSearch2._1.Controllers
             }
             catch
             {
-                return View("Errors"); //change
+                //return View("Errors"); //change
+                //TempData["Folder_Id"] = Folder_ID;
+                TempData.Clear();
+                TempData["error_info"] = "The client does not have any available records.";
+                TempData["importance"] = false;
+
+                return RedirectToAction("Index", "ErrorHandler", null);
             }
 
             //needs to be checked seperately because cant select by DocId until after deciding if we are searching by documentId or policy
@@ -245,6 +251,7 @@ namespace DocSearch2._1.Controllers
             if (file == null) {
                 ViewData["repositoryRequestDocId"] = id;
 
+                TempData.Clear();
                 TempData["error_info"] = "The document is not available or does not exist."; //maybe seperate this later with a check for tbl_doc.Active_IND
                 TempData["importance"] = false;
 
@@ -259,8 +266,6 @@ namespace DocSearch2._1.Controllers
                 TempData["importance"] = true;
 
                 return RedirectToAction("Index", "ErrorHandler", null);
-
-                //return Content("<script language='javascript' type='text/javascript'>alert('Unable to open, File Size: 0 mb');window.open('','_self').close();</script>");
             }
 
             switch (file.FileExtension.ToLower().Trim()) {

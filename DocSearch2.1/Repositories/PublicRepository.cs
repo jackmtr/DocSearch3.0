@@ -67,6 +67,11 @@ namespace DocSearch2._1.Repositories
                                         d.Active_IND //only want recipient and active_ind for admin, wonder if better way to do this
                                     }).ToList();
 
+                if (!documentList.Any())
+                {
+                    throw new System.ArgumentException("This client does not exist or has no available records.");
+                }
+
                 foreach (var item in documentList) {
                     PublicVM objpvm = new PublicVM();
 
@@ -122,6 +127,10 @@ namespace DocSearch2._1.Repositories
                                         d.Reason,
                                         dr.Number1
                                     }).ToList();
+
+                if (!documentList.Any()) {
+                    throw new System.ArgumentException("This client does not exist or has no available records.");
+                }
 
                 foreach (var item in documentList)
                 {

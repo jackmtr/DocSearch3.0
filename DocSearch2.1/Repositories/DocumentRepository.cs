@@ -18,9 +18,6 @@ namespace DocSearch2._1.Repositories
 
         public tbl_Document SelectById(string id, bool authorized)
         {
-            //int idInt = Int32.Parse(id);
-            //int crash = 10 / idInt; //used to test crashing application
-
             int docId = 0;
             tbl_Document document = null;
 
@@ -47,7 +44,6 @@ namespace DocSearch2._1.Repositories
                     {
                         document = _db.tbl_Document.AsNoTracking().SingleOrDefault(p => p.Document_ID == docId && p.Active_IND == false);
                     }
-
                     //Because this is a rare occurance, I would rather blindly search through other db's than change my model to bring in the repo value
                     //if more than one repo is used, we will have to create a repo attribute on the document model and bring tbl_Document.Repository_ID over to check and find
                 }
