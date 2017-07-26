@@ -13,6 +13,7 @@
                 <span id="currentHighYear">
                     @DateTime.Now.Year
                 </span>
+                <span id="currentSearchTerm"></span>
             </span>
         </p>
     </div>
@@ -87,7 +88,7 @@
                        InsertionMode = InsertionMode.ReplaceWith,
                        UpdateTargetId = "public_table",
                        OnComplete = "clearFields",
-                       OnSuccess = "updateCurrentCount"
+                       OnSuccess = "updateCurrentCount" //clearFields
                    }, new { @class = "button", id = "clearButton" })
                     </div>
 

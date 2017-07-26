@@ -67,6 +67,14 @@ function updateCurrentCount() {
     var currentLowYear = $("select[name = 'IssueYearMinRange']:not(:disabled)").val();
     var currentHighYear = new Date().getFullYear();
 
+    var searchTerm = $('#searchInputBox').val();
+
+    if (searchTerm.length > 0) {
+        $('#currentSearchTerm').text(', with term ' + searchTerm);
+    } else {
+        $('#currentSearchTerm').text("");
+    }
+
     if ($("select[name = 'IssueYearMaxRange']:not(:disabled)")[0]) { //confirms in custom range
 
         if (currentLowYear == "") {
@@ -412,14 +420,14 @@ $(function () {
 
     //may end up dropping pagination
     //event for selecting a 'records per page' from dropdown
-    $('#pageSize').change(function () {
-        var value = this.value;
+    //$('#pageSize').change(function () {
+    //    var value = this.value;
 
-        $('select[name^="pageSize"] option').removeAttr('selected');
-        $('select[name^="pageSize"] option[value="' + value + '"]').attr("selected", "selected");
+    //    $('select[name^="pageSize"] option').removeAttr('selected');
+    //    $('select[name^="pageSize"] option[value="' + value + '"]').attr("selected", "selected");
 
-        ajaxFormSubmit();
-    });
+    //    ajaxFormSubmit();
+    //});
 
     
     //event for clicking the backspace or enter key in select scenerios
@@ -488,8 +496,6 @@ $(function () {
             var removeItem = $(this).val();
             editList.splice($.inArray(removeItem, editList), 1);
         }
-
-
     });
 
 
@@ -512,10 +518,7 @@ $(function () {
             var $newHtml = $(data);
 
 
-            $target.replaceWith($newHtml);
-
-            //complete: updateCurrentCount();
-            //success: clearFields($this.prop('id'));      
+            $target.replaceWith($newHtml);    
             complete: clearFields($this.prop('id'));
             success: updateCurrentCount();
             
@@ -625,6 +628,7 @@ $(function () {
         $this = $(this);
 
         var $selectName = $("select[name = 'IssueYearMinRange']:not(:disabled)");
+        var $searchTerm = $('#searchInputBox').val();
 
         if (!$selectName.val()) {
             alert("Please input a Starting and Ending Year.");
@@ -633,7 +637,7 @@ $(function () {
 
         var options = {
             url: $this.attr('href'),
-            data: "&IssueYearMinRange=" + $selectName.val(),
+            data: "&IssueYearMinRange=" + $selectName.val() + "&searchTerm=" + $searchTerm,
             type: "GET",
         };
 
@@ -645,7 +649,7 @@ $(function () {
             $target.replaceWith($newHtml);
 
             complete: postNavbar();
-            success: clearFields($this.prop('id'));
+            //success: clearFields($this.prop('id')); //didnt want this cause clicking a navbar should remember the date range called upon
         });
 
         return false;
