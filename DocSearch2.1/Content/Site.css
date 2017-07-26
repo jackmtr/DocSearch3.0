@@ -698,7 +698,13 @@ select {
     border-width: 0 0 1px 1px;
 }
 
-a.navLink {
+/*a.navLink, #policy_list li * {
+    border: 0 solid black;
+    border-width: 1px 1px 0 0;
+    padding:.5em;
+}*/
+
+a.navLink{
     border: 0 solid black;
     border-width: 1px 1px 0 0;
     padding:.5em;
