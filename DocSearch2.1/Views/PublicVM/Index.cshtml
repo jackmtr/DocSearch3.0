@@ -33,7 +33,7 @@
                         @*@if (ViewBag.PolicyNavBar != null || ViewBag.PolicyNavBar != "")*@
 
                         @*<li>@(((IEnumerable<string>)ViewBag.PolicyNavBar).First())</li>*@
-                        @if (((IEnumerable<string>)ViewBag.PolicyNavBar).First().Trim().Length > 1)
+                        @if (ViewBag.PolicyNavBar == null || !((IEnumerable<string>)ViewBag.PolicyNavBar).Any() || ((IEnumerable<string>)ViewBag.PolicyNavBar).First().Trim().Length > 1)
                         {
                             foreach (var policy in ViewBag.PolicyNavBar)
                             {
