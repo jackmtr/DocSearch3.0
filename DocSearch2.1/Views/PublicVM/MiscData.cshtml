@@ -74,9 +74,7 @@
                             <td>
                                 @if (item.RefNumber == null || item.RefNumber.Trim().Length < 1)
                                 {
-                                    @*@Html.DisplayFor(modelItem => item.RefNumber)*@
                                     @Html.Raw("N/A");
-                                    
                                 }
                                 else
                                 {

@@ -29,10 +29,6 @@
                 <div id="policy_section" class="hidden">
                     <ul id="policy_list">
                         <!--need to check for no reference number documents with the policy !- null-->
-                        @*@if (((IEnumerable<dynamic>)ViewBag.PolicyNavBar).Count() > 0)*@ <!--Not sure if I need this conditional-->
-                        @*@if (ViewBag.PolicyNavBar != null || ViewBag.PolicyNavBar != "")*@
-
-                        @*<li>@(((IEnumerable<string>)ViewBag.PolicyNavBar).First())</li>*@
                         @if (ViewBag.PolicyNavBar == null || !((IEnumerable<string>)ViewBag.PolicyNavBar).Any() || ((IEnumerable<string>)ViewBag.PolicyNavBar).First().Trim().Length > 1)
                         {
                             foreach (var policy in ViewBag.PolicyNavBar)

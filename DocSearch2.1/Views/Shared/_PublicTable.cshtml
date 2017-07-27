@@ -1,18 +1,5 @@
 ﻿@model IEnumerable<PublicVM>
 
-@if (ViewData["repositoryRequestDocId"] != null)
-{
-    <!--Am I still using this?-->
-    <script type="text/javascript">
-        var txt;
-
-        if (confirm("The file you are looking for has been moved to another repository. If you still want to view this file click on the button below to send a request to support.") == true) {
-            txt = "Send";
-        } else {
-            txt = "Return";
-        }
-    </script>
-}
 @if (Model.Count() > 0 && (bool)ViewData["goodSearch"] == true)
 {
     <div id="public_table" class="row default-table" data-currentRecord="@ViewData["currentRecordsCount"]" data-currentLowYear="@(((List<SelectListItem>)TempData["YearRange"]).First().Text)" data-currentHighYear="@(((List<SelectListItem>)TempData["YearRange"]).Last().Text)">

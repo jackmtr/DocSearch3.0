@@ -418,18 +418,6 @@ $(function () {
         $('select[name^="IssueYearMaxRange"] option[value="' + value + '"]').attr("selected", "selected");
     });
 
-    //may end up dropping pagination
-    //event for selecting a 'records per page' from dropdown
-    //$('#pageSize').change(function () {
-    //    var value = this.value;
-
-    //    $('select[name^="pageSize"] option').removeAttr('selected');
-    //    $('select[name^="pageSize"] option[value="' + value + '"]').attr("selected", "selected");
-
-    //    ajaxFormSubmit();
-    //});
-
-    
     //event for clicking the backspace or enter key in select scenerios
     $(document).bind("keydown", function (e) {
 

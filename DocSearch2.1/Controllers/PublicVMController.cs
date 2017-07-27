@@ -69,18 +69,10 @@ namespace DocSearch2._1.Controllers
                 publicModel = publicRepository
                                 .SelectAll(Folder_ID, TempData["Role"].ToString())
                                     .Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null);
-                //check this logic later
-                //.Where(n => n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null)
-
-                //.GroupBy(x => x.Document_ID) //THE ISSUE IS WITHIN THIS AND NEXT LINE
-                //.Select(x => x.First()); //condesning by docId... maybe do after controller decides user wants to see by docId or Cate
-
                 //right now, publicModel is full of units of DocReference x DocId
             }
             catch
             {
-                //return View("Errors"); //change
-                //TempData["Folder_Id"] = Folder_ID;
                 TempData.Clear();
                 TempData["error_info"] = "The client does not have any available records.";
                 TempData["importance"] = false;
@@ -106,7 +98,6 @@ namespace DocSearch2._1.Controllers
                 //maybe should return view here already since overall count is alreadt 0
                 if (publicModel.Count() == 0)
                 {
-                    //return View("Errors");
                     TempData["error_info"] = "The client does not have any available records.";
                     TempData["importance"] = true;
 
@@ -136,18 +127,11 @@ namespace DocSearch2._1.Controllers
                 if (String.IsNullOrEmpty(IssueYearMaxRange))
                 {
                     //entered in two scenarios: 1) regular minIssueDate input and custom date where only minIssueDate is filled
-
                     int yearInput = (string.IsNullOrEmpty(IssueYearMinRange)) ? Int32.Parse(today.AddYears(-1).Year.ToString()) : Int32.Parse(IssueYearMinRange);
-                    //int yearInput = Int32.Parse(IssueYearMinRange);
-
-                    //issueDateMin = (yearInput > 0) ? issueDateMin = new DateTime(yearInput, 1, 1) : issueDateMin;
                     issueDateMin = (yearInput > 0) ? issueDateMin = new DateTime(yearInput, 1, 1) : issueDateMin = today.AddYears(yearInput);
 
                     yearInput = (yearInput > 0) ? yearInput - DateTime.Now.Year : yearInput;
                     // bug, sometimes issueDateMin should be relative to full year, not to today
-
-
-                    //issueDateMin = today.AddYears(yearInput);
                 }
                 else if (!String.IsNullOrEmpty(IssueYearMinRange) && !String.IsNullOrEmpty(IssueYearMaxRange))
                 {
@@ -193,10 +177,6 @@ namespace DocSearch2._1.Controllers
                 {
                     //checks if the date filter and search term will return any results
                     publicModel = publicModel.Where(r => (r.IssueDate >= issueDateMin) && (r.IssueDate <= issueDateMax) && (searchTerm == null || ((bool)ViewData["goodSearch"] ? r.Description.ToLower().Contains(searchTerm.ToLower()) == true : true)));
-
-                    //if (!publicModel.Any()) {
-                    //    ViewData["goodSearch"] = false;
-                    //}
                 }
 
                 ViewData["currentRecordsCount"] = publicModel.Count();
@@ -416,10 +396,7 @@ namespace DocSearch2._1.Controllers
             ViewBag.CategoryNavBar = nbl;
             ViewBag.PolicyNavBar = model
                                     //check this logic later
-                                    //.Where(e => e.EffectiveDate != null || e.EffectiveDate == null && e.RefNumber == null || e.EffectiveDate == null && e.RefNumber != null)
                                     .Where(e => e.EffectiveDate != null && e.ReferenceType == "Policy")
-                                        //.Where(n => n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null)
-                                        //.Where(n => n.EffectiveDate != null || n.EffectiveDate == null && n.RefNumber == null || n.EffectiveDate == null && n.RefNumber != null)
                                         .OrderBy(e => e.RefNumber)
                                             .GroupBy(e => e.RefNumber)
                                                 .Select(g => g.First().RefNumber);

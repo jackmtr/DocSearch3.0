@@ -35,22 +35,11 @@ namespace DocSearch2._1.Filters
             {
                 return false;
             }
-
-            //this group doesnt exist, simulates being denied
-            //if (httpContext.User.IsInRole("IT-ops1")) 
-            //{
-            //    return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
             //can do checks for what info to give user when not authorized arrises
-
             filterContext.Result = new ViewResult
             {
                 ViewName = "~/Views/Shared/Errors.cshtml"

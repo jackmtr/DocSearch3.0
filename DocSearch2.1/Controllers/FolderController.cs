@@ -37,8 +37,8 @@ namespace DocSearch2._1.Controllers
 
             if (folder == null)
             {
+                TempData.Clear();
                 TempData["Client_Id"] = Number;
-                //TempData["error_info"] = "The client does not exist.";
                 TempData["error_info"] = "The client may not exist or does not have any available documents.";
                 TempData["importance"] = false;
 
