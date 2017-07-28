@@ -99,10 +99,25 @@
                     <label class="col-md-4" for="fromYear">
                         Records from:
                         <select id="fromYear" name="IssueYearMinRange">
-                            <option value="-1" selected>one year ago from today</option>
+                            @if (TempData["Role"] != null && (string)TempData["Role"] == "Admin")
+                            {
+                                <option value="-1" >one year ago from today</option>
+                            }
+                            else
+                            {
+                                <option value="-1" selected>one year ago from today</option>
+                            }
+                            
                             <option value="-2">two years ago from today</option>
                             <option value="-3">three years ago from today</option>
-                            <option value="-100">All</option>
+                            @if (TempData["Role"] != null && (string)TempData["Role"] == "Admin")
+                            {
+                                <option value="-100" selected>All</option>
+                            }
+                            else
+                            {
+                                <option value="-100">All</option>
+                            }
                         </select>
                     </label>
 

@@ -45,7 +45,11 @@ function clearFields(id) {
     //may want to be more specific with check //having issues with this since updating the reset button
     if (id == "clearButton") {
 
-        $form.find("#fromYear option:eq(0)").prop("selected", true);
+        if ($('#downloadForm')[0]) {
+            $form.find("#fromYear option:eq(3)").prop("selected", true);
+        } else {
+            $form.find("#fromYear option:eq(0)").prop("selected", true);
+        }
         $form.find("#fromYear").prop("disabled", false);
         $(".customDates select").prop("disabled", true);
         $(".customDates *").css("display", "none");
@@ -493,8 +497,14 @@ $(function () {
 
         $this = $(this);
 
+        var resetMinRange = 2016;
+
+        if ($('#downloadForm')[0]) {
+            resetMinRange = 1975;
+        } 
+
         var options = {
-            url: $this.attr('href') + "&IssueYearMinRange=" + "2016",
+            url: $this.attr('href') + "&IssueYearMinRange=" + resetMinRange,
             data: "IssueYearMinRange=" + "2016", //not being sent to controller, but I need a data attribute it seems
             type: "GET",
         };

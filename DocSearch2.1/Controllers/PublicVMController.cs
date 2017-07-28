@@ -36,7 +36,7 @@ namespace DocSearch2._1.Controllers
 
         // GET: PublicVM
         [HttpGet]
-        public ActionResult Index([Bind(Prefix = "folderId")] string Folder_ID, string navBarGroup = null, string navBarItem = null, string filter = null, string searchTerm = null, string IssueYearMinRange = "", string IssueYearMaxRange = "", /*int page = 1, int pageSize = 300,*/ bool Admin = false, string IssueMonthMinRange = "", string IssueMonthMaxRange = "")
+        public ActionResult Index([Bind(Prefix = "folderId")] string Folder_ID, string navBarGroup = null, string navBarItem = null, string filter = null, string searchTerm = null, string IssueYearMinRange = "", string IssueYearMaxRange = "", bool Admin = false, string IssueMonthMinRange = "", string IssueMonthMaxRange = "")
         {
             //**GLOBAL VARIABLES
 
@@ -56,8 +56,11 @@ namespace DocSearch2._1.Controllers
             //ViewData["currentNav"] used to populate view's link route value for navBarGroup, which in turn populates navBarGroup variable.  Used to save navBarGroup state
             ViewData["currentNav"] = null;
 
-            DateTime issueDateMin = today.AddYears(-1); //appropriate place?
-            DateTime issueDateMax = today; //appropriate place?
+            //DateTime issueDateMin = today.AddYears(-1); //appropriate place?
+            //DateTime issueDateMax = today; //appropriate place?
+
+            DateTime issueDateMin = ((string)TempData["Role"] == "Admin") ? today.AddYears(-30) : today.AddYears(-1);
+            DateTime issueDateMax = today;
 
             if (searchTerm != null) {
                 searchTerm = searchTerm.Trim();
@@ -130,6 +133,9 @@ namespace DocSearch2._1.Controllers
                 //If user inputs only one custom year and maybe one/two months, what should happen?
                 if (String.IsNullOrEmpty(IssueYearMaxRange))
                 {
+                    //if ((string)TempData["Role"] == "Admin") {
+                    //    IssueYearMinRange = "1975";
+                    //}
                     //entered in two scenarios: 1) regular minIssueDate input and custom date where only minIssueDate is filled
                     int yearInput = (string.IsNullOrEmpty(IssueYearMinRange)) ? Int32.Parse(today.AddYears(-1).Year.ToString()) : Int32.Parse(IssueYearMinRange);
                     issueDateMin = (yearInput > 0) ? issueDateMin = new DateTime(yearInput, 1, 1) : issueDateMin = today.AddYears(yearInput);
