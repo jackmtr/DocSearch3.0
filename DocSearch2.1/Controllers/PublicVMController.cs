@@ -59,6 +59,10 @@ namespace DocSearch2._1.Controllers
             DateTime issueDateMin = today.AddYears(-1); //appropriate place?
             DateTime issueDateMax = today; //appropriate place?
 
+            if (searchTerm != null) {
+                searchTerm = searchTerm.Trim();
+            }
+
             //declare and instantiate the original full PublicVM data for the client
             IEnumerable<PublicVM> publicModel = null;
 

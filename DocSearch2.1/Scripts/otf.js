@@ -70,7 +70,7 @@ function updateCurrentCount() {
     var searchTerm = $('#searchInputBox').val();
 
     if (searchTerm.length > 0) {
-        $('#currentSearchTerm').text(', with term ' + searchTerm);
+        $('#currentSearchTerm').text(', with term "' + searchTerm + '"');
     } else {
         $('#currentSearchTerm').text("");
     }
